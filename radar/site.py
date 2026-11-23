@@ -254,7 +254,7 @@ function renderIPOs() {
 
     const foot = el("div", "card-foot");
     foot.appendChild(el("span", "", r.official ? "Official filing" : "News source"));
-    if (/^https?:\/\//.test(r.url)) {
+    if (/^https?:\\/\\//.test(r.url)) {
       const a = el("a", "", r.link_label + " ↗");
       a.href = r.url; a.target = "_blank"; a.rel = "noopener noreferrer";
       foot.appendChild(a);
