@@ -92,7 +92,12 @@ def format_alert(entry: dict, now: datetime) -> str:
         lines.append(f"Filed: {esc(entry['filed_on'])}")
     lines.append(f"First seen on: {esc(_sources_line(entry))}")
     url = entry.get("official_url")
-    if url:
+    docs = entry.get("documents") or []
+    for d in docs:
+        lines.append(f'<a href="{esc(d["url"])}">Download: {esc(d["label"])}</a>')
+    if url and docs:
+        lines.append(f'<a href="{esc(url)}">SEBI filing page</a>')
+    elif url:
         lines.append(f'<a href="{esc(url)}">Open the official document</a>')
     else:
         first = next(iter(entry["sources"].values()))

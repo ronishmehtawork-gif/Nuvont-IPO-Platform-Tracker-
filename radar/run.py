@@ -6,6 +6,7 @@ from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
 
 from . import state as st
+from .documents import find_pdf_links
 from .http import Fetcher
 from .models import ALERT_EVENTS, SEGMENT_RANK, SourceResult, label
 from .site import build_site
@@ -98,6 +99,7 @@ def run_once(sources, fetcher, tg, state, now, alert_segments, site_url="") -> l
             new_entries.append((key, entry))
 
     for key, entry in new_entries[:MAX_ALERTS]:
+        _attach_documents(entry, fetcher)
         mid = tg.send_channel(format_alert(entry, now))
         if tg.enabled and mid is None:
             del state["seen"][key]  # delivery failed: forget it so the next run retries
@@ -125,6 +127,19 @@ def run_once(sources, fetcher, tg, state, now, alert_segments, site_url="") -> l
         tg.send_admin(format_report("Daily check", results, state, now))
         state["last_heartbeat"] = today
     return results
+
+
+def _attach_documents(entry: dict, fetcher) -> None:
+    """For SEBI filings, read the filing page once and keep the direct PDF links. Never blocks an alert."""
+    url = entry.get("official_url") or ""
+    if "sebi.gov.in" not in url or entry.get("documents"):
+        return
+    try:
+        res = fetcher.get("sebi_filing_page", url)
+        if res.ok:
+            entry["documents"] = find_pdf_links(res.text, url)
+    except Exception:  # the alert must still go out with the filing-page link
+        pass
 
 
 def _update_health(results, state, tg, stamp) -> None:
