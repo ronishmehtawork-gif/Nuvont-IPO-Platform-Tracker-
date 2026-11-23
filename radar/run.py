@@ -229,6 +229,14 @@ def main() -> None:
     state = st.load(path)
     now = datetime.now(IST)
     run_once(all_sources(), fetcher, tg, state, now, segments, os.getenv("RADAR_SITE_URL", ""))
+    from .sectors import fetch_sector_heatmap  # add at top of radar/run.py
+
+# Inside main(), right after run_once(...):
+sectors = fetch_sector_heatmap(fetcher, now)
+if sectors["groups"]:
+    state["sectors"] = sectors
+st.save(path, state)
+build_site(state, os.getenv("RADAR_SITE", "docs/index.html"), now)
     st.save(path, state)
     build_site(state, os.getenv("RADAR_SITE", "docs/index.html"), now)
 
