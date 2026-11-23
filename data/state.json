@@ -1,0 +1,540 @@
+{
+ "health": {
+  "bse_sme": {
+   "down_alerted": false,
+   "empty_streak": 0,
+   "ever_parsed": false,
+   "failures": 1,
+   "last_note": "ConnectTimeout",
+   "last_ok": ""
+  },
+  "chittorgarh": {
+   "down_alerted": false,
+   "empty_streak": 0,
+   "ever_parsed": true,
+   "failures": 0,
+   "last_note": "12 headlines matched",
+   "last_ok": "2026-11-23"
+  },
+  "rss_ipocentral": {
+   "down_alerted": false,
+   "empty_streak": 0,
+   "ever_parsed": true,
+   "failures": 0,
+   "last_note": "1 items matched",
+   "last_ok": "2026-11-23"
+  },
+  "sebi": {
+   "down_alerted": false,
+   "empty_streak": 0,
+   "ever_parsed": true,
+   "failures": 0,
+   "last_note": "24 entries parsed",
+   "last_ok": "2026-11-23"
+  }
+ },
+ "last_heartbeat": "2026-11-23",
+ "seen": {
+  "carlsberg india|drhp_refiled": {
+   "alerted": false,
+   "baseline": true,
+   "company": "Carlsberg India Limited",
+   "event": "drhp_refiled",
+   "exchange": "SEBI",
+   "filed_on": "2026-10-29",
+   "first_seen": "2026-11-23T12:47:29+05:30",
+   "message_id": null,
+   "official_url": "https://www.sebi.gov.in/filings/public-issues/oct-2026/carlsberg-india-limited-udrhp-1_105485.html",
+   "segment": "mainboard",
+   "sources": {
+    "sebi": "https://www.sebi.gov.in/filings/public-issues/oct-2026/carlsberg-india-limited-udrhp-1_105485.html"
+   }
+  },
+  "chartered speed|addendum": {
+   "alerted": false,
+   "baseline": true,
+   "company": "Chartered Speed Limited",
+   "event": "addendum",
+   "exchange": "SEBI",
+   "filed_on": "2026-11-19",
+   "first_seen": "2026-11-23T12:47:29+05:30",
+   "message_id": null,
+   "official_url": "https://www.sebi.gov.in/filings/public-issues/nov-2026/chartered-speed-limited-addendum-to-the-drhp_105815.html",
+   "segment": "mainboard",
+   "sources": {
+    "sebi": "https://www.sebi.gov.in/filings/public-issues/nov-2026/chartered-speed-limited-addendum-to-the-drhp_105815.html"
+   }
+  },
+  "datasoft computer services|drhp_refiled": {
+   "alerted": false,
+   "baseline": true,
+   "company": "Datasoft Computer Services Ltd.",
+   "event": "drhp_refiled",
+   "exchange": "NSE Emerge",
+   "filed_on": "",
+   "first_seen": "2026-11-23T12:47:29+05:30",
+   "message_id": null,
+   "official_url": "",
+   "segment": "sme",
+   "sources": {
+    "chittorgarh": "https://www.chittorgarh.com/news-detail/ipo/upcoming-ipo/datasoft-computer-services-ipo/21644/"
+   }
+  },
+  "eldorado agritech|addendum": {
+   "alerted": false,
+   "baseline": true,
+   "company": "Eldorado Agritech Limited",
+   "event": "addendum",
+   "exchange": "SEBI",
+   "filed_on": "2026-11-19",
+   "first_seen": "2026-11-23T12:47:29+05:30",
+   "message_id": null,
+   "official_url": "https://www.sebi.gov.in/filings/public-issues/nov-2026/eldorado-agritech-limited-addendum-to-the-drhp_105811.html",
+   "segment": "mainboard",
+   "sources": {
+    "sebi": "https://www.sebi.gov.in/filings/public-issues/nov-2026/eldorado-agritech-limited-addendum-to-the-drhp_105811.html"
+   }
+  },
+  "gamp services|drhp_filed": {
+   "alerted": false,
+   "baseline": true,
+   "company": "GAMP Services Limited",
+   "event": "drhp_filed",
+   "exchange": "SEBI",
+   "filed_on": "2026-10-21",
+   "first_seen": "2026-11-23T12:47:29+05:30",
+   "message_id": null,
+   "official_url": "https://www.sebi.gov.in/filings/public-issues/oct-2026/gamp-services-limited-drhp_105424.html",
+   "segment": "mainboard",
+   "sources": {
+    "sebi": "https://www.sebi.gov.in/filings/public-issues/oct-2026/gamp-services-limited-drhp_105424.html"
+   }
+  },
+  "grace renewable energy|drhp_filed": {
+   "alerted": false,
+   "baseline": true,
+   "company": "Grace Renewable Energy Limited",
+   "event": "drhp_filed",
+   "exchange": "SEBI",
+   "filed_on": "2026-10-07",
+   "first_seen": "2026-11-23T12:47:29+05:30",
+   "message_id": null,
+   "official_url": "https://www.sebi.gov.in/filings/public-issues/oct-2026/grace-renewable-energy-limited-drhp_105099.html",
+   "segment": "mainboard",
+   "sources": {
+    "sebi": "https://www.sebi.gov.in/filings/public-issues/oct-2026/grace-renewable-energy-limited-drhp_105099.html"
+   }
+  },
+  "hindustan coca cola holdings|drhp_filed": {
+   "alerted": false,
+   "baseline": true,
+   "company": "Hindustan Coca-Cola Holdings Limited",
+   "event": "drhp_filed",
+   "exchange": "SEBI",
+   "filed_on": "2026-11-12",
+   "first_seen": "2026-11-23T12:47:29+05:30",
+   "message_id": null,
+   "official_url": "https://www.sebi.gov.in/filings/public-issues/nov-2026/hindustan-coca-cola-holdings-limited-drhp_105729.html",
+   "segment": "mainboard",
+   "sources": {
+    "chittorgarh": "https://www.chittorgarh.com/news-detail/ipo/upcoming-ipo/hindustan-coca-cola-ipo/20917/",
+    "sebi": "https://www.sebi.gov.in/filings/public-issues/nov-2026/hindustan-coca-cola-holdings-limited-drhp_105729.html"
+   }
+  },
+  "hunger pangs|drhp_filed": {
+   "alerted": false,
+   "baseline": true,
+   "company": "Hunger Pangs Limited",
+   "event": "drhp_filed",
+   "exchange": "SEBI",
+   "filed_on": "2026-10-21",
+   "first_seen": "2026-11-23T12:47:29+05:30",
+   "message_id": null,
+   "official_url": "https://www.sebi.gov.in/filings/public-issues/oct-2026/hunger-pangs-limited-drhp_105347.html",
+   "segment": "mainboard",
+   "sources": {
+    "sebi": "https://www.sebi.gov.in/filings/public-issues/oct-2026/hunger-pangs-limited-drhp_105347.html"
+   }
+  },
+  "il jin electronics india|drhp_filed": {
+   "alerted": false,
+   "baseline": true,
+   "company": "IL JIN ELECTRONICS (INDIA) LIMITED",
+   "event": "drhp_filed",
+   "exchange": "SEBI",
+   "filed_on": "2026-11-17",
+   "first_seen": "2026-11-23T12:47:29+05:30",
+   "message_id": null,
+   "official_url": "https://www.sebi.gov.in/filings/public-issues/nov-2026/il-jin-electronics-india-limited-drhp_105795.html",
+   "segment": "mainboard",
+   "sources": {
+    "chittorgarh": "https://www.chittorgarh.com/news-detail/ipo/upcoming-ipo/il-jin-electronics-india-ipo/20864/",
+    "sebi": "https://www.sebi.gov.in/filings/public-issues/nov-2026/il-jin-electronics-india-limited-drhp_105795.html"
+   }
+  },
+  "integris medtech|addendum": {
+   "alerted": false,
+   "baseline": true,
+   "company": "Integris Medtech Limited",
+   "event": "addendum",
+   "exchange": "SEBI",
+   "filed_on": "2026-10-26",
+   "first_seen": "2026-11-23T12:47:29+05:30",
+   "message_id": null,
+   "official_url": "https://www.sebi.gov.in/filings/public-issues/oct-2026/integris-medtech-limited-addendum-to-drhp_105416.html",
+   "segment": "mainboard",
+   "sources": {
+    "sebi": "https://www.sebi.gov.in/filings/public-issues/oct-2026/integris-medtech-limited-addendum-to-drhp_105416.html"
+   }
+  },
+  "integrum energy infrastructure|drhp_filed": {
+   "alerted": false,
+   "baseline": true,
+   "company": "INTEGRUM ENERGY INFRASTRUCTURE LIMITED",
+   "event": "drhp_filed",
+   "exchange": "SEBI",
+   "filed_on": "2026-10-07",
+   "first_seen": "2026-11-23T12:47:29+05:30",
+   "message_id": null,
+   "official_url": "https://www.sebi.gov.in/filings/public-issues/oct-2026/integrum-energy-infrastructure-limited-drhp_105075.html",
+   "segment": "mainboard",
+   "sources": {
+    "sebi": "https://www.sebi.gov.in/filings/public-issues/oct-2026/integrum-energy-infrastructure-limited-drhp_105075.html"
+   }
+  },
+  "jamnagar agro industries|drhp_filed": {
+   "alerted": false,
+   "baseline": true,
+   "company": "Jamnagar Agro Industries Ltd.",
+   "event": "drhp_filed",
+   "exchange": "",
+   "filed_on": "",
+   "first_seen": "2026-11-23T12:47:29+05:30",
+   "message_id": null,
+   "official_url": "",
+   "segment": "unknown",
+   "sources": {
+    "chittorgarh": "https://www.chittorgarh.com/news-detail/ipo/upcoming-ipo/jamnagar-agro-industries-ipo/19405/"
+   }
+  },
+  "learnfluence education|addendum": {
+   "alerted": false,
+   "baseline": true,
+   "company": "Learnfluence Education Limited",
+   "event": "addendum",
+   "exchange": "SEBI",
+   "filed_on": "2026-11-12",
+   "first_seen": "2026-11-23T12:47:29+05:30",
+   "message_id": null,
+   "official_url": "https://www.sebi.gov.in/filings/public-issues/nov-2026/learnfluence-education-limited-addendum-to-drhp_105776.html",
+   "segment": "mainboard",
+   "sources": {
+    "sebi": "https://www.sebi.gov.in/filings/public-issues/nov-2026/learnfluence-education-limited-addendum-to-drhp_105776.html"
+   }
+  },
+  "matangi rubber|addendum": {
+   "alerted": false,
+   "baseline": true,
+   "company": "Matangi Rubber Limited",
+   "event": "addendum",
+   "exchange": "SEBI",
+   "filed_on": "2026-10-10",
+   "first_seen": "2026-11-23T12:47:29+05:30",
+   "message_id": null,
+   "official_url": "https://www.sebi.gov.in/filings/public-issues/oct-2026/matangi-rubber-limited-addendum-to-the-drhp_105143.html",
+   "segment": "mainboard",
+   "sources": {
+    "sebi": "https://www.sebi.gov.in/filings/public-issues/oct-2026/matangi-rubber-limited-addendum-to-the-drhp_105143.html"
+   }
+  },
+  "meganet technologies global|drhp_filed": {
+   "alerted": false,
+   "baseline": true,
+   "company": "Meganet Technologies Global Ltd.",
+   "event": "drhp_filed",
+   "exchange": "",
+   "filed_on": "",
+   "first_seen": "2026-11-23T12:47:29+05:30",
+   "message_id": null,
+   "official_url": "",
+   "segment": "unknown",
+   "sources": {
+    "chittorgarh": "https://www.chittorgarh.com/news-detail/ipo/upcoming-ipo/meganet-technologies-global-ipo/22735/"
+   }
+  },
+  "nlc india renewables|drhp_filed": {
+   "alerted": false,
+   "baseline": true,
+   "company": "Nlc India Renewables Ltd.",
+   "event": "drhp_filed",
+   "exchange": "",
+   "filed_on": "",
+   "first_seen": "2026-11-23T12:47:29+05:30",
+   "message_id": null,
+   "official_url": "",
+   "segment": "unknown",
+   "sources": {
+    "chittorgarh": "https://www.chittorgarh.com/news-detail/ipo/upcoming-ipo/nlc-india-renewables-ipo/23397/",
+    "rss_ipocentral": "https://ipocentral.in/nlc-india-renewables-ipo-drhp-filing-analysis/"
+   }
+  },
+  "oravel stays|addendum": {
+   "alerted": false,
+   "baseline": true,
+   "company": "Oravel Stays Limited",
+   "event": "addendum",
+   "exchange": "SEBI",
+   "filed_on": "2026-10-26",
+   "first_seen": "2026-11-23T12:47:29+05:30",
+   "message_id": null,
+   "official_url": "https://www.sebi.gov.in/filings/public-issues/oct-2026/oravel-stays-limited-addendum-to-drhp_105418.html",
+   "segment": "mainboard",
+   "sources": {
+    "sebi": "https://www.sebi.gov.in/filings/public-issues/oct-2026/oravel-stays-limited-addendum-to-drhp_105418.html"
+   }
+  },
+  "oswal cables|addendum": {
+   "alerted": false,
+   "baseline": true,
+   "company": "OSWAL CABLES LIMITED",
+   "event": "addendum",
+   "exchange": "SEBI",
+   "filed_on": "2026-10-12",
+   "first_seen": "2026-11-23T12:47:29+05:30",
+   "message_id": null,
+   "official_url": "https://www.sebi.gov.in/filings/public-issues/oct-2026/oswal-cables-limited-addendum-to-drhp_105234.html",
+   "segment": "mainboard",
+   "sources": {
+    "sebi": "https://www.sebi.gov.in/filings/public-issues/oct-2026/oswal-cables-limited-addendum-to-drhp_105234.html"
+   }
+  },
+  "paramotor digital technology|drhp_refiled": {
+   "alerted": false,
+   "baseline": true,
+   "company": "Paramotor Digital Technology Limited",
+   "event": "drhp_refiled",
+   "exchange": "SEBI",
+   "filed_on": "2026-10-14",
+   "first_seen": "2026-11-23T12:47:29+05:30",
+   "message_id": null,
+   "official_url": "https://www.sebi.gov.in/filings/public-issues/oct-2026/paramotor-digital-technology-limited-udrhp-i_105258.html",
+   "segment": "mainboard",
+   "sources": {
+    "sebi": "https://www.sebi.gov.in/filings/public-issues/oct-2026/paramotor-digital-technology-limited-udrhp-i_105258.html"
+   }
+  },
+  "pradeepit global consulting|drhp_filed": {
+   "alerted": false,
+   "baseline": true,
+   "company": "Pradeepit Global Consulting Ltd.",
+   "event": "drhp_filed",
+   "exchange": "SEBI",
+   "filed_on": "",
+   "first_seen": "2026-11-23T12:47:29+05:30",
+   "message_id": null,
+   "official_url": "",
+   "segment": "mainboard",
+   "sources": {
+    "chittorgarh": "https://www.chittorgarh.com/news-detail/ipo/upcoming-ipo/pradeepit-global-consulting-ipo/19404/"
+   }
+  },
+  "pride hotels|addendum": {
+   "alerted": false,
+   "baseline": true,
+   "company": "Pride Hotels Limited",
+   "event": "addendum",
+   "exchange": "SEBI",
+   "filed_on": "2026-11-23",
+   "first_seen": "2026-11-23T12:47:29+05:30",
+   "message_id": null,
+   "official_url": "https://www.sebi.gov.in/filings/public-issues/nov-2026/pride-hotels-limited-addendum-to-the-drhp_105935.html",
+   "segment": "mainboard",
+   "sources": {
+    "sebi": "https://www.sebi.gov.in/filings/public-issues/nov-2026/pride-hotels-limited-addendum-to-the-drhp_105935.html"
+   }
+  },
+  "rediff com india|drhp_refiled": {
+   "alerted": false,
+   "baseline": true,
+   "company": "Rediff com India Limited",
+   "event": "drhp_refiled",
+   "exchange": "SEBI",
+   "filed_on": "2026-11-14",
+   "first_seen": "2026-11-23T12:47:29+05:30",
+   "message_id": null,
+   "official_url": "https://www.sebi.gov.in/filings/public-issues/nov-2026/rediff-com-india-limited-udrhp-i_105794.html",
+   "segment": "mainboard",
+   "sources": {
+    "sebi": "https://www.sebi.gov.in/filings/public-issues/nov-2026/rediff-com-india-limited-udrhp-i_105794.html"
+   }
+  },
+  "sagar defence engineering|drhp_refiled": {
+   "alerted": false,
+   "baseline": true,
+   "company": "Sagar Defence Engineering Limited",
+   "event": "drhp_refiled",
+   "exchange": "SEBI",
+   "filed_on": "2026-11-19",
+   "first_seen": "2026-11-23T12:47:29+05:30",
+   "message_id": null,
+   "official_url": "https://www.sebi.gov.in/filings/public-issues/nov-2026/sagar-defence-engineering-limited-udrhp-i_105801.html",
+   "segment": "mainboard",
+   "sources": {
+    "sebi": "https://www.sebi.gov.in/filings/public-issues/nov-2026/sagar-defence-engineering-limited-udrhp-i_105801.html"
+   }
+  },
+  "sahanaratnabh|drhp_filed": {
+   "alerted": false,
+   "baseline": true,
+   "company": "SahanaRatnabh Ltd.",
+   "event": "drhp_filed",
+   "exchange": "NSE Emerge",
+   "filed_on": "",
+   "first_seen": "2026-11-23T12:47:29+05:30",
+   "message_id": null,
+   "official_url": "",
+   "segment": "sme",
+   "sources": {
+    "chittorgarh": "https://www.chittorgarh.com/news-detail/ipo/upcoming-ipo/sahanaratnabh-ipo/19024/"
+   }
+  },
+  "sillverton industries|addendum": {
+   "alerted": false,
+   "baseline": true,
+   "company": "Sillverton Industries Limited",
+   "event": "addendum",
+   "exchange": "SEBI",
+   "filed_on": "2026-11-07",
+   "first_seen": "2026-11-23T12:47:29+05:30",
+   "message_id": null,
+   "official_url": "https://www.sebi.gov.in/filings/public-issues/nov-2026/sillverton-industries-limited-addendum-to-drhp_105681.html",
+   "segment": "mainboard",
+   "sources": {
+    "sebi": "https://www.sebi.gov.in/filings/public-issues/nov-2026/sillverton-industries-limited-addendum-to-drhp_105681.html"
+   }
+  },
+  "sitaram denims india|drhp_filed": {
+   "alerted": false,
+   "baseline": true,
+   "company": "Sitaram Denims India Ltd",
+   "event": "drhp_filed",
+   "exchange": "SEBI",
+   "filed_on": "2026-11-13",
+   "first_seen": "2026-11-23T12:47:29+05:30",
+   "message_id": null,
+   "official_url": "https://www.sebi.gov.in/filings/public-issues/nov-2026/sitaram-denims-india-ltd-drhp_105736.html",
+   "segment": "mainboard",
+   "sources": {
+    "chittorgarh": "https://www.chittorgarh.com/news-detail/ipo/upcoming-ipo/sitaram-denims-india-ipo/19023/",
+    "sebi": "https://www.sebi.gov.in/filings/public-issues/nov-2026/sitaram-denims-india-ltd-drhp_105736.html"
+   }
+  },
+  "snva traveltech|drhp_refiled": {
+   "alerted": false,
+   "baseline": true,
+   "company": "SNVA Traveltech Limited",
+   "event": "drhp_refiled",
+   "exchange": "SEBI",
+   "filed_on": "2026-11-09",
+   "first_seen": "2026-11-23T12:47:29+05:30",
+   "message_id": null,
+   "official_url": "https://www.sebi.gov.in/filings/public-issues/nov-2026/snva-traveltech-limited-udrhp_105682.html",
+   "segment": "mainboard",
+   "sources": {
+    "sebi": "https://www.sebi.gov.in/filings/public-issues/nov-2026/snva-traveltech-limited-udrhp_105682.html"
+   }
+  },
+  "soleos energy|drhp_filed": {
+   "alerted": false,
+   "baseline": true,
+   "company": "Soleos Energy Limited",
+   "event": "drhp_filed",
+   "exchange": "SEBI",
+   "filed_on": "2026-10-13",
+   "first_seen": "2026-11-23T12:47:29+05:30",
+   "message_id": null,
+   "official_url": "https://www.sebi.gov.in/filings/public-issues/oct-2026/soleos-energy-limited-drhp_105196.html",
+   "segment": "mainboard",
+   "sources": {
+    "sebi": "https://www.sebi.gov.in/filings/public-issues/oct-2026/soleos-energy-limited-drhp_105196.html"
+   }
+  },
+  "south eastern coalfields|drhp_filed": {
+   "alerted": false,
+   "baseline": true,
+   "company": "South Eastern Coalfields Limited",
+   "event": "drhp_filed",
+   "exchange": "SEBI",
+   "filed_on": "2026-11-04",
+   "first_seen": "2026-11-23T12:47:29+05:30",
+   "message_id": null,
+   "official_url": "https://www.sebi.gov.in/filings/public-issues/nov-2026/south-eastern-coalfields-limited-drhp_105620.html",
+   "segment": "mainboard",
+   "sources": {
+    "sebi": "https://www.sebi.gov.in/filings/public-issues/nov-2026/south-eastern-coalfields-limited-drhp_105620.html"
+   }
+  },
+  "tablespace technologies|addendum": {
+   "alerted": false,
+   "baseline": true,
+   "company": "Tablespace Technologies Limited",
+   "event": "addendum",
+   "exchange": "SEBI",
+   "filed_on": "2026-10-21",
+   "first_seen": "2026-11-23T12:47:29+05:30",
+   "message_id": null,
+   "official_url": "https://www.sebi.gov.in/filings/public-issues/oct-2026/tablespace-technologies-limited-addendum-to-drhp_105343.html",
+   "segment": "mainboard",
+   "sources": {
+    "sebi": "https://www.sebi.gov.in/filings/public-issues/oct-2026/tablespace-technologies-limited-addendum-to-drhp_105343.html"
+   }
+  },
+  "trebits investment trust|drhp_filed": {
+   "alerted": false,
+   "baseline": true,
+   "company": "TreBits Investment Trust",
+   "event": "drhp_filed",
+   "exchange": "",
+   "filed_on": "",
+   "first_seen": "2026-11-23T12:47:29+05:30",
+   "message_id": null,
+   "official_url": "",
+   "segment": "unknown",
+   "sources": {
+    "chittorgarh": "https://www.chittorgarh.com/news-detail/ipo/upcoming-ipo/trebits-investment-trust-reit/21475/"
+   }
+  },
+  "uranus stone products|drhp_filed": {
+   "alerted": false,
+   "baseline": true,
+   "company": "Uranus Stone Products Ltd.",
+   "event": "drhp_filed",
+   "exchange": "",
+   "filed_on": "",
+   "first_seen": "2026-11-23T12:47:29+05:30",
+   "message_id": null,
+   "official_url": "",
+   "segment": "unknown",
+   "sources": {
+    "chittorgarh": "https://www.chittorgarh.com/news-detail/ipo/upcoming-ipo/uranus-stone-products-ipo/20918/"
+   }
+  },
+  "zadley india|drhp_filed": {
+   "alerted": false,
+   "baseline": true,
+   "company": "Zadley India Ltd.",
+   "event": "drhp_filed",
+   "exchange": "",
+   "filed_on": "",
+   "first_seen": "2026-11-23T12:47:29+05:30",
+   "message_id": null,
+   "official_url": "",
+   "segment": "unknown",
+   "sources": {
+    "chittorgarh": "https://www.chittorgarh.com/news-detail/ipo/upcoming-ipo/zadley-india-ipo/22847/"
+   }
+  }
+ },
+ "started": true,
+ "version": 1
+}
