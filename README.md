@@ -7,7 +7,7 @@ alerts to a Telegram channel. Runs free on GitHub Actions every ~15 minutes, so 
 
 | Source | Role |
 |---|---|
-| BSE SME DRHP page | Official. Blocks GitHub's servers today (connection never opens), so it only helps from an Indian-IP machine |
+| BSE SME DRHP page | Official, but its site never answers GitHub's servers, so it is off by default. Set `RADAR_ENABLE_BSE_SME=1` when running from a machine with an Indian IP |
 | SEBI "Draft Offer Documents" | Official. Mainboard filings; alerts carry direct PDF links read from the filing page |
 | IPO Platform "DRHP filed" lists (SME and mainboard) | Reads company, exchange (BSE SME / NSE Emerge), filing date, status and the exchange-hosted DRHP file link. Covers NSE Emerge and BSE SME. A status change to "approved" sends an approval alert |
 | Chittorgarh IPO news | News trigger only. Alert text is written by this tool and links to the source |

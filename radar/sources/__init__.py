@@ -22,11 +22,13 @@ def feeds_from_env() -> dict:
 
 def all_sources() -> list:
     sources = [
-        (bse_sme.NAME, bse_sme.fetch),
         (sebi.NAME, sebi.fetch),
         (chittorgarh.NAME, chittorgarh.fetch),
         (ipoplatform.NAME, ipoplatform.fetch),
     ]
+    if os.getenv("RADAR_ENABLE_BSE_SME") == "1":
+        # BSE SME's own site never answers from GitHub's servers; this is for a machine with an Indian IP.
+        sources.insert(0, (bse_sme.NAME, bse_sme.fetch))
     if os.getenv("RADAR_ENABLE_NSE") == "1":
         # Experimental: the NSE page is script-driven and blocks most cloud servers, so it is off by default.
         sources.append((nse_emerge.NAME, nse_emerge.fetch))
