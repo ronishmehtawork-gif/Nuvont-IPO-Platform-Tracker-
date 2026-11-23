@@ -22,8 +22,8 @@ EVENT_LABELS = {
     "addendum": "DRHP addendum",
 }
 
-# Recorded and shown on the site, but not pushed to the channel.
-ALERT_EVENTS = {"drhp_filed", "drhp_refiled", "approval", "issue"}
+# Events pushed to the channel. Anything else is only recorded and shown on the site.
+ALERT_EVENTS = {"drhp_filed", "drhp_refiled", "approval", "issue", "addendum"}
 
 SEGMENT_RANK = {"unknown": 0, "mainboard": 1, "sme": 2}
 

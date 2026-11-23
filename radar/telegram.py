@@ -100,7 +100,7 @@ NEXT_STEP = {
     "drhp_refiled": "An updated draft has been filed and replaces the earlier one.",
     "approval": "Approval received. The company can now file its final prospectus and set the issue dates.",
     "issue": "Issue news such as dates, price band or subscription. Open the report for details.",
-    "addendum": "An addendum to the draft has been filed.",
+    "addendum": "An addendum to the draft offer document has been filed. It updates the existing DRHP.",
 }
 
 
@@ -117,15 +117,15 @@ def _where(entry: dict) -> str:
     return exchange or "SME"
 
 
-def _date_line(iso: str, now: datetime) -> str:
+def _date_line(iso: str, now: datetime, what: str = "DRHP filed") -> str:
     try:
         d = datetime.strptime(iso, "%Y-%m-%d").date()
     except ValueError:
-        return f"DRHP filed {esc(iso)}"
+        return f"{what} {esc(iso)}"
     text = f"{d.day} {d.strftime('%b %Y')}"
     days = (now.date() - d).days
     ago = {0: " (today)", 1: " (yesterday)"}.get(days, f" ({days} days ago)" if days > 1 else "")
-    return f"DRHP filed {text}{ago}"
+    return f"{what} {text}{ago}"
 
 
 def _page_label(url: str) -> str:
@@ -146,7 +146,8 @@ def format_alert(entry: dict, now: datetime) -> str:
         lines.append(f"<i>{esc(tagline)}</i>")
     facts = []
     if entry.get("filed_on"):
-        facts.append("📅 " + _date_line(entry["filed_on"], now))
+        what = "Addendum filed" if event == "addendum" else "DRHP filed"
+        facts.append("📅 " + _date_line(entry["filed_on"], now, what))
     if info.get("bankers"):
         facts.append("🏦 Lead manager: " + esc(info["bankers"]))
     if facts:

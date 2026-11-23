@@ -44,6 +44,9 @@ A company seen first in news and later in an official source gets a reply under 
 
 ## If a source fails
 
+The **catch-up** workflow (Actions tab, Run workflow, enter a start date) announces filings dated on or after
+that day which the silent first-run baseline stored without an alert. Each one is sent once and never repeated.
+
 Run the **connectivity** workflow (Actions tab, Run workflow). It prints only an HTTP status and timing for each
 source, so you can tell "the site blocks this server" apart from "the parser is wrong". BSE SME in particular
 may refuse connections from GitHub's US servers; that needs a different host, not a parser change.

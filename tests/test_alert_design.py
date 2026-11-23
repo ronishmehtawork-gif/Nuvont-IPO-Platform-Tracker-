@@ -125,3 +125,14 @@ def test_company_name_prefers_the_properly_written_spelling():
     assert _better_name("Zadley India Ltd.", "Zadley India Limited") == "Zadley India Limited"
     assert _better_name("Zadley India Limited", "ZADLEY INDIA LTD.") == "Zadley India Limited"
     assert _better_name("Zadley India Limited", "Zadley India Limited ") == "Zadley India Limited"
+
+
+def test_addendum_card_says_addendum_not_drhp_filed():
+    from datetime import datetime
+    from radar.run import IST
+    from radar.telegram import format_alert
+    e = {"company": "Pride Hotels Limited", "event": "addendum", "segment": "mainboard", "exchange": "SEBI",
+         "filed_on": "2026-11-23", "sources": {"sebi": "https://www.sebi.gov.in/filings/public-issues/nov-2026/x_1.html"},
+         "official_url": "https://www.sebi.gov.in/filings/public-issues/nov-2026/x_1.html"}
+    t = format_alert(e, datetime(2026, 11, 23, 14, 0, tzinfo=IST))
+    assert "DRHP addendum" in t and "Addendum filed 23 Nov 2026 (today)" in t and "DRHP filed" not in t

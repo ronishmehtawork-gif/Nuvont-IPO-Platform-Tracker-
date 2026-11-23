@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import os
+import re
 import sys
 from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
@@ -62,7 +63,7 @@ def run_once(sources, fetcher, tg, state, now, alert_segments, site_url="") -> l
     merged: dict = {}
     for res in results:
         for rec in res.records:
-            merged.setdefault(rec.key, []).append(rec)
+            merged.setdefault(_record_key(rec, state), []).append(rec)
 
     new_entries, official_updates = [], []
     for key, recs in merged.items():
@@ -137,6 +138,18 @@ def run_once(sources, fetcher, tg, state, now, alert_segments, site_url="") -> l
         tg.send_admin(format_report("Daily check", results, state, now))
         state["last_heartbeat"] = today
     return results
+
+
+def _record_key(rec, state) -> str:
+    """Normally company|event. A later addendum from the same company is a new filing with its own page,
+    so it gets its own key instead of being swallowed as a duplicate of the first one."""
+    key = rec.key
+    if rec.event == "addendum":
+        old = state["seen"].get(key)
+        if old and old.get("sources", {}).get(rec.source, rec.url) != rec.url:
+            m = re.search(r"_(\d+)\.html", rec.url)
+            key = f"{key}|{m.group(1) if m else rec.url}"
+    return key
 
 
 def _name_score(name: str) -> int:

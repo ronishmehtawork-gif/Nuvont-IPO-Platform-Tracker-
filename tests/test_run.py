@@ -170,10 +170,23 @@ def test_state_roundtrip_and_site_escaping(tmp_path):
     assert "Seed Ltd" in html and html.count("</script>") == 1
 
 
-def test_addendum_is_recorded_but_not_alerted():
+def test_addendum_is_alerted_once():
     state, tg = st.empty_state(), FakeTG()
     go([src("bse_sme", [rec("bse_sme", "Seed Ltd")])], state, tg)
-    go([src("bse_sme", [rec("bse_sme", "Seed Ltd"), rec("bse_sme", "Amended Co Ltd", event="addendum")])],
-       state, tg, day=2)
-    assert tg.channel == []
-    assert any(e["event"] == "addendum" for e in state["seen"].values())
+    batch = [rec("bse_sme", "Seed Ltd"), rec("bse_sme", "Amended Co Ltd", event="addendum")]
+    go([src("bse_sme", batch)], state, tg, day=2)
+    assert len(tg.channel) == 1 and "DRHP addendum" in tg.channel[0][1] and "Amended Co" in tg.channel[0][1]
+    go([src("bse_sme", batch)], state, tg, day=2, hour=12)
+    assert len(tg.channel) == 1  # not repeated
+
+
+def test_second_addendum_from_same_company_is_a_new_alert():
+    state, tg = st.empty_state(), FakeTG()
+    go([src("bse_sme", [rec("bse_sme", "Seed Ltd")])], state, tg)
+    first = rec("bse_sme", "Amended Co Ltd", event="addendum", url="https://x/filings/amended-addendum_100.html")
+    go([src("bse_sme", [rec("bse_sme", "Seed Ltd"), first])], state, tg, day=2)
+    second = rec("bse_sme", "Amended Co Ltd", event="addendum", url="https://x/filings/amended-addendum-2_200.html")
+    both = [rec("bse_sme", "Seed Ltd"), first, second]
+    go([src("bse_sme", both)], state, tg, day=3)
+    go([src("bse_sme", both)], state, tg, day=3, hour=12)
+    assert len(tg.channel) == 2  # first once, second once, no repeats
