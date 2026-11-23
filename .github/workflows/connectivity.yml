@@ -1,0 +1,29 @@
+name: connectivity
+
+# Manual check: can this runner reach each source? Prints only a status code and timing per URL,
+# never page content. Used to tell "site blocks this server" apart from "parser is wrong".
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Probe sources
+        run: |
+          UA="Mozilla/5.0 (compatible; sme-drhp-radar/0.1; personal research tool)"
+          for url in \
+            "https://www.bsesme.com/PublicIssues/SMEIPODRHP.aspx" \
+            "https://bsesme.com/PublicIssues/SMEIPODRHP.aspx" \
+            "https://www.bseindia.com/" \
+            "https://www.sebi.gov.in/filings/public-issues.html" \
+            "https://www.chittorgarh.com/news/category/ipo-news/upcoming-ipo/" \
+            "https://ipocentral.in/category/ipo-news/feed/" \
+            "https://www.nseindia.com/"; do
+            printf '%s -> ' "$url"
+            curl -sS -o /dev/null -m 25 -A "$UA" -w 'HTTP %{http_code}, %{time_total}s\n' "$url" 2>&1 | tail -1 || true
+          done

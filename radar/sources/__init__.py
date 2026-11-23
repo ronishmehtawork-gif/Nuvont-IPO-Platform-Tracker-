@@ -25,8 +25,10 @@ def all_sources() -> list:
         (bse_sme.NAME, bse_sme.fetch),
         (sebi.NAME, sebi.fetch),
         (chittorgarh.NAME, chittorgarh.fetch),
-        (nse_emerge.NAME, nse_emerge.fetch),
     ]
+    if os.getenv("RADAR_ENABLE_NSE") == "1":
+        # Experimental: the NSE page is script-driven and blocks most cloud servers, so it is off by default.
+        sources.append((nse_emerge.NAME, nse_emerge.fetch))
     for name, url in feeds_from_env().items():
         sources.append((name, rss.make_fetch(name, url)))
     return sources

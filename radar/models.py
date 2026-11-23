@@ -18,7 +18,11 @@ EVENT_LABELS = {
     "drhp_refiled": "DRHP refiled",
     "approval": "Approval update",
     "issue": "Issue update",
+    "addendum": "DRHP addendum",
 }
+
+# Recorded and shown on the site, but not pushed to the channel.
+ALERT_EVENTS = {"drhp_filed", "drhp_refiled", "approval", "issue"}
 
 SEGMENT_RANK = {"unknown": 0, "mainboard": 1, "sme": 2}
 

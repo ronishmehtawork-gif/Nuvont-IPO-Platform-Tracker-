@@ -3,9 +3,10 @@ from __future__ import annotations
 import re
 from datetime import date
 
-_REFILE = re.compile(r"\brefil", re.I)
+_REFILE = re.compile(r"\brefil|\budrhp\b|updated draft", re.I)
+_ADDENDUM = re.compile(r"(?<![A-Za-z])(?:addendum|corrigendum)(?![A-Za-z])", re.I)
 _DRHP = re.compile(
-    r"\bdrhp\b|draft (red herring )?prospectus|draft papers|draft offer", re.I
+    r"\bdrhp\b|draft (red herring )?prospectus|draft (ipo )?(papers|prospectus)|draft offer", re.I
 )
 _APPROVAL = re.compile(
     r"in[- ]principle|green signal|\bnod\b|observations?\b|\bapproval\b", re.I
@@ -13,7 +14,8 @@ _APPROVAL = re.compile(
 _ISSUE = re.compile(r"\brhp\b|price band|\banchor\b|ipo opens", re.I)
 
 _LEAD = re.compile(r"^(?:upcoming ipo|new ipo|ipo alert|breaking)\s*[!:\-–]*\s*", re.I)
-_COMPANY = re.compile(r"^(?P<c>.+?\b(?:Ltd\.?|Limited|LLP|Trust))(?=[\s:,;]|$)", re.I)
+_COMPANY = re.compile(r"^(?P<c>.+?\b(?:Ltd\.?|Limited|LLP|Trust))(?=[^A-Za-z0-9]|$)", re.I)
+_PREFIX_WORDS = re.compile(r"\b(ipo|alert|update|news|exclusive|breaking|big|just in)\b", re.I)
 _VERB = re.compile(
     r"^(?P<c>.+?)\s+(?:files|filed|refiles|submits|submitted|advances|opts|gets|"
     r"receives|secures|bags|clears)\b",
@@ -30,6 +32,8 @@ _MONTHS = {
 
 
 def classify_event(text: str) -> str | None:
+    if _ADDENDUM.search(text):
+        return "addendum"
     if _REFILE.search(text):
         return "drhp_refiled"
     if _DRHP.search(text):
@@ -46,7 +50,7 @@ def classify_segment(text: str) -> tuple[str, str]:
     t = text.lower()
     if "bse sme" in t:
         return "sme", "BSE SME"
-    if "nse emerge" in t or re.search(r"\bemerge\b", t):
+    if "nse emerge" in t or "nse sme" in t or re.search(r"\bemerge\b", t):
         return "sme", "NSE Emerge"
     if re.search(r"\bsme\b", t):
         return "sme", ""
@@ -57,6 +61,9 @@ def classify_segment(text: str) -> tuple[str, str]:
 
 def extract_company(title: str) -> str | None:
     t = _LEAD.sub("", title.strip())
+    head, sep, rest = t.partition(":")
+    if sep and len(head) <= 45 and len(head.split()) <= 5 and _PREFIX_WORDS.search(head):
+        t = rest.strip()  # e.g. "Shareholder Quota IPO: Example Ltd files DRHP"
     mc = _COMPANY.match(t)
     mv = _VERB.match(t)
     if mc and (not mv or len(mc.group("c")) <= len(mv.group("c"))):

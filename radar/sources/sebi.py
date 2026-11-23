@@ -9,7 +9,7 @@ from urllib.parse import urljoin
 
 from bs4 import BeautifulSoup
 
-from ..classify import parse_date
+from ..classify import classify_event, extract_company, parse_date
 from ..models import Record, SourceResult
 
 NAME = "sebi"
@@ -36,14 +36,17 @@ def parse_listing(html: str, base: str = INDEX_URL) -> list:
         if len(title) < 4 or title.lower() in seen:
             continue
         seen.add(title.lower())
+        event = classify_event(title)
+        if event not in ("drhp_filed", "drhp_refiled", "addendum"):
+            continue  # e.g. "Notice to Investors", menu entries
         sme = bool(re.search(r"\bsme\b", title, re.I))
-        company = re.split(r"\s+[-–—]\s+SME IPO", title, flags=re.I)[0].strip()
+        company = extract_company(title) or re.split(r"\s+[-–—]\s+", title)[0].strip()
         row = a.find_parent(["tr", "li"])
         out.append(
             Record(
                 source=NAME,
                 company=company,
-                event="drhp_filed",
+                event=event,
                 segment="sme" if sme else "mainboard",
                 exchange="SEBI",
                 url=urljoin(base, href),

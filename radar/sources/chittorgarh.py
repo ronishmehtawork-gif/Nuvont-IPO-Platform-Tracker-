@@ -22,7 +22,9 @@ def parse(html: str, base: str = URL) -> list:
     for a in soup.find_all("a", href=True):
         if "/news-detail/" not in a["href"]:
             continue
-        title = a.get_text(" ", strip=True)
+        # Each card's link carries the plain headline in its title attribute; the visible text is
+        # a blob of number + category + timestamp + headline + teaser.
+        title = (a.get("title") or "").strip() or a.get_text(" ", strip=True)
         event = classify_event(title)
         company = extract_company(title)
         if event not in KEEP or not company:

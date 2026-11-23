@@ -29,6 +29,22 @@ def test_headlines(title, company, event, segment, exchange):
     assert classify_segment(title) == (segment, exchange)
 
 
+@pytest.mark.parametrize(
+    "title,event,company",
+    [
+        ("Chartered Speed Limited_Addendum to the DRHP", "addendum", "Chartered Speed Limited"),
+        ("Carlsberg India Limited- UDRHP-1 Carlsberg India Limited", "drhp_refiled", "Carlsberg India Limited"),
+        ("Sagar Defence Engineering Limited -UDRHP- I", "drhp_refiled", "Sagar Defence Engineering Limited"),
+        ("Shareholder Quota IPO: NLC India Renewables Files DRHP for Rs 3,300 Cr Fresh Issue",
+         "drhp_filed", "NLC India Renewables"),
+        ("INTELLIUS RECODE LIMITED - Notice to Investors", None, "INTELLIUS RECODE LIMITED"),
+    ],
+)
+def test_real_wording_variants(title, event, company):
+    assert classify_event(title) == event
+    assert extract_company(title) == company
+
+
 def test_unrelated_headline_is_ignored():
     assert classify_event("Stock markets close higher on Friday") is None
     assert extract_company("Markets close higher on Friday") is None

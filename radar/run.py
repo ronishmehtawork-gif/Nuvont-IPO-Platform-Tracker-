@@ -7,7 +7,7 @@ from zoneinfo import ZoneInfo
 
 from . import state as st
 from .http import Fetcher
-from .models import SEGMENT_RANK, SourceResult, label
+from .models import ALERT_EVENTS, SEGMENT_RANK, SourceResult, label
 from .site import build_site
 from .sources import all_sources
 from .telegram import (
@@ -94,7 +94,7 @@ def run_once(sources, fetcher, tg, state, now, alert_segments, site_url="") -> l
                 entry["official_url"] = rec.url
                 if not is_new and entry["message_id"]:
                     official_updates.append(entry)
-        if is_new and not baseline and entry["segment"] in alert_segments:
+        if is_new and not baseline and entry["segment"] in alert_segments and entry["event"] in ALERT_EVENTS:
             new_entries.append((key, entry))
 
     for key, entry in new_entries[:MAX_ALERTS]:

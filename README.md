@@ -10,7 +10,7 @@ alerts to a Telegram channel. Runs free on GitHub Actions every ~15 minutes, so 
 | BSE SME DRHP page | Official. Alerts for BSE SME filings |
 | SEBI "Draft Offer Documents" | Official. Separates SME and mainboard filings |
 | Chittorgarh IPO news | News trigger only. Alert text is written by this tool and links to the source |
-| NSE Emerge | Experimental. NSE often blocks cloud servers; if so it is reported, never bypassed |
+| NSE Emerge | Off by default (its page is script-driven and blocks most cloud servers). Set variable `RADAR_ENABLE_NSE` to `1` to try it. NSE SME filings are still picked up from the news sources |
 | IPOCentral RSS | News trigger |
 
 A company seen first in news and later in an official source gets a reply under the first alert with the official link.
@@ -40,6 +40,12 @@ A company seen first in news and later in an official source gets a reply under 
 - **A source failing 3 runs in a row** sends one admin notice, then one more when it recovers.
 - **Daily check** (after 9 am IST) tells the admin chat the tool is alive.
 - **If Telegram delivery fails**, the item is retried on the next run instead of being lost.
+
+## If a source fails
+
+Run the **connectivity** workflow (Actions tab, Run workflow). It prints only an HTTP status and timing for each
+source, so you can tell "the site blocks this server" apart from "the parser is wrong". BSE SME in particular
+may refuse connections from GitHub's US servers; that needs a different host, not a parser change.
 
 ## Tuning the parsers
 

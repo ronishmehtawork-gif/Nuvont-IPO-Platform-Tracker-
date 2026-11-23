@@ -168,3 +168,12 @@ def test_state_roundtrip_and_site_escaping(tmp_path):
     build_site(state, str(out), datetime(2026, 11, 2, 12, 0, tzinfo=IST))
     html = out.read_text()
     assert "Seed Ltd" in html and html.count("</script>") == 1
+
+
+def test_addendum_is_recorded_but_not_alerted():
+    state, tg = st.empty_state(), FakeTG()
+    go([src("bse_sme", [rec("bse_sme", "Seed Ltd")])], state, tg)
+    go([src("bse_sme", [rec("bse_sme", "Seed Ltd"), rec("bse_sme", "Amended Co Ltd", event="addendum")])],
+       state, tg, day=2)
+    assert tg.channel == []
+    assert any(e["event"] == "addendum" for e in state["seen"].values())
