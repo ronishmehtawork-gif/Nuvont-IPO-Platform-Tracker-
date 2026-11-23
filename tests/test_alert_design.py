@@ -100,3 +100,19 @@ def test_rejected_formatting_is_resent_as_plain_text():
     tg.session.post = post
     assert tg.send_channel("<b>Hi</b> <blockquote>x</blockquote>") == 5
     assert len(calls) == 2 and "parse_mode" not in calls[1] and "<" not in calls[1]["text"]
+
+
+def test_preview_picks_one_entry_per_style_and_copies_them():
+    from radar.preview import pick_samples
+
+    sebi_url = "https://www.sebi.gov.in/filings/x.html"
+    seen = {
+        "a|drhp_filed": entry(),
+        "b|drhp_filed": entry(company="Main Co", segment="mainboard", exchange="SEBI", official_url=sebi_url),
+        "c|approval": entry(company="Appr Co", event="approval"),
+        "d|drhp_refiled": entry(company="Re Co", event="drhp_refiled", segment="mainboard"),
+    }
+    picks = pick_samples({"seen": seen})
+    assert [p["event"] for p in picks] == ["drhp_filed", "drhp_filed", "approval", "drhp_refiled"]
+    picks[0]["company"] = "changed"
+    assert seen["a|drhp_filed"]["company"] == "Zadley India Limited"
