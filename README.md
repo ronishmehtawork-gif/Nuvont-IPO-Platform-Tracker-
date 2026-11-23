@@ -1,7 +1,7 @@
 # SME DRHP Radar
 
 Watches official and news sources for new SME / mainboard IPO filings (DRHP and related updates) and posts
-alerts to a Telegram channel. Runs free on GitHub Actions every ~15 minutes, so nothing depends on a laptop.
+alerts to a Telegram channel. Runs free on GitHub Actions, hourly from about 7 AM to 7 PM IST (resting overnight), so nothing depends on a laptop.
 
 ## What it watches
 

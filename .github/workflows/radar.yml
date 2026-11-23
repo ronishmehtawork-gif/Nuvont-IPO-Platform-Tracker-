@@ -2,7 +2,9 @@ name: radar
 
 on:
   schedule:
-    - cron: "3,18,33,48 * * * *" # every 15 minutes, off the busy :00/:15/:30/:45 marks where GitHub drops or delays runs
+    # Hourly from about 7 AM to 7 PM IST, then a 12-hour rest. GitHub reads cron in UTC:
+    # 01:33-13:33 UTC = 07:03-19:03 IST (13 runs a day). Minute 33 avoids the busy :00/:30 marks.
+    - cron: "33 1-13 * * *"
   workflow_dispatch:
 
 concurrency:
