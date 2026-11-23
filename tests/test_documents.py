@@ -101,3 +101,13 @@ def test_run_fetches_the_filing_page_once_and_adds_links():
 def test_run_still_alerts_when_the_filing_page_cannot_be_read():
     state, tg = _run(FakeFetcher(ok=False))
     assert len(tg.channel) == 1 and "Open the official document" in tg.channel[0]
+
+
+def test_label_copes_with_odd_spacing_in_sebi_titles():
+    from radar.documents import _doc_label
+
+    u = "https://www.sebi.gov.in/sebi_data/attachdocs/nov-2026/1.pdf"
+    assert _doc_label(u, "Sagar Defence Engineering Limited -UDRHP- I") == "UDRHP-I (PDF)"
+    assert _doc_label(u, "Alpha - Beta Limited - Addendum to DRHP") == "Addendum to DRHP (PDF)"
+    assert _doc_label(u, "") == "Draft offer document (PDF)"
+    assert _doc_label("https://www.sebi.gov.in/sebi_data/commondocs/x.pdf", "") == "Document (PDF)"

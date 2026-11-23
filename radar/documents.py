@@ -24,7 +24,8 @@ def _doc_label(url: str, text: str) -> str:
     """Name a SEBI attachment from its link text. SEBI's own markup can leave raw HTML inside the text,
     so only the part before the first '<' is read, and only the last ' - ' segment is used."""
     head = text.split("<", 1)[0].strip()
-    name = re.split(r"\s+[-–—]\s+", head)[-1].strip() if head else ""
+    name = re.split(r"\s+[-–—]\s*", head)[-1].strip() if head else ""
+    name = re.sub(r"\s*[-–—]\s*", "-", name)  # 'UDRHP- I' -> 'UDRHP-I'
     if not name or len(name) > 50:
         name = "Draft offer document" if "/attachdocs/" in url else "Document"
     return f"{name} (PDF)"
