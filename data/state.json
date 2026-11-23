@@ -14180,12 +14180,19 @@
    "alerted": false,
    "baseline": true,
    "company": "Pride Hotels Limited",
+   "documents": [
+    {
+     "label": "Addendum to the DRHP (PDF)",
+     "url": "https://www.sebi.gov.in/sebi_data/attachdocs/nov-2026/1795413857739.pdf"
+    }
+   ],
    "event": "addendum",
    "exchange": "SEBI",
    "filed_on": "2026-11-23",
    "first_seen": "2026-11-23T12:47:29+05:30",
    "message_id": null,
    "official_url": "https://www.sebi.gov.in/filings/public-issues/nov-2026/pride-hotels-limited-addendum-to-the-drhp_105935.html",
+   "sebi_checked": true,
    "segment": "mainboard",
    "sources": {
     "sebi": "https://www.sebi.gov.in/filings/public-issues/nov-2026/pride-hotels-limited-addendum-to-the-drhp_105935.html"
