@@ -14,15 +14,15 @@
    "ever_parsed": true,
    "failures": 0,
    "last_note": "12 headlines matched",
-   "last_ok": "2026-11-23"
+   "last_ok": "2026-11-24"
   },
   "ipoplatform": {
    "down_alerted": false,
    "empty_streak": 0,
    "ever_parsed": true,
    "failures": 0,
-   "last_note": "844 items",
-   "last_ok": "2026-11-23"
+   "last_note": "849 items",
+   "last_ok": "2026-11-24"
   },
   "rss_ipocentral": {
    "down_alerted": false,
@@ -30,7 +30,7 @@
    "ever_parsed": true,
    "failures": 0,
    "last_note": "1 items matched",
-   "last_ok": "2026-11-23"
+   "last_ok": "2026-11-24"
   },
   "sebi": {
    "down_alerted": false,
@@ -38,7 +38,7 @@
    "ever_parsed": true,
    "failures": 0,
    "last_note": "24 entries parsed",
-   "last_ok": "2026-11-23"
+   "last_ok": "2026-11-24"
   }
  },
  "last_heartbeat": "2026-11-23",
@@ -48,13 +48,13 @@
     {
      "name": "Nifty Auto",
      "returns": {
-      "1D": -1.03,
-      "1M": 13.91,
-      "1W": 3.34,
-      "1Y": 3.66,
-      "3M": -2.77,
-      "3Y": 71.44,
-      "6M": 9.64
+      "1D": 0.65,
+      "1M": 14.25,
+      "1W": 3.07,
+      "1Y": 6.04,
+      "3M": -1.36,
+      "3Y": 74.1,
+      "6M": 11.09
      },
      "symbol": "^CNXAUTO"
     }
@@ -63,26 +63,26 @@
     {
      "name": "Nifty Bank",
      "returns": {
-      "1D": -3.04,
-      "1M": 14.1,
-      "1W": 1.78,
-      "1Y": 7.35,
-      "3M": 9.0,
-      "3Y": 48.23,
-      "6M": 17.28
+      "1D": 2.49,
+      "1M": 17.57,
+      "1W": 5.9,
+      "1Y": 10.91,
+      "3M": 12.92,
+      "3Y": 50.9,
+      "6M": 20.67
      },
      "symbol": "^NSEBANK"
     },
     {
      "name": "PSU Banks",
      "returns": {
-      "1D": -3.27,
-      "1M": 15.75,
-      "1W": 2.71,
-      "1Y": 14.33,
-      "3M": 10.92,
-      "3Y": 90.04,
-      "6M": 19.64
+      "1D": 1.23,
+      "1M": 19.75,
+      "1W": 6.72,
+      "1Y": 18.93,
+      "3M": 14.66,
+      "3Y": 96.52,
+      "6M": 23.96
      },
      "symbol": "^CNXPSUBANK"
     },
@@ -104,13 +104,13 @@
     {
      "name": "Nifty FMCG",
      "returns": {
-      "1D": -0.46,
-      "1M": 12.08,
-      "1W": 1.27,
-      "1Y": -13.0,
-      "3M": 0.94,
-      "3Y": -8.01,
-      "6M": -3.88
+      "1D": -0.06,
+      "1M": 11.01,
+      "1W": 3.63,
+      "1Y": -12.58,
+      "3M": 2.24,
+      "3Y": -7.45,
+      "6M": -3.93
      },
      "symbol": "^CNXFMCG"
     }
@@ -119,13 +119,13 @@
     {
      "name": "Nifty Pharma",
      "returns": {
-      "1D": -0.28,
-      "1M": 10.59,
-      "1W": 0.74,
-      "1Y": 25.29,
-      "3M": 7.16,
-      "3Y": 91.26,
-      "6M": 13.72
+      "1D": 0.05,
+      "1M": 11.03,
+      "1W": -0.52,
+      "1Y": 26.9,
+      "3M": 7.88,
+      "3Y": 90.37,
+      "6M": 14.26
      },
      "symbol": "^CNXPHARMA"
     }
@@ -134,13 +134,13 @@
     {
      "name": "Nifty Metal",
      "returns": {
-      "1D": -3.81,
-      "1M": 0.04,
-      "1W": -5.26,
-      "1Y": 11.96,
-      "3M": -9.62,
-      "3Y": 73.5,
-      "6M": -10.67
+      "1D": -0.23,
+      "1M": 3.47,
+      "1W": -2.98,
+      "1Y": 16.21,
+      "3M": -5.78,
+      "3Y": 78.79,
+      "6M": -6.94
      },
      "symbol": "^CNXMETAL"
     }
@@ -149,13 +149,13 @@
     {
      "name": "Nifty Energy",
      "returns": {
-      "1D": -1.67,
-      "1M": 4.55,
-      "1W": -1.55,
-      "1Y": 1.13,
-      "3M": -3.81,
-      "3Y": 35.47,
-      "6M": -8.89
+      "1D": -0.22,
+      "1M": 5.21,
+      "1W": -0.21,
+      "1Y": 3.47,
+      "3M": -2.11,
+      "3Y": 36.98,
+      "6M": -7.06
      },
      "symbol": "^CNXENERGY"
     }
@@ -164,26 +164,26 @@
     {
      "name": "Nifty Realty",
      "returns": {
-      "1D": 0.28,
-      "1M": 17.18,
-      "1W": 3.59,
-      "1Y": 0.38,
-      "3M": 3.7,
-      "3Y": 55.39,
-      "6M": 21.47
+      "1D": 1.71,
+      "1M": 16.51,
+      "1W": 1.92,
+      "1Y": -0.39,
+      "3M": 4.86,
+      "3Y": 54.41,
+      "6M": 22.4
      },
      "symbol": "^CNXREALTY"
     },
     {
      "name": "Nifty Infra",
      "returns": {
-      "1D": -1.51,
-      "1M": 11.07,
-      "1W": 0.03,
-      "1Y": -0.17,
-      "3M": 2.07,
-      "3Y": 52.44,
-      "6M": 1.73
+      "1D": 0.61,
+      "1M": 12.22,
+      "1W": 2.21,
+      "1Y": 2.05,
+      "3M": 4.12,
+      "3Y": 54.42,
+      "6M": 3.57
      },
      "symbol": "^CNXINFRA"
     }
@@ -192,13 +192,13 @@
     {
      "name": "Nifty IT",
      "returns": {
-      "1D": 1.78,
-      "1M": -0.62,
-      "1W": -0.19,
-      "1Y": -13.08,
-      "3M": 3.94,
-      "3Y": 5.48,
-      "6M": 9.85
+      "1D": 1.3,
+      "1M": -3.39,
+      "1W": -1.91,
+      "1Y": -15.01,
+      "3M": 2.92,
+      "3Y": 2.59,
+      "6M": 7.32
      },
      "symbol": "^CNXIT"
     },
@@ -217,7 +217,7 @@
     }
    ]
   },
-  "updated": "23 Nov 2026, 03:10 PM IST"
+  "updated": "24 Nov 2026, 01:59 AM IST"
  },
  "seen": {
   "aarish outdoors|drhp_filed": {
@@ -1874,6 +1874,26 @@
     "ipoplatform": "https://www.ipoplatform.com/ipo/arjun-jewellers-ipo/4456"
    }
   },
+  "arohan financial services|approval": {
+   "alerted": true,
+   "baseline": false,
+   "company": "Arohan Financial Services Limited",
+   "event": "approval",
+   "exchange": "",
+   "filed_on": "2021-02-14",
+   "first_seen": "2026-11-24T01:59:46+05:30",
+   "info": {
+    "bankers": "Dam Capital Advisors Limited (Formerly Idfc Securities Limited), Motilal Oswal Investment Advisors Limited +1 more",
+    "city": "Kolkata",
+    "sector": "Banking and Finance - FinTech"
+   },
+   "message_id": 7,
+   "official_url": "",
+   "segment": "mainboard",
+   "sources": {
+    "ipoplatform": "https://www.ipoplatform.com/ipo/arohan-financial-services-ipo/4684"
+   }
+  },
   "arohan financial services|drhp_filed": {
    "alerted": false,
    "baseline": true,
@@ -1990,6 +2010,26 @@
    "segment": "mainboard",
    "sources": {
     "ipoplatform": "https://www.ipoplatform.com/ipo/aspri-pirits-ipo/4530"
+   }
+  },
+  "assetgro fintech|drhp_filed": {
+   "alerted": true,
+   "baseline": false,
+   "company": "Assetgro Fintech Limited",
+   "event": "drhp_filed",
+   "exchange": "",
+   "filed_on": "2026-09-30",
+   "first_seen": "2026-11-24T01:59:46+05:30",
+   "info": {
+    "bankers": "Axis Capital Limited",
+    "city": "Bengaluru",
+    "sector": "Financial Services - Wealth Management"
+   },
+   "message_id": 5,
+   "official_url": "",
+   "segment": "mainboard",
+   "sources": {
+    "ipoplatform": "https://www.ipoplatform.com/ipo/assetgro-fintech-ipo/4951"
    }
   },
   "assetz|drhp_filed": {
@@ -4677,6 +4717,26 @@
    "segment": "mainboard",
    "sources": {
     "ipoplatform": "https://www.ipoplatform.com/ipo/dorf-ketal-chemicals-india-ipo/3981"
+   }
+  },
+  "dosti realty|drhp_filed": {
+   "alerted": true,
+   "baseline": false,
+   "company": "Dosti Realty Limited",
+   "event": "drhp_filed",
+   "exchange": "",
+   "filed_on": "2026-09-30",
+   "first_seen": "2026-11-24T01:59:46+05:30",
+   "info": {
+    "bankers": "Jm Financial Limited",
+    "city": "Mumbai",
+    "sector": "Real Estate"
+   },
+   "message_id": 4,
+   "official_url": "",
+   "segment": "mainboard",
+   "sources": {
+    "ipoplatform": "https://www.ipoplatform.com/ipo/dosti-realty-ipo/4950"
    }
   },
   "durgadevi raiment|drhp_filed": {
@@ -13616,6 +13676,32 @@
     "ipoplatform": "https://www.ipoplatform.com/ipo/parmeshwar-recycling-ipo/4370"
    }
   },
+  "parswam fashion|approval": {
+   "alerted": true,
+   "baseline": false,
+   "company": "Parswam Fashion Limited",
+   "documents": [
+    {
+     "label": "DRHP ZIP on BSE",
+     "url": "https://www.bsesme.com/download/349251/SME_IPO%20InPrinciple/Parswam_DRHP_Abridge_20260929125135.zip"
+    }
+   ],
+   "event": "approval",
+   "exchange": "BSE SME",
+   "filed_on": "2026-09-28",
+   "first_seen": "2026-11-24T01:59:46+05:30",
+   "info": {
+    "bankers": "Galactico Corporate Service Limited",
+    "city": "Ahmedabad",
+    "sector": "Clothing and Apparels"
+   },
+   "message_id": 3,
+   "official_url": "",
+   "segment": "sme",
+   "sources": {
+    "ipoplatform": "https://www.ipoplatform.com/ipo/parswam-fashion-ipo/4860"
+   }
+  },
   "parswam fashion|drhp_filed": {
    "alerted": false,
    "baseline": true,
@@ -20283,6 +20369,26 @@
    "segment": "mainboard",
    "sources": {
     "ipoplatform": "https://www.ipoplatform.com/ipo/torrent-gas-ipo/4731"
+   }
+  },
+  "trans acnr|drhp_filed": {
+   "alerted": true,
+   "baseline": false,
+   "company": "Trans ACNR Limited",
+   "event": "drhp_filed",
+   "exchange": "",
+   "filed_on": "2026-09-29",
+   "first_seen": "2026-11-24T01:59:46+05:30",
+   "info": {
+    "bankers": "Motilal Oswal Investment Advisors Limited",
+    "city": "New Delhi",
+    "sector": "Electric Equipments"
+   },
+   "message_id": 6,
+   "official_url": "",
+   "segment": "mainboard",
+   "sources": {
+    "ipoplatform": "https://www.ipoplatform.com/ipo/trans-acnr-ipo/4952"
    }
   },
   "transline technologies|approval": {
