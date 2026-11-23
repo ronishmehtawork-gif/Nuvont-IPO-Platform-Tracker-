@@ -42,6 +42,183 @@
   }
  },
  "last_heartbeat": "2026-11-23",
+ "sectors": {
+  "groups": {
+   "AUTOMOBILES & COMPONENTS": [
+    {
+     "name": "Nifty Auto",
+     "returns": {
+      "1D": -1.03,
+      "1M": 13.91,
+      "1W": 3.34,
+      "1Y": 3.66,
+      "3M": -2.77,
+      "3Y": 71.44,
+      "6M": 9.64
+     },
+     "symbol": "^CNXAUTO"
+    }
+   ],
+   "BANKING & FINANCE": [
+    {
+     "name": "Nifty Bank",
+     "returns": {
+      "1D": -3.04,
+      "1M": 14.1,
+      "1W": 1.78,
+      "1Y": 7.35,
+      "3M": 9.0,
+      "3Y": 48.23,
+      "6M": 17.28
+     },
+     "symbol": "^NSEBANK"
+    },
+    {
+     "name": "PSU Banks",
+     "returns": {
+      "1D": -3.27,
+      "1M": 15.75,
+      "1W": 2.71,
+      "1Y": 14.33,
+      "3M": 10.92,
+      "3Y": 90.04,
+      "6M": 19.64
+     },
+     "symbol": "^CNXPSUBANK"
+    },
+    {
+     "name": "Financial Services",
+     "returns": {
+      "1D": null,
+      "1M": null,
+      "1W": null,
+      "1Y": null,
+      "3M": null,
+      "3Y": null,
+      "6M": null
+     },
+     "symbol": "^CNXFIN"
+    }
+   ],
+   "FMCG & STAPLES": [
+    {
+     "name": "Nifty FMCG",
+     "returns": {
+      "1D": -0.46,
+      "1M": 12.08,
+      "1W": 1.27,
+      "1Y": -13.0,
+      "3M": 0.94,
+      "3Y": -8.01,
+      "6M": -3.88
+     },
+     "symbol": "^CNXFMCG"
+    }
+   ],
+   "HEALTHCARE": [
+    {
+     "name": "Nifty Pharma",
+     "returns": {
+      "1D": -0.28,
+      "1M": 10.59,
+      "1W": 0.74,
+      "1Y": 25.29,
+      "3M": 7.16,
+      "3Y": 91.26,
+      "6M": 13.72
+     },
+     "symbol": "^CNXPHARMA"
+    }
+   ],
+   "METALS & MINING": [
+    {
+     "name": "Nifty Metal",
+     "returns": {
+      "1D": -3.81,
+      "1M": 0.04,
+      "1W": -5.26,
+      "1Y": 11.96,
+      "3M": -9.62,
+      "3Y": 73.5,
+      "6M": -10.67
+     },
+     "symbol": "^CNXMETAL"
+    }
+   ],
+   "OIL, GAS & COAL": [
+    {
+     "name": "Nifty Energy",
+     "returns": {
+      "1D": -1.67,
+      "1M": 4.55,
+      "1W": -1.55,
+      "1Y": 1.13,
+      "3M": -3.81,
+      "3Y": 35.47,
+      "6M": -8.89
+     },
+     "symbol": "^CNXENERGY"
+    }
+   ],
+   "REALTY & INFRA": [
+    {
+     "name": "Nifty Realty",
+     "returns": {
+      "1D": 0.28,
+      "1M": 17.18,
+      "1W": 3.59,
+      "1Y": 0.38,
+      "3M": 3.7,
+      "3Y": 55.39,
+      "6M": 21.47
+     },
+     "symbol": "^CNXREALTY"
+    },
+    {
+     "name": "Nifty Infra",
+     "returns": {
+      "1D": -1.51,
+      "1M": 11.07,
+      "1W": 0.03,
+      "1Y": -0.17,
+      "3M": 2.07,
+      "3Y": 52.44,
+      "6M": 1.73
+     },
+     "symbol": "^CNXINFRA"
+    }
+   ],
+   "TECHNOLOGY & TELECOM": [
+    {
+     "name": "Nifty IT",
+     "returns": {
+      "1D": 1.78,
+      "1M": -0.62,
+      "1W": -0.19,
+      "1Y": -13.08,
+      "3M": 3.94,
+      "3Y": 5.48,
+      "6M": 9.85
+     },
+     "symbol": "^CNXIT"
+    },
+    {
+     "name": "Nifty Media",
+     "returns": {
+      "1D": null,
+      "1M": null,
+      "1W": null,
+      "1Y": null,
+      "3M": null,
+      "3Y": null,
+      "6M": null
+     },
+     "symbol": "^CNXMEDIA"
+    }
+   ]
+  },
+  "updated": "23 Nov 2026, 03:10 PM IST"
+ },
  "seen": {
   "aarish outdoors|drhp_filed": {
    "alerted": false,
