@@ -27,3 +27,23 @@ jobs:
             printf '%s -> ' "$url"
             curl -sS -o /dev/null -m 25 -A "$UA" -w 'HTTP %{http_code}, %{time_total}s\n' "$url" 2>&1 | tail -1 || true
           done
+
+      - name: Probe candidate notice sources (prints the first 400 characters of public exchange pages)
+        run: |
+          UA="Mozilla/5.0 (compatible; sme-drhp-radar/0.1; personal research tool)"
+          probe() { # label url [referer]
+            echo "=== $1"
+            if [ -n "$3" ]; then REF=(-e "$3"); else REF=(); fi
+            curl -sS -m 25 -A "$UA" "${REF[@]}" -D /tmp/h -o /tmp/b -w 'HTTP %{http_code}, %{size_download} bytes, %{time_total}s\n' "$2" 2>&1 | tail -1 || true
+            grep -i '^content-type' /tmp/h 2>/dev/null | head -1 || true
+            head -c 400 /tmp/b 2>/dev/null | tr '\n\r' '  ' || true
+            echo
+          }
+          probe "BSE notices API, plain" "https://api.bseindia.com/BseIndiaAPI/api/getCurrPreNextNoticesData_New/w?flag="
+          probe "BSE notices API, with its own site as referer" "https://api.bseindia.com/BseIndiaAPI/api/getCurrPreNextNoticesData_New/w?flag=" "https://www.bseindia.com/markets/MarketInfo/NoticesCirculars.aspx"
+          probe "BSE notices page" "https://www.bseindia.com/markets/MarketInfo/NoticesCirculars.aspx?id=0&txtscripcd=&pagecont=&subject="
+          probe "NSE archive PDF (static file host)" "https://nsearchives.nseindia.com//web/mediaattachment/2026-09/31082026_20260904120146.pdf"
+          probe "NSE Emerge offer documents page" "https://www.nseindia.com/companies-listing/raising-capital-public-issues-emerge-public-issue-offer-documents"
+          probe "Circulars mirror home" "https://rhnvrm.github.io/stock-market-circulars/"
+          probe "Circulars mirror feed.xml" "https://rhnvrm.github.io/stock-market-circulars/feed.xml"
+          probe "Circulars mirror sitemap" "https://rhnvrm.github.io/stock-market-circulars/sitemap.xml"
