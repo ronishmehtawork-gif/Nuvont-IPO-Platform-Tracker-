@@ -8,6 +8,10 @@ on:
         description: "Announce unannounced filings dated on or after this day (YYYY-MM-DD)"
         required: true
         default: "2026-11-23"
+      source:
+        description: "Only filings reported by this source, e.g. sebi (leave empty for all)"
+        required: false
+        default: "sebi"
 
 concurrency:
   group: radar
@@ -38,6 +42,7 @@ jobs:
           TELEGRAM_ADMIN_CHAT_ID: ${{ secrets.TELEGRAM_ADMIN_CHAT_ID }}
           ALERT_SEGMENTS: ${{ vars.ALERT_SEGMENTS || 'sme,unknown,mainboard' }}
           CATCHUP_SINCE: ${{ inputs.since }}
+          CATCHUP_SOURCE: ${{ inputs.source }}
 
       - name: Save state
         if: always()

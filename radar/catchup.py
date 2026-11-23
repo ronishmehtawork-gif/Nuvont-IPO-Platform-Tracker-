@@ -15,12 +15,14 @@ from .run import IST, MAX_ALERTS, _attach_documents
 from .telegram import Telegram, format_alert
 
 
-def pick(state: dict, since: str, segments: set) -> list:
-    """Baseline entries filed on or after `since` that were never announced, oldest first."""
+def pick(state: dict, since: str, segments: set, source: str = "") -> list:
+    """Baseline entries filed on or after `since` that were never announced, oldest first.
+    With `source` set, only entries that source reported (e.g. 'sebi' for official SEBI filings)."""
     rows = [
         (key, e) for key, e in state["seen"].items()
         if e.get("baseline") and not e.get("alerted") and (e.get("filed_on") or "") >= since
         and e["event"] in ALERT_EVENTS and e["segment"] in segments
+        and (not source or source in e.get("sources", {}))
     ]
     return sorted(rows, key=lambda r: (r[1].get("filed_on") or "", r[0]))[:MAX_ALERTS]
 
@@ -41,7 +43,7 @@ def main() -> int:
     path = os.getenv("RADAR_STATE", "data/state.json")
     state = st.load(path)
     fetcher, now, sent = Fetcher(), datetime.now(IST), 0
-    rows = pick(state, since, segments)
+    rows = pick(state, since, segments, (os.getenv("CATCHUP_SOURCE") or "").strip())
     for key, entry in rows:
         _attach_documents(entry, fetcher)
         mid = tg.send_channel(format_alert(entry, now))

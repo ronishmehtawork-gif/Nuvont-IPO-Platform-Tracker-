@@ -34,3 +34,13 @@ def test_pick_respects_alert_segments():
     state = st.empty_state()
     state["seen"] = {"s|drhp_filed": entry("S Ltd", event="drhp_filed", segment="sme")}
     assert catchup.pick(state, "2026-11-01", {"mainboard"}) == []
+
+
+def test_pick_can_be_limited_to_one_source():
+    state = st.empty_state()
+    state["seen"] = {
+        "a|addendum": entry("A Ltd"),
+        "b|drhp_filed": {**entry("B Ltd", event="drhp_filed"), "sources": {"ipoplatform": "https://x/b"}},
+    }
+    assert [e["company"] for _, e in catchup.pick(state, "2026-11-23", SEGS, "sebi")] == ["A Ltd"]
+    assert len(catchup.pick(state, "2026-11-23", SEGS)) == 2
