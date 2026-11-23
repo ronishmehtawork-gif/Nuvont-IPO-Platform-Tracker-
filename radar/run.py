@@ -10,6 +10,7 @@ from . import state as st
 from .documents import exchange_doc_label, find_pdf_links
 from .http import Fetcher
 from .models import ALERT_EVENTS, SEGMENT_RANK, SourceResult, label
+from .sectors import fetch_sector_heatmap
 from .site import build_site
 from .sources import all_sources
 from .telegram import (
@@ -229,14 +230,9 @@ def main() -> None:
     state = st.load(path)
     now = datetime.now(IST)
     run_once(all_sources(), fetcher, tg, state, now, segments, os.getenv("RADAR_SITE_URL", ""))
-    from .sectors import fetch_sector_heatmap  # add at top of radar/run.py
-
-# Inside main(), right after run_once(...):
-sectors = fetch_sector_heatmap(fetcher, now)
-if sectors["groups"]:
-    state["sectors"] = sectors
-st.save(path, state)
-build_site(state, os.getenv("RADAR_SITE", "docs/index.html"), now)
+    sectors = fetch_sector_heatmap(fetcher, now)
+    if sectors["groups"]:
+        state["sectors"] = sectors
     st.save(path, state)
     build_site(state, os.getenv("RADAR_SITE", "docs/index.html"), now)
 
