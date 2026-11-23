@@ -7,26 +7,26 @@ from radar.http import FetchResult
 from radar.models import Record, SourceResult
 from radar.telegram import format_alert
 
-BASE = "https://www.sebi.gov.in/filings/public-issues/oct-2026/gamp-services-limited-drhp_105424.html"
+BASE = "https://www.sebi.gov.in/filings/public-issues/nov-2026/il-jin-electronics-india-limited-drhp_105795.html"
+# Same shape as the real SEBI page: the abridged prospectus link sits in the heading, the main attachment
+# is wrapped in SEBI's viewer, and that link's text has raw HTML (escaped) from the page title inside it.
 PAGE = """
-<html><body>
-<a href="https://www.sebi.gov.in/sebi_data/commondocs/oct-2026/GAMP%20Services%20Limited%20-%20Draft%20Abridged%20Prospectus_p.pdf">Draft Abridged Prospectus</a>
-<a href="../../../web/?file=https://www.sebi.gov.in/sebi_data/attachdocs/oct-2026/1792995489638.pdf">GAMP Services Limited - DRHP</a>
+<html><body><h1><a href="https://www.sebi.gov.in/sebi_data/commondocs/nov-2026/IL%20JIN%20ELECTRONICS%20(INDIA)%20LIMITED_p.pdf">IL JIN ELECTRONICS (INDIA) LIMITED - Draft Abridged Prospectus</a></h1>
+<div class="cover"><a href="../../../web/?file=https://www.sebi.gov.in/sebi_data/attachdocs/nov-2026/1794907751564.pdf">IL JIN ELECTRONICS (INDIA) LIMITED - DRHP &lt;br&gt;&lt;a href='https://www.sebi.gov.in/sebi_data/commondocs/nov-2026/IL%20JIN_p.pdf' style=color:#000000&gt;IL JIN ELECTRO</a></div>
 <a href="/about-sebi.html">About SEBI</a>
-<a href="https://www.sebi.gov.in/sebi_data/attachdocs/oct-2026/1792995489638.pdf">same file again</a>
+<a href="https://www.sebi.gov.in/sebi_data/attachdocs/nov-2026/1794907751564.pdf">same file again</a>
 </body></html>
 """
 
 
 def test_finds_direct_pdfs_and_unwraps_the_viewer_link():
     docs = find_pdf_links(PAGE, BASE)
-    urls = [d["url"] for d in docs]
-    assert urls == [
-        "https://www.sebi.gov.in/sebi_data/attachdocs/oct-2026/1792995489638.pdf",
-        "https://www.sebi.gov.in/sebi_data/commondocs/oct-2026/GAMP%20Services%20Limited%20-%20Draft%20Abridged%20Prospectus_p.pdf",
+    assert [d["url"] for d in docs] == [
+        "https://www.sebi.gov.in/sebi_data/attachdocs/nov-2026/1794907751564.pdf",
+        "https://www.sebi.gov.in/sebi_data/commondocs/nov-2026/IL%20JIN%20ELECTRONICS%20(INDIA)%20LIMITED_p.pdf",
     ]
-    assert docs[0]["label"] == "Draft offer document (PDF)"
-    assert docs[1]["label"] == "Abridged prospectus (PDF)"
+    # each file is named by its own link text, so the two never share a label
+    assert [d["label"] for d in docs] == ["DRHP (PDF)", "Draft Abridged Prospectus (PDF)"]
 
 
 def test_page_without_pdfs_gives_nothing():
@@ -40,8 +40,8 @@ def test_alert_shows_download_links_then_filing_page():
         "documents": find_pdf_links(PAGE, BASE),
     }
     text = format_alert(entry, datetime(2026, 11, 23, 12, 0, tzinfo=radar_run.IST))
-    assert "Download · Draft offer document (PDF)" in text
-    assert "1792995489638.pdf" in text
+    assert "Download · DRHP (PDF)" in text
+    assert "1794907751564.pdf" in text
     assert "SEBI filing page" in text
 
 
@@ -94,7 +94,7 @@ def test_run_fetches_the_filing_page_once_and_adds_links():
     f = FakeFetcher()
     state, tg = _run(f)
     assert f.calls == [BASE]
-    assert "Download · Draft offer document (PDF)" in tg.channel[0]
+    assert "Download · DRHP (PDF)" in tg.channel[0]
     assert len(state["seen"]["gamp services|drhp_filed"]["documents"]) == 2
 
 

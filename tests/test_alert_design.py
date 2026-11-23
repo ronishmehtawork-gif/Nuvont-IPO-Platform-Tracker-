@@ -116,3 +116,12 @@ def test_preview_picks_one_entry_per_style_and_copies_them():
     assert [p["event"] for p in picks] == ["drhp_filed", "drhp_filed", "approval", "drhp_refiled"]
     picks[0]["company"] = "changed"
     assert seen["a|drhp_filed"]["company"] == "Zadley India Limited"
+
+
+def test_company_name_prefers_the_properly_written_spelling():
+    from radar.run import _better_name
+
+    assert _better_name("ZADLEY INDIA LTD.", "Zadley India Limited") == "Zadley India Limited"
+    assert _better_name("Zadley India Ltd.", "Zadley India Limited") == "Zadley India Limited"
+    assert _better_name("Zadley India Limited", "ZADLEY INDIA LTD.") == "Zadley India Limited"
+    assert _better_name("Zadley India Limited", "Zadley India Limited ") == "Zadley India Limited"

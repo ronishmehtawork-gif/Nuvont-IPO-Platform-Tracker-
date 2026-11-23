@@ -1,6 +1,7 @@
 """Find the direct PDF links on a SEBI filing page, so an alert can offer a one-tap download."""
 from __future__ import annotations
 
+import re
 from urllib.parse import parse_qs, unquote, urljoin, urlparse
 
 from bs4 import BeautifulSoup
@@ -20,12 +21,13 @@ def _pdf_target(href: str, base: str) -> str:
 
 
 def _doc_label(url: str, text: str) -> str:
-    blob = f"{url} {text}".lower()
-    if "abridged" in blob:
-        return "Abridged prospectus (PDF)"
-    if "addendum" in blob or "corrigendum" in blob:
-        return "Addendum (PDF)"
-    return "Draft offer document (PDF)"
+    """Name a SEBI attachment from its link text. SEBI's own markup can leave raw HTML inside the text,
+    so only the part before the first '<' is read, and only the last ' - ' segment is used."""
+    head = text.split("<", 1)[0].strip()
+    name = re.split(r"\s+[-–—]\s+", head)[-1].strip() if head else ""
+    if not name or len(name) > 50:
+        name = "Draft offer document" if "/attachdocs/" in url else "Document"
+    return f"{name} (PDF)"
 
 
 def find_pdf_links(html: str, base: str) -> list:
@@ -38,8 +40,8 @@ def find_pdf_links(html: str, base: str) -> list:
             continue
         seen.add(url)
         found.append({"label": _doc_label(url, tag.get_text(" ", strip=True)), "url": url})
-    # the main document first, the abridged prospectus after it
-    found.sort(key=lambda d: d["label"].startswith("Abridged"))
+    # the filing's main attachment first, supporting files (abridged prospectus) after it
+    found.sort(key=lambda d: "/attachdocs/" not in d["url"])
     return found[:MAX_DOCS]
 
 

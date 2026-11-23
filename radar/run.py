@@ -86,6 +86,7 @@ def run_once(sources, fetcher, tg, state, now, alert_segments, site_url="") -> l
             }
             state["seen"][key] = entry
         for rec in recs:
+            entry["company"] = _better_name(entry["company"], rec.company)
             entry["sources"].setdefault(rec.source, rec.url)
             if SEGMENT_RANK[rec.segment] > SEGMENT_RANK[entry["segment"]]:
                 entry["segment"] = rec.segment
@@ -136,6 +137,15 @@ def run_once(sources, fetcher, tg, state, now, alert_segments, site_url="") -> l
         tg.send_admin(format_report("Daily check", results, state, now))
         state["last_heartbeat"] = today
     return results
+
+
+def _name_score(name: str) -> int:
+    return (0 if name.isupper() else 2) + (1 if name.rstrip(". ").lower().endswith("limited") else 0)
+
+
+def _better_name(old: str, new: str) -> str:
+    """Prefer 'Zadley India Limited' over 'ZADLEY INDIA LTD.' when sources spell a company differently."""
+    return new if _name_score(new) > _name_score(old) else old
 
 
 def _not_listed(entries: list, entry: dict) -> bool:
