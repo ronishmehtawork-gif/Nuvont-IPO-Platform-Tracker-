@@ -95,24 +95,36 @@ def format_alert(entry: dict, now: datetime) -> str:
     docs = entry.get("documents") or []
     for d in docs:
         lines.append(f'<a href="{esc(d["url"])}">Download: {esc(d["label"])}</a>')
+    first = next(iter(entry["sources"].values()))
     if url and docs:
-        lines.append(f'<a href="{esc(url)}">SEBI filing page</a>')
+        lines.append(f'<a href="{esc(url)}">{esc(_page_label(url))}</a>')
     elif url:
         lines.append(f'<a href="{esc(url)}">Open the official document</a>')
+    elif docs:
+        lines.append(f'<a href="{esc(first)}">More details</a>')
     else:
-        first = next(iter(entry["sources"].values()))
         lines.append(f'<a href="{esc(first)}">Open the report</a>')
         lines.append("Official document link will follow once it is found.")
     lines.append(f"<i>Detected {now.strftime('%d %b %Y, %I:%M %p')} IST</i>")
     return "\n".join(lines)
 
 
+def _page_label(url: str) -> str:
+    return "SEBI filing page" if "sebi.gov.in" in url else "Official page"
+
+
 def format_official_update(entry: dict) -> str:
-    return (
-        f"<b>Official document found</b>\n"
-        f"{esc(entry['company'])}\n"
-        f'<a href="{esc(entry["official_url"])}">Open the official document</a>'
-    )
+    docs = entry.get("documents") or []
+    url = entry.get("official_url")
+    lines = [
+        "<b>Official document found</b>" if url else "<b>Download link found</b>",
+        esc(entry["company"]),
+    ]
+    for d in docs:
+        lines.append(f'<a href="{esc(d["url"])}">Download: {esc(d["label"])}</a>')
+    if url:
+        lines.append(f'<a href="{esc(url)}">{esc(_page_label(url)) if docs else "Open the official document"}</a>')
+    return "\n".join(lines)
 
 
 def format_digest(entries: list, site_url: str = "") -> str:

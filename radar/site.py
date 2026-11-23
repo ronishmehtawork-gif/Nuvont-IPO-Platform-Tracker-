@@ -61,8 +61,8 @@ def build_site(state: dict, out_path: str, now: datetime, limit: int = 500) -> N
                 "segment": e["segment"],
                 "where": e["exchange"] or e["segment"],
                 "first_seen": e["first_seen"][:10],
-                "url": e["official_url"] or e["sources"][first_source],
-                "official": bool(e["official_url"]),
+                "url": (e.get("documents") or [{}])[0].get("url") or e["official_url"] or e["sources"][first_source],
+                "official": bool(e["official_url"] or e.get("documents")),
                 "source": label(first_source),
             }
         )

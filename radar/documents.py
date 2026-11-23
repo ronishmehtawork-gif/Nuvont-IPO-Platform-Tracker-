@@ -41,3 +41,14 @@ def find_pdf_links(html: str, base: str) -> list:
     # the main document first, the abridged prospectus after it
     found.sort(key=lambda d: d["label"].startswith("Abridged"))
     return found[:MAX_DOCS]
+
+
+def exchange_doc_label(url: str) -> str:
+    """Name a document link by who hosts it, for the alert text."""
+    host = urlparse(url).netloc.lower()
+    kind = "ZIP" if urlparse(url).path.lower().endswith(".zip") else "file"
+    if "bsesme" in host or "bseindia" in host:
+        return f"DRHP {kind} on BSE"
+    if "nse" in host:
+        return f"DRHP {kind} on NSE"
+    return f"DRHP {kind}"

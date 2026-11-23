@@ -11,6 +11,7 @@ SOURCE_LABELS = {
     "nse_emerge": "NSE",
     "chittorgarh": "Chittorgarh",
     "rss_ipocentral": "IPOCentral",
+    "ipoplatform": "IPO Platform",
 }
 
 EVENT_LABELS = {
@@ -49,6 +50,7 @@ class Record:
     url: str
     title: str = ""
     filed_on: str = ""  # ISO date when the source shows one
+    doc_url: str = ""  # direct link to the draft document file, when the source gives one
 
     @property
     def official(self) -> bool:

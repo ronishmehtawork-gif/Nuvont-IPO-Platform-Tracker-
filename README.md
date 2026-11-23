@@ -7,11 +7,12 @@ alerts to a Telegram channel. Runs free on GitHub Actions every ~15 minutes, so 
 
 | Source | Role |
 |---|---|
-| BSE SME DRHP page | Official. Alerts for BSE SME filings |
-| SEBI "Draft Offer Documents" | Official. Separates SME and mainboard filings |
+| BSE SME DRHP page | Official. Blocks GitHub's servers today (connection never opens), so it only helps from an Indian-IP machine |
+| SEBI "Draft Offer Documents" | Official. Mainboard filings; alerts carry direct PDF links read from the filing page |
+| IPO Platform "DRHP filed" lists (SME and mainboard) | Reads company, exchange (BSE SME / NSE Emerge), filing date, status and the exchange-hosted DRHP file link. Covers NSE Emerge and BSE SME. A status change to "approved" sends an approval alert |
 | Chittorgarh IPO news | News trigger only. Alert text is written by this tool and links to the source |
-| NSE Emerge | Off by default (its page is script-driven and blocks most cloud servers). Set variable `RADAR_ENABLE_NSE` to `1` to try it. NSE SME filings are still picked up from the news sources |
 | IPOCentral RSS | News trigger |
+| NSE Emerge page and BSE notices API | Not used. Both refuse GitHub's servers (HTTP 403 / no answer) and this tool does not work around blocks. The NSE adapter stays off unless `RADAR_ENABLE_NSE=1` |
 
 A company seen first in news and later in an official source gets a reply under the first alert with the official link.
 
@@ -26,7 +27,7 @@ A company seen first in news and later in an official source gets a reply under 
    - `TELEGRAM_CHANNEL`: `@your_channel_username` for a public channel, or the numeric ID that starts with `-100`
    - `TELEGRAM_ADMIN_CHAT_ID`: the number from step 3
 5. **Optional variables** (Settings, Secrets and variables, Actions, Variables):
-   - `ALERT_SEGMENTS`: default `sme,unknown`. Add `mainboard` to alert on mainboard DRHPs too
+   - `ALERT_SEGMENTS`: default `sme,unknown,mainboard` (all filings alert). Set it to `sme,unknown` to drop mainboard alerts
    - `RADAR_SITE_URL`: your GitHub Pages address, so alert digests can link to the searchable list
 6. **Web page (optional).** Settings, Pages, deploy from branch `main`, folder `/docs`.
 7. **First run.** Actions tab, "radar", Run workflow. The admin chat gets a source report.

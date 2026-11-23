@@ -32,7 +32,7 @@ jobs:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHANNEL: ${{ secrets.TELEGRAM_CHANNEL }}
           TELEGRAM_ADMIN_CHAT_ID: ${{ secrets.TELEGRAM_ADMIN_CHAT_ID }}
-          ALERT_SEGMENTS: ${{ vars.ALERT_SEGMENTS || 'sme,unknown' }}
+          ALERT_SEGMENTS: ${{ vars.ALERT_SEGMENTS || 'sme,unknown,mainboard' }}
           RADAR_SITE_URL: ${{ vars.RADAR_SITE_URL }}
 
       - name: Keep page snapshots for debugging

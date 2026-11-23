@@ -3,7 +3,7 @@ from __future__ import annotations
 
 import os
 
-from . import bse_sme, chittorgarh, nse_emerge, rss, sebi
+from . import bse_sme, chittorgarh, ipoplatform, nse_emerge, rss, sebi
 
 DEFAULT_FEEDS = {"rss_ipocentral": "https://ipocentral.in/category/ipo-news/feed/"}
 
@@ -25,6 +25,7 @@ def all_sources() -> list:
         (bse_sme.NAME, bse_sme.fetch),
         (sebi.NAME, sebi.fetch),
         (chittorgarh.NAME, chittorgarh.fetch),
+        (ipoplatform.NAME, ipoplatform.fetch),
     ]
     if os.getenv("RADAR_ENABLE_NSE") == "1":
         # Experimental: the NSE page is script-driven and blocks most cloud servers, so it is off by default.

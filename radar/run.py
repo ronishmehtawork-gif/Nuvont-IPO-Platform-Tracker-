@@ -6,7 +6,7 @@ from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
 
 from . import state as st
-from .documents import find_pdf_links
+from .documents import exchange_doc_label, find_pdf_links
 from .http import Fetcher
 from .models import ALERT_EVENTS, SEGMENT_RANK, SourceResult, label
 from .site import build_site
@@ -93,7 +93,13 @@ def run_once(sources, fetcher, tg, state, now, alert_segments, site_url="") -> l
             entry["filed_on"] = entry["filed_on"] or rec.filed_on
             if rec.official and not entry["official_url"]:
                 entry["official_url"] = rec.url
-                if not is_new and entry["message_id"]:
+                if not is_new and entry["message_id"] and _not_listed(official_updates, entry):
+                    official_updates.append(entry)
+            if rec.doc_url and all(d["url"] != rec.doc_url for d in entry.get("documents", [])):
+                entry.setdefault("documents", []).append(
+                    {"label": exchange_doc_label(rec.doc_url), "url": rec.doc_url}
+                )
+                if not is_new and entry["message_id"] and _not_listed(official_updates, entry):
                     official_updates.append(entry)
         if is_new and not baseline and entry["segment"] in alert_segments and entry["event"] in ALERT_EVENTS:
             new_entries.append((key, entry))
@@ -129,15 +135,23 @@ def run_once(sources, fetcher, tg, state, now, alert_segments, site_url="") -> l
     return results
 
 
+def _not_listed(entries: list, entry: dict) -> bool:
+    return all(e is not entry for e in entries)
+
+
 def _attach_documents(entry: dict, fetcher) -> None:
-    """For SEBI filings, read the filing page once and keep the direct PDF links. Never blocks an alert."""
+    """For SEBI filings, read the filing page once and put its direct PDF links first. Never blocks an alert."""
     url = entry.get("official_url") or ""
-    if "sebi.gov.in" not in url or entry.get("documents"):
+    if "sebi.gov.in" not in url or entry.get("sebi_checked"):
         return
     try:
         res = fetcher.get("sebi_filing_page", url)
         if res.ok:
-            entry["documents"] = find_pdf_links(res.text, url)
+            pdfs = find_pdf_links(res.text, url)
+            have = [d for d in entry.get("documents", []) if all(d["url"] != p["url"] for p in pdfs)]
+            if pdfs or have:
+                entry["documents"] = pdfs + have
+            entry["sebi_checked"] = True
     except Exception:  # the alert must still go out with the filing-page link
         pass
 
@@ -184,7 +198,7 @@ def main() -> None:
         print("Telegram secrets are missing. Add TELEGRAM_BOT_TOKEN, TELEGRAM_CHANNEL and "
               "TELEGRAM_ADMIN_CHAT_ID under Settings > Secrets and variables > Actions.", file=sys.stderr)
         sys.exit(1)
-    segments = {s.strip() for s in os.getenv("ALERT_SEGMENTS", "sme,unknown").split(",") if s.strip()}
+    segments = {s.strip() for s in os.getenv("ALERT_SEGMENTS", "sme,unknown,mainboard").split(",") if s.strip()}
     fetcher = Fetcher(snapshot_dir=os.getenv("RADAR_SNAPSHOTS", "snapshots"))
     state = st.load(path)
     now = datetime.now(IST)
