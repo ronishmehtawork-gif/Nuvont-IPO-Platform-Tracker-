@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import os
+import sys
 from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
 
@@ -162,6 +163,12 @@ def main() -> None:
         os.getenv("TELEGRAM_CHANNEL", ""),
         os.getenv("TELEGRAM_ADMIN_CHAT_ID", ""),
     )
+    if os.getenv("GITHUB_ACTIONS") and not (tg.enabled and os.getenv("TELEGRAM_CHANNEL")
+                                           and os.getenv("TELEGRAM_ADMIN_CHAT_ID")):
+        # Stop before saving anything: a baseline taken without Telegram would hide the first source report.
+        print("Telegram secrets are missing. Add TELEGRAM_BOT_TOKEN, TELEGRAM_CHANNEL and "
+              "TELEGRAM_ADMIN_CHAT_ID under Settings > Secrets and variables > Actions.", file=sys.stderr)
+        sys.exit(1)
     segments = {s.strip() for s in os.getenv("ALERT_SEGMENTS", "sme,unknown").split(",") if s.strip()}
     fetcher = Fetcher(snapshot_dir=os.getenv("RADAR_SNAPSHOTS", "snapshots"))
     state = st.load(path)
