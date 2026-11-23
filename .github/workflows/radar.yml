@@ -2,7 +2,7 @@ name: radar
 
 on:
   schedule:
-    - cron: "*/15 * * * *" # GitHub may run this late; that is normal
+    - cron: "3,18,33,48 * * * *" # every 15 minutes, off the busy :00/:15/:30/:45 marks where GitHub drops or delays runs
   workflow_dispatch:
 
 concurrency:

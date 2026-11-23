@@ -28,6 +28,29 @@ def _field(item, name: str) -> str:
     return ""
 
 
+def _clean(text: str) -> str:
+    return " ".join(text.replace("\xa0", " ").split())
+
+
+def _details(item) -> dict:
+    info = {}
+    for p in item.select(".company-name p"):
+        icon = p.find("i")
+        classes = " ".join(icon.get("class", [])) if icon else ""
+        text = _clean(p.get_text(" ", strip=True))
+        if "fa-map-marker" in classes and text:
+            info["city"] = text
+        elif "fa-industry" in classes and text:
+            info["sector"] = text
+    for box in item.select("div.company-info"):
+        if "merchant bankers" in box.get_text(" ", strip=True).lower():
+            names = [_clean(x.get_text(" ", strip=True)) for x in box.find_all("strong")]
+            names = [n for n in names if n]
+            if names:
+                info["bankers"] = ", ".join(names[:2]) + (f" +{len(names) - 2} more" if len(names) > 2 else "")
+    return info
+
+
 def _iso(text: str) -> str:
     try:
         return datetime.strptime(text.strip(), "%d %b %Y").date().isoformat()
@@ -71,7 +94,7 @@ def parse(html: str, page_segment: str, base: str) -> list:
         status = status_btn.get_text(" ", strip=True).lower() if status_btn else ""
         common = dict(
             source=NAME, company=company, segment=segment, exchange=exchange,
-            url=detail, filed_on=filed, doc_url=doc_url,
+            url=detail, filed_on=filed, doc_url=doc_url, info=_details(item),
         )
         out.append(Record(event="drhp_filed", title=f"{company} DRHP", **common))
         if "approved" in status:

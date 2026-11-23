@@ -15,11 +15,12 @@ def card(name, date, exchange, doc, status, detail="https://www.ipoplatform.com/
     return f"""
 <div class="item ml10px">
   <div class="company-name"><a href="{detail}" title="{name}"><h4>{name}</h4></a>
-    <p><a href="/geo/noida">Noida</a></p></div>
+    <p><a href="/geo/noida"><i class="fas fa-map-marker-alt"></i> &nbsp; &nbsp;Noida</a></p>
+    <p><a href="/sector/apparel"><i class="fas fa-industry"></i> &nbsp; &nbsp;Clothing and Apparels</a></p></div>
   <div class="company-info"><span>Date of DRHP:</span><b>{date}</b></div>
   <div class="company-info"><span>Revenue*:</span><b>47.08</b></div>
   {ex}
-  <div class="company-info text-center">Merchant Bankers: <a href="/mb/1"><strong>Some Bank</strong></a></div>
+  <div class="company-info text-center">Merchant Bankers: <a href="/mb/1"><strong>Some Bank</strong></a><a href="/mb/2"><strong>Other Bank</strong></a><a href="/mb/3"><strong>Third Bank</strong></a></div>
   <div class="company-info text-center">{read}
     <a class="nav-link btn btn-primary Under_Process text-white" href="{detail}">DRHP {status}</a></div>
 </div>"""
@@ -114,7 +115,7 @@ def test_first_pass_is_silent_then_a_new_filing_alerts_with_download_and_approva
     assert len(tg.channel) == 1
     text = tg.channel[0][0]
     assert "New DRHP detected" in text and "Fresh Filer Limited" in text and "NSE Emerge" in text
-    assert f'href="{NSE_ZIP}"' in text and "Download: DRHP ZIP on NSE" in text
+    assert f'href="{NSE_ZIP}"' in text and "Download · DRHP ZIP on NSE" in text
     assert "will follow" not in text
 
     approved = newer.replace('DRHP Under Process</a>\n</div>', 'DRHP Under Process</a>\n</div>', 1)
@@ -138,3 +139,8 @@ def test_download_link_found_later_is_sent_as_a_reply():
     assert len(replies) == 1 and "Download link found" in replies[0][0] and BSE_ZIP in replies[0][0]
     run(state, tg, SME_HTML)
     assert len([1 for _, r in tg.channel if r == 7]) == 1  # not repeated
+
+
+def test_city_sector_and_bankers_are_read():
+    rec = ipoplatform.parse(SME_HTML, "sme", SME_URL)[0]
+    assert rec.info == {"city": "Noida", "sector": "Clothing and Apparels", "bankers": "Some Bank, Other Bank +1 more"}

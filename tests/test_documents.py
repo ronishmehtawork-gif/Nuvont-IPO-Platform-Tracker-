@@ -40,7 +40,7 @@ def test_alert_shows_download_links_then_filing_page():
         "documents": find_pdf_links(PAGE, BASE),
     }
     text = format_alert(entry, datetime(2026, 11, 23, 12, 0, tzinfo=radar_run.IST))
-    assert "Download: Draft offer document (PDF)" in text
+    assert "Download · Draft offer document (PDF)" in text
     assert "1792995489638.pdf" in text
     assert "SEBI filing page" in text
 
@@ -94,7 +94,7 @@ def test_run_fetches_the_filing_page_once_and_adds_links():
     f = FakeFetcher()
     state, tg = _run(f)
     assert f.calls == [BASE]
-    assert "Download: Draft offer document (PDF)" in tg.channel[0]
+    assert "Download · Draft offer document (PDF)" in tg.channel[0]
     assert len(state["seen"]["gamp services|drhp_filed"]["documents"]) == 2
 
 

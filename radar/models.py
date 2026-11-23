@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import re
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 OFFICIAL_SOURCES = {"bse_sme", "sebi", "nse_emerge"}
 
@@ -51,6 +51,7 @@ class Record:
     title: str = ""
     filed_on: str = ""  # ISO date when the source shows one
     doc_url: str = ""  # direct link to the draft document file, when the source gives one
+    info: dict = field(default_factory=dict)  # optional: city, sector, bankers (display only)
 
     @property
     def official(self) -> bool:

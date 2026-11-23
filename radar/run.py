@@ -34,19 +34,19 @@ def _run_source(name, fn, fetcher) -> SourceResult:
 
 
 def format_report(title: str, results: list, state: dict, now: datetime) -> str:
-    lines = [f"<b>{esc(title)}</b>"]
+    lines = [f"📊 <b>{esc(title)}</b>"]
     for r in results:
         if not r.ok:
-            lines.append(f"{esc(label(r.name))}: FAILED ({esc(r.note)})")
+            lines.append(f"⚠️ {esc(label(r.name))}: FAILED ({esc(r.note)})")
         elif not r.records:
-            lines.append(f"{esc(label(r.name))}: answered, 0 items parsed (layout may differ)")
+            lines.append(f"⚠️ {esc(label(r.name))}: answered, 0 items parsed (layout may differ)")
         else:
-            lines.append(f"{esc(label(r.name))}: answered, {len(r.records)} items")
+            lines.append(f"✅ {esc(label(r.name))}: answered, {len(r.records)} items")
     cutoff = (now - timedelta(hours=24)).isoformat(timespec="seconds")
     fresh = sum(
         1 for e in state["seen"].values() if not e.get("baseline") and e["first_seen"] >= cutoff
     )
-    lines.append(f"New filings in the last 24 hours: {fresh}")
+    lines.append(f"🆕 New filings in the last 24 hours: {fresh}")
     return "\n".join(lines)
 
 
@@ -95,6 +95,9 @@ def run_once(sources, fetcher, tg, state, now, alert_segments, site_url="") -> l
                 entry["official_url"] = rec.url
                 if not is_new and entry["message_id"] and _not_listed(official_updates, entry):
                     official_updates.append(entry)
+            for k, v in rec.info.items():
+                if v and not entry.get("info", {}).get(k):
+                    entry.setdefault("info", {})[k] = v
             if rec.doc_url and all(d["url"] != rec.doc_url for d in entry.get("documents", [])):
                 entry.setdefault("documents", []).append(
                     {"label": exchange_doc_label(rec.doc_url), "url": rec.doc_url}
