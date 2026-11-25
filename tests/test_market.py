@@ -279,3 +279,8 @@ def test_an_unadjusted_split_long_ago_is_caught_across_the_whole_two_year_window
     uni, series, nifty, cal = make_market(n=520, mutate=mutate)
     payload = m.build_market(uni, series, nifty, NOW)
     assert "STK003" in payload["dropped"]["outlier"]
+
+
+def test_nse_placeholder_rows_are_not_treated_as_stocks():
+    text = csv_text() + "\nDummy HEG Ltd.,Capital Goods,DUMMYHEG,EQ,INE0000000"
+    assert all(not r["s"].startswith("DUMMY") for r in m.parse_universe(text))

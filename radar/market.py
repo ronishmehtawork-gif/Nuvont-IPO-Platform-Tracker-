@@ -76,6 +76,8 @@ def parse_universe(text: str) -> list[dict]:
         symbol = row.get("Symbol", "").upper()
         if row.get("Series", "EQ").upper() != "EQ" or not re.fullmatch(r"[A-Z0-9&\-]{1,20}", symbol) or symbol in seen:
             continue
+        if symbol.startswith("DUMMY") or row.get("Company Name", "").lower().startswith("dummy "):
+            continue  # NSE placeholder rows for pending corporate actions; they do not trade
         industry = row.get("Industry", "") or "Unclassified"
         seen.add(symbol)
         rows.append({"s": symbol, "n": row.get("Company Name", "") or symbol,
