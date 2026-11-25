@@ -1,0 +1,12 @@
+{
+  "market": {
+    "asof_kept": "",
+    "fetch_failures": {
+      "HTTP 404": 469,
+      "unreadable response": 11
+    },
+    "note": "kept previous data: only 13 of 496 stocks have a fresh close on 2026-11-23",
+    "ok": false,
+    "universe_note": "universe fetched from nsearchives.nseindia.com"
+  }
+}
