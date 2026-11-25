@@ -1,10 +1,13 @@
 name: market
 
-# Stock-level data for the sector heatmap and market breadth pages. Runs once after the Indian market closes
-# (16:37 IST, Monday to Friday) and on demand. If a source fails, the last good data stays on the page.
+# Stock-level data for the sector heatmap and market breadth pages. Runs after the Indian market closes
+# (16:37 IST and again at 19:07 IST in case the price feed is late, Monday to Friday) and on demand.
+# The second run changes nothing when the first already saved the day. If a source fails, the last good
+# data stays on the page.
 on:
   schedule:
     - cron: "7 11 * * 1-5"
+    - cron: "37 13 * * 1-5"
   workflow_dispatch:
 
 concurrency:

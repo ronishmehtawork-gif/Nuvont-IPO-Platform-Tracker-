@@ -87,6 +87,34 @@ period, segment, exchange, status and sector, a sector heatmap, charts of filing
 lead managers and cities, and a searchable table with document links and a CSV download. The page is one static file:
 it makes no network calls when opened.
 
+The page has four tabs. **Filings** is the view above. The other three are built from market data and are described
+below.
+
+### Sector heatmap, IPO pipeline and market breadth
+
+| Tab | What it shows | Source | Refreshed |
+|---|---|---|---|
+| Sector heatmap | Median 1D, 1W, 1M, 3M, 6M, 1Y, YTD and 2Y return of the stocks in each NSE industry, with the stocks themselves one click away | NSE Nifty 500 list and Yahoo Finance daily closes | `market` workflow, 16:37 and 19:07 IST on weekdays |
+| Market breadth | Session by session: stocks up or down 4%, 5 and 10 day thrust ratios, 25% quarter and month moves, 13% moves over 34 days, share above the 40-day average, Nifty 50 | Same closes | Same |
+| IPO pipeline | Open, upcoming and recently closed issues with grey market premium, price band, issue size (in crores), lot size, minimum investment and dates | ipowatch.in | Every hourly `radar` run |
+
+How the backend protects the page (`radar/market.py`, `radar/ipowatch.py`):
+
+- Nothing replaces the saved data until every check passes: the NSE list has at least 400 stocks, at least 85% of it
+  has a fresh close, the latest session is not stale, and the new data is not older than the saved data.
+- A stock with a one-day move over 50%, a return beyond 50x, or no close on the latest session is left out and listed
+  in `data/diagnostics.json`. It never fails the whole update.
+- Trading sessions are read from the stock prices themselves, so a late index feed cannot hold the page back.
+- If the price site starts refusing requests (more than 30% of the first 30 or more answers are 429 or 403), the job
+  stops instead of pushing through, and keeps the last good data.
+- Issue sizes quoted in lakhs or thousands are converted to crores. Per-share prices, premiums and minimum investment
+  stay in rupees. A premium above 5 times the price is dropped as a parsing slip.
+- `data/diagnostics.json` is a public, secret-free health report: counts, dates and a few example errors for each job.
+  Read it first when a tab looks wrong.
+- The grey market premium is unofficial and shown with that warning. Nothing here is a recommendation.
+
+Run it by hand from the Actions tab: choose **market**, then **Run workflow**.
+
 ## Security
 
 - **Secrets** live only in GitHub Actions secrets and are never printed. The repo and its full history were scanned for

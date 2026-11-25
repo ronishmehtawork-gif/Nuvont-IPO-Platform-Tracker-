@@ -866,7 +866,7 @@ function renderBreadth() {
   $("#br-pill").hidden = false; setPill($("#br-pill"), MK.asof, 4, 8, "Data as of");
   const rows = MK.breadth, latest = rows[0];
   $("#br-sub").textContent = "How many of the " + MK.priced + " Nifty 500 stocks are making big moves, session by session. Newest first.";
-  const st = $("#br-state"); st.hidden = false; st.className = "pill"; st.textContent = breadthState(latest);
+  const st = $("#br-state"); st.hidden = false; st.className = "pill"; st.textContent = "Reading: " + breadthState(latest);
   st.title = "Reading for the latest session. Broad strength: 10-day thrust at or above 1.5 and at least 55% of stocks above their 40-day average. Broad weakness: 10-day thrust at or below 0.7 and 45% or less above it. Anything else is mixed.";
   const maxOf = k => Math.max(1, ...rows.map(r => r[k] || 0));
   const g1 = el("tr"); g1.appendChild(el("th")); const g2 = el("tr"); g2.appendChild(el("th", null, "Session"));
