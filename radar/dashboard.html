@@ -1174,7 +1174,7 @@ function renderFlow() {
       const sv = el("td"); flowCell(sv, st[idx]); sr.appendChild(sv);
       const sb = el("td"); sb.appendChild(flowBar(st[idx], max / 6)); sr.appendChild(sb);
       sr.appendChild(el("td", "num " + (st[3] > 0 ? "up" : st[3] < 0 ? "dn" : ""), st[3] == null ? "–" : "1D " + signed(st[3]) + "%"));
-      sr.appendChild(el("td", "num", "1D ₹" + crp(st[4])));
+      sr.appendChild(el("td", "num", "1D " + crp(st[4])));
       sr.appendChild(el("td")); sr.appendChild(el("td"));
       tb.appendChild(sr);
     }
