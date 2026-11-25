@@ -1,11 +1,19 @@
 {
   "market": {
     "asof_kept": "",
+    "failure_examples": [
+      "DUMMYHEG: HTTP 404"
+    ],
     "fetch_failures": {
-      "HTTP 404": 469,
-      "unreadable response": 11
+      "HTTP 404": 1
     },
-    "note": "kept previous data: only 13 of 496 stocks have a fresh close on 2026-11-23",
+    "fetched": 495,
+    "nifty_last_sessions": [
+      "2026-11-19",
+      "2026-11-20",
+      "2026-11-23"
+    ],
+    "note": "kept previous data: CUPID has an impossible return (2002.1%)",
     "ok": false,
     "universe_note": "universe fetched from nsearchives.nseindia.com"
   }
