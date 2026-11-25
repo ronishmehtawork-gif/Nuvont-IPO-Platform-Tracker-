@@ -14,7 +14,7 @@
   "market": {
     "asof": "2026-11-23",
     "dropped": {
-      "no_data": 1,
+      "no_data": 0,
       "outlier": [
         "HEGAM",
         "VEDL"
@@ -22,12 +22,7 @@
       "short": 0,
       "stale": 0
     },
-    "failure_examples": [
-      "DUMMYHEG: HTTP 404"
-    ],
-    "fetch_failures": {
-      "HTTP 404": 1
-    },
+    "fetch_failures": {},
     "fetched": 495,
     "nifty_last_sessions": [
       "2026-11-19",
@@ -42,7 +37,7 @@
       "2026-11-20",
       "2026-11-23"
     ],
-    "universe": 496,
+    "universe": 495,
     "universe_note": "universe fetched from nsearchives.nseindia.com"
   }
 }
