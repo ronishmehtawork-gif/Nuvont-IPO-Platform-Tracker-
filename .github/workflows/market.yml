@@ -1,0 +1,54 @@
+name: market
+
+# Stock-level data for the sector heatmap and market breadth pages. Runs once after the Indian market closes
+# (16:37 IST, Monday to Friday) and on demand. If a source fails, the last good data stays on the page.
+on:
+  schedule:
+    - cron: "7 11 * * 1-5"
+  workflow_dispatch:
+
+concurrency:
+  group: radar
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  market:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - run: pip install -r requirements.txt
+
+      - name: Refresh market data and rebuild the page
+        run: python -m radar.market_job
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHANNEL: ${{ secrets.TELEGRAM_CHANNEL }}
+          TELEGRAM_ADMIN_CHAT_ID: ${{ secrets.TELEGRAM_ADMIN_CHAT_ID }}
+
+      - name: Save data
+        if: always()
+        run: |
+          git config user.name "radar-bot"
+          git config user.email "radar-bot@users.noreply.github.com"
+          git add -A data docs
+          if git diff --cached --quiet; then
+            echo "No changes to save"
+          else
+            git commit -m "Update market data [skip ci]"
+            for attempt in 1 2 3; do
+              git pull --rebase -X theirs -q origin "$GITHUB_REF_NAME" && git push -q && exit 0
+              sleep 5
+            done
+            echo "Could not save after 3 tries" >&2
+            exit 1
+          fi

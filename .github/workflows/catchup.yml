@@ -54,5 +54,12 @@ jobs:
             echo "No changes to save"
           else
             git commit -m "Record catch-up alerts [skip ci]"
-            git push
+            # If someone pushed while this run was working, replay this commit on top. In a clash the bot's own
+            # newest files (state, data, page) win, so a saved state can never be lost and alerts never repeat.
+            for attempt in 1 2 3; do
+              git pull --rebase -X theirs -q origin "$GITHUB_REF_NAME" && git push -q && exit 0
+              sleep 5
+            done
+            echo "Could not save after 3 tries" >&2
+            exit 1
           fi

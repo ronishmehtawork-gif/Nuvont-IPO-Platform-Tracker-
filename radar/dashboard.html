@@ -73,7 +73,7 @@ main{padding:20px 0 8px}
 .ph h2{margin:0;font-size:15px;font-weight:650;color:var(--navy);letter-spacing:-.005em}
 .ph p{margin:2px 0 0;font-size:12.5px;color:var(--muted)}
 .pb{padding:12px 16px 16px}
-.tools{display:flex;align-items:center;gap:10px}
+.tools{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
 .seg.sm button{padding:3px 9px;font-size:12px}
 .legend{display:flex;gap:12px;font-size:12px;color:var(--muted);align-items:center}
 .legend span{display:inline-flex;align-items:center;gap:6px}
@@ -166,8 +166,73 @@ table.t{border-collapse:collapse;width:100%;min-width:980px}
 .tbl-view th:first-child,.tbl-view td:first-child{text-align:left}
 .tbl-view th{color:var(--muted);font-weight:600}
 
+[hidden]{display:none!important}
+/* pages */
+.tabs{background:var(--panel);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:40}
+.tabs-in{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none}
+.tabs button{border:0;background:none;padding:13px 16px 10px;font-weight:600;font-size:14px;color:var(--muted);cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap}
+.tabs button:hover{color:var(--navy)}
+.tabs button[aria-selected="true"]{color:var(--navy);border-bottom-color:var(--gold)}
+.filters{top:47px}
+.up{color:#0b6b49}.dn{color:#b02a2a}
+/* sector heatmap page */
+.two{display:grid;grid-template-columns:1fr 1fr;gap:16px;padding:14px 16px 2px}
+.rank{margin:0;padding:0;list-style:none;border:1px solid var(--line);border-radius:var(--r);min-width:0}
+.rank h3{margin:0;padding:9px 12px;font-size:12.5px;font-weight:650;color:var(--muted);border-bottom:1px solid var(--line-2)}
+.rank li{display:flex;justify-content:space-between;gap:10px;padding:7px 12px;border-bottom:1px solid var(--line-2);font-size:13px}
+.rank li:last-child{border-bottom:0}
+.rank li b{font-variant-numeric:tabular-nums;white-space:nowrap}
+.sx-bar{display:flex;align-items:flex-end;gap:14px;flex-wrap:wrap;padding:14px 16px 4px}
+.sx-bar .search{max-width:260px;flex:1 1 200px}
+.sx{border-collapse:separate;border-spacing:0;width:100%;min-width:700px;font-size:12.5px}
+.sx th{font-weight:600;color:var(--muted);font-size:12px;text-align:center;padding:4px 2px 8px;background:var(--panel)}
+.sx th.l{text-align:left;padding-left:10px}
+.sx td{padding:0}
+.sx td.nm{padding:0 10px;min-width:210px}
+.sx tr.sec{cursor:pointer}
+.sx tr.sec td.nm{background:var(--gold-wash);border-left:3px solid var(--gold);border-bottom:2px solid var(--panel);font-size:13px}
+.sx tr.sec:hover td.nm{background:#efe9d8}
+.sx tr.sec .car{display:inline-block;width:14px;color:var(--gold-ink)}
+.sx tr.sec b{color:var(--navy);font-weight:650}
+.sx tr.stk td.nm{padding-left:30px;border-bottom:1px solid var(--line-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:260px}
+.sx td.v{height:34px;text-align:center;font-variant-numeric:tabular-nums;font-weight:550;border:2px solid var(--panel);border-radius:5px;background-clip:padding-box;min-width:62px}
+.sx tr.stk td.v{height:27px;font-weight:500;font-size:12px}
+.sx tr.stk td.more-c{padding:8px 10px 8px 30px}
+/* IPO pipeline page */
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:14px}
+.card{border:1px solid var(--line);border-radius:var(--r);padding:14px;display:flex;flex-direction:column;gap:11px;background:var(--panel);min-width:0}
+.c-top{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:12.5px;font-weight:600}
+.stt{display:inline-flex;align-items:center;gap:6px}
+.stt i{width:8px;height:8px;border-radius:50%;background:var(--faint);flex:none}
+.stt.open i{background:var(--pos)}.stt.upcoming i{background:var(--s2)}
+.tag{border:1px solid var(--line);border-radius:5px;padding:1px 7px;font-size:12px;color:var(--muted);background:var(--bg);white-space:nowrap}
+.card h3{margin:0;font-size:16px;line-height:1.3;color:var(--navy);letter-spacing:-.005em}
+.gmp{border-radius:7px;padding:10px 12px;background:var(--bg)}
+.gmp.pos{background:#eefaf4}.gmp.neg{background:#fdf0f0}
+.gmp .gk{font-size:12px;color:var(--muted)}
+.gmp .gp{font-size:28px;font-weight:650;letter-spacing:-.02em;line-height:1.2;font-variant-numeric:tabular-nums}
+.gmp.pos .gp{color:#0b6b49}.gmp.neg .gp{color:#b02a2a}
+.gmp .gp.none{font-size:17px;color:var(--muted);padding:5px 0}
+.gmp .gt{font-size:12.5px;color:var(--muted)}
+.facts{display:grid;grid-template-columns:1fr 1fr;gap:8px 12px;margin:0}
+.facts div{min-width:0}
+.facts dt{font-size:11.5px;color:var(--faint)}
+.facts dd{margin:0;font-weight:600;font-size:13px;font-variant-numeric:tabular-nums}
+.card .det{margin-top:auto;font-size:12.5px;font-weight:600;color:var(--navy-2);text-decoration:none}
+.card .det:hover{text-decoration:underline}
+/* breadth page */
+.br{border-collapse:separate;border-spacing:0;width:100%;min-width:1080px;font-size:13px}
+.br th{font-size:12px;font-weight:600;color:var(--muted);text-align:center;padding:6px 6px;background:var(--panel);line-height:1.3;vertical-align:bottom}
+.br th.grp{border-bottom:2px solid var(--gold);color:var(--navy);padding-bottom:6px}
+.br td{height:44px;text-align:center;font-variant-numeric:tabular-nums;border:2px solid var(--panel);border-radius:5px;background-clip:padding-box;font-weight:550;padding:0 6px}
+.br th:first-child,.br td:first-child{position:sticky;left:0;z-index:1;background:var(--panel);text-align:left;border-radius:0;padding-left:12px;min-width:112px}
+.br td.ses{font-weight:600;line-height:1.25;white-space:nowrap}
+.br td.ses small{display:block;font-weight:400;color:var(--muted);font-size:12px}
+.br td.nf{text-align:right;padding-right:12px;line-height:1.25}
+.br td.nf small{display:block;font-weight:600;font-size:12px}
+.br .tag{margin-left:6px;font-size:11px;background:var(--navy);color:#fff;border-color:var(--navy)}
 @media (max-width:1100px){
-  .g-2,.g-3{grid-template-columns:minmax(0,1fr)}
+  .g-2,.g-3,.two{grid-template-columns:minmax(0,1fr)}
   .kpis{grid-template-columns:repeat(3,minmax(0,1fr))}
   .kpi:nth-child(4){border-left:0}
   .kpi:nth-child(n+4){border-top:1px solid var(--line)}
@@ -175,6 +240,8 @@ table.t{border-collapse:collapse;width:100%;min-width:980px}
 @media (max-width:720px){
   .wrap{padding:0 14px}
   .filters{position:static}
+  .tabs button{padding:12px 11px 9px;font-size:13px}
+  .seg{max-width:100%;overflow-x:auto}
   .mast-in{padding-top:12px;padding-bottom:14px;gap:10px}
   .brand{gap:12px;width:100%}
   .brand img{height:34px} .brand-sep{display:none} .brand-title b{font-size:17px} .brand-title small{display:none}
@@ -212,6 +279,14 @@ table.t{border-collapse:collapse;width:100%;min-width:980px}
   </div>
 </header>
 
+<nav class="tabs" aria-label="Pages"><div class="wrap tabs-in" role="tablist">
+  <button type="button" role="tab" id="tab-filings" data-v="filings" aria-controls="v-filings" aria-selected="true">Filings</button>
+  <button type="button" role="tab" id="tab-sectors" data-v="sectors" aria-controls="v-sectors" aria-selected="false">Sector heatmap</button>
+  <button type="button" role="tab" id="tab-ipos" data-v="ipos" aria-controls="v-ipos" aria-selected="false">IPO pipeline</button>
+  <button type="button" role="tab" id="tab-breadth" data-v="breadth" aria-controls="v-breadth" aria-selected="false">Market breadth</button>
+</div></nav>
+
+<div id="v-filings" role="tabpanel" aria-labelledby="tab-filings">
 <div class="filters" role="region" aria-label="Filters">
   <div class="wrap f-in">
     <div class="f"><span class="l" id="l-r">Filed in</span>
@@ -273,12 +348,49 @@ table.t{border-collapse:collapse;width:100%;min-width:980px}
     <div class="more" id="more"></div>
   </section>
 
-  <footer class="foot">
-    <div class="src" id="src"></div>
-    <p>Filings are compiled from public sources and shown as published. Check the official document before relying on any item. This page is for research and is not investment advice.</p>
-    <p>afc | ashmavir Financial Consultants Pvt. Ltd. Research desk. Sector returns are from public index data and may be delayed.</p>
-  </footer>
 </main>
+</div>
+
+<main class="wrap" id="v-sectors" role="tabpanel" aria-labelledby="tab-sectors" hidden>
+  <section class="panel" aria-labelledby="h-sx">
+    <div class="ph"><div><h2 id="h-sx">Sector heatmap</h2><p id="sx-sub"></p></div>
+      <div class="tools"><span class="pill" id="sx-pill"><i></i><span></span></span></div></div>
+    <div class="two" id="sx-lists"></div>
+    <div class="sx-bar">
+      <div class="f"><span class="l" id="l-sx">Sort by</span><div class="seg" id="sx-sort" role="group" aria-labelledby="l-sx"></div></div>
+      <div class="f search"><label for="sx-q">Find a stock or sector</label><input id="sx-q" type="search" placeholder="Name or symbol" autocomplete="off"></div>
+    </div>
+    <div class="hm-wrap" id="sx-body"></div>
+    <div class="hm-key"><span>Fall</span><span class="ramp" aria-hidden="true"></span><span>Rise</span><span style="margin-left:auto">Select a sector to see its stocks</span></div>
+  </section>
+</main>
+
+<main class="wrap" id="v-ipos" role="tabpanel" aria-labelledby="tab-ipos" hidden>
+  <section class="panel" aria-labelledby="h-ip">
+    <div class="ph"><div><h2 id="h-ip">IPO pipeline</h2><p id="ip-sub"></p></div>
+      <div class="tools"><span class="pill" id="ip-pill"><i></i><span></span></span>
+        <div class="seg sm" id="ip-g" role="group" aria-label="Segment"><button type="button" data-v="all" aria-pressed="true">All</button><button type="button" data-v="M" aria-pressed="false">Mainboard</button><button type="button" data-v="S" aria-pressed="false">SME</button></div>
+        <div class="seg sm" id="ip-s" role="group" aria-label="Status"><button type="button" data-v="all" aria-pressed="true">Any</button><button type="button" data-v="open" aria-pressed="false">Open</button><button type="button" data-v="upcoming" aria-pressed="false">Upcoming</button><button type="button" data-v="closed" aria-pressed="false">Closed</button></div></div></div>
+    <div class="pb"><div class="cards" id="ip-body"></div>
+      <p class="note">GMP is the unofficial grey market premium over the issue price, as reported by ipowatch.in. It is not an exchange price and can change sharply before listing. Issue size is in crores. Minimum investment is one lot at the upper price band. For information only, not a recommendation to apply.</p></div>
+  </section>
+</main>
+
+<main class="wrap" id="v-breadth" role="tabpanel" aria-labelledby="tab-breadth" hidden>
+  <section class="panel" aria-labelledby="h-br">
+    <div class="ph"><div><h2 id="h-br">Market breadth</h2><p id="br-sub"></p></div>
+      <div class="tools"><span class="pill" id="br-state"></span><span class="pill" id="br-pill"><i></i><span></span></span></div></div>
+    <div class="pb"><div class="tw"><table class="br" id="br-table"></table></div>
+      <p class="note" id="br-note"></p></div>
+  </section>
+</main>
+
+<footer class="wrap foot">
+  <div class="src" id="src"></div>
+  <p>Filings are compiled from public sources and shown as published. Check the official document before relying on any item. This page is for research and is not investment advice.</p>
+  <p>Sector and breadth numbers are calculated from the NSE Nifty 500 list and daily closing prices from Yahoo Finance, once a day after the market closes. IPO grey market premiums come from ipowatch.in's public table and are unofficial. Data can be delayed or wrong.</p>
+  <p>afc | ashmavir Financial Consultants Pvt. Ltd. Research desk.</p>
+</footer>
 <div class="tip" id="tip" role="tooltip"></div>
 
 <script type="application/json" id="data">__DATA__</script>
@@ -319,6 +431,7 @@ const RANGES = ["7", "30", "90", "365", "all"];
 let sort = { k: "d", dir: -1 }, shown = 25, view = "chart";
 function writeHash() {
   const p = new URLSearchParams();
+  if (page !== "filings") p.set("v", page);
   for (const k in DEF) if (S[k] !== DEF[k]) p.set(k, S[k]);
   history.replaceState(null, "", p.toString() ? "#" + p : location.pathname + location.search);
 }
@@ -603,10 +716,204 @@ function render() {
   renderTable(items);
   $("#csv").onclick = () => exportCsv(items.slice().sort((a, b) => (b.d || "").localeCompare(a.d || "")));
 }
-buildFilters();
+/* ---------- shared helpers for the data pages ---------- */
+const PAGES = ["filings", "sectors", "ipos", "breadth"];
+let page = "filings";
+{ const v = new URLSearchParams(location.hash.slice(1)).get("v"); if (PAGES.includes(v)) page = v; }
+const MK = DATA.market, IPOS = DATA.ipos;
+const signed = (x, d) => x == null ? "–" : (x > 0 ? "+" : "") + minus(x.toFixed(d == null ? 2 : d));
+const inr = n => "₹" + n.toLocaleString("en-IN", { maximumFractionDigits: 2 });
+const shortDate = iso => { const [, m, d] = iso.split("-"); return (+d) + " " + MON[m - 1]; };
+const ageDays = iso => Math.round((today - parse(iso)) / 864e5);
+function setPill(node, iso, good, warn, label) {
+  const d = ageDays(iso), cls = d <= good ? "good" : d <= warn ? "warn" : "bad";
+  node.className = "pill " + cls; node.textContent = "";
+  node.appendChild(el("i")); node.appendChild(el("span", null, (cls === "bad" ? "Out of date. " : "") + label + " " + fmt(iso)));
+}
+function emptyBox(host, text) { host.textContent = ""; host.appendChild(el("div", "empty", text)); }
+function tint(td, x, scale) {
+  if (x == null) { td.textContent = "–"; td.style.color = "var(--faint)"; return; }
+  const k = Math.max(-1, Math.min(1, x / scale)), rgb = mix(NEU, k >= 0 ? POS : NEG, Math.abs(k));
+  td.style.background = "rgb(" + rgb.join(",") + ")"; td.style.color = Math.abs(k) > 0.55 ? "#fff" : "var(--ink)";
+  td.textContent = signed(x) + "%";
+}
+const p90 = arr => { const v = arr.filter(x => x != null).map(Math.abs).sort((a, b) => a - b); return Math.max(v.length ? v[Math.floor(v.length * 0.9)] : 1, 0.5); };
+
+/* ---------- sector heatmap page ---------- */
+const SX = { h: "default", q: "", open: new Set(), full: new Set(), focus: null };
+function stockMatches(s, q) { return (s[0] + " " + s[1]).toLowerCase().includes(q); }
+function renderSectors() {
+  const body = $("#sx-body"), lists = $("#sx-lists"); lists.textContent = "";
+  if (!MK) { emptyBox(body, "Stock-level sector data is not available yet. It is built once a day after the market closes."); $("#sx-sub").textContent = ""; $("#sx-pill").hidden = true; return; }
+  $("#sx-pill").hidden = false; setPill($("#sx-pill"), MK.asof, 4, 8, "Data as of");
+  $("#sx-sub").textContent = "Median return of the stocks in each sector. " + MK.priced + " of the Nifty 500, grouped by NSE industry.";
+  const H = MK.horizons, hix = k => H.indexOf(k), q = SX.q.trim().toLowerCase();
+  const lead = SX.h === "default" ? "1W" : SX.h;
+  const ranked = MK.clusters.filter(c => c.med[lead] != null).sort((a, b) => b.med[lead] - a.med[lead]);
+  for (const [title, list] of [["Strongest sectors, " + lead, ranked.slice(0, 5)], ["Weakest sectors, " + lead, ranked.slice(-5).reverse()]]) {
+    const ol = el("ol", "rank"); ol.appendChild(el("h3", null, title));
+    for (const c of list) { const li = el("li"); li.appendChild(el("span", null, c.n)); li.appendChild(el("b", c.med[lead] >= 0 ? "up" : "dn", signed(c.med[lead]) + "%")); ol.appendChild(li); }
+    lists.appendChild(ol);
+  }
+  const secScale = {}, stkScale = {};
+  for (const h of H) { secScale[h] = p90(MK.clusters.map(c => c.med[h])); stkScale[h] = p90(MK.stocks.map(s => s[3][hix(h)])); }
+  let rows = MK.clusters.map((c, i) => ({ c, i, stocks: MK.stocks.filter(s => s[2] === i) }));
+  if (q) rows = rows.filter(r => r.c.n.toLowerCase().includes(q) || r.stocks.some(s => stockMatches(s, q)));
+  rows.sort(SX.h === "default" ? (a, b) => a.c.n.localeCompare(b.c.n) : (a, b) => (b.c.med[SX.h] == null ? -1e9 : b.c.med[SX.h]) - (a.c.med[SX.h] == null ? -1e9 : a.c.med[SX.h]));
+  body.textContent = "";
+  if (!rows.length) { body.appendChild(el("div", "empty", "No sector or stock matches that search.")); return; }
+  const t = el("table", "sx"), head = el("tr"); head.appendChild(el("th", "l", "Sector"));
+  for (const h of H) head.appendChild(el("th", null, h));
+  t.appendChild(head);
+  for (const r of rows) {
+    const open = SX.open.has(r.i) || (q && !r.c.n.toLowerCase().includes(q));
+    const tr = el("tr", "sec"); tr.tabIndex = 0; tr.dataset.i = r.i; tr.setAttribute("role", "button"); tr.setAttribute("aria-expanded", String(!!open));
+    const nm = el("td", "nm"); nm.appendChild(el("span", "car", open ? "▾" : "▸")); nm.appendChild(el("b", null, r.c.n)); nm.appendChild(el("span", "muted", "  " + r.c.k + " stocks"));
+    tr.appendChild(nm);
+    for (const h of H) { const td = el("td", "v"); tint(td, r.c.med[h], secScale[h]); td.title = r.c.n + ", " + h + " median: " + signed(r.c.med[h]) + "%"; tr.appendChild(td); }
+    const toggle = () => { SX.open.has(r.i) ? SX.open.delete(r.i) : SX.open.add(r.i); SX.focus = r.i; renderSectors(); };
+    tr.addEventListener("click", toggle); tr.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggle(); } });
+    t.appendChild(tr);
+    if (!open) continue;
+    let list = r.stocks.slice();
+    if (q && !r.c.n.toLowerCase().includes(q)) list = list.filter(s => stockMatches(s, q));
+    const key = SX.h === "default" ? 0 : hix(SX.h);
+    list.sort((a, b) => (b[3][key] == null ? -1e9 : b[3][key]) - (a[3][key] == null ? -1e9 : a[3][key]));
+    const cap = SX.full.has(r.i) ? list.length : 25;
+    for (const s of list.slice(0, cap)) {
+      const sr = el("tr", "stk"), sn = el("td", "nm"); sn.appendChild(el("b", null, s[0])); sn.appendChild(el("span", "muted", "  " + s[1])); sn.title = s[0] + ", " + s[1]; sr.appendChild(sn);
+      H.forEach((h, k) => { const td = el("td", "v"); tint(td, s[3][k], stkScale[h]); sr.appendChild(td); });
+      t.appendChild(sr);
+    }
+    if (list.length > cap) {
+      const mr = el("tr", "stk"), td = el("td", "more-c"); td.colSpan = H.length + 1;
+      const b = el("button", "btn", "Show all " + list.length + " stocks"); b.type = "button"; b.addEventListener("click", () => { SX.full.add(r.i); renderSectors(); });
+      td.appendChild(b); mr.appendChild(td); t.appendChild(mr);
+    }
+  }
+  body.appendChild(t);
+  if (SX.focus != null) { const f = body.querySelector('tr.sec[data-i="' + SX.focus + '"]'); if (f) f.focus(); SX.focus = null; }
+}
+function buildSectorControls() {
+  const seg = $("#sx-sort");
+  for (const [v, t] of [["default", "Name"], ["1D", "1D"], ["1W", "1W"], ["1M", "1M"], ["3M", "3M"], ["6M", "6M"], ["1Y", "1Y"], ["YTD", "YTD"], ["2Y", "2Y"]]) {
+    const b = el("button", null, t); b.type = "button"; b.dataset.v = v; b.setAttribute("aria-pressed", String(v === SX.h)); seg.appendChild(b);
+  }
+  seg.addEventListener("click", e => { const b = e.target.closest("button"); if (!b) return; SX.h = b.dataset.v; for (const x of seg.children) x.setAttribute("aria-pressed", String(x === b)); renderSectors(); });
+  let timer; $("#sx-q").addEventListener("input", e => { clearTimeout(timer); timer = setTimeout(() => { SX.q = e.target.value; renderSectors(); }, 120); });
+}
+
+/* ---------- IPO pipeline page ---------- */
+const IP = { g: "all", s: "all" };
+const STATE_WORD = { open: "Open", upcoming: "Upcoming", closed: "Closed" };
+function ipoCard(i) {
+  const c = el("article", "card");
+  const top = el("div", "c-top"), st = el("span", "stt " + i.st); st.appendChild(el("i"));
+  st.appendChild(document.createTextNode(STATE_WORD[i.st] + (i.st === "open" && i.c ? ", closes " + shortDate(i.c) : i.st === "upcoming" && i.o ? ", opens " + shortDate(i.o) : i.st === "closed" && i.c ? " " + shortDate(i.c) : "")));
+  top.appendChild(st); top.appendChild(el("span", "tag", i.sg === "S" ? (i.x || "SME") : "Mainboard")); c.appendChild(top);
+  c.appendChild(el("h3", null, i.n));
+  const g = el("div", "gmp " + (i.pct == null ? "" : i.pct > 0 ? "pos" : i.pct < 0 ? "neg" : ""));
+  g.appendChild(el("div", "gk", "Grey market premium"));
+  if (i.pct == null) { g.appendChild(el("div", "gp none", "Not quoted yet")); g.appendChild(el("div", "gt", i.hi ? "Upper price band " + inr(i.hi) : "Price band not announced")); }
+  else {
+    g.appendChild(el("div", "gp", signed(i.pct) + "%"));
+    g.appendChild(el("div", "gt", signed(i.gmp, Number.isInteger(i.gmp) ? 0 : 2).replace(/(\d)/, "₹$1") + " on the upper band of " + inr(i.hi) + ". Estimated listing " + inr(i.est)));
+  }
+  c.appendChild(g);
+  const f = el("dl", "facts");
+  const add = (k, v) => { if (v == null || v === "") return; const d = el("div"); d.appendChild(el("dt", null, k)); d.appendChild(el("dd", null, v)); f.appendChild(d); };
+  add("Price band", i.lo && i.hi ? (i.lo === i.hi ? inr(i.hi) : inr(i.lo) + " to " + inr(i.hi)) : "");
+  add("Issue size", i.sz != null ? "₹" + i.sz.toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " Cr" : "");
+  add("Lot size", i.lot ? i.lot.toLocaleString("en-IN") + " shares" : "");
+  add("Minimum investment", i.inv ? inr(i.inv) : "");
+  add("Opens", i.o ? shortDate(i.o) : ""); add("Closes", i.c ? shortDate(i.c) : ""); add("Listing", i.ls ? shortDate(i.ls) : "");
+  c.appendChild(f);
+  if (i.u && safeUrl(i.u)) { const a = el("a", "det", "Full details"); a.href = i.u; a.target = "_blank"; a.rel = "noopener noreferrer"; c.appendChild(a); }
+  return c;
+}
+function renderIpos() {
+  const body = $("#ip-body"); body.textContent = "";
+  if (!IPOS) { emptyBox(body, "IPO data is not available yet. It loads with the next hourly check."); $("#ip-sub").textContent = ""; $("#ip-pill").hidden = true; return; }
+  const n = s => IPOS.filter(i => i.st === s).length;
+  $("#ip-sub").textContent = n("open") + " open, " + n("upcoming") + " upcoming, " + n("closed") + " recently closed";
+  const ups = IPOS.map(i => i.up).filter(Boolean).sort();
+  const pill = $("#ip-pill"); pill.hidden = !ups.length; if (ups.length) setPill(pill, ups[ups.length - 1], 3, 7, "Premiums as of");
+  for (const [id, key] of [["#ip-g", "g"], ["#ip-s", "s"]]) for (const b of $(id).children) b.setAttribute("aria-pressed", String(b.dataset.v === IP[key]));
+  const list = IPOS.filter(i => (IP.g === "all" || i.sg === IP.g) && (IP.s === "all" || i.st === IP.s));
+  if (!list.length) { body.className = ""; body.appendChild(el("div", "empty", "No issues match these filters.")); return; }
+  body.className = "cards"; for (const i of list) body.appendChild(ipoCard(i));
+}
+function buildIpoControls() {
+  for (const [id, key] of [["#ip-g", "g"], ["#ip-s", "s"]]) $(id).addEventListener("click", e => { const b = e.target.closest("button"); if (!b) return; IP[key] = b.dataset.v; renderIpos(); });
+}
+
+/* ---------- market breadth page ---------- */
+const BR_COLS = [
+  ["Daily thrust", [["up4", "Up 4%+ today", "up"], ["dn4", "Down 4%+ today", "dn"], ["r5", "5-day thrust ratio", "ratio"], ["r10", "10-day thrust ratio", "ratio"]]],
+  ["Quarter momentum", [["uq", "Up 25%+ in a quarter", "up"], ["dq", "Down 25%+ in a quarter", "dn"]]],
+  ["Month swings", [["um", "Up 25%+ in a month", "up"], ["dm", "Down 25%+ in a month", "dn"]]],
+  ["34-day drift", [["ut", "Up 13%+ in 34 days", "up"], ["dt", "Down 13%+ in 34 days", "dn"]]],
+  ["Health", [["tr", "Stocks tracked", "plain"], ["a40", "Above 40-day average", "mid"], ["nf", "Nifty 50", "nifty"]]],
+];
+function breadthState(r) {
+  if (r.r10 != null && r.a40 != null && r.r10 >= 1.5 && r.a40 >= 55) return "Broad strength";
+  if (r.r10 != null && r.a40 != null && r.r10 <= 0.7 && r.a40 <= 45) return "Broad weakness";
+  return "Mixed";
+}
+function renderBreadth() {
+  const t = $("#br-table"); t.textContent = "";
+  if (!MK) { $("#br-sub").textContent = ""; $("#br-state").hidden = true; $("#br-pill").hidden = true; $("#br-note").textContent = ""; const tr = el("tr"), td = el("td"); td.appendChild(el("div", "empty", "Market breadth is not available yet. It is built once a day after the market closes.")); tr.appendChild(td); t.appendChild(tr); return; }
+  $("#br-pill").hidden = false; setPill($("#br-pill"), MK.asof, 4, 8, "Data as of");
+  const rows = MK.breadth, latest = rows[0];
+  $("#br-sub").textContent = "How many of the " + MK.priced + " Nifty 500 stocks are making big moves, session by session. Newest first.";
+  const st = $("#br-state"); st.hidden = false; st.className = "pill"; st.textContent = breadthState(latest);
+  st.title = "Reading for the latest session. Broad strength: 10-day thrust at or above 1.5 and at least 55% of stocks above their 40-day average. Broad weakness: 10-day thrust at or below 0.7 and 45% or less above it. Anything else is mixed.";
+  const maxOf = k => Math.max(1, ...rows.map(r => r[k] || 0));
+  const g1 = el("tr"); g1.appendChild(el("th")); const g2 = el("tr"); g2.appendChild(el("th", null, "Session"));
+  for (const [g, cols] of BR_COLS) { const th = el("th", "grp", g); th.colSpan = cols.length; g1.appendChild(th); for (const c of cols) g2.appendChild(el("th", null, c[1])); }
+  const thead = el("thead"); thead.appendChild(g1); thead.appendChild(g2); t.appendChild(thead);
+  const tb = el("tbody");
+  rows.forEach((r, ri) => {
+    const tr = el("tr"), d = parse(r.d), td0 = el("td", "ses");
+    td0.appendChild(document.createTextNode(shortDate(r.d)));
+    const wk = el("small", null, ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"][d.getDay()] + " " + d.getFullYear()); if (ri === 0) wk.appendChild(el("span", "tag", "Latest"));
+    td0.appendChild(wk); tr.appendChild(td0);
+    for (const [, cols] of BR_COLS) for (const [k, , kind] of cols) {
+      const td = el("td"), v = r[k];
+      if (kind === "nifty") {
+        td.className = "nf"; td.appendChild(document.createTextNode(v.toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 })));
+        if (r.nc != null) td.appendChild(el("small", r.nc >= 0 ? "up" : "dn", signed(r.nc) + "%"));
+      } else if (v == null) { td.textContent = "–"; td.style.color = "var(--faint)"; }
+      else {
+        td.textContent = kind === "ratio" ? v.toFixed(2) : kind === "mid" ? v.toFixed(1) + "%" : v.toLocaleString("en-IN");
+        let rgb = null;
+        if (kind === "up") rgb = mix(NEU, POS, 0.55 * v / maxOf(k)); else if (kind === "dn") rgb = mix(NEU, NEG, 0.55 * v / maxOf(k));
+        else if (kind === "ratio") rgb = v >= 1 ? mix(NEU, POS, Math.min(0.6, (v - 1) / 2)) : mix(NEU, NEG, Math.min(0.6, (1 - v) * 0.9));
+        else if (kind === "mid") rgb = v >= 50 ? mix(NEU, POS, Math.min(0.6, (v - 50) / 35)) : mix(NEU, NEG, Math.min(0.6, (50 - v) / 35));
+        if (rgb) td.style.background = "rgb(" + rgb.join(",") + ")";
+      }
+      tr.appendChild(td);
+    }
+    tb.appendChild(tr);
+  });
+  t.appendChild(tb);
+  $("#br-note").textContent = "Built from daily closes of the Nifty 500 stocks. A move is close to close. Thrust ratio is stocks up 4%+ divided by stocks down 4%+ over the last 5 or 10 sessions. A quarter is 65 sessions and a month is 20. Above 40-day average is the share of stocks closing above their 40-session simple average. Stocks that jumped more than 50% in a single day are left out as likely unadjusted corporate actions. Nifty 500 is a narrower base than the whole market.";
+}
+
+/* ---------- page switching ---------- */
+function setPage(v) {
+  page = PAGES.includes(v) ? v : "filings";
+  for (const b of document.querySelectorAll(".tabs button")) { const on = b.dataset.v === page; b.setAttribute("aria-selected", String(on)); b.tabIndex = on ? 0 : -1; }
+  for (const p of PAGES) $("#v-" + p).hidden = p !== page;
+  hideTip();
+  if (page === "sectors") renderSectors(); else if (page === "ipos") renderIpos(); else if (page === "breadth") renderBreadth(); else render();
+  writeHash();
+}
+buildFilters(); buildSectorControls(); buildIpoControls();
 for (const b of document.querySelectorAll("th button")) b.addEventListener("click", () => { const k = b.dataset.k; sort = { k, dir: sort.k === k ? -sort.dir : (k === "n" ? 1 : -1) }; renderTable(C.filter(match).filter(c => inWin(c, window_()))); });
 $("#t-view").addEventListener("click", e => { const b = e.target.closest("button"); if (!b) return; view = b.dataset.v; for (const x of $("#t-view").children) x.setAttribute("aria-pressed", String(x === b)); render(); });
-renderChrome(); renderHeatmap(); render();
+for (const b of document.querySelectorAll(".tabs button")) b.addEventListener("click", () => { setPage(b.dataset.v); window.scrollTo(0, 0); });
+renderChrome(); renderHeatmap(); setPage(page);
 })();
 </script>
 </body>

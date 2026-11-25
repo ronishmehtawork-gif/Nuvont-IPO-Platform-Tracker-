@@ -143,7 +143,7 @@ def _script_hash(html: str) -> str:
     return "sha256-" + base64.b64encode(digest).decode()
 
 
-def build_site(state: dict, out_path: str, now: datetime) -> None:
+def build_site(state: dict, out_path: str, now: datetime, market: dict | None = None, ipos: dict | None = None) -> None:
     updated = now.strftime("%d %b %Y, %I:%M %p IST").lstrip("0")
     payload = {
         "generated": now.isoformat(timespec="seconds"),
@@ -152,6 +152,8 @@ def build_site(state: dict, out_path: str, now: datetime) -> None:
         "sectors": state.get("sectors") or {"updated": updated, "groups": {}},
         "health": _health(state),
         "alerts": sum(1 for e in state.get("seen", {}).values() if e.get("alerted")),
+        "market": market,
+        "ipos": (ipos or {}).get("items") if ipos else None,
     }
     html = TEMPLATE.read_text(encoding="utf-8")
     html = html.replace("__SCRIPT_HASH__", _script_hash(html))

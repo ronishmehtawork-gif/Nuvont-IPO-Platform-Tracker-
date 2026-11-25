@@ -6,6 +6,8 @@ import sys
 from datetime import date, datetime, timedelta
 from zoneinfo import ZoneInfo
 
+from . import diag, ipowatch
+from . import market as market_data
 from . import state as st
 from .documents import exchange_doc_label, find_pdf_links
 from .http import Fetcher
@@ -254,11 +256,19 @@ def main() -> None:
     state = st.load(path)
     now = datetime.now(IST)
     run_once(all_sources(), fetcher, tg, state, now, segments, os.getenv("RADAR_SITE_URL", ""))
-    sectors = fetch_sector_heatmap(fetcher, now)
-    if sectors["groups"]:
-        state["sectors"] = sectors
-    st.save(path, state)
-    build_site(state, os.getenv("RADAR_SITE", "docs/index.html"), now)
+    st.save(path, state)  # save first: alerts are already out, so nothing below may cause a repeat
+    try:
+        sectors = fetch_sector_heatmap(fetcher, now)
+        if sectors["groups"]:
+            state["sectors"] = sectors
+            st.save(path, state)
+    except Exception as e:  # noqa: BLE001 - the index strip is optional; alerts and the page go on without it
+        print(f"sector index fetch failed: {type(e).__name__}", file=sys.stderr)
+    ipos, ipo_info = ipowatch.refresh(fetcher, os.getenv("RADAR_IPOS", "data/ipos.json"), now)
+    diag.record("ipo_pipeline", ipo_info)
+    print("ipo pipeline:", ipo_info)
+    build_site(state, os.getenv("RADAR_SITE", "docs/index.html"), now,
+               market=market_data.load(os.getenv("RADAR_MARKET", "data/market.json")), ipos=ipos)
 
 
 if __name__ == "__main__":

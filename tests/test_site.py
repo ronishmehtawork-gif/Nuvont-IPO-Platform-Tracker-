@@ -51,3 +51,17 @@ def test_csp_hash_matches_the_only_executable_script(tmp_path):
     assert "connect-src 'none'" in html and "default-src 'none'" in html
     assert "__DATA__" not in html and "__SCRIPT_HASH__" not in html
     assert len(re.findall(r"<script>", html)) == 1  # the data block is type=application/json, not executable
+
+
+def test_market_and_ipo_data_travel_inside_the_page_without_breaking_it(tmp_path):
+    market = {"asof": "2026-11-25", "universe": 1, "priced": 1, "horizons": ["1D"], "industries": ["Power"],
+              "clusters": [{"n": "Power", "k": 1, "med": {"1D": 1.0}, "adv": 1.0}],
+              "stocks": [["EVIL", "Evil </script><img src=x onerror=alert(1)> Ltd", 0, [1.0]]], "breadth": [{"d": "2026-11-25"}]}
+    ipos = {"items": [{"n": "Bad </script> IPO", "u": "https://ipowatch.in/x/", "sg": "M", "st": "open"}]}
+    out = tmp_path / "index.html"
+    build_site({"seen": {}}, str(out), datetime(2026, 11, 26, 12, 0, tzinfo=IST), market=market, ipos=ipos)
+    html = out.read_text()
+    assert html.count("</script>") == 2 and "Evil <\\/script>" in html and "Bad <\\/script> IPO" in html
+    assert "__DATA__" not in html and "onerror" in html  # present only as inert JSON text inside the data block
+    code = re.search(r"<script>(.*?)</script>", html, re.S).group(1)
+    assert "innerHTML" not in code and "document.write" not in code and "eval(" not in code and "outerHTML" not in code
