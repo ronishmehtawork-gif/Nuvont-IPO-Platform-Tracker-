@@ -1,6 +1,15 @@
 {
   "market": {
-    "asof_kept": "",
+    "asof": "2026-11-23",
+    "dropped": {
+      "no_data": 1,
+      "outlier": [
+        "HEGAM",
+        "VEDL"
+      ],
+      "short": 0,
+      "stale": 0
+    },
     "failure_examples": [
       "DUMMYHEG: HTTP 404"
     ],
@@ -13,8 +22,15 @@
       "2026-11-20",
       "2026-11-23"
     ],
-    "note": "kept previous data: CUPID has an impossible return (2002.1%)",
-    "ok": false,
+    "note": "saved",
+    "ok": true,
+    "priced": 493,
+    "stock_last_sessions": [
+      "2026-11-19",
+      "2026-11-20",
+      "2026-11-23"
+    ],
+    "universe": 496,
     "universe_note": "universe fetched from nsearchives.nseindia.com"
   }
 }
