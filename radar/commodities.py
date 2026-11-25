@@ -51,7 +51,8 @@ HORIZON_KEYS = ["1D"] + [k for k, _ in HORIZONS] + ["YTD"]
 
 MIN_BARS = 60
 MAX_STALE_DAYS = 6           # futures trade on weekdays; a longer gap means the feed has stopped
-MAX_DAILY_MOVE = 0.45        # a bigger one-day move is read as a data fault or contract-roll gap
+MAX_DAILY_MOVE = 0.45        # a bigger one-day move in the latest sessions is read as a data fault
+RECENT_BARS = 10             # older jumps are real moves or contract rolls and stay in the history (natural gas, Jan 2026)
 MIN_SHARE_OK = 0.5           # share of the requested symbols that must pass, or the old file stays
 SPARK_POINTS = 90
 WORKERS = 4
@@ -97,7 +98,7 @@ def summarize(symbol: str, closes: dict[date, float], now: datetime, absolute: b
     last_day, last = days[-1], closes[days[-1]]
     if (now.astimezone(IST).date() - last_day).days > MAX_STALE_DAYS:
         raise CommodityError(f"last bar is from {last_day}")
-    window = days[-253:]
+    window = days[-(RECENT_BARS + 1):]
     for a, b in zip(window, window[1:]):
         if abs(closes[b] / closes[a] - 1) > MAX_DAILY_MOVE:
             raise CommodityError(f"{(closes[b] / closes[a] - 1) * 100:+.0f}% in one day on {b}")

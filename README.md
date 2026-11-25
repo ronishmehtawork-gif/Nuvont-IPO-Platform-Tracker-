@@ -120,7 +120,7 @@ How the backend protects the page (`radar/market.py`, `radar/ipowatch.py`):
 - Sector flow needs at least 15 of the last 20 sessions of volume for a stock, drops a stock with a day above
   Rs 50,000 crore as a data slip, and is left out altogether when fewer than half of the F&O stocks are usable.
 - Commodities are published only when at least half of the symbols pass: 60 or more daily bars, a last bar not older
-  than 6 days, no daily move above 45%, and a plausible price. Gold, silver, oil and USD/INR also have price ranges.
+  than 6 days, no daily move above 45% in the last 10 sessions (older jumps from contract rolls stay in the history), and a plausible price. Gold, silver, oil and USD/INR also have price ranges.
 - The grey market premium is unofficial and shown with that warning. Nothing here is a recommendation.
 
 Run the market job by hand from the Actions tab: choose **market**, then **Run workflow**. Data files: `data/market.json`,

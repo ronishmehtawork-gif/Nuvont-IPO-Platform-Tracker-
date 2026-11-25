@@ -76,6 +76,13 @@ def test_bad_series_are_refused_with_a_reason():
     glitch[max(glitch)] = glitch[sorted(glitch)[-2]] * 2.5
     with pytest.raises(c.CommodityError, match="in one day"):
         c.summarize("HG=F", glitch, NOW)
+    # a big jump months ago (a contract roll or a real spike) is history, not a fault
+    old = ramp()
+    day = sorted(old)[-120]
+    for d in old:
+        if d >= day:
+            old[d] *= 0.5
+    assert c.summarize("NG=F", old, NOW)["p"] > 0
     with pytest.raises(c.CommodityError, match="plausible"):
         c.summarize("GC=F", ramp(start=1.0, step=0.0001), NOW)  # gold at one dollar
 
