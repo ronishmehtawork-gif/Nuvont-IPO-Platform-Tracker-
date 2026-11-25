@@ -165,9 +165,9 @@ def test_too_little_coverage_or_history_raises():
     uni, series, nifty, _ = make_market(mutate=mutate)
     with pytest.raises(m.MarketError, match="fresh close"):
         m.build_market(uni, series, nifty, NOW)
-    uni, series, nifty, cal = make_market(n=130)
+    uni, series, nifty, _ = make_market(n=60)  # under 100 sessions of history
     with pytest.raises(m.MarketError, match="sessions"):
-        m.build_market(uni, series, {d: 1.0 for d in cal[-50:]}, NOW)
+        m.build_market(uni, series, nifty, NOW)
 
 
 def test_old_data_is_rejected():
@@ -251,3 +251,31 @@ def test_a_site_that_answers_404_for_everything_leaves_examples_to_diagnose(tmp_
     assert not info["ok"] and info["fetch_failures"] == {"HTTP 404": 420}
     assert len(info["failure_examples"]) == 5 and info["failure_examples"][0].endswith("HTTP 404")
     assert info["nifty_last_sessions"][-1] == "2026-11-25"
+
+
+def test_calendar_comes_from_the_stocks_so_a_lagging_index_feed_cannot_hold_the_page_back():
+    uni, series, nifty, cal = make_market()
+    lagging = {d: v for d, v in nifty.items() if d < cal[-1]}  # the index feed is one session behind
+    payload = m.build_market(uni, series, lagging, NOW)
+    assert payload["asof"] == "2026-11-25" and payload["breadth"][0]["nf"] is None
+    assert payload["breadth"][1]["nf"] is not None and payload["breadth"][0]["nc"] is None
+
+
+def test_a_real_twenty_fold_runner_stays_but_a_fifty_fold_fault_is_left_out_without_failing_the_job():
+    def mutate(series, cal):
+        series["STK001"] = {d: 10.0 * (1 + i / (len(cal) - 1) * 20) for i, d in enumerate(cal)}   # 21x, smooth
+        series["STK002"] = {d: 10.0 * (1 + i / (len(cal) - 1) * 70) for i, d in enumerate(cal)}   # 71x, smooth
+    uni, series, nifty, cal = make_market(mutate=mutate)
+    payload = m.build_market(uni, series, nifty, NOW)
+    names = {s[0] for s in payload["stocks"]}
+    assert "STK001" in names and "STK002" not in names and "STK002" in payload["dropped"]["outlier"]
+    m.validate(payload, None)  # no job-level failure over one stock
+
+
+def test_an_unadjusted_split_long_ago_is_caught_across_the_whole_two_year_window():
+    def mutate(series, cal):
+        cut = len(cal) - 400
+        series["STK003"] = {d: (500.0 if i < cut else 100.0) for i, d in enumerate(cal)}  # 5:1 split never adjusted
+    uni, series, nifty, cal = make_market(n=520, mutate=mutate)
+    payload = m.build_market(uni, series, nifty, NOW)
+    assert "STK003" in payload["dropped"]["outlier"]

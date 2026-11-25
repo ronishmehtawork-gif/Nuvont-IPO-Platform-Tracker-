@@ -880,7 +880,7 @@ function renderBreadth() {
     td0.appendChild(wk); tr.appendChild(td0);
     for (const [, cols] of BR_COLS) for (const [k, , kind] of cols) {
       const td = el("td"), v = r[k];
-      if (kind === "nifty") {
+      if (kind === "nifty" && v != null) {
         td.className = "nf"; td.appendChild(document.createTextNode(v.toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 })));
         if (r.nc != null) td.appendChild(el("small", r.nc >= 0 ? "up" : "dn", signed(r.nc) + "%"));
       } else if (v == null) { td.textContent = "–"; td.style.color = "var(--faint)"; }

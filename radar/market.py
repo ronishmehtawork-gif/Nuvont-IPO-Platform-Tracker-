@@ -39,6 +39,9 @@ HORIZON_KEYS = [k for k, _ in HORIZONS] + ["YTD"]
 MIN_UNIVERSE = 400           # NSE publishes 500; far fewer means a broken file
 MIN_COVERAGE = 0.85          # share of the universe that must have a fresh close
 MAX_DAILY_MOVE = 0.50        # a bigger one-day move in the history is treated as an unadjusted corporate action
+MAX_RETURN = 5000.0        # percent. A 50x move on any horizon is far more likely a data fault than a result
+MIN_SESSION_SHARE = 0.6    # a date counts as a trading session when this share of the stocks have a close on it
+JUMP_WINDOW = 505          # sessions checked for unadjusted splits: the whole 2Y horizon plus one
 MAX_STALE_DAYS = 7           # the latest session may not be older than this
 BREADTH_SESSIONS = 20
 WORKERS = 6
@@ -185,14 +188,24 @@ def _median(values: list[float]) -> float | None:
     return round(statistics.median(values), 2) if values else None
 
 
+def session_calendar(series: dict[str, dict]) -> list[date]:
+    """Trading sessions as the stocks themselves show them. The index feed can lag a day or two behind."""
+    counts: dict[date, int] = {}
+    for closes in series.values():
+        for d in closes:
+            counts[d] = counts.get(d, 0) + 1
+    need = MIN_SESSION_SHARE * len(series)
+    return sorted(d for d, c in counts.items() if c >= need)
+
+
 def build_market(universe: list[dict], series: dict[str, dict], nifty: dict[date, float], now: datetime) -> dict:
     """All the arithmetic. Pure function: same inputs, same output."""
-    calendar = sorted(nifty)
+    calendar = session_calendar(series)
     today = now.astimezone(IST).date()
     if calendar and calendar[-1] == today and now.astimezone(IST).time() < dtime(15, 45):
         calendar = calendar[:-1]  # today's bar is still forming; use the last finished session
     if len(calendar) < 100:
-        raise MarketError(f"Nifty 50 history has only {len(calendar)} sessions")
+        raise MarketError(f"only {len(calendar)} trading sessions found in the stock prices")
     asof = calendar[-1]
     if (today - asof).days > MAX_STALE_DAYS:
         raise MarketError(f"latest session {asof} is more than {MAX_STALE_DAYS} days old")
@@ -211,7 +224,7 @@ def build_market(universe: list[dict], series: dict[str, dict], nifty: dict[date
         if arr[-1] is None:
             dropped["stale"] += 1
             continue
-        window = [v for v in arr[-253:] if v is not None]
+        window = [v for v in arr[-JUMP_WINDOW:] if v is not None]
         jumps = [abs(b / a - 1) for a, b in zip(window, window[1:])]
         if jumps and max(jumps) > MAX_DAILY_MOVE:
             dropped["outlier"].append(symbol)
@@ -236,8 +249,13 @@ def build_market(universe: list[dict], series: dict[str, dict], nifty: dict[date
     industries = sorted({meta[s]["i"] for s in grid})
     index_of = {name: i for i, name in enumerate(industries)}
     stocks = []
-    for symbol, arr in grid.items():
-        stocks.append([symbol, meta[symbol]["n"], index_of[meta[symbol]["i"]], returns(arr)])
+    for symbol, arr in list(grid.items()):
+        rets = returns(arr)
+        if any(v is not None and not -99.5 <= v <= MAX_RETURN for v in rets):
+            dropped["outlier"].append(symbol)  # almost certainly an unadjusted corporate action
+            del grid[symbol]
+            continue
+        stocks.append([symbol, meta[symbol]["n"], index_of[meta[symbol]["i"]], rets])
     stocks.sort(key=lambda s: (s[2], s[0]))
 
     clusters = []
@@ -293,8 +311,8 @@ def build_market(universe: list[dict], series: dict[str, dict], nifty: dict[date
             "d": calendar[j].isoformat(), "up4": up4[j], "dn4": dn4[j], "r5": ratio(j, 5), "r10": ratio(j, 10),
             "uq": uq, "dq": dq, "um": um, "dm": dm, "ut": ut, "dt": dt, "tr": tracked,
             "a40": round(above / total * 100, 1) if total else None,
-            "nf": round(nifty[calendar[j]], 2),
-            "nc": _pct(nifty[calendar[j]], nifty.get(calendar[j - 1])),
+            "nf": round(nifty[calendar[j]], 2) if calendar[j] in nifty else None,
+            "nc": _pct(nifty.get(calendar[j]), nifty.get(calendar[j - 1])),
         })
 
     return {
@@ -322,7 +340,7 @@ def validate(new: dict, previous: dict | None) -> None:
         raise MarketError("breadth covers too few stocks")
     for s in new["stocks"]:
         for v in s[3]:
-            if v is not None and not -99.9 <= v <= 2000:
+            if v is not None and not -99.5 <= v <= MAX_RETURN:
                 raise MarketError(f"{s[0]} has an impossible return ({v}%)")
 
 
@@ -355,6 +373,7 @@ def refresh(make_fetcher, market_path: str, universe_path: str, now: datetime) -
             raise MarketError(f"Nifty 50 history unavailable ({nifty_fail})")
         info["nifty_last_sessions"] = [d.isoformat() for d in sorted(nifty_series[NIFTY_SYMBOL])[-3:]]
         series, failures, examples = fetch_series(symbols, make_fetcher, started + BUDGET_SECONDS)
+        info["stock_last_sessions"] = [d.isoformat() for d in session_calendar(series)[-3:]]
         info["fetch_failures"] = failures
         if examples:
             info["failure_examples"] = examples
