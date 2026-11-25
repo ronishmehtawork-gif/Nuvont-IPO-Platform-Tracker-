@@ -1,4 +1,16 @@
 {
+  "ipo_pipeline": {
+    "detail_fetched": 10,
+    "detail_skipped": 0,
+    "note": "saved",
+    "ok": true,
+    "rows": 10,
+    "shown": 10,
+    "with_gmp": 10,
+    "with_listing": 10,
+    "with_lot": 8,
+    "with_size": 9
+  },
   "market": {
     "asof": "2026-11-23",
     "dropped": {
