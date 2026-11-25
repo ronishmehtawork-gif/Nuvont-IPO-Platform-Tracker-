@@ -5,7 +5,7 @@ import os
 import sys
 from datetime import datetime
 
-from . import diag, ipowatch, market
+from . import commodities, diag, ipowatch, market
 from . import state as st
 from .http import Fetcher
 from .run import IST
@@ -30,7 +30,8 @@ def main() -> None:
 
     state = st.load(os.getenv("RADAR_STATE", "data/state.json"))
     ipos = ipowatch.load(os.getenv("RADAR_IPOS", "data/ipos.json"))
-    build_site(state, os.getenv("RADAR_SITE", "docs/index.html"), now, market=payload, ipos=ipos)
+    prices = commodities.load(os.getenv("RADAR_COMMODITIES", "data/commodities.json"))
+    build_site(state, os.getenv("RADAR_SITE", "docs/index.html"), now, market=payload, ipos=ipos, commodities=prices)
     if not info["ok"] and not payload:
         sys.exit(1)  # nothing to show at all: fail the run so it is noticed
 

@@ -6,7 +6,7 @@ import sys
 from datetime import date, datetime, timedelta
 from zoneinfo import ZoneInfo
 
-from . import diag, ipowatch
+from . import commodities, diag, ipowatch
 from . import market as market_data
 from . import state as st
 from .documents import exchange_doc_label, find_pdf_links
@@ -267,8 +267,11 @@ def main() -> None:
     ipos, ipo_info = ipowatch.refresh(fetcher, os.getenv("RADAR_IPOS", "data/ipos.json"), now)
     diag.record("ipo_pipeline", ipo_info)
     print("ipo pipeline:", ipo_info)
+    prices, price_info = commodities.refresh(lambda: Fetcher(), os.getenv("RADAR_COMMODITIES", "data/commodities.json"), now)
+    diag.record("commodities", price_info)
+    print("commodities:", {k: v for k, v in price_info.items() if k not in ("not_fetched", "left_out")})
     build_site(state, os.getenv("RADAR_SITE", "docs/index.html"), now,
-               market=market_data.load(os.getenv("RADAR_MARKET", "data/market.json")), ipos=ipos)
+               market=market_data.load(os.getenv("RADAR_MARKET", "data/market.json")), ipos=ipos, commodities=prices)
 
 
 if __name__ == "__main__":

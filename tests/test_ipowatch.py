@@ -106,6 +106,56 @@ def test_detail_page_facts_in_crores():
     assert w.parse_details("<p>nothing useful</p>") == {}
 
 
+ISSUE_PAGE = """<html><body>
+<nav><a href="https://ipowatch.in/sectors/banking/">Banking</a></nav>
+<h1>Foodlink F&amp;B Holdings IPO Details</h1><div>MainboardOpen</div>
+<div><a href="https://ipowatch.in/sectors/hotels-and-resorts/">Hotels &amp; Resorts</a> &middot; Listed on BSE , NSE &middot; 26 Nov 2026 - 30 Nov 2026</div>
+<div>Issue Size</div><div>360.76 Cr</div><div>Lot Size</div><div>78 Shares</div>
+<div>26 Nov 2026</div><div>IPO Opens</div><div>ACTIVE</div><div>30 Nov 2026</div>
+<div>Lead Managers</div>
+<div><a href="https://ipowatch.in/lead-managers/equirus-capital-pvt-ltd/">Equirus Capital Pvt Ltd</a></div>
+<div><a href="https://ipowatch.in/lead-managers/jm-financial-ltd/">JM Financial Ltd</a></div>
+<div>Registrar</div><div><a href="https://ipowatch.in/registrar/mufg-intime-india-pvt-ltd/">MUFG Intime India Pvt Ltd</a></div>
+<h2>IPO Timeline</h2>
+<div>IPO Opens</div><div>ACTIVE</div><div>26 Nov 2026</div>
+<div>IPO Closes</div><div>PENDING</div><div>30 Nov 2026</div>
+<div>Basis of Allotment</div><div>PENDING</div><div>01 Dec 2026</div>
+<div>Refunds</div><div>PENDING</div><div>02 Dec 2026</div>
+<div>Demat Credit</div><div>PENDING</div><div>02 Dec 2026</div>
+<div>Listing</div><div>PENDING</div><div>03 Dec 2026</div>
+<div><a href="https://ipowatch.in/lead-managers/someone-else-ltd/">Someone Else Ltd</a></div>
+</body></html>"""
+
+
+def test_issue_page_gives_dates_bankers_registrar_and_sector():
+    got = w.parse_details(ISSUE_PAGE)
+    assert got["sc"] == "Hotels & Resorts"                       # not the 'Banking' link in the menu
+    assert got["ex"] == "BSE, NSE"
+    assert got["bk"] == ["Equirus Capital", "JM Financial"]      # stops at the Registrar label
+    assert got["rg"] == "MUFG Intime India"
+    assert (got["al"], got["rf"], got["dc"], got["ls"]) == ("2026-12-01", "2026-12-02", "2026-12-02", "2026-12-03")
+    assert (got["o2"], got["c2"]) == ("2026-11-26", "2026-11-30")
+    assert got["sz"] == 360.76 and got["lot"] == 78
+
+
+def test_dates_are_kept_only_where_the_issue_process_puts_them():
+    item = {"o": "2026-11-26", "c": "2026-11-30", "al": "2026-12-01", "rf": "2026-12-02", "dc": "2026-12-02", "ls": "2026-12-03"}
+    assert w.check_dates(dict(item)) == item
+    bad = w.check_dates(dict(item, al="2026-12-25", rf="2026-12-01", ls="2027-01-20"))
+    assert "al" not in bad and "ls" not in bad and bad["rf"] == "2026-12-01" and bad["dc"] == "2026-12-02"
+    backwards = w.check_dates(dict(item, rf="2026-12-01", al="2026-12-02"))
+    assert "rf" not in backwards and backwards["al"] == "2026-12-02"
+    no_close = w.check_dates({"o": "2026-11-26", "c": "", "al": "2026-12-01"})
+    assert "al" not in no_close
+
+
+def test_banker_names_are_tidied_so_the_same_bank_matches_across_issues():
+    assert w.clean_banker("Equirus Capital Pvt Ltd") == "Equirus Capital"
+    assert w.clean_banker("Anand Rathi Advisors Limited") == "Anand Rathi Advisors"
+    assert w.clean_banker("JM Financial Ltd.") == "JM Financial"
+    assert w.clean_banker("Ambit Private Limited") == "Ambit"
+
+
 # ----------------------------------------------------------------------------- the job
 
 class FakeSite:

@@ -121,6 +121,28 @@ def build_companies(state: dict) -> list[dict]:
     return rows
 
 
+def _norm(name: str) -> str:
+    return re.sub(r"[^a-z0-9]+", "", re.sub(r"\b(limited|ltd|pvt|private)\b", "", (name or "").lower()))
+
+
+def enrich_ipos(items: list[dict], companies: list[dict]) -> list[dict]:
+    """Fill a missing sector or lead manager from the same company's filings, and link its draft or final prospectus."""
+    by_name = {_norm(c["n"]): c for c in companies if c.get("n")}
+    out = []
+    for item in items:
+        item = dict(item)
+        company = by_name.get(_norm(item.get("n", "")))
+        if company:
+            if not item.get("sc") and company.get("sec"):
+                item["sc"] = company["sec"]
+            if not item.get("bk") and company.get("b"):
+                item["bk"] = list(company["b"])
+            if company.get("docs"):
+                item["dl"] = company["docs"][0]
+        out.append(item)
+    return out
+
+
 def _health(state: dict) -> list[dict]:
     out = []
     for name, h in sorted((state.get("health") or {}).items()):
@@ -143,17 +165,20 @@ def _script_hash(html: str) -> str:
     return "sha256-" + base64.b64encode(digest).decode()
 
 
-def build_site(state: dict, out_path: str, now: datetime, market: dict | None = None, ipos: dict | None = None) -> None:
+def build_site(state: dict, out_path: str, now: datetime, market: dict | None = None, ipos: dict | None = None,
+               commodities: dict | None = None) -> None:
     updated = now.strftime("%d %b %Y, %I:%M %p IST").lstrip("0")
+    companies = build_companies(state)
     payload = {
         "generated": now.isoformat(timespec="seconds"),
         "updated": updated,
-        "companies": build_companies(state),
+        "companies": companies,
         "sectors": state.get("sectors") or {"updated": updated, "groups": {}},
         "health": _health(state),
         "alerts": sum(1 for e in state.get("seen", {}).values() if e.get("alerted")),
         "market": market,
-        "ipos": (ipos or {}).get("items") if ipos else None,
+        "ipos": enrich_ipos(ipos["items"], companies) if ipos and ipos.get("items") is not None else None,
+        "commodities": commodities,
     }
     html = TEMPLATE.read_text(encoding="utf-8")
     html = html.replace("__SCRIPT_HASH__", _script_hash(html))

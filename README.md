@@ -87,16 +87,19 @@ period, segment, exchange, status and sector, a sector heatmap, charts of filing
 lead managers and cities, and a searchable table with document links and a CSV download. The page is one static file:
 it makes no network calls when opened.
 
-The page has four tabs. **Filings** is the view above. The other three are built from market data and are described
-below.
+The page has five tabs, in this order. **IPO Desk** opens first. **Filings** is the logbook view described above. The
+other three are built from market data.
 
-### Sector heatmap, IPO pipeline and market breadth
+### IPO Desk, Sector heatmap, Sector flow and Commodities
 
 | Tab | What it shows | Source | Refreshed |
 |---|---|---|---|
+| IPO Desk | Open, upcoming and recently closed issues as cards or a table. Each shows the grey market premium, price band, issue size (in crores), lot size, minimum investment, key dates (opens, closes, allotment, refunds start, demat credit, listing), lead managers (merchant bankers), registrar, sector and exchange. A calendar of the next 14 days of dates sits on top. Filters: segment, status, exchange, sector, lead manager, key dates (closing in 3 days, opening in 7, allotment in 7, listing in 7), premium, search, and sort | ipowatch.in (table and issue pages), with sector and lead managers filled from the Filings data when an issue page lacks them | Every hourly `radar` run |
 | Sector heatmap | Median 1D, 1W, 1M, 3M, 6M, 1Y, YTD and 2Y return of the stocks in each NSE industry, with the stocks themselves one click away | NSE Nifty 500 list and Yahoo Finance daily closes | `market` workflow, 16:37 and 19:07 IST on weekdays |
-| Market breadth | Session by session: stocks up or down 4%, 5 and 10 day thrust ratios, 25% quarter and month moves, 13% moves over 34 days, share above the 40-day average, Nifty 50 | Same closes | Same |
-| IPO pipeline | Open, upcoming and recently closed issues with grey market premium, price band, issue size (in crores), lot size, minimum investment and dates | ipowatch.in | Every hourly `radar` run |
+| Sector flow | Estimated net buying pressure per sector over 1, 5 and 20 sessions, in crores, for the NSE F&O stocks: net flow, strength (net as a share of turnover), turnover, advancers and decliners, a 20-session daily sparkline, and the stocks in each sector. Turnover is closing price times volume. It counts as inflow on a day the stock closes up and outflow on a day it closes down, so it is an estimate from prices and volumes, not a record of what any fund traded | NSE F&O lot file and Yahoo Finance closes and volumes | `market` workflow |
+| Commodities | 27 futures in five groups (precious metals, energy, industrial metals, grains and oilseeds, softs and livestock) with price, 1D, 1W, 1M, 3M, 1Y and YTD change, a 52-week range and a sparkline. Gauges for USD/INR, the dollar index, the US 10-year yield and India VIX. Gold and silver in rupees at international parity (before duty and GST, so not the MCX rate) | Yahoo Finance | Every hourly `radar` run |
+
+Market breadth was removed from the page and its backend. Old links to `#v=ipos` open the IPO Desk.
 
 How the backend protects the page (`radar/market.py`, `radar/ipowatch.py`):
 
@@ -111,9 +114,17 @@ How the backend protects the page (`radar/market.py`, `radar/ipowatch.py`):
   stay in rupees. A premium above 5 times the price is dropped as a parsing slip.
 - `data/diagnostics.json` is a public, secret-free health report: counts, dates and a few example errors for each job.
   Read it first when a tab looks wrong.
+- Issue-page dates are cross-checked: allotment within 7 days of close, refunds and demat credit within 10, listing
+  within 14, and each step not before the one before it. A date that fails is dropped, never shown. If the issue page
+  and the table disagree on the open or close date, the table wins and the conflict is counted in the diagnostics.
+- Sector flow needs at least 15 of the last 20 sessions of volume for a stock, drops a stock with a day above
+  Rs 50,000 crore as a data slip, and is left out altogether when fewer than half of the F&O stocks are usable.
+- Commodities are published only when at least half of the symbols pass: 60 or more daily bars, a last bar not older
+  than 6 days, no daily move above 45%, and a plausible price. Gold, silver, oil and USD/INR also have price ranges.
 - The grey market premium is unofficial and shown with that warning. Nothing here is a recommendation.
 
-Run it by hand from the Actions tab: choose **market**, then **Run workflow**.
+Run the market job by hand from the Actions tab: choose **market**, then **Run workflow**. Data files: `data/market.json`,
+`data/fno.json` (cached F&O list), `data/ipos.json`, `data/commodities.json`, `data/diagnostics.json`.
 
 ## Security
 

@@ -198,8 +198,20 @@ table.t{border-collapse:collapse;width:100%;min-width:980px}
 .sx td.v{height:34px;text-align:center;font-variant-numeric:tabular-nums;font-weight:550;border:2px solid var(--panel);border-radius:5px;background-clip:padding-box;min-width:62px}
 .sx tr.stk td.v{height:27px;font-weight:500;font-size:12px}
 .sx tr.stk td.more-c{padding:8px 10px 8px 30px}
-/* IPO pipeline page */
-.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:14px}
+/* IPO Desk */
+.nosticky{position:static!important}
+.sub-h{margin:0 0 8px;font-size:14px;font-weight:650;color:var(--navy)}
+.desk-top{padding:14px 16px 6px}
+.cal{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px}
+.day{border:1px solid var(--line);border-radius:var(--r);background:var(--panel);min-width:0}
+.day.today{border-color:var(--gold);box-shadow:inset 0 3px 0 var(--gold)}
+.day h4{margin:0;padding:9px 11px 6px;font-size:13px;display:flex;justify-content:space-between;gap:8px;color:var(--navy)}
+.day h4 small{font-weight:500;color:var(--muted);font-size:12px}
+.day ul{list-style:none;margin:0;padding:0 0 3px}
+.day li{padding:5px 11px;font-size:12.5px;display:grid;grid-template-columns:96px minmax(0,1fr);gap:8px;align-items:baseline;border-top:1px solid var(--line-2);min-width:0}
+.day li em{font-style:normal;font-weight:600;white-space:nowrap;color:var(--navy-2)}
+.day li span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
 .card{border:1px solid var(--line);border-radius:var(--r);padding:14px;display:flex;flex-direction:column;gap:11px;background:var(--panel);min-width:0}
 .c-top{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:12.5px;font-weight:600}
 .stt{display:inline-flex;align-items:center;gap:6px}
@@ -207,6 +219,8 @@ table.t{border-collapse:collapse;width:100%;min-width:980px}
 .stt.open i{background:var(--pos)}.stt.upcoming i{background:var(--s2)}
 .tag{border:1px solid var(--line);border-radius:5px;padding:1px 7px;font-size:12px;color:var(--muted);background:var(--bg);white-space:nowrap}
 .card h3{margin:0;font-size:16px;line-height:1.3;color:var(--navy);letter-spacing:-.005em}
+.meta{font-size:12.5px;color:var(--muted);line-height:1.45;margin:0}
+.meta b{color:var(--ink);font-weight:600}
 .gmp{border-radius:7px;padding:10px 12px;background:var(--bg)}
 .gmp.pos{background:#eefaf4}.gmp.neg{background:#fdf0f0}
 .gmp .gk{font-size:12px;color:var(--muted)}
@@ -218,20 +232,64 @@ table.t{border-collapse:collapse;width:100%;min-width:980px}
 .facts div{min-width:0}
 .facts dt{font-size:11.5px;color:var(--faint)}
 .facts dd{margin:0;font-weight:600;font-size:13px;font-variant-numeric:tabular-nums}
-.card .det{margin-top:auto;font-size:12.5px;font-weight:600;color:var(--navy-2);text-decoration:none}
-.card .det:hover{text-decoration:underline}
-/* breadth page */
-.br{border-collapse:separate;border-spacing:0;width:100%;min-width:1080px;font-size:13px}
-.br th{font-size:12px;font-weight:600;color:var(--muted);text-align:center;padding:6px 6px;background:var(--panel);line-height:1.3;vertical-align:bottom}
-.br th.grp{border-bottom:2px solid var(--gold);color:var(--navy);padding-bottom:6px}
-.br td{height:44px;text-align:center;font-variant-numeric:tabular-nums;border:2px solid var(--panel);border-radius:5px;background-clip:padding-box;font-weight:550;padding:0 6px}
-.br th:first-child,.br td:first-child{position:sticky;left:0;z-index:1;background:var(--panel);text-align:left;border-radius:0;padding-left:12px;min-width:112px}
-.br td.ses{font-weight:600;line-height:1.25;white-space:nowrap}
-.br td.ses small{display:block;font-weight:400;color:var(--muted);font-size:12px}
-.br td.nf{text-align:right;padding-right:12px;line-height:1.25}
-.br td.nf small{display:block;font-weight:600;font-size:12px}
-.br .tag{margin-left:6px;font-size:11px;background:var(--navy);color:#fff;border-color:var(--navy)}
+.steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px 8px;font-size:12px}
+.steps li{border-top:2px solid var(--line);padding-top:5px;min-width:0}
+.steps li.done{border-top-color:var(--navy)}
+.steps li.next{border-top-color:var(--gold)}
+.steps .sl{display:block;color:var(--muted);font-size:11.5px}
+.steps li.next .sl{color:var(--gold-ink);font-weight:650}
+.steps b{font-variant-numeric:tabular-nums;font-size:12.5px;font-weight:600}
+.links{display:flex;gap:14px;flex-wrap:wrap;margin-top:auto}
+.links a{font-size:12.5px;font-weight:600;color:var(--navy-2);text-decoration:none}
+.links a:hover{text-decoration:underline}
+.dt{border-collapse:collapse;width:100%;min-width:1180px;font-size:13px}
+.dt th{text-align:left;font-size:12px;font-weight:600;color:var(--muted);padding:8px 10px;border-bottom:1px solid var(--line);white-space:nowrap;background:var(--panel)}
+.dt td{padding:9px 10px;border-bottom:1px solid var(--line-2);vertical-align:top}
+.dt th.num,.dt td.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.dt td.nm b{display:block;color:var(--navy);font-weight:650}
+.dt td.nm small{color:var(--muted)}
+.dt td.st{white-space:nowrap}
+/* sector flow and commodities */
+.gauges{display:grid;grid-template-columns:repeat(var(--n,6),minmax(0,1fr));gap:10px;padding:14px 16px 4px}
+.gauge{border:1px solid var(--line);border-radius:var(--r);padding:10px 12px;min-width:0}
+.gauge .k{font-size:12px;color:var(--muted)}
+.gauge .v{font-size:21px;font-weight:650;font-variant-numeric:tabular-nums;letter-spacing:-.01em;line-height:1.3}
+.gauge .d{font-size:12px;color:var(--muted)}
+.fl{border-collapse:separate;border-spacing:0;width:100%;min-width:900px;font-size:13px}
+.fl th{font-weight:600;color:var(--muted);font-size:12px;text-align:right;padding:6px 10px 8px;background:var(--panel);white-space:nowrap}
+.fl th.l{text-align:left}
+.fl td{padding:8px 10px;border-bottom:1px solid var(--line-2);font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap}
+.fl td.nm{text-align:left;white-space:normal;min-width:200px}
+.fl tr.sec{cursor:pointer}
+.fl tr.sec td{background:var(--gold-wash)}
+.fl tr.sec td:first-child{border-left:3px solid var(--gold)}
+.fl tr.sec:hover td{background:#efe9d8}
+.fl tr.sec .car{display:inline-block;width:14px;color:var(--gold-ink)}
+.fl tr.sec b{color:var(--navy);font-weight:650}
+.fl tr.stk td:first-child{padding-left:30px}
+.fl tr.stk td{font-size:12.5px}
+.fb{position:relative;height:18px;width:170px;display:inline-block;vertical-align:middle}
+.fb::before{content:"";position:absolute;left:50%;top:0;bottom:0;width:1px;background:var(--line)}
+.fb i{position:absolute;top:3px;bottom:3px;border-radius:3px}
+.fb i.p{background:var(--pos)}.fb i.n{background:var(--neg)}
+.spk{display:block;margin-left:auto}
+.cmg{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}
+.cm-group{margin-bottom:18px}
+.cm-group:last-child{margin-bottom:0}
+.cm{border:1px solid var(--line);border-radius:var(--r);padding:12px;display:flex;flex-direction:column;gap:9px;min-width:0;background:var(--panel)}
+.cm h4{margin:0;font-size:14.5px;color:var(--navy);font-weight:650;line-height:1.3}
+.cm .u{font-size:11.5px;color:var(--faint)}
+.cm .pr{display:flex;align-items:baseline;justify-content:space-between;gap:8px}
+.cm .pv{font-size:22px;font-weight:650;font-variant-numeric:tabular-nums;letter-spacing:-.015em}
+.chip{font-size:12.5px;font-weight:650;font-variant-numeric:tabular-nums;white-space:nowrap}
+.rng{position:relative;height:6px;background:var(--line-2);border-radius:3px;margin:7px 0 2px}
+.rng i{position:absolute;top:-3px;width:3px;height:12px;border-radius:2px;background:var(--navy)}
+.rngl{display:flex;justify-content:space-between;font-size:11.5px;color:var(--faint);font-variant-numeric:tabular-nums}
+.chg{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:4px;font-size:11.5px;text-align:center}
+.chg small{display:block;color:var(--faint);font-size:11px}
+.chg b{font-weight:600;font-variant-numeric:tabular-nums;font-size:12px}
 @media (max-width:1100px){
+  .gauges{grid-template-columns:repeat(auto-fit,minmax(170px,1fr))}
   .g-2,.g-3,.two{grid-template-columns:minmax(0,1fr)}
   .kpis{grid-template-columns:repeat(3,minmax(0,1fr))}
   .kpi:nth-child(4){border-left:0}
@@ -259,6 +317,14 @@ table.t{border-collapse:collapse;width:100%;min-width:980px}
   .t td::before{content:attr(data-l);display:block;font-size:11px;color:var(--faint);margin-bottom:1px}
   .t td.co::before{display:none}
   .row{grid-template-columns:minmax(0,44%) minmax(0,1fr) 30px}
+  .cards{grid-template-columns:minmax(0,1fr)}
+  .cal{grid-template-columns:minmax(0,1fr)}
+  .gauges{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .cmg{grid-template-columns:minmax(0,1fr)}
+  .fb{width:96px}
+  .fl{min-width:760px}
+  .gmp .gp{font-size:24px}
+  .gauge .v{font-size:18px}
 }
 @media print{.filters{position:static}.tools,.more,.f-end .btn{display:none}}
 @media (prefers-reduced-motion:no-preference){.slot,.row,.btn,.seg button{transition:background-color .12s}}
@@ -280,13 +346,47 @@ table.t{border-collapse:collapse;width:100%;min-width:980px}
 </header>
 
 <nav class="tabs" aria-label="Pages"><div class="wrap tabs-in" role="tablist">
-  <button type="button" role="tab" id="tab-filings" data-v="filings" aria-controls="v-filings" aria-selected="true">Filings</button>
+  <button type="button" role="tab" id="tab-desk" data-v="desk" aria-controls="v-desk" aria-selected="true">IPO Desk</button>
+  <button type="button" role="tab" id="tab-filings" data-v="filings" aria-controls="v-filings" aria-selected="false">Filings</button>
   <button type="button" role="tab" id="tab-sectors" data-v="sectors" aria-controls="v-sectors" aria-selected="false">Sector heatmap</button>
-  <button type="button" role="tab" id="tab-ipos" data-v="ipos" aria-controls="v-ipos" aria-selected="false">IPO pipeline</button>
-  <button type="button" role="tab" id="tab-breadth" data-v="breadth" aria-controls="v-breadth" aria-selected="false">Market breadth</button>
+  <button type="button" role="tab" id="tab-flow" data-v="flow" aria-controls="v-flow" aria-selected="false">Sector flow</button>
+  <button type="button" role="tab" id="tab-commodities" data-v="commodities" aria-controls="v-commodities" aria-selected="false">Commodities</button>
 </div></nav>
 
-<div id="v-filings" role="tabpanel" aria-labelledby="tab-filings">
+<div id="v-desk" role="tabpanel" aria-labelledby="tab-desk">
+<div class="filters nosticky" role="region" aria-label="IPO filters">
+  <div class="wrap f-in">
+    <div class="f"><span class="l" id="l-dg">Segment</span>
+      <div class="seg" id="d-g" role="group" aria-labelledby="l-dg">
+        <button type="button" data-v="all">All</button><button type="button" data-v="M">Mainboard</button><button type="button" data-v="S">SME</button>
+      </div></div>
+    <div class="f"><span class="l" id="l-dk">Status</span>
+      <div class="seg" id="d-k" role="group" aria-labelledby="l-dk">
+        <button type="button" data-v="all">Any</button><button type="button" data-v="open">Open</button><button type="button" data-v="upcoming">Upcoming</button><button type="button" data-v="closed">Closed</button>
+      </div></div>
+    <div class="f"><label for="d-x">Exchange</label><select id="d-x"></select></div>
+    <div class="f"><label for="d-s">Sector</label><select id="d-s"></select></div>
+    <div class="f"><label for="d-b">Lead manager</label><select id="d-b"></select></div>
+    <div class="f"><label for="d-w">Key dates</label><select id="d-w"></select></div>
+    <div class="f"><label for="d-p">Premium (GMP)</label><select id="d-p"></select></div>
+    <div class="f search"><label for="d-q">Search</label><input id="d-q" type="search" placeholder="Company, sector or lead manager" autocomplete="off"></div>
+    <div class="f-end"><button class="btn" id="d-reset" type="button">Reset</button></div>
+  </div>
+</div>
+<main class="wrap">
+  <section class="panel" aria-labelledby="h-dk">
+    <div class="ph"><div><h2 id="h-dk">Ashmavir IPO Desk</h2><p id="d-sub"></p></div>
+      <div class="tools"><span class="pill" id="d-pill"><i></i><span></span></span>
+        <div class="f"><label for="d-o">Sort</label><select id="d-o"></select></div>
+        <div class="seg sm" id="d-v" role="group" aria-label="View"><button type="button" data-v="cards">Cards</button><button type="button" data-v="table">Table</button></div></div></div>
+    <div class="desk-top" id="d-cal"></div>
+    <div class="pb"><div id="d-body"></div>
+      <p class="note">Grey market premium (GMP) is unofficial and comes from ipowatch.in. It is not an exchange price and can move sharply before listing. Issue size is in crores. Minimum investment is one lot at the upper price band. Dates are as published and can change. For information only, not a recommendation to apply.</p></div>
+  </section>
+</main>
+</div>
+
+<div id="v-filings" role="tabpanel" hidden aria-labelledby="tab-filings">
 <div class="filters" role="region" aria-label="Filters">
   <div class="wrap f-in">
     <div class="f"><span class="l" id="l-r">Filed in</span>
@@ -365,30 +465,41 @@ table.t{border-collapse:collapse;width:100%;min-width:980px}
   </section>
 </main>
 
-<main class="wrap" id="v-ipos" role="tabpanel" aria-labelledby="tab-ipos" hidden>
-  <section class="panel" aria-labelledby="h-ip">
-    <div class="ph"><div><h2 id="h-ip">IPO pipeline</h2><p id="ip-sub"></p></div>
-      <div class="tools"><span class="pill" id="ip-pill"><i></i><span></span></span>
-        <div class="seg sm" id="ip-g" role="group" aria-label="Segment"><button type="button" data-v="all" aria-pressed="true">All</button><button type="button" data-v="M" aria-pressed="false">Mainboard</button><button type="button" data-v="S" aria-pressed="false">SME</button></div>
-        <div class="seg sm" id="ip-s" role="group" aria-label="Status"><button type="button" data-v="all" aria-pressed="true">Any</button><button type="button" data-v="open" aria-pressed="false">Open</button><button type="button" data-v="upcoming" aria-pressed="false">Upcoming</button><button type="button" data-v="closed" aria-pressed="false">Closed</button></div></div></div>
-    <div class="pb"><div class="cards" id="ip-body"></div>
-      <p class="note">GMP is the unofficial grey market premium over the issue price, as reported by ipowatch.in. It is not an exchange price and can change sharply before listing. Issue size is in crores. Minimum investment is one lot at the upper price band. For information only, not a recommendation to apply.</p></div>
+<main class="wrap" id="v-flow" role="tabpanel" aria-labelledby="tab-flow" hidden>
+  <section class="panel" aria-labelledby="h-fl">
+    <div class="ph"><div><h2 id="h-fl">Sector flow</h2><p id="fl-sub"></p></div>
+      <div class="tools"><span class="pill" id="fl-pill"><i></i><span></span></span></div></div>
+    <div class="gauges" id="fl-kpis"></div>
+    <div class="two" id="fl-lists"></div>
+    <div class="sx-bar">
+      <div class="f"><span class="l" id="l-flw">Window</span><div class="seg" id="fl-w" role="group" aria-labelledby="l-flw"><button type="button" data-v="1">1 day</button><button type="button" data-v="5">5 days</button><button type="button" data-v="20">20 days</button></div></div>
+      <div class="f"><span class="l" id="l-flo">Sort by</span><div class="seg" id="fl-o" role="group" aria-labelledby="l-flo"><button type="button" data-v="net">Net flow</button><button type="button" data-v="str">Strength</button><button type="button" data-v="turn">Turnover</button><button type="button" data-v="name">Name</button></div></div>
+      <div class="f search"><label for="fl-q">Find a stock or sector</label><input id="fl-q" type="search" placeholder="Name or symbol" autocomplete="off"></div>
+    </div>
+    <div class="tw" id="fl-body"></div>
+    <p class="note" id="fl-note"></p>
   </section>
 </main>
 
-<main class="wrap" id="v-breadth" role="tabpanel" aria-labelledby="tab-breadth" hidden>
-  <section class="panel" aria-labelledby="h-br">
-    <div class="ph"><div><h2 id="h-br">Market breadth</h2><p id="br-sub"></p></div>
-      <div class="tools"><span class="pill" id="br-state"></span><span class="pill" id="br-pill"><i></i><span></span></span></div></div>
-    <div class="pb"><div class="tw"><table class="br" id="br-table"></table></div>
-      <p class="note" id="br-note"></p></div>
+<main class="wrap" id="v-commodities" role="tabpanel" aria-labelledby="tab-commodities" hidden>
+  <section class="panel" aria-labelledby="h-cm">
+    <div class="ph"><div><h2 id="h-cm">Commodities</h2><p id="cm-sub"></p></div>
+      <div class="tools"><span class="pill" id="cm-pill"><i></i><span></span></span></div></div>
+    <div class="gauges" id="cm-gauges"></div>
+    <div class="sx-bar">
+      <div class="f"><span class="l" id="l-cmg">Group</span><div class="seg" id="cm-g" role="group" aria-labelledby="l-cmg"></div></div>
+      <div class="f"><span class="l" id="l-cmo">Sort by</span><div class="seg" id="cm-o" role="group" aria-labelledby="l-cmo"><button type="button" data-v="default">Default</button><button type="button" data-v="1D">1D</button><button type="button" data-v="1M">1M</button><button type="button" data-v="YTD">YTD</button><button type="button" data-v="1Y">1Y</button></div></div>
+      <div class="f search"><label for="cm-q">Find a commodity</label><input id="cm-q" type="search" placeholder="Name or symbol" autocomplete="off"></div>
+    </div>
+    <div class="pb" id="cm-body"></div>
+    <p class="note" id="cm-note"></p>
   </section>
 </main>
 
 <footer class="wrap foot">
   <div class="src" id="src"></div>
   <p>Filings are compiled from public sources and shown as published. Check the official document before relying on any item. This page is for research and is not investment advice.</p>
-  <p>Sector and breadth numbers are calculated from the NSE Nifty 500 list and daily closing prices from Yahoo Finance, once a day after the market closes. IPO grey market premiums come from ipowatch.in's public table and are unofficial. Data can be delayed or wrong.</p>
+  <p>Sector heatmap and sector flow are worked out from the NSE Nifty 500 and F&amp;O stock lists with daily prices and volumes from Yahoo Finance, once a day after the market closes. Commodity prices are futures prices from Yahoo Finance. IPO dates, lead managers, sectors and grey market premiums come from ipowatch.in and are unofficial. Data can be delayed or wrong.</p>
   <p>afc | ashmavir Financial Consultants Pvt. Ltd. Research desk.</p>
 </footer>
 <div class="tip" id="tip" role="tooltip"></div>
@@ -431,8 +542,9 @@ const RANGES = ["7", "30", "90", "365", "all"];
 let sort = { k: "d", dir: -1 }, shown = 25, view = "chart";
 function writeHash() {
   const p = new URLSearchParams();
-  if (page !== "filings") p.set("v", page);
+  if (page !== "desk") p.set("v", page);
   for (const k in DEF) if (S[k] !== DEF[k]) p.set(k, S[k]);
+  for (const k in DDEF) if (D[k] !== DDEF[k]) p.set(k, D[k]);
   history.replaceState(null, "", p.toString() ? "#" + p : location.pathname + location.search);
 }
 
@@ -717,9 +829,9 @@ function render() {
   $("#csv").onclick = () => exportCsv(items.slice().sort((a, b) => (b.d || "").localeCompare(a.d || "")));
 }
 /* ---------- shared helpers for the data pages ---------- */
-const PAGES = ["filings", "sectors", "ipos", "breadth"];
-let page = "filings";
-{ const v = new URLSearchParams(location.hash.slice(1)).get("v"); if (PAGES.includes(v)) page = v; }
+const PAGES = ["desk", "filings", "sectors", "flow", "commodities"];
+let page = "desk";
+{ const v = new URLSearchParams(location.hash.slice(1)).get("v"); if (PAGES.includes(v)) page = v; else if (v === "ipos") page = "desk"; }
 const MK = DATA.market, IPOS = DATA.ipos;
 const signed = (x, d) => x == null ? "–" : (x > 0 ? "+" : "") + minus(x.toFixed(d == null ? 2 : d));
 const inr = n => "₹" + n.toLocaleString("en-IN", { maximumFractionDigits: 2 });
@@ -803,15 +915,96 @@ function buildSectorControls() {
   let timer; $("#sx-q").addEventListener("input", e => { clearTimeout(timer); timer = setTimeout(() => { SX.q = e.target.value; renderSectors(); }, 120); });
 }
 
-/* ---------- IPO pipeline page ---------- */
-const IP = { g: "all", s: "all" };
-const STATE_WORD = { open: "Open", upcoming: "Upcoming", closed: "Closed" };
+/* ---------- IPO Desk ---------- */
+const DDEF = { dg: "all", dk: "all", dx: "all", ds: "all", db: "all", dw: "all", dp: "all", dq: "", dz: "default", dv: "cards" };
+const D = Object.assign({}, DDEF);
+{
+  const p = new URLSearchParams(location.hash.slice(1));
+  for (const k in DDEF) if (p.has(k)) D[k] = p.get(k);
+  if (!["cards", "table"].includes(D.dv)) D.dv = "cards";
+}
+const dayFrom = iso => Math.round((parse(iso) - today) / 864e5);
+const venues = i => i.x ? [i.x] : i.ex ? i.ex.split(",").map(s => s.trim()).filter(Boolean) : ["Not stated"];
+const venueOf = i => venues(i).join(", ");
+const sectorOf = i => i.sc || "Not stated";
+const DSEL = { dx: "#d-x", ds: "#d-s", db: "#d-b", dw: "#d-w", dp: "#d-p", dz: "#d-o" };
+const DKEYS = [["o", "Opens"], ["c", "Closes"], ["al", "Allotment"], ["rf", "Refunds start"], ["dc", "Demat credit"], ["ls", "Lists"]];
+const WHEN = [["all", "Any time"], ["closing3", "Closing within 3 days"], ["opening7", "Opening within 7 days"], ["allot7", "Allotment within 7 days"], ["listing7", "Listing within 7 days"]];
+const PREM = [["all", "Any premium"], ["pos", "Positive"], ["10", "10% or more"], ["25", "25% or more"], ["none", "Not quoted"]];
+const ORDER = [["default", "Open first"], ["gmp", "Highest premium"], ["size", "Largest issue"], ["open", "Opening date"], ["list", "Listing date"]];
+const SORTERS = {
+  gmp: (a, b) => (b.pct == null ? -1e9 : b.pct) - (a.pct == null ? -1e9 : a.pct),
+  size: (a, b) => (b.sz == null ? -1 : b.sz) - (a.sz == null ? -1 : a.sz),
+  open: (a, b) => (a.o || "9").localeCompare(b.o || "9"),
+  list: (a, b) => (a.ls || "9").localeCompare(b.ls || "9"),
+};
+for (const i of IPOS || []) i._h = [i.n, i.sc, (i.bk || []).join(" "), i.x, i.ex].join(" ").toLowerCase();
+function within(iso, lo, hi) { if (!iso) return false; const n = dayFrom(iso); return n >= lo && n <= hi; }
+function deskMatch(i) {
+  if (D.dg !== "all" && i.sg !== D.dg) return false;
+  if (D.dk !== "all" && i.st !== D.dk) return false;
+  if (D.dx !== "all" && !venues(i).includes(D.dx)) return false;
+  if (D.ds !== "all" && sectorOf(i) !== D.ds) return false;
+  if (D.db !== "all" && !(i.bk || []).includes(D.db)) return false;
+  if (D.dw === "closing3" && !(i.st === "open" && within(i.c, 0, 3))) return false;
+  if (D.dw === "opening7" && !(i.st === "upcoming" && within(i.o, 0, 7))) return false;
+  if (D.dw === "allot7" && !within(i.al, 0, 7)) return false;
+  if (D.dw === "listing7" && !within(i.ls, 0, 7)) return false;
+  if (D.dp === "pos" && !(i.pct != null && i.pct > 0)) return false;
+  if (D.dp === "10" && !(i.pct != null && i.pct >= 10)) return false;
+  if (D.dp === "25" && !(i.pct != null && i.pct >= 25)) return false;
+  if (D.dp === "none" && i.pct != null) return false;
+  const q = D.dq.trim().toLowerCase();
+  return !q || i._h.includes(q);
+}
+let CALFULL = false;
+const CAL_DAYS = innerWidth < 720 ? 3 : 5;
+const WEEKDAY = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+function renderCal(list) {
+  const host = $("#d-cal"); host.textContent = "";
+  host.appendChild(el("h3", "sub-h", "Key dates, next 14 days"));
+  const events = [];
+  for (const i of list) for (const [k, label] of DKEYS) if (within(i[k], 0, 14)) events.push({ d: i[k], k, label, i });
+  if (!events.length) { host.appendChild(el("p", "meta", "No key dates in the next 14 days for these filters.")); return; }
+  const order = k => DKEYS.findIndex(e => e[0] === k);
+  events.sort((a, b) => a.d.localeCompare(b.d) || order(a.k) - order(b.k) || a.i.n.localeCompare(b.i.n));
+  const days = new Map();
+  for (const e of events) { if (!days.has(e.d)) days.set(e.d, []); days.get(e.d).push(e); }
+  const grid = el("div", "cal"); let n = 0;
+  for (const [d, items] of days) {
+    if (!CALFULL && ++n > CAL_DAYS) break;
+    const away = dayFrom(d), card = el("div", "day" + (away === 0 ? " today" : ""));
+    const h = el("h4", null, WEEKDAY[parse(d).getDay()] + " " + shortDate(d));
+    h.appendChild(el("small", null, away === 0 ? "Today" : away === 1 ? "Tomorrow" : "In " + away + " days"));
+    card.appendChild(h);
+    const ul = el("ul");
+    for (const e of items) { const li = el("li"); li.appendChild(el("em", null, e.label)); const s = el("span", null, e.i.n); s.title = e.i.n; li.appendChild(s); ul.appendChild(li); }
+    card.appendChild(ul); grid.appendChild(card);
+  }
+  host.appendChild(grid);
+  if (days.size > CAL_DAYS) {
+    const b = el("button", "btn", CALFULL ? "Show fewer days" : "Show all " + days.size + " days with dates"); b.type = "button"; b.style.marginTop = "10px";
+    b.addEventListener("click", () => { CALFULL = !CALFULL; renderCal(list); }); host.appendChild(b);
+  }
+}
+function ipoSteps(i) {
+  const ol = el("ol", "steps"); let marked = false;
+  for (const [k, label] of DKEYS) {
+    if (!i[k]) continue;
+    const past = dayFrom(i[k]) < (k === "o" ? 1 : 0), li = el("li", past ? "done" : !marked ? "next" : "");
+    if (!past) marked = true;
+    li.appendChild(el("span", "sl", (past ? "✓ " : li.className === "next" ? "▸ " : "") + label));
+    li.appendChild(el("b", null, shortDate(i[k]))); ol.appendChild(li);
+  }
+  return ol;
+}
 function ipoCard(i) {
   const c = el("article", "card");
   const top = el("div", "c-top"), st = el("span", "stt " + i.st); st.appendChild(el("i"));
   st.appendChild(document.createTextNode(STATE_WORD[i.st] + (i.st === "open" && i.c ? ", closes " + shortDate(i.c) : i.st === "upcoming" && i.o ? ", opens " + shortDate(i.o) : i.st === "closed" && i.c ? " " + shortDate(i.c) : "")));
-  top.appendChild(st); top.appendChild(el("span", "tag", i.sg === "S" ? (i.x || "SME") : "Mainboard")); c.appendChild(top);
+  top.appendChild(st); top.appendChild(el("span", "tag", i.sg === "S" ? "SME" : "Mainboard")); c.appendChild(top);
   c.appendChild(el("h3", null, i.n));
+  const m = el("p", "meta"); m.appendChild(el("b", null, sectorOf(i))); m.appendChild(document.createTextNode(" · " + venueOf(i))); c.appendChild(m);
   const g = el("div", "gmp " + (i.pct == null ? "" : i.pct > 0 ? "pos" : i.pct < 0 ? "neg" : ""));
   g.appendChild(el("div", "gk", "Grey market premium"));
   if (i.pct == null) { g.appendChild(el("div", "gp none", "Not quoted yet")); g.appendChild(el("div", "gt", i.hi ? "Upper price band " + inr(i.hi) : "Price band not announced")); }
@@ -826,90 +1019,264 @@ function ipoCard(i) {
   add("Issue size", i.sz != null ? "₹" + i.sz.toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " Cr" : "");
   add("Lot size", i.lot ? i.lot.toLocaleString("en-IN") + " shares" : "");
   add("Minimum investment", i.inv ? inr(i.inv) : "");
-  add("Opens", i.o ? shortDate(i.o) : ""); add("Closes", i.c ? shortDate(i.c) : ""); add("Listing", i.ls ? shortDate(i.ls) : "");
   c.appendChild(f);
-  if (i.u && safeUrl(i.u)) { const a = el("a", "det", "Full details"); a.href = i.u; a.target = "_blank"; a.rel = "noopener noreferrer"; c.appendChild(a); }
+  if (DKEYS.some(([k]) => i[k])) c.appendChild(ipoSteps(i));
+  const bm = el("p", "meta"); bm.appendChild(el("b", null, "Lead managers: ")); bm.appendChild(document.createTextNode((i.bk || []).length ? i.bk.join(", ") : "Not stated"));
+  if (i.rg) bm.appendChild(document.createTextNode(". Registrar: " + i.rg));
+  c.appendChild(bm);
+  const links = el("div", "links");
+  const link = (t, u) => { if (!safeUrl(u)) return; const a = el("a", null, t); a.href = u; a.target = "_blank"; a.rel = "noopener noreferrer"; links.appendChild(a); };
+  link("Full details", i.u); if (i.dl) link(i.dl[0], i.dl[1]);
+  if (links.children.length) c.appendChild(links);
   return c;
 }
-function renderIpos() {
-  const body = $("#ip-body"); body.textContent = "";
-  if (!IPOS) { emptyBox(body, "IPO data is not available yet. It loads with the next hourly check."); $("#ip-sub").textContent = ""; $("#ip-pill").hidden = true; return; }
-  const n = s => IPOS.filter(i => i.st === s).length;
-  $("#ip-sub").textContent = n("open") + " open, " + n("upcoming") + " upcoming, " + n("closed") + " recently closed";
-  const ups = IPOS.map(i => i.up).filter(Boolean).sort();
-  const pill = $("#ip-pill"); pill.hidden = !ups.length; if (ups.length) setPill(pill, ups[ups.length - 1], 3, 7, "Premiums as of");
-  for (const [id, key] of [["#ip-g", "g"], ["#ip-s", "s"]]) for (const b of $(id).children) b.setAttribute("aria-pressed", String(b.dataset.v === IP[key]));
-  const list = IPOS.filter(i => (IP.g === "all" || i.sg === IP.g) && (IP.s === "all" || i.st === IP.s));
-  if (!list.length) { body.className = ""; body.appendChild(el("div", "empty", "No issues match these filters.")); return; }
-  body.className = "cards"; for (const i of list) body.appendChild(ipoCard(i));
+function deskTable(list) {
+  const wrap = el("div", "tw"), t = el("table", "dt"), head = el("tr");
+  for (const [h, num] of [["Company"], ["Segment"], ["Sector"], ["Status"], ["Price band", 1], ["Size (₹ Cr)", 1], ["GMP", 1], ["Opens"], ["Closes"], ["Allotment"], ["Listing"], ["Lead managers"]]) head.appendChild(el("th", num ? "num" : "", h));
+  const thead = el("thead"); thead.appendChild(head); t.appendChild(thead);
+  const tb = el("tbody");
+  for (const i of list) {
+    const tr = el("tr"), td = (txt, cls) => { const x = el("td", cls || "", txt); tr.appendChild(x); return x; };
+    const nm = td("", "nm");
+    if (safeUrl(i.u)) { const a = el("a", null, i.n); a.href = i.u; a.target = "_blank"; a.rel = "noopener noreferrer"; const b = el("b"); b.appendChild(a); nm.appendChild(b); } else nm.appendChild(el("b", null, i.n));
+    nm.appendChild(el("small", null, venueOf(i)));
+    td(i.sg === "S" ? "SME" : "Mainboard"); td(sectorOf(i));
+    td(STATE_WORD[i.st] || "", "st");
+    td(i.lo && i.hi ? (i.lo === i.hi ? inr(i.hi) : inr(i.lo) + " to " + inr(i.hi)) : "–", "num");
+    td(i.sz != null ? i.sz.toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : "–", "num");
+    td(i.pct == null ? "–" : signed(i.pct) + "%", "num" + (i.pct > 0 ? " up" : i.pct < 0 ? " dn" : ""));
+    for (const k of ["o", "c", "al", "ls"]) td(i[k] ? shortDate(i[k]) : "–", "num");
+    td((i.bk || []).join(", ") || "–");
+    tb.appendChild(tr);
+  }
+  t.appendChild(tb); wrap.appendChild(t); return wrap;
 }
-function buildIpoControls() {
-  for (const [id, key] of [["#ip-g", "g"], ["#ip-s", "s"]]) $(id).addEventListener("click", e => { const b = e.target.closest("button"); if (!b) return; IP[key] = b.dataset.v; renderIpos(); });
+const STATE_WORD = { open: "Open", upcoming: "Upcoming", closed: "Closed" };
+function renderDesk() {
+  const body = $("#d-body"); body.textContent = "";
+  if (!IPOS) { emptyBox(body, "IPO data is not available yet. It loads with the next hourly check."); $("#d-sub").textContent = ""; $("#d-pill").hidden = true; $("#d-cal").textContent = ""; return; }
+  const ups = IPOS.map(i => i.up).filter(Boolean).sort();
+  const pill = $("#d-pill"); pill.hidden = !ups.length; if (ups.length) setPill(pill, ups[ups.length - 1], 3, 7, "Premiums as of");
+  for (const [id, key] of [["#d-g", "dg"], ["#d-k", "dk"], ["#d-v", "dv"]]) for (const b of $(id).children) b.setAttribute("aria-pressed", String(b.dataset.v === D[key]));
+  let list = IPOS.filter(deskMatch);
+  if (SORTERS[D.dz]) list = list.slice().sort(SORTERS[D.dz]);
+  const n = s => list.filter(i => i.st === s).length;
+  $("#d-sub").textContent = plural(list.length, "issue") + " shown of " + IPOS.length + ": " + n("open") + " open, " + n("upcoming") + " upcoming, " + n("closed") + " recently closed";
+  renderCal(list);
+  if (!list.length) { body.appendChild(el("div", "empty", "No issues match these filters. Reset them to see all " + IPOS.length + ".")); writeHash(); return; }
+  if (D.dv === "table") body.appendChild(deskTable(list));
+  else { const grid = el("div", "cards"); for (const i of list) grid.appendChild(ipoCard(i)); body.appendChild(grid); }
+  writeHash();
+}
+function buildDeskControls() {
+  const items = IPOS || [];
+  const count = f => { const m = new Map(); for (const i of items) for (const k of f(i)) m.set(k, (m.get(k) || 0) + 1); return [...m].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0])); };
+  const opts = (all, rows) => [["all", all]].concat(rows.map(([k, n]) => [k, k + " (" + n + ")"]));
+  fillSelect("#d-x", opts("All exchanges", count(venues)), D.dx);
+  fillSelect("#d-s", opts("All sectors", count(i => [sectorOf(i)])), D.ds);
+  fillSelect("#d-b", opts("All lead managers", count(i => i.bk || [])), D.db);
+  fillSelect("#d-w", WHEN, D.dw); fillSelect("#d-p", PREM, D.dp); fillSelect("#d-o", ORDER, D.dz);
+  for (const k in DSEL) if (![...$(DSEL[k]).options].some(o => o.value === D[k])) D[k] = DDEF[k];
+  for (const k in DSEL) $(DSEL[k]).value = D[k];
+  $("#d-q").value = D.dq;
+  for (const [id, key] of [["#d-g", "dg"], ["#d-k", "dk"], ["#d-v", "dv"]]) $(id).addEventListener("click", e => { const b = e.target.closest("button"); if (!b) return; D[key] = b.dataset.v; renderDesk(); });
+  for (const k in DSEL) $(DSEL[k]).addEventListener("change", e => { D[k] = e.target.value; renderDesk(); });
+  let timer; $("#d-q").addEventListener("input", e => { clearTimeout(timer); timer = setTimeout(() => { D.dq = e.target.value; renderDesk(); }, 120); });
+  $("#d-reset").addEventListener("click", () => { Object.assign(D, DDEF); $("#d-q").value = ""; for (const k in DSEL) $(DSEL[k]).value = D[k]; renderDesk(); });
 }
 
-/* ---------- market breadth page ---------- */
-const BR_COLS = [
-  ["Daily thrust", [["up4", "Up 4%+ today", "up"], ["dn4", "Down 4%+ today", "dn"], ["r5", "5-day thrust ratio", "ratio"], ["r10", "10-day thrust ratio", "ratio"]]],
-  ["Quarter momentum", [["uq", "Up 25%+ in a quarter", "up"], ["dq", "Down 25%+ in a quarter", "dn"]]],
-  ["Month swings", [["um", "Up 25%+ in a month", "up"], ["dm", "Down 25%+ in a month", "dn"]]],
-  ["34-day drift", [["ut", "Up 13%+ in 34 days", "up"], ["dt", "Down 13%+ in 34 days", "dn"]]],
-  ["Health", [["tr", "Stocks tracked", "plain"], ["a40", "Above 40-day average", "mid"], ["nf", "Nifty 50", "nifty"]]],
-];
-function breadthState(r) {
-  if (r.r10 != null && r.a40 != null && r.r10 >= 1.5 && r.a40 >= 55) return "Broad strength";
-  if (r.r10 != null && r.a40 != null && r.r10 <= 0.7 && r.a40 <= 45) return "Broad weakness";
-  return "Mixed";
+/* ---------- shared drawing helpers ---------- */
+const SVGNS = "http://www.w3.org/2000/svg";
+function svg(tag, attrs) { const e = document.createElementNS(SVGNS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); return e; }
+function sparkLine(values, w, h, label) {
+  const s = svg("svg", { viewBox: "0 0 " + w + " " + h, width: w, height: h, role: "img", "aria-label": label });
+  const lo = Math.min(...values), hi = Math.max(...values), span = hi - lo || 1, step = (w - 4) / (values.length - 1 || 1);
+  const pts = values.map((v, k) => (2 + k * step).toFixed(1) + "," + (h - 3 - (v - lo) / span * (h - 6)).toFixed(1));
+  s.appendChild(svg("polyline", { points: pts.join(" "), fill: "none", stroke: "#203058", "stroke-width": "1.6", "stroke-linejoin": "round", "stroke-linecap": "round" }));
+  const [x, y] = pts[pts.length - 1].split(",");
+  s.appendChild(svg("circle", { cx: x, cy: y, r: "2.4", fill: "#B8A880", stroke: "#203058", "stroke-width": "1" }));
+  return s;
 }
-function renderBreadth() {
-  const t = $("#br-table"); t.textContent = "";
-  if (!MK) { $("#br-sub").textContent = ""; $("#br-state").hidden = true; $("#br-pill").hidden = true; $("#br-note").textContent = ""; const tr = el("tr"), td = el("td"); td.appendChild(el("div", "empty", "Market breadth is not available yet. It is built once a day after the market closes.")); tr.appendChild(td); t.appendChild(tr); return; }
-  $("#br-pill").hidden = false; setPill($("#br-pill"), MK.asof, 4, 8, "Data as of");
-  const rows = MK.breadth, latest = rows[0];
-  $("#br-sub").textContent = "How many of the " + MK.priced + " Nifty 500 stocks are making big moves, session by session. Newest first.";
-  const st = $("#br-state"); st.hidden = false; st.className = "pill"; st.textContent = "Reading: " + breadthState(latest);
-  st.title = "Reading for the latest session. Broad strength: 10-day thrust at or above 1.5 and at least 55% of stocks above their 40-day average. Broad weakness: 10-day thrust at or below 0.7 and 45% or less above it. Anything else is mixed.";
-  const maxOf = k => Math.max(1, ...rows.map(r => r[k] || 0));
-  const g1 = el("tr"); g1.appendChild(el("th")); const g2 = el("tr"); g2.appendChild(el("th", null, "Session"));
-  for (const [g, cols] of BR_COLS) { const th = el("th", "grp", g); th.colSpan = cols.length; g1.appendChild(th); for (const c of cols) g2.appendChild(el("th", null, c[1])); }
-  const thead = el("thead"); thead.appendChild(g1); thead.appendChild(g2); t.appendChild(thead);
-  const tb = el("tbody");
-  rows.forEach((r, ri) => {
-    const tr = el("tr"), d = parse(r.d), td0 = el("td", "ses");
-    td0.appendChild(document.createTextNode(shortDate(r.d)));
-    const wk = el("small", null, ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"][d.getDay()] + " " + d.getFullYear()); if (ri === 0) wk.appendChild(el("span", "tag", "Latest"));
-    td0.appendChild(wk); tr.appendChild(td0);
-    for (const [, cols] of BR_COLS) for (const [k, , kind] of cols) {
-      const td = el("td"), v = r[k];
-      if (kind === "nifty" && v != null) {
-        td.className = "nf"; td.appendChild(document.createTextNode(v.toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 })));
-        if (r.nc != null) td.appendChild(el("small", r.nc >= 0 ? "up" : "dn", signed(r.nc) + "%"));
-      } else if (v == null) { td.textContent = "–"; td.style.color = "var(--faint)"; }
-      else {
-        td.textContent = kind === "ratio" ? v.toFixed(2) : kind === "mid" ? v.toFixed(1) + "%" : v.toLocaleString("en-IN");
-        let rgb = null;
-        if (kind === "up") rgb = mix(NEU, POS, 0.55 * v / maxOf(k)); else if (kind === "dn") rgb = mix(NEU, NEG, 0.55 * v / maxOf(k));
-        else if (kind === "ratio") rgb = v >= 1 ? mix(NEU, POS, Math.min(0.6, (v - 1) / 2)) : mix(NEU, NEG, Math.min(0.6, (1 - v) * 0.9));
-        else if (kind === "mid") rgb = v >= 50 ? mix(NEU, POS, Math.min(0.6, (v - 50) / 35)) : mix(NEU, NEG, Math.min(0.6, (50 - v) / 35));
-        if (rgb) td.style.background = "rgb(" + rgb.join(",") + ")";
-      }
-      tr.appendChild(td);
-    }
-    tb.appendChild(tr);
+function sparkBars(values, w, h, label) {
+  const s = svg("svg", { viewBox: "0 0 " + w + " " + h, width: w, height: h, role: "img", "aria-label": label });
+  const max = Math.max(1e-9, ...values.map(Math.abs)), step = w / values.length, mid = h / 2;
+  values.forEach((v, k) => {
+    const bh = Math.max(1, Math.abs(v) / max * (mid - 1));
+    s.appendChild(svg("rect", { x: (k * step + 1).toFixed(1), y: (v >= 0 ? mid - bh : mid).toFixed(1), width: Math.max(1, step - 2).toFixed(1), height: bh.toFixed(1), fill: v >= 0 ? "#0F8A5F" : "#D14343" }));
   });
-  t.appendChild(tb);
-  $("#br-note").textContent = "Built from daily closes of the Nifty 500 stocks. A move is close to close. Thrust ratio is stocks up 4%+ divided by stocks down 4%+ over the last 5 or 10 sessions. A quarter is 65 sessions and a month is 20. Above 40-day average is the share of stocks closing above their 40-session simple average. Stocks that jumped more than 50% in a single day are left out as likely unadjusted corporate actions. Nifty 500 is a narrower base than the whole market.";
+  s.appendChild(svg("line", { x1: "0", x2: String(w), y1: String(mid), y2: String(mid), stroke: "#E3E8F0", "stroke-width": "1" }));
+  return s;
+}
+function gauge(host, k, v, d, cls) {
+  const g = el("div", "gauge"); g.appendChild(el("div", "k", k)); g.appendChild(el("div", "v" + (cls ? " " + cls : ""), v)); g.appendChild(el("div", "d", d || " ")); host.appendChild(g);
+}
+
+/* ---------- sector flow page ---------- */
+const FL = MK && MK.flow;
+const FS = { w: "5", o: "net", q: "", open: new Set(), full: new Set(), focus: null };
+const crs = (x, d) => x == null ? "–" : (x > 0 ? "+" : x < 0 ? "−" : "") + Math.abs(x).toLocaleString("en-IN", { minimumFractionDigits: d == null ? 1 : d, maximumFractionDigits: d == null ? 1 : d });
+const crp = x => x == null ? "–" : x.toLocaleString("en-IN", { maximumFractionDigits: 1 });
+const flowCell = (td, x) => { td.textContent = crs(x); td.className = "num " + (x > 0 ? "up" : x < 0 ? "dn" : ""); };
+function flowBar(x, max) {
+  const b = el("span", "fb"), w = Math.min(50, Math.abs(x) / (max || 1) * 50), i = el("i", x >= 0 ? "p" : "n");
+  i.style.left = (x >= 0 ? 50 : 50 - w) + "%"; i.style.width = w + "%"; b.appendChild(i); b.title = crs(x) + " crore"; return b;
+}
+function renderFlow() {
+  const body = $("#fl-body"), lists = $("#fl-lists"), kp = $("#fl-kpis"); body.textContent = ""; lists.textContent = ""; kp.textContent = "";
+  if (!FL) {
+    emptyBox(body, "Sector flow is not available yet. It needs the F&O list and daily volumes, and is built once a day after the market closes.");
+    $("#fl-sub").textContent = ""; $("#fl-pill").hidden = true; $("#fl-note").textContent = ""; return;
+  }
+  $("#fl-pill").hidden = false; setPill($("#fl-pill"), FL.asof, 4, 8, "Data as of");
+  $("#fl-sub").textContent = "Estimated net buying pressure in " + FL.count + " F&O stocks, by sector. Amounts are in ₹ crore.";
+  const w = FS.w, nk = "n" + w, tk = "t" + w, sk = "s" + w, T = FL.total, q = FS.q.trim().toLowerCase();
+  gauge(kp, "Net flow, latest session", crs(T.n1) + " Cr", "of ₹" + crp(T.t1) + " Cr traded", T.n1 > 0 ? "up" : T.n1 < 0 ? "dn" : "");
+  gauge(kp, "Net flow, 5 sessions", crs(T.n5) + " Cr", "of ₹" + crp(T.t5) + " Cr traded", T.n5 > 0 ? "up" : T.n5 < 0 ? "dn" : "");
+  gauge(kp, "Net flow, 20 sessions", crs(T.n20) + " Cr", "of ₹" + crp(T.t20) + " Cr traded", T.n20 > 0 ? "up" : T.n20 < 0 ? "dn" : "");
+  gauge(kp, "Up and down, latest session", T.adv + " up, " + T.dec + " down", "among " + T.k + " F&O stocks");
+  kp.style.setProperty("--n", "4");
+  const ranked = FL.sectors.slice().sort((a, b) => b[nk] - a[nk]), label = w === "1" ? "latest session" : w + " sessions";
+  for (const [title, list, cls] of [["Strongest inflow, " + label, ranked.slice(0, 5), "up"], ["Heaviest outflow, " + label, ranked.slice(-5).reverse(), "dn"]]) {
+    const ol = el("ol", "rank"); ol.appendChild(el("h3", null, title));
+    for (const s of list) { const li = el("li"); li.appendChild(el("span", null, s.n)); li.appendChild(el("b", s[nk] >= 0 ? "up" : "dn", crs(s[nk]) + " Cr")); ol.appendChild(li); }
+    lists.appendChild(ol);
+  }
+  const max = Math.max(1, ...FL.sectors.map(s => Math.abs(s[nk])));
+  let rows = FL.sectors.map(s => ({ s, stocks: FL.stocks.filter(r => r[2] === s.n) }));
+  if (q) rows = rows.filter(r => r.s.n.toLowerCase().includes(q) || r.stocks.some(r2 => (r2[0] + " " + r2[1]).toLowerCase().includes(q)));
+  const by = { net: (a, b) => b.s[nk] - a.s[nk], str: (a, b) => (b.s[sk] == null ? -1e9 : b.s[sk]) - (a.s[sk] == null ? -1e9 : a.s[sk]), turn: (a, b) => b.s[tk] - a.s[tk], name: (a, b) => a.s.n.localeCompare(b.s.n) };
+  rows.sort(by[FS.o]);
+  if (!rows.length) { body.appendChild(el("div", "empty", "No sector or stock matches that search.")); return; }
+  const t = el("table", "fl"), head = el("tr");
+  for (const [h, left] of [["Sector", 1], ["Net flow (₹ Cr)"], ["Direction"], ["Strength"], ["Turnover (₹ Cr)"], ["Up / down"], ["Last 20 sessions"]]) head.appendChild(el("th", left ? "l" : "", h));
+  const thead = el("thead"); thead.appendChild(head); t.appendChild(thead);
+  const tb = el("tbody"), idx = { 1: 5, 5: 6, 20: 7 }[w];
+  for (const r of rows) {
+    const s = r.s, open = FS.open.has(s.n) || (q && !s.n.toLowerCase().includes(q));
+    const tr = el("tr", "sec"); tr.tabIndex = 0; tr.dataset.n = s.n; tr.setAttribute("role", "button"); tr.setAttribute("aria-expanded", String(!!open));
+    const nm = el("td", "nm"); nm.appendChild(el("span", "car", open ? "▾" : "▸")); nm.appendChild(el("b", null, s.n)); nm.appendChild(el("span", "muted", "  " + s.k + " stocks")); tr.appendChild(nm);
+    const n = el("td"); flowCell(n, s[nk]); tr.appendChild(n);
+    const bar = el("td"); bar.appendChild(flowBar(s[nk], max)); tr.appendChild(bar);
+    tr.appendChild(el("td", "num " + (s[sk] > 0 ? "up" : s[sk] < 0 ? "dn" : ""), s[sk] == null ? "–" : signed(s[sk], 1) + "%"));
+    tr.appendChild(el("td", "num", crp(s[tk])));
+    tr.appendChild(el("td", "num", s.adv + " / " + s.dec));
+    const sp = el("td"); const g = sparkBars(s.sp, 100, 26, s.n + " daily net flow, last 20 sessions"); g.setAttribute("class", "spk"); sp.appendChild(g); tr.appendChild(sp);
+    const toggle = () => { FS.open.has(s.n) ? FS.open.delete(s.n) : FS.open.add(s.n); FS.focus = s.n; renderFlow(); };
+    tr.addEventListener("click", toggle); tr.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggle(); } });
+    tb.appendChild(tr);
+    if (!open) continue;
+    let list = r.stocks.slice();
+    if (q && !s.n.toLowerCase().includes(q)) list = list.filter(r2 => (r2[0] + " " + r2[1]).toLowerCase().includes(q));
+    list.sort((a, b) => b[idx] - a[idx]);
+    const cap = FS.full.has(s.n) ? list.length : 12;
+    for (const st of list.slice(0, cap)) {
+      const sr = el("tr", "stk"), sn = el("td", "nm"); sn.appendChild(el("b", null, st[0])); sn.appendChild(el("span", "muted", "  " + st[1])); sr.appendChild(sn);
+      const sv = el("td"); flowCell(sv, st[idx]); sr.appendChild(sv);
+      const sb = el("td"); sb.appendChild(flowBar(st[idx], max / 6)); sr.appendChild(sb);
+      sr.appendChild(el("td", "num " + (st[3] > 0 ? "up" : st[3] < 0 ? "dn" : ""), st[3] == null ? "–" : "1D " + signed(st[3]) + "%"));
+      sr.appendChild(el("td", "num", "1D ₹" + crp(st[4])));
+      sr.appendChild(el("td")); sr.appendChild(el("td"));
+      tb.appendChild(sr);
+    }
+    if (list.length > cap) {
+      const mr = el("tr", "stk"), td = el("td"); td.colSpan = 7;
+      const b = el("button", "btn", "Show all " + list.length + " stocks"); b.type = "button"; b.addEventListener("click", () => { FS.full.add(s.n); renderFlow(); });
+      td.appendChild(b); mr.appendChild(td); tb.appendChild(mr);
+    }
+  }
+  t.appendChild(tb); const wrap = el("div", "tw"); wrap.appendChild(t); body.appendChild(wrap);
+  $("#fl-note").textContent = "How it is worked out: each F&O stock's turnover (closing price times NSE volume, in crore) counts as inflow on a day the stock closes up and outflow on a day it closes down. Net flow adds these up for the sector. Strength is net flow as a share of turnover, from minus 100% (all selling pressure) to plus 100% (all buying pressure). It is an estimate from prices and volumes, not a record of what any fund bought or sold. Single-stock sectors are left out of the sector list. Stock rows in an open sector show the selected window's net flow, and the latest session's move and turnover.";
+  if (FS.focus != null) { const f = body.querySelector('tr.sec[data-n="' + CSS.escape(FS.focus) + '"]'); if (f) f.focus(); FS.focus = null; }
+}
+function buildFlowControls() {
+  for (const [id, key] of [["#fl-w", "w"], ["#fl-o", "o"]]) {
+    const seg = $(id); for (const b of seg.children) b.setAttribute("aria-pressed", String(b.dataset.v === FS[key]));
+    seg.addEventListener("click", e => { const b = e.target.closest("button"); if (!b) return; FS[key] = b.dataset.v; for (const x of seg.children) x.setAttribute("aria-pressed", String(x === b)); renderFlow(); });
+  }
+  let timer; $("#fl-q").addEventListener("input", e => { clearTimeout(timer); timer = setTimeout(() => { FS.q = e.target.value; renderFlow(); }, 120); });
+}
+
+/* ---------- commodities page ---------- */
+const CM = DATA.commodities;
+const CS = { g: "all", o: "default", q: "" };
+const fmtPrice = p => p >= 1000 ? p.toLocaleString("en-US", { maximumFractionDigits: 2 }) : p >= 100 ? p.toFixed(2) : p >= 10 ? p.toFixed(2) : p.toFixed(3);
+function chip(v, abs, cls) {
+  if (v == null) return el("span", "chip muted", "–");
+  const s = el("span", "chip " + (v > 0 ? "up" : v < 0 ? "dn" : "") + (cls ? " " + cls : ""));
+  s.textContent = (v > 0 ? "▲ " : v < 0 ? "▼ " : "") + signed(v, 2) + (abs ? "" : "%"); return s;
+}
+function commodityCard(i, group) {
+  const c = el("article", "cm"), top = el("div");
+  top.appendChild(el("h4", null, i.n)); top.appendChild(el("div", "u", i.u + (group ? " · " + group : ""))); c.appendChild(top);
+  const pr = el("div", "pr"); pr.appendChild(el("span", "pv", fmtPrice(i.p))); pr.appendChild(chip(i.ch["1D"], false)); pr.title = "Change over the last session"; c.appendChild(pr);
+  c.appendChild(sparkLine(i.sp, 232, 40, i.n + " closing prices, last " + i.sp.length + " sessions"));
+  const r = el("div"); const rng = el("div", "rng"), mk = el("i"); mk.style.left = "calc(" + i.pos + "% - 1px)"; rng.appendChild(mk); r.appendChild(rng);
+  const lab = el("div", "rngl"); lab.appendChild(el("span", null, fmtPrice(i.lo))); lab.appendChild(el("span", null, "52-week range")); lab.appendChild(el("span", null, fmtPrice(i.hi))); r.appendChild(lab); c.appendChild(r);
+  const g = el("div", "chg");
+  for (const k of ["1W", "1M", "3M", "1Y", "YTD"]) { const d = el("div"); d.appendChild(el("small", null, k)); const v = i.ch[k]; d.appendChild(el("b", v > 0 ? "up" : v < 0 ? "dn" : "", v == null ? "–" : signed(v, 1) + "%")); g.appendChild(d); }
+  c.appendChild(g); return c;
+}
+function renderCommodities() {
+  const body = $("#cm-body"), gauges = $("#cm-gauges"); body.textContent = ""; gauges.textContent = "";
+  if (!CM) { emptyBox(body, "Commodity prices are not available yet. They load with the next hourly check."); $("#cm-sub").textContent = ""; $("#cm-pill").hidden = true; $("#cm-note").textContent = ""; return; }
+  $("#cm-pill").hidden = false; setPill($("#cm-pill"), CM.asof, 4, 8, "Prices as of");
+  const total = CM.groups.reduce((n, g) => n + g.items.length, 0);
+  $("#cm-sub").textContent = total + " futures contracts in " + CM.groups.length + " groups, with the currency and rate gauges that move them.";
+  for (const x of CM.context) {
+    const v = x.y === "^TNX" ? x.p.toFixed(2) + "%" : x.p.toFixed(2);
+    const d = el("span"); d.appendChild(chip(x.ch["1D"], x.ab)); d.appendChild(document.createTextNode(x.ab ? " pts today" : " today"));
+    const g = el("div", "gauge"); g.appendChild(el("div", "k", x.n)); g.appendChild(el("div", "v", v)); const dd = el("div", "d"); dd.appendChild(d); g.appendChild(dd); gauges.appendChild(g);
+  }
+  if (CM.parity) {
+    if (CM.parity.gold10g) gauge(gauges, "Gold, India parity", "₹" + CM.parity.gold10g.toLocaleString("en-IN"), "per 10 g, before duty and GST");
+    if (CM.parity.silverkg) gauge(gauges, "Silver, India parity", "₹" + CM.parity.silverkg.toLocaleString("en-IN"), "per kg, before duty and GST");
+    if (CM.parity.ratio) gauge(gauges, "Gold to silver ratio", CM.parity.ratio.toFixed(1), "ounces of silver per ounce of gold");
+  }
+  gauges.style.setProperty("--n", String(Math.max(1, gauges.children.length)));
+  const q = CS.q.trim().toLowerCase();
+  const match = i => !q || (i.n + " " + i.y).toLowerCase().includes(q);
+  if (CS.o === "default") {
+    let shown = 0;
+    for (const g of CM.groups) {
+      if (CS.g !== "all" && CS.g !== g.n) continue;
+      const list = g.items.filter(match); if (!list.length) continue;
+      shown += list.length;
+      const box = el("section", "cm-group"); box.appendChild(el("h3", "sub-h", g.n));
+      const grid = el("div", "cmg"); for (const i of list) grid.appendChild(commodityCard(i)); box.appendChild(grid); body.appendChild(box);
+    }
+    if (!shown) body.appendChild(el("div", "empty", "No commodity matches that search."));
+  } else {
+    const all = [];
+    for (const g of CM.groups) if (CS.g === "all" || CS.g === g.n) for (const i of g.items) if (match(i)) all.push([i, g.n]);
+    all.sort((a, b) => (b[0].ch[CS.o] == null ? -1e9 : b[0].ch[CS.o]) - (a[0].ch[CS.o] == null ? -1e9 : a[0].ch[CS.o]));
+    if (!all.length) body.appendChild(el("div", "empty", "No commodity matches that search."));
+    else { const grid = el("div", "cmg"); for (const [i, g] of all) grid.appendChild(commodityCard(i, g)); body.appendChild(grid); }
+  }
+  $("#cm-note").textContent = "Prices are front-month futures from Yahoo Finance, in each contract's own unit, and can be delayed. Changes are close to close. India parity converts the world price at the day's USD/INR and leaves out import duty, GST and dealer margins, so it will not match the MCX or a jeweller's rate. Yields change in percentage points.";
+}
+function buildCommodityControls() {
+  if (CM) {
+    const seg = $("#cm-g");
+    for (const [v, t] of [["all", "All"]].concat(CM.groups.map(g => [g.n, g.n]))) { const b = el("button", null, t); b.type = "button"; b.dataset.v = v; b.setAttribute("aria-pressed", String(v === CS.g)); seg.appendChild(b); }
+  }
+  for (const [id, key] of [["#cm-g", "g"], ["#cm-o", "o"]]) {
+    const seg = $(id); for (const b of seg.children) b.setAttribute("aria-pressed", String(b.dataset.v === CS[key]));
+    seg.addEventListener("click", e => { const b = e.target.closest("button"); if (!b) return; CS[key] = b.dataset.v; for (const x of seg.children) x.setAttribute("aria-pressed", String(x === b)); renderCommodities(); });
+  }
+  let timer; $("#cm-q").addEventListener("input", e => { clearTimeout(timer); timer = setTimeout(() => { CS.q = e.target.value; renderCommodities(); }, 120); });
 }
 
 /* ---------- page switching ---------- */
 function setPage(v) {
-  page = PAGES.includes(v) ? v : "filings";
+  page = PAGES.includes(v) ? v : "desk";
   for (const b of document.querySelectorAll(".tabs button")) { const on = b.dataset.v === page; b.setAttribute("aria-selected", String(on)); b.tabIndex = on ? 0 : -1; }
   for (const p of PAGES) $("#v-" + p).hidden = p !== page;
   hideTip();
-  if (page === "sectors") renderSectors(); else if (page === "ipos") renderIpos(); else if (page === "breadth") renderBreadth(); else render();
+  if (page === "desk") renderDesk(); else if (page === "sectors") renderSectors(); else if (page === "flow") renderFlow(); else if (page === "commodities") renderCommodities(); else render();
   writeHash();
 }
-buildFilters(); buildSectorControls(); buildIpoControls();
+
+buildFilters(); buildSectorControls(); buildDeskControls(); buildFlowControls(); buildCommodityControls();
 for (const b of document.querySelectorAll("th button")) b.addEventListener("click", () => { const k = b.dataset.k; sort = { k, dir: sort.k === k ? -sort.dir : (k === "n" ? 1 : -1) }; renderTable(C.filter(match).filter(c => inWin(c, window_()))); });
 $("#t-view").addEventListener("click", e => { const b = e.target.closest("button"); if (!b) return; view = b.dataset.v; for (const x of $("#t-view").children) x.setAttribute("aria-pressed", String(x === b)); render(); });
 for (const b of document.querySelectorAll(".tabs button")) b.addEventListener("click", () => { setPage(b.dataset.v); window.scrollTo(0, 0); });

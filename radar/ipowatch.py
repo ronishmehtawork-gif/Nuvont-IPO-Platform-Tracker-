@@ -20,7 +20,8 @@ from .market import IST
 
 NAME = "ipowatch"
 URL = "https://ipowatch.in/ipo-grey-market-premium-latest-ipo-gmp/"
-MAX_DETAIL_FETCHES = 12
+MAX_DETAIL_FETCHES = 14
+DETAIL_VERSION = 3          # bump when parse_details learns a new field, so cached pages are read again
 KEEP_CLOSED_DAYS = 10
 MONTHS = {m: i for i, m in enumerate(
     ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"], 1)}
@@ -239,9 +240,102 @@ def select(items: list[dict], today: date) -> list[dict]:
 
 # ----------------------------------------------------------------------------- detail page
 
+_STATUS_WORDS = {"pending", "active", "completed", "complete", "done", "upcoming", "live", "closed", "tba", "open", "opened"}
+_TIMELINE_LABELS = {
+    "ipo opens": "o2", "ipo closes": "c2", "basis of allotment": "al", "allotment": "al",
+    "refunds": "rf", "initiation of refunds": "rf", "demat credit": "dc", "credit of shares to demat": "dc",
+    "listing": "ls", "listing date": "ls",
+}
+_BANKER_SUFFIX = re.compile(r"[\s,]+(?:pvt\.?|private)?\s*(?:ltd\.?|limited)\.?$", re.I)
+
+
+def clean_banker(name: str) -> str:
+    """'Equirus Capital Pvt Ltd' -> 'Equirus Capital'. Keeps the name readable and makes the same bank match across issues."""
+    name = _clean(name)
+    for _ in range(2):
+        name = _BANKER_SUFFIX.sub("", name).strip(" ,.")
+    return name
+
+
+def _timeline_dates(lines: list[str]) -> dict[str, str]:
+    """Label, optional status word, then the date, in the page's own order. Anything unclear stays missing."""
+    start = next((i for i, ln in enumerate(lines) if ln.lower().startswith("ipo timeline")), 0)
+    out: dict[str, str] = {}
+    for i in range(start, min(len(lines), start + 120)):
+        low = lines[i].lower().rstrip(":")
+        key = _TIMELINE_LABELS.get(low)
+        rest = ""
+        if key is None:
+            for label, k in _TIMELINE_LABELS.items():
+                if low.startswith(label + " ") or low.startswith(label + ":"):
+                    key, rest = k, lines[i][len(label):].lstrip(" :")
+                    break
+        if key is None or key in out:
+            continue
+        found = parse_full_date(rest) if rest else ""
+        j = i + 1
+        while not found and j < min(len(lines), i + 4):
+            word = lines[j].lower().strip(" :")
+            if word in _STATUS_WORDS:
+                j += 1
+                continue
+            found = parse_full_date(lines[j]) if len(lines[j]) <= 40 else ""
+            break
+        if found:
+            out[key] = found
+    return out
+
+
+def _links_after(label, kind: str, stop: str, limit: int = 8) -> list[str]:
+    """Anchor texts under /kind/ that follow a label, up to the next label."""
+    names: list[str] = []
+    for n, node in enumerate(label.next_elements):
+        if n > 400 or len(names) >= limit:
+            break
+        if isinstance(node, str):
+            if node.strip().lower() == stop:
+                break
+        elif node.name == "a" and f"/{kind}/" in (node.get("href") or ""):
+            text = _clean(node.get_text(" "))
+            if text and text not in names:
+                names.append(text)
+    return names
+
+
+def check_dates(item: dict) -> dict:
+    """Keep a date only if it sits where the issue process puts it. Wrong is worse than missing."""
+    def d(key):
+        try:
+            return date.fromisoformat(item.get(key) or "")
+        except ValueError:
+            return None
+    c, al, rf, dc, ls = (d(k) for k in ("c", "al", "rf", "dc", "ls"))
+    after_close = lambda x, most: bool(x and c and 0 < (x - c).days <= most)  # noqa: E731
+    if al and not after_close(al, 7):
+        item["al"] = al = None
+    if rf and not after_close(rf, 10):
+        item["rf"] = rf = None
+    if dc and not after_close(dc, 10):
+        item["dc"] = dc = None
+    if ls and not after_close(ls, 14):
+        item["ls"] = ls = None
+    if al and rf and rf < al:
+        item["rf"] = None
+    if al and dc and dc < al:
+        item["dc"] = None
+    if ls and ((rf and ls < rf) or (dc and ls < dc)):
+        item["ls"] = None
+    for key in ("al", "rf", "dc", "ls"):
+        if item.get(key) is None:
+            item.pop(key, None)
+    return item
+
+
 def parse_details(html: str) -> dict:
-    """Issue size (crores), lot size and listing date from an issue's own page. Any field may be missing."""
-    text = _clean(BeautifulSoup(html, "html.parser").get_text(" "))
+    """Issue size (crores), lot size, important dates, lead managers, registrar and sector from an issue's own page.
+    Any field may be missing."""
+    soup = BeautifulSoup(html, "html.parser")
+    text = _clean(soup.get_text(" "))
     out: dict = {}
     m = re.search(r"Issue Size[^0-9₹]{0,40}(?:₹|Rs\.?)?\s*([\d,]+(?:\.\d+)?)\s*(Crores?|Cr\.?|Lakhs?|Lacs?|Million|Mn|Billion|Bn)?",
                   text, re.I)
@@ -259,6 +353,34 @@ def parse_details(html: str) -> dict:
         listed = parse_full_date(m.group(1))
         if listed:
             out["ls"] = listed
+
+    lines = [ln for ln in (_clean(x) for x in soup.get_text("\n").split("\n")) if ln]
+    out.update(_timeline_dates(lines))  # o2 / c2 are only used to cross-check the table's own open and close dates
+
+    for a in soup.find_all("a", href=re.compile(r"/sectors/[^/]+/?$")):
+        line = _clean(a.parent.get_text(" "))
+        if "listed on" in line.lower():
+            sector = _clean(a.get_text(" "))
+            if sector:
+                out["sc"] = sector
+                venues = re.search(r"Listed on\s+([A-Za-z ,&]+?)\s*(?:[·•|]|\d|$)", line, re.I)
+                if venues:
+                    out["ex"] = re.sub(r"\s*,\s*", ", ", venues.group(1).strip(" ,"))
+                break
+    label = soup.find(string=re.compile(r"^\s*Lead Managers?\s*$", re.I))
+    if label:
+        bankers = []
+        for name in _links_after(label, "lead-managers", "registrar"):
+            cleaned = clean_banker(name)
+            if cleaned and cleaned not in bankers:
+                bankers.append(cleaned)
+        if bankers:
+            out["bk"] = bankers
+    label = soup.find(string=re.compile(r"^\s*Registrar\s*$", re.I))
+    if label:
+        names = _links_after(label, "registrar", "lead managers", limit=1)
+        if names:
+            out["rg"] = clean_banker(names[0])
     return out
 
 
@@ -276,31 +398,38 @@ def refresh(fetcher, path: str, now: datetime) -> tuple[dict | None, dict]:
         rows = validate_items(parse_table(res.text, today))
         info["rows"] = len(rows)
         cache = {i["u"]: i for i in (previous or {}).get("items", []) if i.get("u")}
-        fetched = skipped = 0
+        fetched = skipped = conflicts = 0
         for it in rows:
             old = cache.get(it["u"], {})
-            for key in ("sz", "lot", "ls", "dchecked"):
+            for key in ("sz", "lot", "ls", "al", "rf", "dc", "bk", "rg", "sc", "ex", "dchecked", "dv"):
                 if key in old:
                     it[key] = old[key]
         chosen = select(rows, today)
+        fresh = lambda it: it.get("dchecked") == today.isoformat() and it.get("dv") == DETAIL_VERSION  # noqa: E731
         for it in chosen:
-            if not it["u"] or it.get("dchecked") == today.isoformat() or fetched >= MAX_DETAIL_FETCHES:
-                skipped += bool(it["u"] and it.get("dchecked") != today.isoformat())
+            if not it["u"] or fresh(it) or fetched >= MAX_DETAIL_FETCHES:
+                skipped += bool(it["u"] and not fresh(it))
                 continue
             page = fetcher.get("ipowatch_detail", it["u"])
             fetched += 1
             if page.ok:
-                it.update(parse_details(page.text))
+                got = parse_details(page.text)
+                o2, c2 = got.pop("o2", None), got.pop("c2", None)
+                if (o2 and it["o"] and o2 != it["o"]) or (c2 and it["c"] and c2 != it["c"]):
+                    conflicts += 1  # the table and the issue page disagree: keep the table, and say so
+                it.update(got)
                 it["dchecked"] = today.isoformat()
-        items = [derive(it) for it in select(chosen, today)]
+                it["dv"] = DETAIL_VERSION
+        items = [derive(check_dates(it)) for it in select(chosen, today)]
         payload = {"source": NAME, "items": items}
         if not (previous and previous.get("items") == items):
             Path(path).parent.mkdir(parents=True, exist_ok=True)
             Path(path).write_text(json.dumps(payload, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
         have = lambda k: sum(1 for i in items if i.get(k) is not None)  # noqa: E731
         info.update(ok=True, shown=len(items), with_gmp=have("gmp"), with_size=have("sz"), with_lot=have("lot"),
-                    with_listing=sum(1 for i in items if i.get("ls")), detail_fetched=fetched,
-                    detail_skipped=skipped, note="saved")
+                    with_listing=sum(1 for i in items if i.get("ls")), with_allotment=sum(1 for i in items if i.get("al")),
+                    with_bankers=sum(1 for i in items if i.get("bk")), with_sector=sum(1 for i in items if i.get("sc")),
+                    date_conflicts=conflicts, detail_fetched=fetched, detail_skipped=skipped, note="saved")
         return payload, info
     except IpoError as e:
         info["note"] = f"kept previous data: {e}"

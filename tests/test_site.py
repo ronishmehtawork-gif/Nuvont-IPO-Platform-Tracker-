@@ -56,7 +56,7 @@ def test_csp_hash_matches_the_only_executable_script(tmp_path):
 def test_market_and_ipo_data_travel_inside_the_page_without_breaking_it(tmp_path):
     market = {"asof": "2026-11-25", "universe": 1, "priced": 1, "horizons": ["1D"], "industries": ["Power"],
               "clusters": [{"n": "Power", "k": 1, "med": {"1D": 1.0}, "adv": 1.0}],
-              "stocks": [["EVIL", "Evil </script><img src=x onerror=alert(1)> Ltd", 0, [1.0]]], "breadth": [{"d": "2026-11-25"}]}
+              "stocks": [["EVIL", "Evil </script><img src=x onerror=alert(1)> Ltd", 0, [1.0]]], "flow": None}
     ipos = {"items": [{"n": "Bad </script> IPO", "u": "https://ipowatch.in/x/", "sg": "M", "st": "open"}]}
     out = tmp_path / "index.html"
     build_site({"seen": {}}, str(out), datetime(2026, 11, 26, 12, 0, tzinfo=IST), market=market, ipos=ipos)
@@ -65,3 +65,43 @@ def test_market_and_ipo_data_travel_inside_the_page_without_breaking_it(tmp_path
     assert "__DATA__" not in html and "onerror" in html  # present only as inert JSON text inside the data block
     code = re.search(r"<script>(.*?)</script>", html, re.S).group(1)
     assert "innerHTML" not in code and "document.write" not in code and "eval(" not in code and "outerHTML" not in code
+
+
+def test_ipos_get_sector_and_lead_managers_from_the_same_companys_filings_when_the_table_has_none():
+    companies = [{"n": "Foodlink F&B Holdings Limited", "sec": "Food and beverages", "b": ["Beeline Capital"],
+                  "docs": [["DRHP (PDF)", "https://sebi.gov.in/x.pdf"]]}]
+    items = [{"n": "Foodlink F&B Holdings Ltd", "u": "https://ipowatch.in/a/", "st": "open"},
+             {"n": "Foodlink F&B Holdings Ltd", "sc": "Packaged food", "bk": ["Own Banker"], "st": "open"},
+             {"n": "Somebody Else", "st": "open"}]
+    got = site.enrich_ipos(items, companies)
+    assert got[0]["sc"] == "Food and beverages" and got[0]["bk"] == ["Beeline Capital"] and got[0]["dl"][1].endswith("x.pdf")
+    assert got[1]["sc"] == "Packaged food" and got[1]["bk"] == ["Own Banker"]  # what the issue page said wins
+    assert "sc" not in got[2] and "dl" not in got[2]
+    assert "sc" not in items[0]  # the input is not changed
+
+
+def test_five_pages_in_the_right_order_and_no_market_breadth(tmp_path):
+    out = tmp_path / "index.html"
+    commodities = {"asof": "2026-11-25", "updated": "x", "groups": [], "context": [], "parity": None, "horizons": ["1D"]}
+    build_site({"seen": {}}, str(out), datetime(2026, 11, 26, 12, 0, tzinfo=IST), commodities=commodities)
+    html = out.read_text()
+    tabs = re.findall(r'<button type="button" role="tab" id="tab-(\w+)"', html)
+    assert tabs == ["desk", "filings", "sectors", "flow", "commodities"]
+    assert re.search(r'id="tab-desk"[^>]*aria-selected="true"', html)  # the IPO Desk opens first
+    for pid in ("v-desk", "v-filings", "v-sectors", "v-flow", "v-commodities"):
+        assert f'id="{pid}"' in html
+    assert "breadth" not in html.lower() and "v-ipos" not in html
+    assert '"commodities":{"asof":"2026-11-25"' in html
+
+
+def test_page_script_has_no_inline_handlers_or_network_calls(tmp_path):
+    out = tmp_path / "index.html"
+    build_site({"seen": {}}, str(out), datetime(2026, 11, 26, 12, 0, tzinfo=IST))
+    html = out.read_text()
+    head, _, _ = html.partition('<script type="application/json"')
+    assert not re.search(r"\son[a-z]+\s*=", head)  # no inline event attributes
+    assert re.findall(r"<link[^>]*>", head) == ['<link rel="icon" type="image/png" href="assets/favicon.png">']  # only the local icon
+    assert not re.search(r"<(img|script|iframe)[^>]*(src)=\"https?:", html, re.I)
+    code = re.search(r"<script>(.*?)</script>", html, re.S).group(1)
+    for banned in ("fetch(", "XMLHttpRequest", "WebSocket", "import(", "localStorage", "sendBeacon"):
+        assert banned not in code, banned
