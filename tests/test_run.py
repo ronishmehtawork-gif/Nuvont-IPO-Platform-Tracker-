@@ -167,7 +167,8 @@ def test_state_roundtrip_and_site_escaping(tmp_path):
     out = tmp_path / "index.html"
     build_site(state, str(out), datetime(2026, 11, 2, 12, 0, tzinfo=IST))
     html = out.read_text()
-    assert "Seed Ltd" in html and html.count("</script>") == 1
+    # one data block and one code block; the hostile name must not be able to close either early
+    assert "Seed Ltd" in html and html.count("</script>") == 2 and "Evil <\\/script> Ltd" in html
 
 
 def test_addendum_is_alerted_once():

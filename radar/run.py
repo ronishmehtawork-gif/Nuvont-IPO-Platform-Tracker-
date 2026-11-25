@@ -3,7 +3,7 @@ from __future__ import annotations
 import os
 import re
 import sys
-from datetime import datetime, timedelta
+from datetime import date, datetime, timedelta
 from zoneinfo import ZoneInfo
 
 from . import state as st
@@ -61,6 +61,8 @@ def run_once(sources, fetcher, tg, state, now, alert_segments, site_url="") -> l
         r.name for r in results if r.records and not state["health"].get(r.name, {}).get("ever_parsed")
     }
 
+    known_companies = {k.split("|")[0] for k in state["seen"]}  # on the radar before this run
+    today = now.astimezone(IST).date()
     merged: dict = {}
     for res in results:
         for rec in res.records:
@@ -107,7 +109,9 @@ def run_once(sources, fetcher, tg, state, now, alert_segments, site_url="") -> l
                 )
                 if not is_new and entry["message_id"] and _not_listed(official_updates, entry):
                     official_updates.append(entry)
-        if is_new and not baseline and entry["segment"] in alert_segments and entry["event"] in ALERT_EVENTS:
+        if is_new and not baseline and _is_backfill(entry, key, known_companies, today):
+            entry["backfill"] = True  # kept for the dashboard, never alerted
+        elif is_new and not baseline and entry["segment"] in alert_segments and entry["event"] in ALERT_EVENTS:
             new_entries.append((key, entry))
 
     for key, entry in new_entries[:MAX_ALERTS]:
@@ -139,6 +143,26 @@ def run_once(sources, fetcher, tg, state, now, alert_segments, site_url="") -> l
         tg.send_admin(format_report("Daily check", results, state, now))
         state["last_heartbeat"] = today
     return results
+
+
+# A filing older than this is history, not news. It is saved for the dashboard but never sent to the channel.
+MAX_AGE_DAYS = int(os.getenv("ALERT_MAX_AGE_DAYS", "45") or 45)
+
+
+def _is_backfill(entry: dict, key: str, known_companies: set, today: date) -> bool:
+    """True when the radar is only now noticing something that is not new.
+
+    Aggregator pages keep adding older companies to their lists, so 'not seen before' is not the same as
+    'just filed'. A filing is news only if its date is recent. An approval is news only if the company was
+    already on the radar before it showed up as approved (a real status change), not when it first appears
+    with the approval already attached."""
+    if entry["event"] == "approval":
+        return key.split("|")[0] not in known_companies
+    try:
+        filed = date.fromisoformat(entry["filed_on"])
+    except ValueError:
+        return False  # no usable date: cannot call it old
+    return (today - filed).days > MAX_AGE_DAYS
 
 
 def _record_key(rec, state) -> str:

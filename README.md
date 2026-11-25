@@ -1,4 +1,6 @@
-# SME DRHP Radar
+# IPO Filing Radar
+
+Built by the research desk at afc | ashmavir Financial Consultants Pvt. Ltd.
 
 Watches official and news sources for new SME / mainboard IPO filings (DRHP and related updates) and posts
 alerts to a Telegram channel. Runs free on GitHub Actions, hourly from about 7 AM to 7 PM IST (resting overnight), so nothing depends on a laptop.
@@ -28,6 +30,7 @@ A company seen first in news and later in an official source gets a reply under 
    - `TELEGRAM_ADMIN_CHAT_ID`: the number from step 3
 5. **Optional variables** (Settings, Secrets and variables, Actions, Variables):
    - `ALERT_SEGMENTS`: default `sme,unknown,mainboard` (all filings alert). Set it to `sme,unknown` to drop mainboard alerts
+   - `ALERT_MAX_AGE_DAYS`: default `45`. A filing dated older than this is saved quietly and never alerted (see below)
    - `RADAR_SITE_URL`: your GitHub Pages address, so alert digests can link to the searchable list
 6. **Web page (optional).** Settings, Pages, deploy from branch `main`, folder `/docs`.
 7. **First run.** Actions tab, "radar", Run workflow. The admin chat gets a source report.
@@ -37,6 +40,10 @@ A company seen first in news and later in an official source gets a reply under 
 - **First run** saves everything currently listed as a baseline and sends no channel alerts. The admin chat gets a
   report of which sources worked.
 - **A source that starts working later** is baselined silently the same way, so you never get a flood of old items.
+- **Only fresh filings alert.** Aggregators such as IPO Platform keep adding older companies to their lists, so
+  "not seen before" does not mean "just filed". A filing dated more than `ALERT_MAX_AGE_DAYS` ago is stored with
+  `backfill: true`, shown on the dashboard, and never sent. An approval alerts only when a company the radar already
+  tracks gets approved, not when it first appears already approved.
 - **More than 12 new items** in one run are cut to 12 alerts plus one digest.
 - **A source failing 3 runs in a row** sends one admin notice, then one more when it recovers.
 - **Daily check** (after 9 am IST) tells the admin chat the tool is alive.
@@ -72,3 +79,23 @@ pip install -r requirements.txt pytest
 python -m pytest -q
 python -m radar.run   # without a token it prints messages instead of sending them
 ```
+
+## Dashboard
+
+`docs/index.html` is rebuilt on every run and served by GitHub Pages. It opens on the last 90 days, with filters for
+period, segment, exchange, status and sector, a sector heatmap, charts of filings over time, listing venues, sectors,
+lead managers and cities, and a searchable table with document links and a CSV download. The page is one static file:
+it makes no network calls when opened.
+
+## Security
+
+- **Secrets** live only in GitHub Actions secrets and are never printed. The repo and its full history were scanned for
+  tokens and chat ids and hold none. Keep it that way: the repo is public, so its Actions logs are public too.
+- **Dashboard hardening.** A Content Security Policy in the page allows only its own one script (matched by hash),
+  blocks every outside request and form, and sends no referrer. Names and links from outside sources are written as
+  plain text, only `http(s)` links are kept, and links open with `rel="noopener noreferrer"`.
+- **Workflows** run with the least permission they need (`contents: read`, and `contents: write` only where state is
+  committed). Third-party actions are pinned to exact commit SHAs, and Dependabot proposes updates weekly.
+- **The bot** should be an administrator of the channel with only the "Post messages" right.
+- **Public page.** GitHub Pages on a public repo is visible to anyone with the link. The page is marked `noindex`, but
+  keep the repo private (Pages then needs a paid plan) if the content should not be public.

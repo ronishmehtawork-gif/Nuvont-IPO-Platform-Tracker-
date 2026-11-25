@@ -1,0 +1,613 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src '__SCRIPT_HASH__'; style-src 'unsafe-inline'; img-src 'self' data:; connect-src 'none'; form-action 'none'; base-uri 'none'">
+<meta name="referrer" content="no-referrer">
+<meta name="robots" content="noindex,nofollow">
+<meta name="color-scheme" content="light">
+<title>IPO Filing Radar | afc | ashmavir Financial Consultants</title>
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<style>
+:root{
+  --navy:#203058;--navy-2:#2b4177;--ink:#172033;--muted:#5c6b82;--faint:#8895aa;
+  --line:#e3e8f0;--line-2:#eef1f6;--bg:#f4f6fa;--panel:#fff;
+  --gold:#b8a880;--gold-ink:#7a6a3e;--gold-wash:#f6f2e8;
+  --s1:#3a64b5;--s2:#c8861f;--s3:#9aa5b6;
+  --pos:#0f8a5f;--neg:#d14343;--warn:#b7791f;
+  --r:8px;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.5 -apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif}
+a{color:var(--navy-2)}
+button,select,input{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--navy-2);outline-offset:2px;border-radius:4px}
+.wrap{max-width:1320px;margin:0 auto;padding:0 20px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* masthead */
+.mast{background:var(--panel);box-shadow:inset 0 -3px 0 var(--gold)}
+.mast-in{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-top:14px;padding-bottom:17px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:16px;text-decoration:none;color:inherit;min-width:0}
+.brand img{display:block;height:44px;width:auto}
+.brand-sep{width:1px;height:34px;background:var(--line)}
+.brand-title{display:flex;flex-direction:column;min-width:0}
+.brand-title b{font-size:19px;line-height:1.2;font-weight:650;color:var(--navy);letter-spacing:-.01em}
+.brand-title small{font-size:12.5px;color:var(--muted)}
+.mast-right{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.pill{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line);border-radius:999px;padding:4px 11px;font-size:12.5px;font-weight:550;background:var(--panel);white-space:nowrap}
+.pill i{width:8px;height:8px;border-radius:50%;display:inline-block;background:var(--faint)}
+.pill.good i{background:var(--pos)} .pill.warn i{background:#f2a600} .pill.bad i{background:var(--neg)}
+.mast-note{font-size:12.5px;color:var(--muted)}
+
+/* filters */
+.filters{background:var(--panel);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:30}
+.f-in{display:flex;align-items:flex-end;gap:14px 18px;flex-wrap:wrap;padding-top:12px;padding-bottom:12px}
+.f{display:flex;flex-direction:column;gap:4px;min-width:0}
+.f>label,.f>span.l{font-size:11.5px;color:var(--muted);font-weight:550}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:7px;overflow:hidden;background:var(--panel)}
+.seg button{border:0;background:transparent;padding:6px 11px;cursor:pointer;font-size:13px;font-weight:550;color:var(--muted);border-right:1px solid var(--line)}
+.seg button:last-child{border-right:0}
+.seg button:hover{background:var(--line-2)}
+.seg button[aria-pressed="true"]{background:var(--navy);color:#fff}
+select,.search input{border:1px solid var(--line);border-radius:7px;background:var(--panel);padding:6px 28px 6px 10px;font-size:13px;height:32px}
+select{width:150px}
+select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%235c6b82' stroke-width='1.6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center}
+.search{position:relative;flex:1 1 170px;min-width:160px;max-width:320px}
+.search input{padding-left:10px;width:100%}
+.f-end{margin-left:auto;display:flex;align-items:center;gap:12px;white-space:nowrap}
+.count{font-size:12.5px;color:var(--muted)} .count b{color:var(--ink);font-weight:650}
+.btn{border:1px solid var(--line);background:var(--panel);border-radius:7px;padding:0 12px;height:32px;cursor:pointer;font-size:13px;font-weight:550;color:var(--navy-2)}
+.btn:hover{background:var(--line-2)}
+
+/* layout */
+main{padding:20px 0 8px}
+.grid{display:grid;gap:16px;margin-bottom:16px}
+.g-2{grid-template-columns:minmax(0,7fr) minmax(0,5fr)}
+.g-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.stack{display:grid;gap:16px;align-content:start}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);min-width:0}
+.ph{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:14px 16px 0;flex-wrap:wrap}
+.ph h2{margin:0;font-size:15px;font-weight:650;color:var(--navy);letter-spacing:-.005em}
+.ph p{margin:2px 0 0;font-size:12.5px;color:var(--muted)}
+.pb{padding:12px 16px 16px}
+.tools{display:flex;align-items:center;gap:10px}
+.seg.sm button{padding:3px 9px;font-size:12px}
+.legend{display:flex;gap:12px;font-size:12px;color:var(--muted);align-items:center}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.sw{width:10px;height:10px;border-radius:2px;display:inline-block}
+.c-M{background:var(--s1)} .c-S{background:var(--s2)} .c-U{background:var(--s3)}
+
+/* KPI strip */
+.kpis{display:grid;grid-template-columns:repeat(6,minmax(0,1fr))}
+.kpi{padding:14px 16px 13px;border-left:1px solid var(--line);min-width:0}
+.kpi:first-child{border-left:0}
+.kpi .k{font-size:12.5px;color:var(--muted)}
+.kpi .v{font-size:28px;line-height:1.15;font-weight:650;color:var(--navy);margin-top:3px;letter-spacing:-.02em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.kpi .v.t{font-size:18px;line-height:1.5;padding-top:4px}
+.kpi .d{font-size:12px;color:var(--muted);margin-top:2px}
+.kpi .d b{font-weight:600;color:var(--ink)}
+
+/* time chart (HTML columns, scales with the page) */
+.plot{position:relative;height:210px;margin:6px 0 0 34px}
+.gl{position:absolute;left:0;right:0;height:0;border-top:1px solid var(--line-2)}
+.gl.z{border-top-color:var(--line)}
+.gl span{position:absolute;left:-34px;top:-8px;width:28px;text-align:right;font-size:11px;color:var(--faint);font-variant-numeric:tabular-nums}
+.cols{position:absolute;inset:0;display:grid;grid-auto-flow:column;grid-auto-columns:1fr;align-items:end}
+.slot{height:100%;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;cursor:default;border-radius:4px 4px 0 0}
+.slot:hover,.slot:focus-visible{background:var(--bg)}
+.bar{width:70%;max-width:24px;display:flex;flex-direction:column-reverse}
+.bar i{display:block;background-clip:padding-box;min-height:0}
+.bar i+i{border-top:2px solid var(--panel)}
+.bar i:last-child{border-radius:4px 4px 0 0}
+.xl{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;margin:5px 0 0 34px;font-size:11px;color:var(--faint)}
+.xl span{text-align:center;white-space:nowrap;overflow:visible}
+.note{font-size:12px;color:var(--muted);margin:8px 0 0}
+.empty{padding:34px 16px;text-align:center;color:var(--muted)}
+
+/* ranking bars */
+.rk{display:grid;gap:2px}
+.row{display:grid;grid-template-columns:minmax(0,46%) minmax(0,1fr) 30px;align-items:center;gap:10px;padding:5px 6px;border-radius:6px}
+.row:hover,.row:focus-visible{background:var(--bg)}
+.row .nm{font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.row .tr{display:flex;height:14px}
+.row .tr i{display:block;height:100%;margin-right:2px;background-clip:padding-box}
+.row .tr i:last-child{border-radius:0 4px 4px 0;margin-right:0}
+.row .n{font-size:12.5px;font-weight:600;text-align:right;font-variant-numeric:tabular-nums}
+
+/* heatmap */
+.hmp{display:flex;flex-direction:column}
+.hm-wrap{overflow:auto;padding:10px 12px 14px}
+.hm{border-collapse:separate;border-spacing:0;width:100%;min-width:560px;font-size:12.5px}
+.hm th{font-weight:600;color:var(--muted);font-size:12px;text-align:center;padding:4px 2px 8px;background:var(--panel)}
+.hm th.l{text-align:left;padding-left:8px}
+.hm td{padding:0}
+.hm td.g{width:116px;vertical-align:middle;padding:0 10px 0 8px;font-weight:650;color:var(--navy);font-size:12px;border-left:3px solid var(--gold);background:var(--gold-wash);border-bottom:2px solid var(--panel)}
+.hm td.i{padding:0 10px 0 8px;white-space:nowrap;border-bottom:2px solid var(--panel);width:112px}
+.hm td.v{height:37px;min-width:54px;text-align:center;font-variant-numeric:tabular-nums;font-size:12px;font-weight:550;border:2px solid var(--panel);border-radius:5px;background-clip:padding-box}
+.hm-sum{font-size:12.5px;color:var(--muted)}
+.hm-key{margin-top:auto;display:flex;align-items:center;gap:8px;font-size:11.5px;color:var(--muted);padding:0 16px 12px}
+.ramp{height:8px;width:150px;border-radius:4px;background:linear-gradient(90deg,#d14343,#eef1f5,#0f8a5f)}
+
+/* table */
+.tw{overflow:auto}
+table.t{border-collapse:collapse;width:100%;min-width:980px}
+.t th{font-size:12px;font-weight:600;color:var(--muted);text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);background:var(--panel);white-space:nowrap}
+.t th button{border:0;background:none;cursor:pointer;font-weight:600;color:inherit;padding:0}
+.t th button:hover{color:var(--navy)}
+.t th [data-dir]::after{content:attr(data-dir);margin-left:4px;color:var(--navy)}
+.t td{padding:10px 12px;border-bottom:1px solid var(--line-2);vertical-align:top;font-size:13px}
+.t tr:hover td{background:#fafbfd}
+.co-n{font-weight:600;color:var(--ink)}
+.co-s,.muted{color:var(--muted);font-size:12.5px}
+.badges{display:flex;flex-wrap:wrap;gap:5px}
+.b{font-size:12px;font-weight:550;border:1px solid var(--line);border-radius:5px;padding:1px 7px;white-space:nowrap;background:var(--panel)}
+.b.ok{border-color:#b9e0cf;background:#eefaf4;color:#0b6b49}
+.b.chg{border-color:#e4d7b4;background:var(--gold-wash);color:var(--gold-ink)}
+.new{font-size:11px;font-weight:650;background:var(--navy);color:#fff;border-radius:4px;padding:1px 6px;margin-left:6px;vertical-align:1px}
+.lst{display:flex;gap:7px;align-items:flex-start}
+.lst .sw{margin-top:5px}
+.lk{display:flex;flex-wrap:wrap;gap:6px 8px}
+.lk a{font-size:12.5px;font-weight:550;text-decoration:none;border:1px solid var(--line);border-radius:6px;padding:2px 9px;color:var(--navy-2);white-space:nowrap}
+.lk a:hover{background:var(--line-2)}
+.lk a.pg{border-color:transparent;padding-left:2px;text-decoration:underline;color:var(--muted)}
+.more{display:flex;justify-content:center;padding:14px}
+.foot{padding:22px 0 40px;color:var(--muted);font-size:12.5px}
+.foot .src{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 10px}
+.foot p{margin:4px 0;max-width:980px}
+.tip{position:fixed;z-index:50;pointer-events:none;background:var(--navy);color:#fff;border-radius:7px;padding:8px 10px;font-size:12px;line-height:1.45;box-shadow:0 6px 20px rgba(23,32,51,.25);max-width:260px;display:none}
+.tip b{display:block;font-size:12.5px;margin-bottom:3px}
+.tip div{display:flex;justify-content:space-between;gap:16px;font-variant-numeric:tabular-nums}
+.tip .sw{margin-right:6px}
+.tbl-view{width:100%;border-collapse:collapse;font-size:12.5px}
+.tbl-view th,.tbl-view td{padding:5px 8px;border-bottom:1px solid var(--line-2);text-align:right;font-variant-numeric:tabular-nums}
+.tbl-view th:first-child,.tbl-view td:first-child{text-align:left}
+.tbl-view th{color:var(--muted);font-weight:600}
+
+@media (max-width:1100px){
+  .g-2,.g-3{grid-template-columns:minmax(0,1fr)}
+  .kpis{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .kpi:nth-child(4){border-left:0}
+  .kpi:nth-child(n+4){border-top:1px solid var(--line)}
+}
+@media (max-width:720px){
+  .wrap{padding:0 14px}
+  .filters{position:static}
+  .mast-in{padding-top:12px;padding-bottom:14px;gap:10px}
+  .brand{gap:12px;width:100%}
+  .brand img{height:34px} .brand-sep{display:none} .brand-title b{font-size:17px} .brand-title small{display:none}
+  .mast-right{width:100%;justify-content:space-between;gap:8px}
+  .pill{white-space:normal;line-height:1.35}
+  .kpis{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .kpi:nth-child(odd){border-left:0} .kpi:nth-child(even){border-left:1px solid var(--line)}
+  .kpi:nth-child(n+3){border-top:1px solid var(--line)}
+  .kpi .v{font-size:24px}
+  .f-end{margin-left:0;width:100%;justify-content:space-between}
+  .search input{width:100%} .search{width:100%}
+  table.t{min-width:0} .t thead{display:none}
+  .t tr{display:block;padding:10px 12px;border-bottom:1px solid var(--line)}
+  .t td{display:block;border:0;padding:3px 0}
+  .t td::before{content:attr(data-l);display:block;font-size:11px;color:var(--faint);margin-bottom:1px}
+  .t td.co::before{display:none}
+  .row{grid-template-columns:minmax(0,44%) minmax(0,1fr) 30px}
+}
+@media print{.filters{position:static}.tools,.more,.f-end .btn{display:none}}
+@media (prefers-reduced-motion:no-preference){.slot,.row,.btn,.seg button{transition:background-color .12s}}
+</style>
+</head>
+<body>
+<header class="mast">
+  <div class="wrap mast-in">
+    <a class="brand" href="./" aria-label="afc | ashmavir Financial Consultants, IPO Filing Radar">
+      <img src="assets/afc-ashmavir-logo.png" alt="afc | ashmavir Financial Consultants Pvt. Ltd">
+      <span class="brand-sep" aria-hidden="true"></span>
+      <span class="brand-title"><b>IPO Filing Radar</b><small>DRHP, approval and addendum tracker for SME and mainboard issues</small></span>
+    </a>
+    <div class="mast-right">
+      <span class="mast-note" id="alerts"></span>
+      <span class="pill" id="fresh"><i></i><span>Checking</span></span>
+    </div>
+  </div>
+</header>
+
+<div class="filters" role="region" aria-label="Filters">
+  <div class="wrap f-in">
+    <div class="f"><span class="l" id="l-r">Filed in</span>
+      <div class="seg" id="f-r" role="group" aria-labelledby="l-r">
+        <button data-v="7">7D</button><button data-v="30">30D</button><button data-v="90">90D</button><button data-v="365">1Y</button><button data-v="all">All</button>
+      </div></div>
+    <div class="f"><span class="l" id="l-g">Segment</span>
+      <div class="seg" id="f-g" role="group" aria-labelledby="l-g">
+        <button data-v="all">All</button><button data-v="M">Mainboard</button><button data-v="S">SME</button>
+      </div></div>
+    <div class="f"><label for="f-x">Exchange</label><select id="f-x"></select></div>
+    <div class="f"><label for="f-k">Status</label><select id="f-k"></select></div>
+    <div class="f"><label for="f-s">Sector</label><select id="f-s"></select></div>
+    <div class="f search"><label for="f-q">Search</label><input id="f-q" type="search" placeholder="Company, city or manager" autocomplete="off"></div>
+    <div class="f-end">
+      <button class="btn" id="reset" type="button">Reset</button>
+    </div>
+  </div>
+</div>
+
+<main class="wrap">
+  <section class="panel kpis" id="kpis" aria-label="Summary"></section>
+  <div style="height:16px"></div>
+
+  <div class="grid g-2">
+    <section class="panel hmp" aria-labelledby="h-hm">
+      <div class="ph"><div><h2 id="h-hm">Sector heatmap</h2><p>Nifty sector indices, return over each period. Not affected by the filters.</p></div>
+        <div class="hm-sum" id="hm-sum"></div></div>
+      <div class="hm-wrap" id="hm"></div>
+      <div class="hm-key"><span>Fall</span><span class="ramp" aria-hidden="true"></span><span>Rise</span><span id="hm-upd" style="margin-left:auto"></span></div>
+    </section>
+    <div class="stack">
+      <section class="panel" aria-labelledby="h-t">
+        <div class="ph"><div><h2 id="h-t">Filings over time</h2><p id="t-sub"></p></div>
+          <div class="tools"><div class="legend" id="t-leg"></div>
+            <div class="seg sm" id="t-view" role="group" aria-label="View"><button data-v="chart" aria-pressed="true">Chart</button><button data-v="table" aria-pressed="false">Table</button></div></div></div>
+        <div class="pb" id="t-body"></div>
+      </section>
+      <section class="panel" aria-labelledby="h-x">
+        <div class="ph"><div><h2 id="h-x">Where they are listed</h2><p>Companies by exchange</p></div></div>
+        <div class="pb rk" id="x-body"></div>
+      </section>
+    </div>
+  </div>
+
+  <div class="grid g-3">
+    <section class="panel" aria-labelledby="h-sec"><div class="ph"><div><h2 id="h-sec">Busiest sectors</h2><p>Top 8 by number of companies</p></div></div><div class="pb rk" id="sec-body"></div></section>
+    <section class="panel" aria-labelledby="h-bk"><div class="ph"><div><h2 id="h-bk">Lead managers</h2><p>Most often named first or second</p></div></div><div class="pb rk" id="bk-body"></div></section>
+    <section class="panel" aria-labelledby="h-ct"><div class="ph"><div><h2 id="h-ct">Cities</h2><p>Registered office, top 8</p></div></div><div class="pb rk" id="ct-body"></div></section>
+  </div>
+
+  <section class="panel" aria-labelledby="h-tb">
+    <div class="ph"><div><h2 id="h-tb">Filings</h2><p id="tb-sub"></p></div>
+      <div class="tools"><button class="btn" id="csv" type="button">Download CSV</button></div></div>
+    <div class="tw"><table class="t" id="tbl"><thead><tr>
+      <th><button data-k="n" type="button">Company</button></th><th>Status</th><th>Listing</th>
+      <th><button data-k="d" type="button">Latest filing</button></th><th>Lead managers</th><th>Documents</th>
+    </tr></thead><tbody id="tb"></tbody></table></div>
+    <div class="more" id="more"></div>
+  </section>
+
+  <footer class="foot">
+    <div class="src" id="src"></div>
+    <p>Filings are compiled from public sources and shown as published. Check the official document before relying on any item. This page is for research and is not investment advice.</p>
+    <p>afc | ashmavir Financial Consultants Pvt. Ltd. Research desk. Sector returns are from public index data and may be delayed.</p>
+  </footer>
+</main>
+<div class="tip" id="tip" role="tooltip"></div>
+
+<script type="application/json" id="data">__DATA__</script>
+<script>
+(() => {
+"use strict";
+const $ = (s, r = document) => r.querySelector(s);
+const el = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
+const DATA = JSON.parse($("#data").textContent);
+const C = DATA.companies;
+const MON = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+const SEG = { M: { name: "Mainboard", cls: "c-M" }, S: { name: "SME", cls: "c-S" }, U: { name: "Unclassified", cls: "c-U" } };
+const STATUS = { filed: "DRHP filed", refiled: "Refiled", approved: "Approved", addendum: "Addendum", issue: "Issue" };
+const pad = n => String(n).padStart(2, "0");
+const isoOf = d => d.getFullYear() + "-" + pad(d.getMonth() + 1) + "-" + pad(d.getDate());
+const parse = iso => new Date(iso + "T00:00:00");
+const fmt = iso => { const [y, m, d] = iso.split("-"); return (+d) + " " + MON[m - 1] + " " + y; };
+const today = new Date(); today.setHours(0, 0, 0, 0);
+const addDays = (d, n) => { const x = new Date(d); x.setDate(x.getDate() + n); return x; };
+const ago = iso => { const n = Math.round((today - parse(iso)) / 864e5); return n <= 0 ? "today" : n === 1 ? "yesterday" : n < 60 ? n + " days ago" : n < 700 ? Math.round(n / 30.4) + " months ago" : (n / 365).toFixed(1) + " years ago"; };
+const safeUrl = u => typeof u === "string" && /^https?:\/\//i.test(u);
+const plural = (n, w) => n + " " + w + (n === 1 ? "" : "s");
+const cos = n => n + (n === 1 ? " company" : " companies");
+const minus = s => s.replace("-", "−");
+
+for (const c of C) c._h = [c.n, c.sec, c.c, c.b.join(" "), c.x].join(" ").toLowerCase();
+
+/* ---------- state ---------- */
+const DEF = { r: "90", g: "all", x: "all", k: "all", s: "all", q: "" };
+const S = Object.assign({}, DEF);
+const RANGES = ["7", "30", "90", "365", "all"];
+(function readHash() {
+  const p = new URLSearchParams(location.hash.slice(1));
+  for (const k in DEF) if (p.has(k)) S[k] = p.get(k);
+  if (!RANGES.includes(S.r)) S.r = DEF.r;
+  if (!["all", "M", "S"].includes(S.g)) S.g = "all";
+})();
+let sort = { k: "d", dir: -1 }, shown = 25, view = "chart";
+function writeHash() {
+  const p = new URLSearchParams();
+  for (const k in DEF) if (S[k] !== DEF[k]) p.set(k, S[k]);
+  history.replaceState(null, "", p.toString() ? "#" + p : location.pathname + location.search);
+}
+
+/* ---------- filtering ---------- */
+function window_() {
+  if (S.r === "all") return { from: "", to: "9999-12-31", n: 0 };
+  const n = +S.r;
+  return { from: isoOf(addDays(today, -(n - 1))), to: isoOf(today), n };
+}
+function match(c) {
+  if (S.g !== "all" && c.g !== S.g) return false;
+  if (S.x !== "all" && (c.x || "Not stated") !== S.x) return false;
+  if (S.k !== "all" && !c.st.includes(S.k)) return false;
+  if (S.s !== "all" && (c.sec || "Unspecified") !== S.s) return false;
+  const q = S.q.trim().toLowerCase();
+  return !q || c._h.includes(q);
+}
+const inWin = (c, w) => c.d && c.d >= w.from && c.d <= w.to;
+
+/* ---------- tooltip ---------- */
+const tip = $("#tip");
+function showTip(target, title, rows) {
+  tip.textContent = "";
+  tip.appendChild(el("b", null, title));
+  for (const r of rows) {
+    const line = el("div");
+    const left = el("span");
+    if (r.cls) left.appendChild(el("i", "sw " + r.cls));
+    left.appendChild(document.createTextNode(r.k));
+    line.appendChild(left); line.appendChild(el("b", null, String(r.v)));
+    line.lastChild.style.display = "inline"; line.lastChild.style.margin = "0";
+    tip.appendChild(line);
+  }
+  tip.style.display = "block";
+  const b = target.getBoundingClientRect(), t = tip.getBoundingClientRect();
+  let x = b.left + b.width / 2 - t.width / 2, y = b.top - t.height - 8;
+  if (y < 6) y = b.bottom + 8;
+  x = Math.max(6, Math.min(x, innerWidth - t.width - 6));
+  tip.style.left = x + "px"; tip.style.top = y + "px";
+}
+const hideTip = () => { tip.style.display = "none"; };
+function hover(node, title, rows) {
+  node.addEventListener("pointerenter", () => showTip(node, title, rows));
+  node.addEventListener("pointerleave", hideTip);
+  node.addEventListener("focus", () => showTip(node, title, rows));
+  node.addEventListener("blur", hideTip);
+  node.tabIndex = 0;
+  node.setAttribute("aria-label", title + ": " + rows.map(r => r.k + " " + r.v).join(", "));
+}
+
+/* ---------- filters UI ---------- */
+function fillSelect(id, options, current) {
+  const s = $(id); s.textContent = "";
+  for (const [v, t] of options) { const o = el("option", null, t); o.value = v; s.appendChild(o); }
+  s.value = options.some(o => o[0] === current) ? current : "all";
+}
+function countBy(list, f) { const m = new Map(); for (const c of list) { const k = f(c); if (k) m.set(k, (m.get(k) || 0) + 1); } return [...m].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0])); }
+function buildFilters() {
+  fillSelect("#f-x", [["all", "All exchanges"]].concat(countBy(C, c => c.x || "Not stated").map(([k, n]) => [k, k + " (" + n + ")"])), S.x);
+  fillSelect("#f-k", [["all", "Any status"]].concat(Object.entries(STATUS).map(([k, t]) => [k, t])), S.k);
+  fillSelect("#f-s", [["all", "All sectors"]].concat(countBy(C, c => c.sec || "Unspecified").map(([k, n]) => [k, k + " (" + n + ")"])), S.sec || S.s);
+  $("#f-q").value = S.q;
+  for (const [id, key] of [["#f-r", "r"], ["#f-g", "g"]]) {
+    $(id).addEventListener("click", e => { const b = e.target.closest("button"); if (!b) return; S[key] = b.dataset.v; shown = 25; render(); });
+  }
+  for (const [id, key] of [["#f-x", "x"], ["#f-k", "k"], ["#f-s", "s"]]) {
+    $(id).addEventListener("change", e => { S[key] = e.target.value; shown = 25; render(); });
+  }
+  let timer; $("#f-q").addEventListener("input", e => { clearTimeout(timer); timer = setTimeout(() => { S.q = e.target.value; shown = 25; render(); }, 120); });
+  $("#reset").addEventListener("click", () => { Object.assign(S, DEF); $("#f-q").value = ""; for (const id of ["#f-x", "#f-k", "#f-s"]) $(id).value = "all"; shown = 25; render(); });
+}
+function syncFilters() {
+  for (const [id, key] of [["#f-r", "r"], ["#f-g", "g"]]) for (const b of $(id).children) b.setAttribute("aria-pressed", String(b.dataset.v === S[key]));
+}
+
+/* ---------- KPI strip ---------- */
+function kpiTile(label, value, delta, small) {
+  const d = el("div", "kpi");
+  d.appendChild(el("div", "k", label));
+  d.appendChild(el("div", "v" + (small ? " t" : ""), value));
+  const line = el("div", "d"); if (delta instanceof Node) line.appendChild(delta); else line.textContent = delta || " ";
+  d.appendChild(line); return d;
+}
+function change(now, before, w) {
+  if (!w.n) return "All time";
+  const s = el("span"); const arrow = now > before ? "▲ " : now < before ? "▼ " : "";
+  if (!before && now) { s.appendChild(el("b", null, arrow + "up from 0")); s.appendChild(document.createTextNode(" in the previous " + w.n + " days")); return s; }
+  const pct = before ? Math.abs(Math.round((now - before) / before * 100)) + "%" : "no change";
+  s.appendChild(el("b", null, arrow + (now === before ? "no change" : pct)));
+  s.appendChild(document.createTextNode(" vs previous " + w.n + " days")); return s;
+}
+function renderKpis(items, prev, w) {
+  const box = $("#kpis"); box.textContent = "";
+  const n = items.length, share = k => n ? Math.round(items.filter(c => c.g === k).length / n * 100) + "% of filings" : " ";
+  const cnt = f => items.filter(f).length, cntP = f => prev.filter(f).length;
+  const top = countBy(items, c => c.sec)[0];
+  box.appendChild(kpiTile("Companies filed", String(n), change(n, prev.length, w)));
+  box.appendChild(kpiTile("Mainboard", String(cnt(c => c.g === "M")), share("M")));
+  box.appendChild(kpiTile("SME", String(cnt(c => c.g === "S")), share("S")));
+  const ap = cnt(c => c.st.includes("approved"));
+  box.appendChild(kpiTile("Approval noted", String(ap), n ? Math.round(ap / n * 100) + "% of filings" : " "));
+  const ad = c => c.st.includes("addendum") || c.st.includes("refiled");
+  box.appendChild(kpiTile("Addendums and refilings", String(cnt(ad)), change(cnt(ad), cntP(ad), w)));
+  box.appendChild(kpiTile("Busiest sector", top ? top[0] : "None", top ? cos(top[1]) : " ", true));
+}
+
+/* ---------- filings over time ---------- */
+function monday(d) { const x = new Date(d); const k = (x.getDay() + 6) % 7; x.setDate(x.getDate() - k); return x; }
+function buckets(items, w) {
+  let mode, start, end = new Date(today), capped = false;
+  if (S.r === "all") {
+    const ds = items.map(c => c.d).filter(Boolean).sort();
+    if (!ds.length) return { mode: "month", list: [], capped };
+    mode = "month"; end = parse(ds[ds.length - 1]); start = parse(ds[0]);
+    const lim = new Date(end.getFullYear(), end.getMonth() - 35, 1);
+    if (start < lim) { start = lim; capped = true; }
+  } else { mode = w.n <= 45 ? "day" : w.n <= 120 ? "week" : "month"; start = addDays(today, -(w.n - 1)); }
+  const list = [], index = new Map();
+  const add = (key, label, long) => { index.set(key, list.length); list.push({ key, label, long, M: 0, S: 0, U: 0 }); };
+  if (mode === "day") for (let d = new Date(start); d <= end; d = addDays(d, 1)) add(isoOf(d), d.getDate() + " " + MON[d.getMonth()], fmt(isoOf(d)));
+  else if (mode === "week") for (let d = monday(start); d <= end; d = addDays(d, 7)) add(isoOf(d), d.getDate() + " " + MON[d.getMonth()], "Week of " + fmt(isoOf(d)));
+  else for (let d = new Date(start.getFullYear(), start.getMonth(), 1); d <= end; d = new Date(d.getFullYear(), d.getMonth() + 1, 1)) add(d.getFullYear() + "-" + pad(d.getMonth() + 1), MON[d.getMonth()] + " '" + String(d.getFullYear()).slice(2), MON[d.getMonth()] + " " + d.getFullYear());
+  for (const c of items) {
+    if (!c.d) continue;
+    const key = mode === "day" ? c.d : mode === "week" ? isoOf(monday(parse(c.d))) : c.d.slice(0, 7);
+    const i = index.get(key); if (i != null) list[i][c.g]++;
+  }
+  return { mode, list, capped };
+}
+function niceMax(v) { if (v <= 4) return 4; const p = Math.pow(10, Math.floor(Math.log10(v))); for (const m of [1, 2, 2.5, 4, 5, 8, 10]) if (m * p >= v) return m * p; return 10 * p; }
+function renderTime(items, w) {
+  const { mode, list, capped } = buckets(items, w);
+  const body = $("#t-body"); body.textContent = "";
+  $("#t-sub").textContent = "Companies by " + (mode === "day" ? "day" : mode === "week" ? "week" : "month") + " of their latest filing";
+  const present = ["M", "S", "U"].filter(k => items.some(c => c.g === k));
+  const leg = $("#t-leg"); leg.textContent = "";
+  if (present.length > 1) for (const k of present) { const s = el("span"); s.appendChild(el("i", "sw " + SEG[k].cls)); s.appendChild(document.createTextNode(SEG[k].name)); leg.appendChild(s); }
+  if (!list.length || !list.some(b => b.M + b.S + b.U)) { body.appendChild(el("div", "empty", "No filings in this period.")); return; }
+  if (view === "table") {
+    const t = el("table", "tbl-view"); const h = el("tr"); for (const x of ["Period", "Mainboard", "SME", "Total"]) h.appendChild(el("th", null, x)); t.appendChild(h);
+    for (const b of list.slice().reverse()) { const r = el("tr"); for (const x of [b.long, b.M, b.S, b.M + b.S + b.U]) r.appendChild(el("td", null, String(x))); t.appendChild(r); }
+    body.appendChild(t); return;
+  }
+  const max = niceMax(Math.max(...list.map(b => b.M + b.S + b.U)));
+  const plot = el("div", "plot");
+  for (let i = 0; i <= 4; i++) { const g = el("div", "gl" + (i === 0 ? " z" : "")); g.style.bottom = (i / 4 * 100) + "%"; g.appendChild(el("span", null, String(Math.round(max * i / 4 * 10) / 10))); plot.appendChild(g); }
+  const cols = el("div", "cols");
+  for (const b of list) {
+    const total = b.M + b.S + b.U, slot = el("div", "slot"), bar = el("div", "bar");
+    for (const k of ["M", "S", "U"]) if (b[k]) { const seg = el("i", SEG[k].cls); seg.style.height = (b[k] / max * 200) + "px"; bar.appendChild(seg); }
+    slot.appendChild(bar);
+    hover(slot, b.long, [{ k: "Mainboard", v: b.M, cls: SEG.M.cls }, { k: "SME", v: b.S, cls: SEG.S.cls }].concat(b.U ? [{ k: "Unclassified", v: b.U, cls: SEG.U.cls }] : []).concat([{ k: "Total", v: total }]));
+    cols.appendChild(slot);
+  }
+  plot.appendChild(cols); body.appendChild(plot);
+  const xl = el("div", "xl"), every = Math.ceil(list.length / 9);
+  list.forEach((b, i) => xl.appendChild(el("span", null, i % every === 0 ? b.label : "")));
+  body.appendChild(xl);
+  if (capped) body.appendChild(el("p", "note", "Showing the latest 36 months. Older filings are in the table below."));
+}
+
+/* ---------- ranking bars ---------- */
+function renderRank(sel, entries, rows) {
+  const box = $(sel); box.textContent = "";
+  if (!entries.length) { box.appendChild(el("div", "empty", "Nothing to show for these filters.")); return; }
+  const top = entries.slice(0, rows), max = top[0].t;
+  for (const e of top) {
+    const row = el("div", "row"); row.appendChild(el("span", "nm", e.name)); row.lastChild.title = e.name;
+    const tr = el("div", "tr");
+    for (const k of ["M", "S", "U"]) if (e[k]) { const s = el("i", SEG[k].cls); s.style.width = (e[k] / max * 100) + "%"; tr.appendChild(s); }
+    row.appendChild(tr); row.appendChild(el("span", "n", String(e.t)));
+    hover(row, e.name, [{ k: "Mainboard", v: e.M, cls: SEG.M.cls }, { k: "SME", v: e.S, cls: SEG.S.cls }].concat(e.U ? [{ k: "Unclassified", v: e.U, cls: SEG.U.cls }] : []).concat([{ k: "Total", v: e.t }]));
+    box.appendChild(row);
+  }
+}
+function tally(items, keysOf) {
+  const m = new Map();
+  for (const c of items) for (const k of new Set(keysOf(c))) { if (!k) continue; const e = m.get(k) || { name: k, M: 0, S: 0, U: 0, t: 0 }; e[c.g]++; e.t++; m.set(k, e); }
+  return [...m.values()].sort((a, b) => b.t - a.t || a.name.localeCompare(b.name));
+}
+
+/* ---------- sector heatmap ---------- */
+const HZ = ["1D", "1W", "1M", "3M", "6M", "1Y", "3Y"];
+const mix = (a, b, t) => a.map((v, i) => Math.round(v + (b[i] - v) * t));
+const NEU = [238, 241, 245], POS = [15, 138, 95], NEG = [209, 67, 67];
+function renderHeatmap() {
+  const host = $("#hm"); host.textContent = "";
+  const ACR = new Set(["FMCG", "IT"]);
+  const nice = g => g.split(" ").map(w => ACR.has(w) || w === "&" ? w : w.charAt(0) + w.slice(1).toLowerCase()).join(" ");
+  const groups = Object.entries((DATA.sectors && DATA.sectors.groups) || {})
+    .map(([g, rows]) => [g, rows.filter(r => HZ.some(h => r.returns && r.returns[h] != null))]).filter(([, rows]) => rows.length);
+  if (!groups.length) { host.appendChild(el("div", "empty", "Sector data is not available yet. It refreshes with each radar run.")); return; }
+  const scale = {};
+  for (const h of HZ) { const v = []; for (const [, rows] of groups) for (const r of rows) { const x = r.returns && r.returns[h]; if (x != null) v.push(Math.abs(x)); } v.sort((a, b) => a - b); scale[h] = Math.max(v.length ? v[Math.floor(v.length * 0.9)] : 1, 0.01); }
+  const t = el("table", "hm"); const head = el("tr"); head.appendChild(el("th", "l", "Sector")); head.appendChild(el("th", "l", "Index"));
+  for (const h of HZ) head.appendChild(el("th", null, h)); t.appendChild(head);
+  let up = 0, total = 0;
+  for (const [g, rows] of groups) rows.forEach((r, i) => {
+    const tr = el("tr");
+    if (i === 0) { const td = el("td", "g", nice(g)); td.rowSpan = rows.length; tr.appendChild(td); }
+    tr.appendChild(el("td", "i", r.name));
+    for (const h of HZ) {
+      const x = r.returns && r.returns[h], td = el("td", "v");
+      if (x == null) { td.textContent = "–"; td.style.color = "var(--faint)"; }
+      else {
+        const k = Math.max(-1, Math.min(1, x / scale[h])), rgb = mix(NEU, k >= 0 ? POS : NEG, Math.abs(k));
+        td.style.background = "rgb(" + rgb.join(",") + ")"; td.style.color = Math.abs(k) > 0.55 ? "#fff" : "var(--ink)";
+        td.textContent = (x > 0 ? "+" : "") + minus(x.toFixed(2)) + "%"; td.title = r.name + ", " + h + ": " + (x > 0 ? "+" : "") + minus(x.toFixed(2)) + "%";
+        if (h === "1D") { total++; if (x > 0) up++; }
+      }
+      tr.appendChild(td);
+    }
+    t.appendChild(tr);
+  });
+  host.appendChild(t);
+  $("#hm-sum").textContent = total ? up + " of " + total + " indices up today" : "";
+  $("#hm-upd").textContent = DATA.sectors.updated ? "Updated " + DATA.sectors.updated : "";
+}
+
+/* ---------- table ---------- */
+function badge(s) { const b = el("span", "b" + (s === "approved" ? " ok" : (s === "addendum" || s === "refiled") ? " chg" : ""), (s === "approved" ? "✓ " : s === "refiled" ? "↻ " : s === "addendum" ? "+ " : "") + STATUS[s]); return b; }
+function renderTable(items) {
+  const k = sort.k, dir = sort.dir;
+  const rows = items.slice().sort((a, b) => { const x = k === "n" ? a.n.toLowerCase() : (a.d || ""), y = k === "n" ? b.n.toLowerCase() : (b.d || ""); return (x < y ? -1 : x > y ? 1 : a.n.localeCompare(b.n)) * dir; });
+  for (const b of document.querySelectorAll("th button")) b.removeAttribute("data-dir");
+  const act = $('th button[data-k="' + k + '"]'); if (act) act.dataset.dir = dir < 0 ? "↓" : "↑";
+  const tb = $("#tb"); tb.textContent = "";
+  $("#tb-sub").textContent = rows.length ? "Newest first. " + cos(rows.length) + " of " + C.length + " match the filters." : "";
+  if (!rows.length) { const tr = el("tr"), td = el("td"); td.colSpan = 6; td.appendChild(el("div", "empty", "No filings match these filters. Widen the period or reset the filters.")); tr.appendChild(td); tb.appendChild(tr); $("#more").textContent = ""; return; }
+  for (const c of rows.slice(0, shown)) {
+    const tr = el("tr");
+    const co = el("td", "co"); const n = el("div", "co-n", c.n);
+    if (c.new && (today - parse(c.new)) / 864e5 <= 7) n.appendChild(el("span", "new", "New"));
+    co.appendChild(n); co.appendChild(el("div", "co-s", [c.sec, c.c].filter(Boolean).join(" · ") || " ")); tr.appendChild(co);
+    const st = el("td"); st.dataset.l = "Status"; const bs = el("div", "badges"); for (const s of c.st) bs.appendChild(badge(s)); st.appendChild(bs); tr.appendChild(st);
+    const ls = el("td"); ls.dataset.l = "Listing"; const l = el("div", "lst"); l.appendChild(el("i", "sw " + SEG[c.g].cls)); const lt = el("div"); lt.appendChild(el("div", null, SEG[c.g].name)); if (c.x) lt.appendChild(el("div", "muted", c.x)); l.appendChild(lt); ls.appendChild(l); tr.appendChild(ls);
+    const dt = el("td"); dt.dataset.l = "Latest filing"; if (c.d) { dt.appendChild(el("div", null, fmt(c.d))); dt.appendChild(el("div", "muted", ago(c.d))); } else dt.textContent = "Not stated"; tr.appendChild(dt);
+    const bk = el("td"); bk.dataset.l = "Lead managers"; bk.textContent = c.b.join(", ") || "Not stated"; if (!c.b.length) bk.className = "muted"; tr.appendChild(bk);
+    const dc = el("td"); dc.dataset.l = "Documents"; const lk = el("div", "lk");
+    for (const [t, u] of c.docs) if (safeUrl(u)) { const a = el("a", null, t); a.href = u; a.target = "_blank"; a.rel = "noopener noreferrer"; lk.appendChild(a); }
+    if (c.p.length && safeUrl(c.p[1])) { const a = el("a", "pg", c.p[0]); a.href = c.p[1]; a.target = "_blank"; a.rel = "noopener noreferrer"; lk.appendChild(a); }
+    if (!lk.children.length) lk.appendChild(el("span", "muted", "No link yet"));
+    dc.appendChild(lk); tr.appendChild(dc); tb.appendChild(tr);
+  }
+  const more = $("#more"); more.textContent = "";
+  if (rows.length > shown) { const b = el("button", "btn", "Show " + Math.min(25, rows.length - shown) + " more"); b.type = "button"; b.addEventListener("click", () => { shown += 25; renderTable(items); }); more.appendChild(b); }
+}
+function csvCell(v) { v = String(v == null ? "" : v); if (/^[=+\-@\t\r]/.test(v)) v = "'" + v; return '"' + v.replace(/"/g, '""') + '"'; }
+function exportCsv(items) {
+  const head = ["Company", "Segment", "Exchange", "Sector", "City", "Latest filing", "Status", "Lead managers", "Document link", "Page link"];
+  const lines = [head.map(csvCell).join(",")];
+  for (const c of items) lines.push([c.n, SEG[c.g].name, c.x, c.sec, c.c, c.d, c.st.map(s => STATUS[s]).join("; "), c.b.join("; "), (c.docs[0] || [])[1] || "", (c.p || [])[1] || ""].map(csvCell).join(","));
+  const url = URL.createObjectURL(new Blob(["﻿" + lines.join("\r\n")], { type: "text/csv;charset=utf-8" }));
+  const a = document.createElement("a"); a.href = url; a.download = "ipo-filings-" + isoOf(today) + ".csv"; document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
+/* ---------- masthead and footer ---------- */
+function renderChrome() {
+  const hrs = (Date.now() - Date.parse(DATA.generated)) / 36e5, p = $("#fresh");
+  const cls = hrs <= 16 ? "good" : hrs <= 40 ? "warn" : "bad";
+  const age = hrs < 1 ? "just now" : hrs < 48 ? Math.round(hrs) + "h ago" : Math.round(hrs / 24) + " days ago";
+  p.className = "pill " + cls; p.lastChild.textContent = (cls === "bad" ? "Out of date. Updated " : "Updated ") + age + ", " + DATA.updated;
+  p.title = "The radar checks the sources through the day and rebuilds this page after each check.";
+  $("#alerts").textContent = DATA.alerts ? plural(DATA.alerts, "Telegram alert") + " sent" : "";
+  const src = $("#src"); src.textContent = "";
+  for (const h of DATA.health) { const s = el("span", "pill " + (h.ok ? "good" : "warn")); s.appendChild(el("i")); s.appendChild(el("span", null, h.name + (h.ok ? "" : ", having trouble"))); src.appendChild(s); }
+}
+
+/* ---------- render ---------- */
+function render() {
+  hideTip(); syncFilters(); writeHash();
+  const w = window_(), base = C.filter(match);
+  const items = base.filter(c => inWin(c, w));
+  let prev = [];
+  if (w.n) { const from = isoOf(addDays(parse(w.from), -w.n)), to = isoOf(addDays(parse(w.from), -1)); prev = base.filter(c => inWin(c, { from, to })); }
+  renderKpis(items, prev, w); renderTime(items, w);
+  const byEx = tally(items, c => [c.x || "Not stated"]); renderRank("#x-body", byEx, 6);
+  renderRank("#sec-body", tally(items, c => [c.sec]), 8);
+  renderRank("#bk-body", tally(items, c => c.b), 8);
+  renderRank("#ct-body", tally(items, c => [c.c]), 8);
+  renderTable(items);
+  $("#csv").onclick = () => exportCsv(items.slice().sort((a, b) => (b.d || "").localeCompare(a.d || "")));
+}
+buildFilters();
+for (const b of document.querySelectorAll("th button")) b.addEventListener("click", () => { const k = b.dataset.k; sort = { k, dir: sort.k === k ? -sort.dir : (k === "n" ? 1 : -1) }; renderTable(C.filter(match).filter(c => inWin(c, window_()))); });
+$("#t-view").addEventListener("click", e => { const b = e.target.closest("button"); if (!b) return; view = b.dataset.v; for (const x of $("#t-view").children) x.setAttribute("aria-pressed", String(x === b)); render(); });
+renderChrome(); renderHeatmap(); render();
+})();
+</script>
+</body>
+</html>
