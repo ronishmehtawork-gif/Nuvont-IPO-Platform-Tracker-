@@ -121,10 +121,16 @@ def parse_chart(text: str) -> dict[date, float]:
     return out
 
 
-def fetch_series(symbols: list[str], make_fetcher, deadline: float) -> tuple[dict[str, dict], dict[str, int]]:
-    """Fetch every symbol politely. Returns ({symbol: {date: close}}, {reason: count})."""
+def yahoo_symbol(symbol: str) -> str:
+    """NSE equities are listed on Yahoo with a .NS suffix; index symbols (^NSEI) are used as they are."""
+    return symbol if symbol.startswith("^") else symbol + ".NS"
+
+
+def fetch_series(symbols: list[str], make_fetcher, deadline: float) -> tuple[dict[str, dict], dict[str, int], list[str]]:
+    """Fetch every symbol politely. Returns ({symbol: {date: close}}, {reason: count}, a few example failures)."""
     series: dict[str, dict] = {}
     failures: dict[str, int] = {}
+    samples: list[str] = []  # a few "SYMBOL: reason" lines, so a bad run can be diagnosed from the public report
     lock = threading.Lock()
     local = threading.local()
     state = {"done": 0, "blocked": 0, "stop": False}
@@ -136,7 +142,7 @@ def fetch_series(symbols: list[str], make_fetcher, deadline: float) -> tuple[dic
             return
         if not hasattr(local, "fetcher"):
             local.fetcher = make_fetcher()
-        res = local.fetcher.get("chart", CHART_URL.format(symbol=quote(symbol, safe="")))
+        res = local.fetcher.get("chart", CHART_URL.format(symbol=quote(yahoo_symbol(symbol), safe="")))
         reason = ""
         if res.ok:
             try:
@@ -154,6 +160,8 @@ def fetch_series(symbols: list[str], make_fetcher, deadline: float) -> tuple[dic
             state["done"] += 1
             if reason:
                 failures[reason] = failures.get(reason, 0) + 1
+                if len(samples) < 5:
+                    samples.append(f"{symbol}: {reason}")
                 if reason in ("HTTP 429", "HTTP 403"):
                     state["blocked"] += 1
             if state["done"] >= 30 and state["blocked"] / state["done"] > BLOCK_LIMIT:
@@ -162,7 +170,7 @@ def fetch_series(symbols: list[str], make_fetcher, deadline: float) -> tuple[dic
 
     with ThreadPoolExecutor(max_workers=WORKERS) as pool:
         list(pool.map(work, symbols))
-    return series, failures
+    return series, failures, samples
 
 
 # ----------------------------------------------------------------------------- maths
@@ -342,11 +350,15 @@ def refresh(make_fetcher, market_path: str, universe_path: str, now: datetime) -
         universe, note = load_universe(make_fetcher(), universe_path, now.astimezone(IST).date())
         info["universe_note"] = note
         symbols = [row["s"] for row in universe]
-        nifty_series, nifty_fail = fetch_series([NIFTY_SYMBOL], make_fetcher, time.monotonic() + 60)
+        nifty_series, nifty_fail, _ = fetch_series([NIFTY_SYMBOL], make_fetcher, time.monotonic() + 60)
         if NIFTY_SYMBOL not in nifty_series:
             raise MarketError(f"Nifty 50 history unavailable ({nifty_fail})")
-        series, failures = fetch_series(symbols, make_fetcher, started + BUDGET_SECONDS)
+        info["nifty_last_sessions"] = [d.isoformat() for d in sorted(nifty_series[NIFTY_SYMBOL])[-3:]]
+        series, failures, examples = fetch_series(symbols, make_fetcher, started + BUDGET_SECONDS)
         info["fetch_failures"] = failures
+        if examples:
+            info["failure_examples"] = examples
+        info["fetched"] = len(series)
         payload = build_market(universe, series, nifty_series[NIFTY_SYMBOL], now)
         validate(payload, previous)
         _write_json(market_path, payload)

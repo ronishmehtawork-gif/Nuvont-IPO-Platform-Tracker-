@@ -209,7 +209,7 @@ class FakeNet:
 
 def net_for(count=420, n=130, **kw):
     uni, series, nifty, cal = make_market(count, n)
-    charts = {row["s"]: chart_json(series[row["s"]]) for row in uni}
+    charts = {row["s"] + ".NS": chart_json(series[row["s"]]) for row in uni}  # Yahoo only knows NSE stocks as SYMBOL.NS
     charts["^NSEI"] = chart_json(nifty)
     text = CSV_HEAD + "\n".join(f"{r['n']},{r['i']},{r['s']},EQ,INE{ix:09d}" for ix, r in enumerate(uni))
     return FakeNet(text, charts, **kw)
@@ -236,3 +236,18 @@ def test_job_stops_early_when_the_data_site_is_blocking(tmp_path):
 def test_no_universe_and_no_cache_is_a_clean_failure(tmp_path):
     _, info = m.refresh(lambda: net_for(universe_ok=False), str(tmp_path / "m.json"), str(tmp_path / "u.json"), NOW)
     assert not info["ok"] and "universe unavailable" in info["note"]
+
+
+def test_yahoo_symbols_get_the_nse_suffix_but_indexes_do_not():
+    assert m.yahoo_symbol("RELIANCE") == "RELIANCE.NS"
+    assert m.yahoo_symbol("M&M") == "M&M.NS"
+    assert m.yahoo_symbol("^NSEI") == "^NSEI"
+
+
+def test_a_site_that_answers_404_for_everything_leaves_examples_to_diagnose(tmp_path):
+    net = net_for()
+    net.charts = {"^NSEI": net.charts["^NSEI"]}  # every stock 404s, only the index answers
+    _, info = m.refresh(lambda: net, str(tmp_path / "m.json"), str(tmp_path / "u.json"), NOW)
+    assert not info["ok"] and info["fetch_failures"] == {"HTTP 404": 420}
+    assert len(info["failure_examples"]) == 5 and info["failure_examples"][0].endswith("HTTP 404")
+    assert info["nifty_last_sessions"][-1] == "2026-11-25"
