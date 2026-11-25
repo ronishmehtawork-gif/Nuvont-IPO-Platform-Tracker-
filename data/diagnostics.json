@@ -39,11 +39,11 @@
     },
     "fetch_failures": {},
     "fetched": 495,
-    "nifty_last_sessions": [
-      "2026-11-19",
-      "2026-11-20",
-      "2026-11-23"
-    ],
+    "flow": {
+      "listed": 218,
+      "stocks": 216
+    },
+    "fno_note": "F&O list fetched from nsearchives.nseindia.com",
     "note": "saved",
     "ok": true,
     "priced": 493,
