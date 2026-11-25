@@ -1,14 +1,29 @@
 {
+  "commodities": {
+    "asof": "2026-11-25",
+    "left_out": {
+      "NG=F": "-47% in one day on 2026-01-29"
+    },
+    "note": "saved",
+    "ok": true,
+    "parity": true,
+    "requested": 31,
+    "shown": 26
+  },
   "ipo_pipeline": {
+    "date_conflicts": 0,
     "detail_fetched": 10,
     "detail_skipped": 0,
     "note": "saved",
     "ok": true,
     "rows": 10,
     "shown": 10,
+    "with_allotment": 10,
+    "with_bankers": 10,
     "with_gmp": 10,
     "with_listing": 10,
     "with_lot": 8,
+    "with_sector": 10,
     "with_size": 9
   },
   "market": {
