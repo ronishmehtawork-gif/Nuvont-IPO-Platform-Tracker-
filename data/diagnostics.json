@@ -1,6 +1,6 @@
 {
   "commodities": {
-    "asof": "2026-11-25",
+    "asof": "2026-11-26",
     "note": "saved",
     "ok": true,
     "parity": true,
@@ -51,5 +51,13 @@
     ],
     "universe": 495,
     "universe_note": "universe fetched from nsearchives.nseindia.com"
+  },
+  "whatsapp": {
+    "configured": false,
+    "recipients": 0,
+    "templates": {
+      "drhp": true,
+      "update": true
+    }
   }
 }
