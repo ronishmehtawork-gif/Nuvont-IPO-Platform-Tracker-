@@ -6,7 +6,7 @@ import sys
 from datetime import date, datetime, timedelta
 from zoneinfo import ZoneInfo
 
-from . import cadence, commodities, diag, ipowatch
+from . import cadence, diag, flows, ipowatch
 from . import market as market_data
 from . import state as st
 from .documents import exchange_doc_label, find_pdf_links
@@ -296,14 +296,15 @@ def main() -> None:
     ipos, ipo_info = ipowatch.refresh(fetcher, os.getenv("RADAR_IPOS", "data/ipos.json"), now)
     diag.record("ipo_pipeline", ipo_info)
     print("ipo pipeline:", ipo_info)
-    prices, price_info = commodities.refresh(lambda: Fetcher(), os.getenv("RADAR_COMMODITIES", "data/commodities.json"), now)
-    diag.record("commodities", price_info)
-    print("commodities:", {k: v for k, v in price_info.items() if k not in ("not_fetched", "left_out")})
+    flows_path = os.getenv("RADAR_FLOWS", "data/flows.json")
+    _, flow_info = flows.refresh(fetcher, flows_path, now)
+    diag.record("flows", flow_info)
+    print("flows:", flow_info)
     market_path = os.getenv("RADAR_MARKET", "data/market.json")
     refresh_market(state, path, market_path, now, tg)
     build_site(state, os.getenv("RADAR_SITE", "docs/index.html"), now,
-               market=market_data.load(market_path), ipos=ipos, commodities=prices,
-               whatsapp_join=join_link())
+               market=market_data.load(market_path), ipos=ipos,
+               flows=flows.load(flows_path), whatsapp_join=join_link())
 
 
 if __name__ == "__main__":

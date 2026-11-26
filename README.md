@@ -147,12 +147,12 @@ market ones. So the radar no longer waits for GitHub's clock. Each `radar` run e
 | When (IST) | Pause between runs |
 |---|---|
 | Weekdays 09:00 to 16:15, Indian market open | 10 minutes |
-| Rest of Monday 04:30 to Saturday 03:30, commodity futures trading | 20 minutes |
-| Saturday 03:30 to Monday 04:30, everything shut | 45 minutes |
+| Rest of the weekday, evenings and nights | 30 minutes |
+| Saturday and Sunday | 60 minutes |
 
-What a run refreshes: filings and IPO data every time; stock prices (heatmap and flow) about every 12 minutes while
-the market is open, once after 15:45 to settle the day, and otherwise at most every 12 hours; commodity prices every
-time. The page itself is rebuilt after each run, and an open page checks its own site every couple of minutes and
+What a run refreshes: filings and IPO data every time; stock prices (the sector map and money flow) about every 12
+minutes while the market is open, once after 15:45 to settle the day, and otherwise at most every 12 hours; the FII
+and DII report at most once an hour. The page itself is rebuilt after each run, and an open page checks its own site every couple of minutes and
 reloads when a newer one is published. Yahoo's feeds run about 10 to 15 minutes behind the exchange.
 
 - Only one waiting job exists at a time, so the chain cannot multiply. A run that fails still starts the next one.
@@ -197,24 +197,31 @@ python -m radar.run   # without a token it prints messages instead of sending th
 ## Dashboard
 
 `docs/index.html` is rebuilt on every run and served by GitHub Pages. It opens on the last 90 days, with filters for
-period, segment, exchange, status and sector, a sector heatmap, charts of filings over time, listing venues, sectors,
+period, segment, exchange, status and sector, charts of filings over time, listing venues, sectors,
 lead managers and cities, and a searchable table with document links and a CSV download. The page is one static file:
 it makes no network calls when opened. With a WhatsApp join link set, the header shows **Get WhatsApp alerts**, and
 each filing has a **Share on WhatsApp** link (see above).
 
-The page has five tabs, in this order. **IPO Desk** opens first. **Filings** is the logbook view described above. The
-other three are built from market data.
+The site opens on a landing screen: the Nuvont Capital mark in light 3D that tilts with the pointer (or sways on its
+own on a touch screen). Click the mark and it steps back to show three sections, **IPO Desk**, **Filings** and
+**Sector Outlook**, each with a live one-line status. A tab bar at the top moves between them, and the browser's back
+button returns to the landing screen. The 3D is plain CSS, with no outside library, and it stands still for visitors
+who ask their device for reduced motion. Addresses look like `#v=desk`, `#v=filings` and `#v=sectors`; old links to
+`#v=ipos`, `#v=flow` and `#v=commodities` still open a real page.
 
-### IPO Desk, Sector heatmap, Sector flow and Commodities
+### IPO Desk and Sector Outlook
 
-| Tab | What it shows | Source | Refreshed |
+| Section | What it shows | Source | Refreshed |
 |---|---|---|---|
 | IPO Desk | Open, upcoming and recently closed issues as cards or a table. Each shows the grey market premium, price band, issue size (in crores), lot size, minimum investment, key dates (opens, closes, allotment, refunds start, demat credit, listing), lead managers (merchant bankers), registrar, sector and exchange. A calendar of the next 14 days of dates sits on top. Filters: segment, status, exchange, sector, lead manager, key dates (closing in 3 days, opening in 7, allotment in 7, listing in 7), premium, search, and sort | ipowatch.in (table and issue pages), with sector and lead managers filled from the Filings data when an issue page lacks them | Every `radar` run (see "How often it runs") |
-| Sector heatmap | Median 1D, 1W, 1M, 3M, 6M, 1Y, YTD and 2Y return of the stocks in each NSE industry, with the stocks themselves one click away | NSE Nifty 500 list and Yahoo Finance daily closes | Every `radar` run: about every 12 minutes while the market is open (today's session shown as it stands), once after the close to settle the day, then left alone |
-| Sector flow | Estimated net buying pressure per sector over 1, 5 and 20 sessions, in crores, for the NSE F&O stocks: net flow, strength (net as a share of turnover), turnover, advancers and decliners, a 20-session daily sparkline, and the stocks in each sector. Turnover is closing price times volume. It counts as inflow on a day the stock closes up and outflow on a day it closes down, so it is an estimate from prices and volumes, not a record of what any fund traded | NSE F&O lot file and Yahoo Finance closes and volumes | Same as the heatmap: "today so far" while the market is open, the finished day after the close |
-| Commodities | 27 futures in five groups (precious metals, energy, industrial metals, grains and oilseeds, softs and livestock) with price, 1D, 1W, 1M, 3M, 1Y and YTD change, a 52-week range and a sparkline. Gauges for USD/INR, the dollar index, the US 10-year yield and India VIX. Gold and silver in rupees at international parity (before duty and GST, so not the MCX rate) | Yahoo Finance | Every `radar` run, so about every 20 minutes while futures trade (Monday morning to Saturday morning IST, day and night) |
+| Sector Outlook: sector map | Median 1D, 1W, 1M, 3M, 6M, 1Y, 2Y and YTD return of the stocks in each NSE industry as a coloured tile map, strongest first, with the stocks themselves one click away in the scorecard | NSE Nifty 500 list and Yahoo Finance daily closes | Every `radar` run: about every 12 minutes while the market is open (today's session shown as it stands), once after the close to settle the day, then left alone |
+| Sector Outlook: FII and DII activity | Cash-market buying, selling and net for foreign portfolio investors (FII / FPI) and domestic institutions (DII) for the latest day, a daily net chart and a table of the last sessions, all in crores. The exchanges call these figures provisional | The combined MSE, NSE and BSE report at msei.in. It shows one day at a time, so the radar keeps its own history in `data/flows.json` (up to 400 days kept, 90 shown) | At most once an hour; the report itself changes once a day |
+| Sector Outlook: money flow | Estimated net buying pressure per sector over 1, 5 and 20 sessions, in crores, for the NSE F&O stocks: net flow, strength (net as a share of turnover), a 20-session daily sparkline. Turnover is closing price times volume. It counts as inflow on a day the stock closes up and outflow on a day it closes down, so it is an estimate from prices and volumes, not a record of what any fund traded or of the FII and DII figures above | NSE F&O lot file and Yahoo Finance closes and volumes | Same as the sector map |
+| Sector Outlook: scorecard and indices | One table with every sector's return across all periods and its estimated money flow, opening to the stocks in each sector, plus the Nifty sector indices | Same as above, plus the NSE sector indices from Yahoo Finance | Same as above |
 
-Market breadth was removed from the page and its backend. Old links to `#v=ipos` open the IPO Desk.
+Market breadth and, later, the Commodities and Sector flow pages were removed. The sector flow numbers now live inside
+Sector Outlook. Fonts (Instrument Serif and IBM Plex Sans, both under the SIL Open Font License) are served from
+`docs/assets/fonts`, so the page still makes no outside request.
 
 How the backend protects the page (`radar/market.py`, `radar/ipowatch.py`):
 
@@ -232,14 +239,15 @@ How the backend protects the page (`radar/market.py`, `radar/ipowatch.py`):
 - Issue-page dates are cross-checked: allotment within 7 days of close, refunds and demat credit within 10, listing
   within 14, and each step not before the one before it. A date that fails is dropped, never shown. If the issue page
   and the table disagree on the open or close date, the table wins and the conflict is counted in the diagnostics.
-- Sector flow needs at least 15 of the last 20 sessions of volume for a stock, drops a stock with a day above
+- Money flow needs at least 15 of the last 20 sessions of volume for a stock, drops a stock with a day above
   Rs 50,000 crore as a data slip, and is left out altogether when fewer than half of the F&O stocks are usable.
-- Commodities are published only when at least half of the symbols pass: 60 or more daily bars, a last bar not older
-  than 6 days, no daily move above 45% in the last 10 sessions (older jumps from contract rolls stay in the history), and a plausible price. Gold, silver, oil and USD/INR also have price ranges.
+- The FII and DII report is accepted only when it parses, each net equals buy minus sell within 0.5 crore, and both
+  figures are for the same date. Anything else keeps the saved history exactly as it was, and `data/diagnostics.json`
+  records why.
 - The grey market premium is unofficial and shown with that warning. Nothing here is a recommendation.
 
 Run the market job by hand from the Actions tab: choose **market**, then **Run workflow**. Data files: `data/market.json`,
-`data/fno.json` (cached F&O list), `data/ipos.json`, `data/commodities.json`, `data/diagnostics.json`.
+`data/fno.json` (cached F&O list), `data/ipos.json`, `data/flows.json` (FII and DII history), `data/diagnostics.json`.
 
 ## Security
 

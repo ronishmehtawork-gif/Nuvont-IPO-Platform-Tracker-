@@ -5,7 +5,7 @@ import os
 import sys
 from datetime import datetime
 
-from . import commodities, diag, ipowatch, market
+from . import diag, flows, ipowatch, market
 from . import state as st
 from .http import Fetcher
 from .run import IST
@@ -29,11 +29,15 @@ def main() -> None:
         if tg.enabled:
             tg.send_admin(f"<b>Market data problem</b>\n{esc(info['note'])[:400]}")
 
+    flows_path = os.getenv("RADAR_FLOWS", "data/flows.json")
+    _, flow_info = flows.refresh(Fetcher(), flows_path, now)
+    diag.record("flows", flow_info)
+    print("flows:", flow_info)
+
     state = st.load(os.getenv("RADAR_STATE", "data/state.json"))
     ipos = ipowatch.load(os.getenv("RADAR_IPOS", "data/ipos.json"))
-    prices = commodities.load(os.getenv("RADAR_COMMODITIES", "data/commodities.json"))
-    build_site(state, os.getenv("RADAR_SITE", "docs/index.html"), now, market=payload, ipos=ipos, commodities=prices,
-               whatsapp_join=join_link())
+    build_site(state, os.getenv("RADAR_SITE", "docs/index.html"), now, market=payload, ipos=ipos,
+               flows=flows.load(flows_path), whatsapp_join=join_link())
     if not info["ok"] and not payload:
         sys.exit(1)  # nothing to show at all: fail the run so it is noticed
 

@@ -1,12 +1,4 @@
 {
-  "commodities": {
-    "asof": "2026-11-26",
-    "note": "saved",
-    "ok": true,
-    "parity": true,
-    "requested": 31,
-    "shown": 27
-  },
   "ipo_pipeline": {
     "date_conflicts": 0,
     "detail_fetched": 0,

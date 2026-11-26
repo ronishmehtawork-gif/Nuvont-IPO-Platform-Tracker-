@@ -3,43 +3,56 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src '__SCRIPT_HASH__'; style-src 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; form-action 'none'; base-uri 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src '__SCRIPT_HASH__'; style-src 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; form-action 'none'; base-uri 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="robots" content="noindex,nofollow">
 <meta name="color-scheme" content="light">
 <title>IPO Filing Radar | afc | ashmavir Financial Consultants</title>
 <link rel="icon" type="image/png" href="assets/favicon.png">
 <style>
+@font-face{font-family:"IBM Plex Sans";font-weight:400;font-style:normal;font-display:swap;src:url(assets/fonts/ibm-plex-sans-latin-400-normal.woff2) format("woff2")}
+@font-face{font-family:"IBM Plex Sans";font-weight:500;font-style:normal;font-display:swap;src:url(assets/fonts/ibm-plex-sans-latin-500-normal.woff2) format("woff2")}
+@font-face{font-family:"IBM Plex Sans";font-weight:600;font-style:normal;font-display:swap;src:url(assets/fonts/ibm-plex-sans-latin-600-normal.woff2) format("woff2")}
+@font-face{font-family:"Instrument Serif";font-weight:400;font-style:normal;font-display:swap;src:url(assets/fonts/instrument-serif-latin-400-normal.woff2) format("woff2")}
 :root{
   --navy:#203058;--navy-2:#2b4177;--ink:#172033;--muted:#5c6b82;--faint:#8895aa;
-  --line:#e3e8f0;--line-2:#eef1f6;--bg:#f4f6fa;--panel:#fff;
+  --line:#e3e8f0;--line-2:#eef1f6;--bg:#f2f4f8;--panel:#fff;
   --gold:#b8a880;--gold-ink:#7a6a3e;--gold-wash:#f6f2e8;
+  --acc:#b8a880;--acc-ink:#7a6a3e;--acc-wash:#f6f2e8;
   --s1:#3a64b5;--s2:#c8861f;--s3:#9aa5b6;
   --pos:#0f8a5f;--neg:#d14343;--warn:#b7791f;
-  --r:8px;
+  --r:12px;--bar-h:66px;
+  --serif:"Instrument Serif","Iowan Old Style","Palatino Linotype",Georgia,serif;
+  --sans:"IBM Plex Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+body.p-desk{--acc:#b8a880;--acc-ink:#7a6a3e;--acc-wash:#f6f2e8}
+body.p-filings{--acc:#3a64b5;--acc-ink:#2b4e94;--acc-wash:#eaf0fa}
+body.p-sectors{--acc:#5a4fcf;--acc-ink:#4338a8;--acc-wash:#eeecfb}
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
-body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.5 -apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif}
+body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.5 var(--sans)}
 a{color:var(--navy-2)}
 button,select,input{font:inherit;color:inherit}
 :focus-visible{outline:2px solid var(--navy-2);outline-offset:2px;border-radius:4px}
 .wrap{max-width:1320px;margin:0 auto;padding:0 20px}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 
-/* masthead */
-.mast{background:var(--panel);box-shadow:inset 0 -3px 0 var(--gold)}
-.mast-in{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-top:14px;padding-bottom:17px;flex-wrap:wrap}
-.brand{display:flex;align-items:center;gap:16px;text-decoration:none;color:inherit;min-width:0}
-.brand-logos{display:flex;align-items:center;gap:16px;flex:none}
-.brand img{display:block;width:auto}
-.logo-afc{height:44px}
-.logo-nuvont{height:23px}
-.brand-sep{width:1px;height:34px;background:var(--line)}
-.brand-title{display:flex;flex-direction:column;min-width:0}
-.brand-title b{font-size:19px;line-height:1.2;font-weight:650;color:var(--navy);letter-spacing:-.01em}
-.brand-title small{font-size:12.5px;color:var(--muted);max-width:300px;line-height:1.35}
-.mast-right{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+/* app bar */
+.appbar{background:var(--panel);box-shadow:0 1px 0 var(--line),inset 0 -3px 0 var(--acc);position:sticky;top:0;z-index:40}
+.bar-in{display:flex;align-items:center;gap:18px;min-height:var(--bar-h);padding-top:8px;padding-bottom:11px}
+.home-link{display:flex;align-items:center;flex:none;border-radius:6px;transition:opacity .15s}
+.home-link:hover{opacity:.75}
+.appbar img{display:block;width:auto}
+.logo-nuvont{height:22px}
+.logo-afc{height:40px}
+.brand-sep{width:1px;height:30px;background:var(--line);flex:none}
+.seg-nav{display:flex;gap:2px;padding:3px;border:1px solid var(--line);border-radius:999px;background:var(--bg);margin-left:auto}
+.seg-nav button{display:flex;align-items:center;gap:8px;border:0;background:none;padding:7px 15px;border-radius:999px;font-weight:550;font-size:13.5px;color:var(--muted);cursor:pointer;white-space:nowrap;transition:background-color .15s,color .15s}
+.seg-nav button i{width:8px;height:8px;border-radius:50%;background:var(--dot);flex:none}
+.seg-nav button:hover{color:var(--navy)}
+.seg-nav button[aria-selected="true"]{background:var(--navy);color:#fff}
+.seg-nav button[aria-selected="true"] i{box-shadow:0 0 0 2px rgba(255,255,255,.28)}
+.bar-right{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-left:auto;justify-content:flex-end}
 .pill{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line);border-radius:999px;padding:4px 11px;font-size:12.5px;font-weight:550;background:var(--panel);white-space:nowrap}
 .pill i{width:8px;height:8px;border-radius:50%;display:inline-block;background:var(--faint)}
 .pill.good i{background:var(--pos)} .pill.warn i{background:#f2a600} .pill.bad i{background:var(--neg)}
@@ -48,6 +61,13 @@ button,select,input{font:inherit;color:inherit}
 .wa-join:hover{background:#eaf6f0}
 .wa-join[hidden]{display:none}
 .wa-join svg{width:15px;height:15px;flex:none}
+
+/* section heading */
+.hero{padding-top:26px;padding-bottom:4px;display:flex;align-items:flex-end;justify-content:space-between;gap:12px 20px;flex-wrap:wrap}
+.hero .bar-acc{display:block;width:46px;height:4px;border-radius:2px;background:var(--acc);margin-bottom:12px}
+.hero h1{margin:0;font:400 clamp(32px,4.4vw,46px)/1.04 var(--serif);color:var(--navy);letter-spacing:-.01em}
+.hero p{margin:7px 0 0;color:var(--muted);max-width:680px;font-size:14.5px}
+.hero-tools{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
 
 /* filters */
 .filters{background:var(--panel);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:30}
@@ -131,7 +151,7 @@ main{padding:20px 0 8px}
 .hm th{font-weight:600;color:var(--muted);font-size:12px;text-align:center;padding:4px 2px 8px;background:var(--panel)}
 .hm th.l{text-align:left;padding-left:8px}
 .hm td{padding:0}
-.hm td.g{width:116px;vertical-align:middle;padding:0 10px 0 8px;font-weight:650;color:var(--navy);font-size:12px;border-left:3px solid var(--gold);background:var(--gold-wash);border-bottom:2px solid var(--panel)}
+.hm td.g{width:116px;vertical-align:middle;padding:0 10px 0 8px;font-weight:650;color:var(--navy);font-size:12px;border-left:3px solid var(--acc);background:var(--acc-wash);border-bottom:2px solid var(--panel)}
 .hm td.i{padding:0 10px 0 8px;white-space:nowrap;border-bottom:2px solid var(--panel);width:112px}
 .hm td.v{height:37px;min-width:54px;text-align:center;font-variant-numeric:tabular-nums;font-size:12px;font-weight:550;border:2px solid var(--panel);border-radius:5px;background-clip:padding-box}
 .hm-sum{font-size:12.5px;color:var(--muted)}
@@ -152,7 +172,7 @@ table.t{border-collapse:collapse;width:100%;min-width:980px}
 .badges{display:flex;flex-wrap:wrap;gap:5px}
 .b{font-size:12px;font-weight:550;border:1px solid var(--line);border-radius:5px;padding:1px 7px;white-space:nowrap;background:var(--panel)}
 .b.ok{border-color:#b9e0cf;background:#eefaf4;color:#0b6b49}
-.b.chg{border-color:#e4d7b4;background:var(--gold-wash);color:var(--gold-ink)}
+.b.chg{border-color:#e4d7b4;background:var(--acc-wash);color:var(--acc-ink)}
 .new{font-size:11px;font-weight:650;background:var(--navy);color:#fff;border-radius:4px;padding:1px 6px;margin-left:6px;vertical-align:1px}
 .lst{display:flex;gap:7px;align-items:flex-start}
 .lst .sw{margin-top:5px}
@@ -177,14 +197,9 @@ table.t{border-collapse:collapse;width:100%;min-width:980px}
 
 [hidden]{display:none!important}
 /* pages */
-.tabs{background:var(--panel);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:40}
-.tabs-in{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none}
-.tabs button{border:0;background:none;padding:13px 16px 10px;font-weight:600;font-size:14px;color:var(--muted);cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap}
-.tabs button:hover{color:var(--navy)}
-.tabs button[aria-selected="true"]{color:var(--navy);border-bottom-color:var(--gold)}
-.filters{top:47px}
+.filters{top:var(--bar-h)}
 .up{color:#0b6b49}.dn{color:#b02a2a}
-/* sector heatmap page */
+/* shared sector pieces */
 .two{display:grid;grid-template-columns:1fr 1fr;gap:16px;padding:14px 16px 2px}
 .rank{margin:0;padding:0;list-style:none;border:1px solid var(--line);border-radius:var(--r);min-width:0}
 .rank h3{margin:0;padding:9px 12px;font-size:12.5px;font-weight:650;color:var(--muted);border-bottom:1px solid var(--line-2)}
@@ -193,27 +208,13 @@ table.t{border-collapse:collapse;width:100%;min-width:980px}
 .rank li b{font-variant-numeric:tabular-nums;white-space:nowrap}
 .sx-bar{display:flex;align-items:flex-end;gap:14px;flex-wrap:wrap;padding:14px 16px 4px}
 .sx-bar .search{max-width:260px;flex:1 1 200px}
-.sx{border-collapse:separate;border-spacing:0;width:100%;min-width:700px;font-size:12.5px}
-.sx th{font-weight:600;color:var(--muted);font-size:12px;text-align:center;padding:4px 2px 8px;background:var(--panel)}
-.sx th.l{text-align:left;padding-left:10px}
-.sx td{padding:0}
-.sx td.nm{padding:0 10px;min-width:210px}
-.sx tr.sec{cursor:pointer}
-.sx tr.sec td.nm{background:var(--gold-wash);border-left:3px solid var(--gold);border-bottom:2px solid var(--panel);font-size:13px}
-.sx tr.sec:hover td.nm{background:#efe9d8}
-.sx tr.sec .car{display:inline-block;width:14px;color:var(--gold-ink)}
-.sx tr.sec b{color:var(--navy);font-weight:650}
-.sx tr.stk td.nm{padding-left:30px;border-bottom:1px solid var(--line-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:260px}
-.sx td.v{height:34px;text-align:center;font-variant-numeric:tabular-nums;font-weight:550;border:2px solid var(--panel);border-radius:5px;background-clip:padding-box;min-width:62px}
-.sx tr.stk td.v{height:27px;font-weight:500;font-size:12px}
-.sx tr.stk td.more-c{padding:8px 10px 8px 30px}
 /* IPO Desk */
 .nosticky{position:static!important}
 .sub-h{margin:0 0 8px;font-size:14px;font-weight:650;color:var(--navy)}
 .desk-top{padding:14px 16px 6px}
 .cal{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px}
 .day{border:1px solid var(--line);border-radius:var(--r);background:var(--panel);min-width:0}
-.day.today{border-color:var(--gold);box-shadow:inset 0 3px 0 var(--gold)}
+.day.today{border-color:var(--acc);box-shadow:inset 0 3px 0 var(--acc)}
 .day h4{margin:0;padding:9px 11px 6px;font-size:13px;display:flex;justify-content:space-between;gap:8px;color:var(--navy)}
 .day h4 small{font-weight:500;color:var(--muted);font-size:12px}
 .day ul{list-style:none;margin:0;padding:0 0 3px}
@@ -244,9 +245,9 @@ table.t{border-collapse:collapse;width:100%;min-width:980px}
 .steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px 8px;font-size:12px}
 .steps li{border-top:2px solid var(--line);padding-top:5px;min-width:0}
 .steps li.done{border-top-color:var(--navy)}
-.steps li.next{border-top-color:var(--gold)}
+.steps li.next{border-top-color:var(--acc)}
 .steps .sl{display:block;color:var(--muted);font-size:11.5px}
-.steps li.next .sl{color:var(--gold-ink);font-weight:650}
+.steps li.next .sl{color:var(--acc-ink);font-weight:650}
 .steps b{font-variant-numeric:tabular-nums;font-size:12.5px;font-weight:600}
 .links{display:flex;gap:14px;flex-wrap:wrap;margin-top:auto}
 .links a{font-size:12.5px;font-weight:600;color:var(--navy-2);text-decoration:none}
@@ -258,64 +259,163 @@ table.t{border-collapse:collapse;width:100%;min-width:980px}
 .dt td.nm b{display:block;color:var(--navy);font-weight:650}
 .dt td.nm small{color:var(--muted)}
 .dt td.st{white-space:nowrap}
-/* sector flow and commodities */
-.gauges{display:grid;grid-template-columns:repeat(var(--n,6),minmax(0,1fr));gap:10px;padding:14px 16px 4px}
-.gauge{border:1px solid var(--line);border-radius:var(--r);padding:10px 12px;min-width:0}
-.gauge .k{font-size:12px;color:var(--muted)}
-.gauge .v{font-size:21px;font-weight:650;font-variant-numeric:tabular-nums;letter-spacing:-.01em;line-height:1.3}
-.gauge .d{font-size:12px;color:var(--muted)}
-.fl{border-collapse:separate;border-spacing:0;width:100%;min-width:900px;font-size:13px}
-.fl th{font-weight:600;color:var(--muted);font-size:12px;text-align:right;padding:6px 10px 8px;background:var(--panel);white-space:nowrap}
-.fl th.l{text-align:left}
-.fl td{padding:8px 10px;border-bottom:1px solid var(--line-2);font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap}
-.fl td.nm{text-align:left;white-space:normal;min-width:200px}
-.fl tr.sec{cursor:pointer}
-.fl tr.sec td{background:var(--gold-wash)}
-.fl tr.sec td:first-child{border-left:3px solid var(--gold)}
-.fl tr.sec:hover td{background:#efe9d8}
-.fl tr.sec .car{display:inline-block;width:14px;color:var(--gold-ink)}
-.fl tr.sec b{color:var(--navy);font-weight:650}
-.fl tr.stk td:first-child{padding-left:30px}
-.fl tr.stk td{font-size:12.5px}
+body.p-desk,body.p-filings,body.p-sectors{background:linear-gradient(180deg,var(--acc-wash) 0,var(--bg) 380px) no-repeat,var(--bg)}
+.panel{box-shadow:0 1px 0 rgba(20,32,60,.03),0 14px 28px -22px rgba(20,32,60,.28)}
+.ph h2{font:400 23px/1.15 var(--serif);letter-spacing:0;color:var(--navy)}
+.kpi .v{font-family:var(--serif);font-weight:400;font-size:36px;letter-spacing:-.01em}
+.kpi .v.t{font-size:22px}
+.card h3{font-family:var(--serif);font-weight:400;font-size:21px;letter-spacing:0}
+.gmp .gp{font-family:var(--serif);font-weight:400;font-size:32px}
+.day h4,.sub-h{font-family:var(--serif);font-weight:400;font-size:17px}
+/* opening screen */
+body.home{background:#070e21;min-height:100vh}
+body.home #app{display:none}
+body:not(.home) #gate{display:none}
+.gate{position:relative;min-height:100vh;min-height:100svh;display:flex;flex-direction:column;color:#ece5cf;overflow:hidden;
+  background:radial-gradient(1100px 640px at 50% 34%,#1d2f60 0%,#0d1735 52%,#060b1c 100%)}
+.gate-floor{position:absolute;left:-60%;right:-60%;bottom:0;height:90%;pointer-events:none;
+  background-image:linear-gradient(rgba(184,168,128,.24) 1px,transparent 1px),linear-gradient(90deg,rgba(184,168,128,.24) 1px,transparent 1px);
+  background-size:80px 80px;transform:perspective(700px) rotateX(66deg);transform-origin:50% 100%;
+  -webkit-mask-image:linear-gradient(to top,#000 0,#000 30%,transparent 100%);mask-image:linear-gradient(to top,#000 0,#000 30%,transparent 100%)}
+.gate-top{position:relative;z-index:2;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:22px 28px}
+.gate-name{font:400 22px/1 var(--serif);color:#e8dfc3;letter-spacing:.01em}
+.gate-wa{background:transparent;border-color:rgba(231,214,160,.5);color:#e8dfc3}
+.gate-wa:hover{background:rgba(255,255,255,.08)}
+.gate-main{position:relative;z-index:2;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 16px 8px}
+.stage{--lw:min(86vw,820px);--dz:calc(var(--lw) / 500);width:var(--lw);perspective:1100px;transition:transform .9s cubic-bezier(.2,.8,.2,1)}
+.gate.opened .stage{transform:translateY(-3vh) scale(.58)}
+.logo3d{position:relative;display:block;width:100%;aspect-ratio:1102/132;padding:0;border:0;background:none;cursor:pointer;transform-style:preserve-3d;will-change:transform;-webkit-tap-highlight-color:transparent}
+.logo3d:focus-visible{outline:2px solid #e6d6a4;outline-offset:18px;border-radius:10px}
+.logo3d .ly{position:absolute;inset:0;transform:translateZ(calc(var(--dz) * var(--i) * -1));
+  -webkit-mask:url(assets/nuvont-capital-logo.png) center/100% 100% no-repeat;mask:url(assets/nuvont-capital-logo.png) center/100% 100% no-repeat}
+.logo3d .face{background:linear-gradient(105deg,#e9dcb2 0%,#fffdf3 38%,#f3e8c4 50%,#d8c58a 100%);background-size:260% 100%;animation:sheen 7s ease-in-out infinite}
+.logo3d .glow{position:absolute;left:8%;right:8%;top:-60%;bottom:-60%;transform:translateZ(calc(var(--dz) * -26));pointer-events:none;
+  background:radial-gradient(ellipse at center,rgba(226,200,120,.34) 0,rgba(226,200,120,0) 62%);filter:blur(14px)}
+@keyframes sheen{0%{background-position:100% 0}55%,100%{background-position:0 0}}
+.gate-tag{margin:clamp(26px,6vh,54px) 0 0;font:400 clamp(20px,2.4vw,26px)/1.2 var(--serif);color:#e8dfc3;text-align:center;display:flex;align-items:center;gap:12px}
+.gate-tag::before{content:"";width:9px;height:9px;border-radius:50%;background:#e6d6a4;box-shadow:0 0 0 0 rgba(230,214,164,.55);animation:ping 2.2s ease-out infinite}
+.gate.opened .gate-tag::before{animation:none;box-shadow:none}
+@keyframes ping{0%{box-shadow:0 0 0 0 rgba(230,214,164,.55)}80%,100%{box-shadow:0 0 0 14px rgba(230,214,164,0)}}
+.portals{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;width:min(1060px,94vw);margin-top:26px;perspective:1300px;visibility:hidden}
+.gate.opened .portals{visibility:visible}
+.portal{--c:#cdb77e;position:relative;display:flex;flex-direction:column;gap:8px;min-width:0;padding:22px 22px 18px;border-radius:16px;text-decoration:none;color:#f3eddb;
+  background:linear-gradient(160deg,rgba(255,255,255,.11),rgba(255,255,255,.035));border:1px solid rgba(255,255,255,.14);overflow:hidden;
+  box-shadow:0 26px 50px -26px rgba(0,0,0,.75);opacity:0;transform:translateY(30px) rotateX(20deg);transition:opacity .6s ease,transform .7s cubic-bezier(.2,.8,.2,1),border-color .2s,background-color .2s}
+.portal::before{content:"";position:absolute;left:0;right:0;top:0;height:3px;background:var(--c)}
+.gate.opened .portal{opacity:1;transform:none}
+.gate.opened .portal:nth-child(2){transition-delay:.08s,.08s,0s,0s}
+.gate.opened .portal:nth-child(3){transition-delay:.16s,.16s,0s,0s}
+.gate.opened .portal:hover,.gate.opened .portal:focus-visible{transform:translateY(-6px);border-color:var(--c);background:linear-gradient(160deg,rgba(255,255,255,.16),rgba(255,255,255,.05))}
+.portal:focus-visible{outline:2px solid var(--c);outline-offset:3px}
+.portal .pn{font:400 34px/1.05 var(--serif)}
+.portal .pd{font-size:13.5px;line-height:1.45;color:rgba(243,237,219,.78)}
+.portal .ps{margin-top:6px;font-size:13px;font-weight:550;color:var(--c);min-height:1.4em}
+.portal .go{margin-top:auto;padding-top:8px;display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:rgba(243,237,219,.9)}
+.portal .go svg{width:16px;height:16px;transition:transform .2s}
+.portal:hover .go svg{transform:translateX(4px)}
+.gate-foot{position:relative;z-index:2;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;padding:14px 28px 22px;font-size:12.5px;color:rgba(236,229,207,.7)}
+.gate-foot .plate{display:inline-flex;align-items:center;background:#fff;border-radius:8px;padding:5px 12px;margin-left:10px;vertical-align:middle}
+.gate-foot .plate img{display:block;height:30px;width:auto}
+.gate-foot a{color:#e8dfc3}
+.gate-note{display:flex;align-items:center;gap:0}
+@media (max-width:820px){
+  .portals{grid-template-columns:minmax(0,1fr);gap:12px;width:min(520px,92vw)}
+  .gate.opened .stage{transform:translateY(-1vh) scale(.78)}
+  .gate-top,.gate-foot{padding-left:16px;padding-right:16px}
+  .portal{padding:16px 18px 14px}.portal .pn{font-size:28px}
+}
+@media (prefers-reduced-motion:reduce){
+  .logo3d .face,.gate-tag::before{animation:none}
+  .stage,.portal{transition:none}
+}
+/* Sector Outlook */
+.pulse{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px;margin-bottom:16px}
+.pt{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px 13px;min-width:0;position:relative;overflow:hidden;box-shadow:0 14px 28px -24px rgba(20,32,60,.3)}
+.pt::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--line)}
+.pt.up::before{background:var(--pos)}.pt.dn::before{background:var(--neg)}
+.pt .k{font-size:12px;color:var(--muted)}
+.pt .v{font:400 30px/1.15 var(--serif);margin-top:4px;color:var(--navy);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pt .v.s{font-size:21px;line-height:1.2;padding-top:3px;white-space:normal}
+.pt .v.up{color:#0b6b49}.pt .v.dn{color:#b02a2a}
+.pt .d{font-size:12px;color:var(--muted);margin-top:2px}
+.dash{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:16px;margin-bottom:16px;align-items:start}
+.tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:8px;padding:12px 16px 16px}
+.tile{border:0;border-radius:10px;padding:10px 12px 9px;text-align:left;cursor:pointer;display:flex;flex-direction:column;gap:2px;min-height:88px;background:var(--bg);box-shadow:inset 0 0 0 1px rgba(23,32,51,.07);font:inherit;transition:transform .15s,box-shadow .15s}
+.tile:hover,.tile:focus-visible{transform:translateY(-2px);box-shadow:inset 0 0 0 2px var(--acc)}
+.tile .n{font-size:12.5px;font-weight:600;line-height:1.25}
+.tile .r{font:400 27px/1.1 var(--serif);margin-top:auto;font-variant-numeric:tabular-nums}
+.tile .m{font-size:11.5px;opacity:.85}
+.bs{display:grid;gap:14px;padding:14px 16px 6px}
+.bs-h{display:flex;justify-content:space-between;align-items:baseline;gap:10px;font-size:13px}
+.bs-h b{font-weight:600}
+.bs-h span{font-variant-numeric:tabular-nums;font-weight:600}
+.bs-r{display:grid;grid-template-columns:54px minmax(0,1fr) 92px;align-items:center;gap:8px;font-size:12px;color:var(--muted);margin-top:4px}
+.bs-t{height:11px;background:var(--line-2);border-radius:3px;overflow:hidden}
+.bs-t i{display:block;height:100%;border-radius:0 3px 3px 0}
+.bs-r em{font-style:normal;text-align:right;color:var(--ink);font-variant-numeric:tabular-nums;font-weight:550}
+.chart{padding:4px 16px 0}
+.chart svg{display:block;width:100%;height:auto}
+.in-sum{display:flex;flex-wrap:wrap;gap:6px 14px;padding:2px 16px 10px;font-size:12.5px;color:var(--muted)}
+.in-sum b{font-variant-numeric:tabular-nums}
+.mf{padding:6px 16px 14px;display:grid;gap:1px}
+.mf-h,.mf-r{display:grid;grid-template-columns:minmax(130px,1.25fr) minmax(170px,2.4fr) 92px 70px 104px;gap:12px;align-items:center;padding:6px 8px}
+.mf-h{font-size:12px;color:var(--muted);font-weight:600;border-bottom:1px solid var(--line-2);padding-bottom:8px}
+.mf-h span:nth-child(n+3),.mf-r>.num{text-align:right}
+.mf-r{border-radius:8px}.mf-r:hover{background:var(--bg)}
+.mf-r .nm{font-size:13px;font-weight:550;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mf-r .nm small{color:var(--faint);font-weight:400;margin-left:6px}
+.mf-r .num{font-variant-numeric:tabular-nums;font-size:13px;white-space:nowrap}
+.mf .fb{width:100%}
+@media (max-width:640px){
+  .mf-h,.mf-r{grid-template-columns:minmax(0,1fr) 82px 62px;gap:8px;padding:7px 4px}
+  .mf-h>:nth-child(2),.mf-h>:nth-child(5),.mf-r>:nth-child(2),.mf-r>:nth-child(5){display:none}
+  .mf-r .nm{white-space:normal;overflow:visible;line-height:1.25}
+  .mf-r .nm small{display:block;margin:2px 0 0}
+}
 .fb{position:relative;height:18px;width:170px;display:inline-block;vertical-align:middle}
 .fb::before{content:"";position:absolute;left:50%;top:0;bottom:0;width:1px;background:var(--line)}
 .fb i{position:absolute;top:3px;bottom:3px;border-radius:3px}
 .fb i.p{background:var(--pos)}.fb i.n{background:var(--neg)}
 .spk{display:block;margin-left:auto}
-.cmg{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}
-.cm-group{margin-bottom:18px}
-.cm-group:last-child{margin-bottom:0}
-.cm{border:1px solid var(--line);border-radius:var(--r);padding:12px;display:flex;flex-direction:column;gap:9px;min-width:0;background:var(--panel)}
-.cm h4{margin:0;font-size:14.5px;color:var(--navy);font-weight:650;line-height:1.3}
-.cm .u{font-size:11.5px;color:var(--faint)}
-.cm .pr{display:flex;align-items:baseline;justify-content:space-between;gap:8px}
-.cm .pv{font-size:22px;font-weight:650;font-variant-numeric:tabular-nums;letter-spacing:-.015em}
-.chip{font-size:12.5px;font-weight:650;font-variant-numeric:tabular-nums;white-space:nowrap}
-.rng{position:relative;height:6px;background:var(--line-2);border-radius:3px;margin:7px 0 2px}
-.rng i{position:absolute;top:-3px;width:3px;height:12px;border-radius:2px;background:var(--navy)}
-.rngl{display:flex;justify-content:space-between;font-size:11.5px;color:var(--faint);font-variant-numeric:tabular-nums}
-.chg{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:4px;font-size:11.5px;text-align:center}
-.chg small{display:block;color:var(--faint);font-size:11px}
-.chg b{font-weight:600;font-variant-numeric:tabular-nums;font-size:12px}
+.sc{border-collapse:separate;border-spacing:0;width:100%;min-width:860px;font-size:12.5px}
+.sc th{font-weight:600;color:var(--muted);font-size:12px;text-align:center;padding:4px 2px 8px;background:var(--panel);white-space:nowrap}
+.sc th.l{text-align:left;padding-left:10px}
+.sc td{padding:0}
+.sc td.nm{padding:0 10px;min-width:210px}
+.sc tr.sec{cursor:pointer}
+.sc tr.sec td.nm{background:var(--acc-wash);border-left:3px solid var(--acc);border-bottom:2px solid var(--panel);font-size:13px}
+.sc tr.sec:hover td.nm{filter:brightness(.97)}
+.sc tr.sec .car{display:inline-block;width:14px;color:var(--acc-ink)}
+.sc tr.sec b{color:var(--navy);font-weight:650}
+.sc tr.stk td.nm{padding-left:30px;border-bottom:1px solid var(--line-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:260px}
+.sc td.v{height:34px;text-align:center;font-variant-numeric:tabular-nums;font-weight:550;border:2px solid var(--panel);border-radius:5px;background-clip:padding-box;min-width:58px}
+.sc tr.stk td.v{height:27px;font-weight:500;font-size:12px}
+.sc td.fx{text-align:right;padding:0 12px;font-variant-numeric:tabular-nums;white-space:nowrap;border-bottom:2px solid var(--panel);font-weight:550}
+.sc tr.stk td.fx{border-bottom:1px solid var(--line-2);font-weight:500;font-size:12px}
+.sc tr.stk td.more-c{padding:8px 10px 8px 30px}
 @media (max-width:1100px){
-  .gauges{grid-template-columns:repeat(auto-fit,minmax(170px,1fr))}
+  .pulse{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .dash{grid-template-columns:minmax(0,1fr)}
   .g-2,.g-3,.two{grid-template-columns:minmax(0,1fr)}
   .kpis{grid-template-columns:repeat(3,minmax(0,1fr))}
   .kpi:nth-child(4){border-left:0}
   .kpi:nth-child(n+4){border-top:1px solid var(--line)}
 }
 @media (max-width:720px){
+  .bar-in{flex-wrap:wrap;gap:10px 12px;padding-top:10px;padding-bottom:12px}
+  .logo-afc{height:32px}.logo-nuvont{height:18px}
+  .seg-nav{order:3;width:100%;margin-left:0;overflow-x:auto;scrollbar-width:none}
+  .seg-nav button{flex:1;justify-content:center;padding:7px 10px;font-size:13px}
+  .bar-right{order:2;margin-left:auto}
+  .hero{padding-top:18px}
+  .pulse{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .pt .v{font-size:26px}
+  .tiles{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .mf-h,.mf-r{grid-template-columns:minmax(0,1fr) 88px 62px}
+  .mf-h span:nth-child(2),.mf-r>span:nth-child(2),.mf-h span:nth-child(5),.mf-r>span:nth-child(5){display:none}
   .wrap{padding:0 14px}
   .filters{position:static}
-  .tabs button{padding:12px 11px 9px;font-size:13px}
   .seg{max-width:100%;overflow-x:auto}
-  .mast-in{padding-top:12px;padding-bottom:14px;gap:10px}
-  .brand{gap:12px;width:100%}
-  .brand{flex-wrap:wrap;row-gap:8px}
-  .brand-logos{gap:12px;width:100%}
-  .logo-afc{height:34px} .logo-nuvont{height:17px}
-  .brand-sep-title{display:none} .brand-title b{font-size:17px} .brand-title small{display:none}
-  .mast-right{width:100%;justify-content:space-between;gap:8px}
   .pill{white-space:normal;line-height:1.35}
   .kpis{grid-template-columns:repeat(2,minmax(0,1fr))}
   .kpi:nth-child(odd){border-left:0} .kpi:nth-child(even){border-left:1px solid var(--line)}
@@ -331,45 +431,58 @@ table.t{border-collapse:collapse;width:100%;min-width:980px}
   .row{grid-template-columns:minmax(0,44%) minmax(0,1fr) 30px}
   .cards{grid-template-columns:minmax(0,1fr)}
   .cal{grid-template-columns:minmax(0,1fr)}
-  .gauges{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .cmg{grid-template-columns:minmax(0,1fr)}
-  .fb{width:96px}
-  .fl{min-width:760px}
   .gmp .gp{font-size:24px}
-  .gauge .v{font-size:18px}
 }
 @media print{.filters{position:static}.tools,.more,.f-end .btn{display:none}}
 @media (prefers-reduced-motion:no-preference){.slot,.row,.btn,.seg button{transition:background-color .12s}}
 </style>
 </head>
-<body>
-<header class="mast">
-  <div class="wrap mast-in">
-    <a class="brand" href="./" aria-label="afc | ashmavir Financial Consultants and Nuvont Capital, IPO Filing Radar">
-      <span class="brand-logos">
-        <img class="logo-afc" src="assets/afc-ashmavir-logo.png" alt="afc | ashmavir Financial Consultants Pvt. Ltd">
-        <span class="brand-sep" aria-hidden="true"></span>
-        <img class="logo-nuvont" src="assets/nuvont-capital-logo.png" alt="Nuvont Capital">
-      </span>
-      <span class="brand-sep brand-sep-title" aria-hidden="true"></span>
-      <span class="brand-title"><b>IPO Filing Radar</b><small>DRHP, approval and addendum tracker for SME and mainboard issues</small></span>
-    </a>
-    <div class="mast-right">
+<body class="home">
+<div class="gate" id="gate">
+  <div class="gate-floor" aria-hidden="true"></div>
+  <div class="gate-top">
+    <span class="gate-name">IPO Filing Radar</span>
+    <a class="wa-join gate-wa" id="wa-join-gate" href="#" target="_blank" rel="noopener noreferrer" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1h-9l-5 4v-4H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg><span>Get WhatsApp alerts</span></a>
+  </div>
+  <div class="gate-main">
+    <div class="stage" id="stage">
+      <button type="button" class="logo3d" id="logo3d" aria-label="Nuvont Capital. Press to open the sections" aria-expanded="false" aria-controls="portals"></button>
+    </div>
+    <p class="gate-tag" id="gate-tag">Click the mark to enter</p>
+    <nav class="portals" id="portals" aria-label="Sections">
+      <a class="portal" href="#v=desk" data-v="desk" style="--c:#cdb77e"><span class="pn">IPO Desk</span><span class="pd">Open and upcoming issues, key dates, grey market premium and lead managers.</span><span class="ps" id="ps-desk"></span><span class="go">Open IPO Desk <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+      <a class="portal" href="#v=filings" data-v="filings" style="--c:#7ea0e6"><span class="pn">Filings</span><span class="pd">Every DRHP, approval and addendum the radar has found, with documents.</span><span class="ps" id="ps-filings"></span><span class="go">Open Filings <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+      <a class="portal" href="#v=sectors" data-v="sectors" style="--c:#9a90f2"><span class="pn">Sector Outlook</span><span class="pd">Sector returns, FII and DII activity and money flow in one dashboard.</span><span class="ps" id="ps-sectors"></span><span class="go">Open Sector Outlook <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+    </nav>
+  </div>
+  <div class="gate-foot">
+    <span>afc | ashmavir Financial Consultants Pvt. Ltd. <span class="plate"><img src="assets/afc-ashmavir-logo.png" alt="afc | ashmavir"></span></span>
+    <a href="#v=desk" data-v="desk" id="gate-skip">Skip to the IPO Desk</a>
+  </div>
+</div>
+
+<div id="app">
+<header class="appbar" id="bar">
+  <div class="wrap bar-in">
+    <a class="home-link" id="home-link" href="./" aria-label="Nuvont Capital. Back to the opening screen"><img class="logo-nuvont" src="assets/nuvont-capital-logo.png" alt="Nuvont Capital"></a>
+    <span class="brand-sep" aria-hidden="true"></span>
+    <img class="logo-afc" src="assets/afc-ashmavir-logo.png" alt="afc | ashmavir Financial Consultants Pvt. Ltd">
+    <nav class="seg-nav" aria-label="Sections" role="tablist">
+      <button type="button" role="tab" id="tab-desk" data-v="desk" style="--dot:#b8a880" aria-controls="v-desk" aria-selected="true"><i></i>IPO Desk</button>
+      <button type="button" role="tab" id="tab-filings" data-v="filings" style="--dot:#3a64b5" aria-controls="v-filings" aria-selected="false"><i></i>Filings</button>
+      <button type="button" role="tab" id="tab-sectors" data-v="sectors" style="--dot:#5a4fcf" aria-controls="v-sectors" aria-selected="false"><i></i>Sector Outlook</button>
+    </nav>
+    <div class="bar-right">
       <a class="wa-join" id="wa-join" href="#" target="_blank" rel="noopener noreferrer" hidden title="Message us on WhatsApp to be added to the alert list"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1h-9l-5 4v-4H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg><span>Get WhatsApp alerts</span></a>
       <span class="pill" id="fresh"><i></i><span>Checking</span></span>
     </div>
   </div>
 </header>
 
-<nav class="tabs" aria-label="Pages"><div class="wrap tabs-in" role="tablist">
-  <button type="button" role="tab" id="tab-desk" data-v="desk" aria-controls="v-desk" aria-selected="true">IPO Desk</button>
-  <button type="button" role="tab" id="tab-filings" data-v="filings" aria-controls="v-filings" aria-selected="false">Filings</button>
-  <button type="button" role="tab" id="tab-sectors" data-v="sectors" aria-controls="v-sectors" aria-selected="false">Sector heatmap</button>
-  <button type="button" role="tab" id="tab-flow" data-v="flow" aria-controls="v-flow" aria-selected="false">Sector flow</button>
-  <button type="button" role="tab" id="tab-commodities" data-v="commodities" aria-controls="v-commodities" aria-selected="false">Commodities</button>
-</div></nav>
-
 <div id="v-desk" role="tabpanel" aria-labelledby="tab-desk">
+<section class="wrap hero" aria-labelledby="h1-desk">
+  <div><span class="bar-acc"></span><h1 id="h1-desk">IPO Desk</h1><p>Open and upcoming issues with price band, key dates, grey market premium and lead managers.</p></div>
+</section>
 <div class="filters nosticky" role="region" aria-label="IPO filters">
   <div class="wrap f-in">
     <div class="f"><span class="l" id="l-dg">Segment</span>
@@ -403,6 +516,9 @@ table.t{border-collapse:collapse;width:100%;min-width:980px}
 </div>
 
 <div id="v-filings" role="tabpanel" hidden aria-labelledby="tab-filings">
+<section class="wrap hero" aria-labelledby="h1-filings">
+  <div><span class="bar-acc"></span><h1 id="h1-filings">Filings</h1><p>Draft prospectuses, approvals and addenda as they appear on SEBI and the exchanges, SME and mainboard.</p></div>
+</section>
 <div class="filters" role="region" aria-label="Filters">
   <div class="wrap f-in">
     <div class="f"><span class="l" id="l-r">Filed in</span>
@@ -428,13 +544,6 @@ table.t{border-collapse:collapse;width:100%;min-width:980px}
   <div style="height:16px"></div>
 
   <div class="grid g-2">
-    <section class="panel hmp" aria-labelledby="h-hm">
-      <div class="ph"><div><h2 id="h-hm">Sector heatmap</h2><p>Nifty sector indices, return over each period. Not affected by the filters.</p></div>
-        <div class="hm-sum" id="hm-sum"></div></div>
-      <div class="hm-wrap" id="hm"></div>
-      <div class="hm-key"><span>Fall</span><span class="ramp" aria-hidden="true"></span><span>Rise</span><span id="hm-upd" style="margin-left:auto"></span></div>
-    </section>
-    <div class="stack">
       <section class="panel" aria-labelledby="h-t">
         <div class="ph"><div><h2 id="h-t">Filings over time</h2><p id="t-sub"></p></div>
           <div class="tools"><div class="legend" id="t-leg"></div>
@@ -445,7 +554,6 @@ table.t{border-collapse:collapse;width:100%;min-width:980px}
         <div class="ph"><div><h2 id="h-x">Where they are listed</h2><p>Companies by exchange</p></div></div>
         <div class="pb rk" id="x-body"></div>
       </section>
-    </div>
   </div>
 
   <div class="grid g-3">
@@ -467,58 +575,65 @@ table.t{border-collapse:collapse;width:100%;min-width:980px}
 </main>
 </div>
 
-<main class="wrap" id="v-sectors" role="tabpanel" aria-labelledby="tab-sectors" hidden>
-  <section class="panel" aria-labelledby="h-sx">
-    <div class="ph"><div><h2 id="h-sx">Sector heatmap</h2><p id="sx-sub"></p></div>
-      <div class="tools"><span class="pill" id="sx-pill"><i></i><span></span></span></div></div>
-    <div class="two" id="sx-lists"></div>
-    <div class="sx-bar">
-      <div class="f"><span class="l" id="l-sx">Sort by</span><div class="seg" id="sx-sort" role="group" aria-labelledby="l-sx"></div></div>
-      <div class="f search"><label for="sx-q">Find a stock or sector</label><input id="sx-q" type="search" placeholder="Name or symbol" autocomplete="off"></div>
-    </div>
-    <div class="hm-wrap" id="sx-body"></div>
-    <div class="hm-key"><span>Fall</span><span class="ramp" aria-hidden="true"></span><span>Rise</span><span style="margin-left:auto">Select a sector to see its stocks</span></div>
-  </section>
-</main>
+<div id="v-sectors" role="tabpanel" aria-labelledby="tab-sectors" hidden>
+<section class="wrap hero" aria-labelledby="h1-sectors">
+  <div><span class="bar-acc"></span><h1 id="h1-sectors">Sector Outlook</h1><p>How each sector is performing, what foreign and domestic institutions are doing, and where money is moving.</p></div>
+  <div class="hero-tools"><span class="pill" id="sx-pill"><i></i><span></span></span></div>
+</section>
+<main class="wrap">
+  <div class="pulse" id="sx-pulse" aria-label="Summary"></div>
 
-<main class="wrap" id="v-flow" role="tabpanel" aria-labelledby="tab-flow" hidden>
-  <section class="panel" aria-labelledby="h-fl">
-    <div class="ph"><div><h2 id="h-fl">Sector flow</h2><p id="fl-sub"></p></div>
-      <div class="tools"><span class="pill" id="fl-pill"><i></i><span></span></span></div></div>
-    <div class="gauges" id="fl-kpis"></div>
-    <div class="two" id="fl-lists"></div>
-    <div class="sx-bar">
-      <div class="f"><span class="l" id="l-flw">Window</span><div class="seg" id="fl-w" role="group" aria-labelledby="l-flw"><button type="button" data-v="1">1 day</button><button type="button" data-v="5">5 days</button><button type="button" data-v="20">20 days</button></div></div>
-      <div class="f"><span class="l" id="l-flo">Sort by</span><div class="seg" id="fl-o" role="group" aria-labelledby="l-flo"><button type="button" data-v="net">Net flow</button><button type="button" data-v="str">Strength</button><button type="button" data-v="turn">Turnover</button><button type="button" data-v="name">Name</button></div></div>
-      <div class="f search"><label for="fl-q">Find a stock or sector</label><input id="fl-q" type="search" placeholder="Name or symbol" autocomplete="off"></div>
-    </div>
-    <div class="tw" id="fl-body"></div>
-    <p class="note" id="fl-note"></p>
-  </section>
-</main>
+  <div class="dash">
+    <section class="panel" aria-labelledby="h-tl">
+      <div class="ph"><div><h2 id="h-tl">Sector map</h2><p id="tl-sub"></p></div>
+        <div class="tools"><div class="seg sm" id="sx-h" role="group" aria-label="Return period"></div></div></div>
+      <div class="tiles" id="sx-tiles"></div>
+      <div class="hm-key"><span>Fall</span><span class="ramp" aria-hidden="true"></span><span>Rise</span><span style="margin-left:auto">Select a sector to open its stocks below</span></div>
+    </section>
 
-<main class="wrap" id="v-commodities" role="tabpanel" aria-labelledby="tab-commodities" hidden>
-  <section class="panel" aria-labelledby="h-cm">
-    <div class="ph"><div><h2 id="h-cm">Commodities</h2><p id="cm-sub"></p></div>
-      <div class="tools"><span class="pill" id="cm-pill"><i></i><span></span></span></div></div>
-    <div class="gauges" id="cm-gauges"></div>
+    <section class="panel" aria-labelledby="h-in">
+      <div class="ph"><div><h2 id="h-in">FII and DII activity</h2><p id="in-sub">Cash market, all exchanges, in ₹ crore.</p></div></div>
+      <div class="bs" id="in-break"></div>
+      <div class="chart" id="in-chart"></div>
+      <div class="in-sum" id="in-sum"></div>
+      <div class="tw" id="in-table"></div>
+      <p class="note" id="in-note" style="padding:0 16px 14px"></p>
+    </section>
+  </div>
+
+  <section class="panel" aria-labelledby="h-mf" style="margin-bottom:16px">
+    <div class="ph"><div><h2 id="h-mf">Where money is moving</h2><p id="mf-sub"></p></div>
+      <div class="tools"><div class="seg sm" id="mf-w" role="group" aria-label="Window"><button type="button" data-v="1">1 day</button><button type="button" data-v="5">5 days</button><button type="button" data-v="20">20 days</button></div></div></div>
+    <div class="mf" id="mf-body"></div>
+    <p class="note" id="mf-note" style="padding:0 16px 14px"></p>
+  </section>
+
+  <section class="panel" aria-labelledby="h-sc" style="margin-bottom:16px">
+    <div class="ph"><div><h2 id="h-sc">Sector scorecard</h2><p id="sc-sub"></p></div></div>
     <div class="sx-bar">
-      <div class="f"><span class="l" id="l-cmg">Group</span><div class="seg" id="cm-g" role="group" aria-labelledby="l-cmg"></div></div>
-      <div class="f"><span class="l" id="l-cmo">Sort by</span><div class="seg" id="cm-o" role="group" aria-labelledby="l-cmo"><button type="button" data-v="default">Default</button><button type="button" data-v="1D">1D</button><button type="button" data-v="1M">1M</button><button type="button" data-v="YTD">YTD</button><button type="button" data-v="1Y">1Y</button></div></div>
-      <div class="f search"><label for="cm-q">Find a commodity</label><input id="cm-q" type="search" placeholder="Name or symbol" autocomplete="off"></div>
+      <div class="f"><span class="l" id="l-sco">Order</span><div class="seg" id="sc-ord" role="group" aria-labelledby="l-sco"><button type="button" data-v="ret">By return</button><button type="button" data-v="name">A to Z</button></div></div>
+      <div class="f search"><label for="sc-q">Find a stock or sector</label><input id="sc-q" type="search" placeholder="Name or symbol" autocomplete="off"></div>
     </div>
-    <div class="pb" id="cm-body"></div>
-    <p class="note" id="cm-note"></p>
+    <div class="hm-wrap" id="sc-body"></div>
+  </section>
+
+  <section class="panel hmp" aria-labelledby="h-hm" style="margin-bottom:16px">
+    <div class="ph"><div><h2 id="h-hm">Nifty sector indices</h2><p>Return over each period for the NSE sector indices.</p></div>
+      <div class="hm-sum" id="hm-sum"></div></div>
+    <div class="hm-wrap" id="hm"></div>
+    <div class="hm-key"><span>Fall</span><span class="ramp" aria-hidden="true"></span><span>Rise</span><span id="hm-upd" style="margin-left:auto"></span></div>
   </section>
 </main>
+</div>
 
 <footer class="wrap foot">
   <div class="src" id="src"></div>
   <p class="alerts-note" id="alerts"></p>
   <p>Filings are compiled from public sources and shown as published. Check the official document before relying on any item. This page is for research and is not investment advice.</p>
-  <p>Sector heatmap and sector flow are worked out from the NSE Nifty 500 and F&amp;O stock lists with daily prices and volumes from Yahoo Finance. While the market is open they include the day's session as it stands, fetched about every 12 minutes and running about 15 minutes behind the exchange; after the close they show the finished day. Commodity prices are futures prices from Yahoo Finance, fetched about every 20 minutes while the markets trade. The radar runs day and night, and an open page reloads itself when new data is published. IPO dates, lead managers, sectors and grey market premiums come from ipowatch.in and are unofficial. Data can be delayed or wrong.</p>
+  <p>Sector returns and money flow are worked out from the NSE Nifty 500 and F&amp;O stock lists with daily prices and volumes from Yahoo Finance. While the market is open they include the day's session as it stands, fetched about every 12 minutes and running about 15 minutes behind the exchange; after the close they show the finished day. Money flow is an estimate from price and volume, not an exchange figure. FII and DII figures come from the combined MSE, NSE and BSE cash-market report, are provisional, and are saved one day at a time. The radar runs day and night, and an open page reloads itself when new data is published. IPO dates, lead managers, sectors and grey market premiums come from ipowatch.in and are unofficial. Data can be delayed or wrong.</p>
   <p>afc | ashmavir Financial Consultants Pvt. Ltd. and Nuvont Capital. Research desk.</p>
 </footer>
+</div>
 <div class="tip" id="tip" role="tooltip"></div>
 
 <script type="application/json" id="data">__DATA__</script>
@@ -559,7 +674,8 @@ const RANGES = ["7", "30", "90", "365", "all"];
 let sort = { k: "d", dir: -1 }, shown = 25, view = "chart";
 function writeHash() {
   const p = new URLSearchParams();
-  if (page !== "desk") p.set("v", page);
+  if (page === "home") { history.replaceState(null, "", location.pathname + location.search); return; }
+  p.set("v", page);
   for (const k in DEF) if (S[k] !== DEF[k]) p.set(k, S[k]);
   for (const k in DDEF) if (D[k] !== DDEF[k]) p.set(k, D[k]);
   history.replaceState(null, "", p.toString() ? "#" + p : location.pathname + location.search);
@@ -837,6 +953,7 @@ function renderChrome() {
   $("#alerts").textContent = DATA.alerts ? plural(DATA.alerts, "Telegram alert") + " sent" : "";
   const wj = $("#wa-join"), wurl = DATA.whatsapp && DATA.whatsapp.join;
   if (wj && safeUrl(wurl)) { wj.href = wurl; wj.hidden = false; }
+  const wg = $("#wa-join-gate"); if (wg && safeUrl(wurl)) { wg.href = wurl; wg.hidden = false; }
   const src = $("#src"); src.textContent = "";
   for (const h of DATA.health) { const s = el("span", "pill " + (h.ok ? "good" : "warn")); s.appendChild(el("i")); s.appendChild(el("span", null, h.name + (h.ok ? "" : ", having trouble"))); src.appendChild(s); }
 }
@@ -857,9 +974,10 @@ function render() {
   $("#csv").onclick = () => exportCsv(items.slice().sort((a, b) => (b.d || "").localeCompare(a.d || "")));
 }
 /* ---------- shared helpers for the data pages ---------- */
-const PAGES = ["desk", "filings", "sectors", "flow", "commodities"];
-let page = "desk";
-{ const v = new URLSearchParams(location.hash.slice(1)).get("v"); if (PAGES.includes(v)) page = v; else if (v === "ipos") page = "desk"; }
+const PAGES = ["desk", "filings", "sectors"];
+const LEGACY = { ipos: "desk", flow: "sectors", commodities: "sectors" };
+let page = "home";
+{ const v = new URLSearchParams(location.hash.slice(1)).get("v"), m = LEGACY[v] || v; if (PAGES.includes(m)) page = m; }
 const MK = DATA.market, IPOS = DATA.ipos;
 const signed = (x, d) => x == null ? "–" : (x > 0 ? "+" : "") + minus(x.toFixed(d == null ? 2 : d));
 const inr = n => "₹" + n.toLocaleString("en-IN", { maximumFractionDigits: 2 });
@@ -891,71 +1009,230 @@ function tint(td, x, scale) {
 }
 const p90 = arr => { const v = arr.filter(x => x != null).map(Math.abs).sort((a, b) => a - b); return Math.max(v.length ? v[Math.floor(v.length * 0.9)] : 1, 0.5); };
 
-/* ---------- sector heatmap page ---------- */
-const SX = { h: "default", q: "", open: new Set(), full: new Set(), focus: null };
+/* ---------- Sector Outlook ---------- */
+const SX = { h: "1W", q: "", ord: "ret", w: "5", open: new Set(), full: new Set(), focus: null };
+const FL = MK && MK.flow, FLX = DATA.flows;
+const FLMAP = new Map(FL ? FL.sectors.map(s => [s.n, s]) : []);
+const FLSTK = new Map(FL ? FL.stocks.map(r => [r[0], r]) : []);
+const crs = (x, d) => x == null ? "–" : (x > 0 ? "+" : x < 0 ? "−" : "") + Math.abs(x).toLocaleString("en-IN", { minimumFractionDigits: d == null ? 1 : d, maximumFractionDigits: d == null ? 1 : d });
+const crp = (x, d) => x == null ? "–" : x.toLocaleString("en-IN", { maximumFractionDigits: d == null ? 1 : d });
+const stk = n => n + (n === 1 ? " stock" : " stocks");
+const dirOf = x => x > 0 ? "up" : x < 0 ? "dn" : "";
+const C_FII = "#3a64b5", C_DII = "#c8861f";
+const FLOW_IDX = { 1: 5, 5: 6, 20: 7 };
+function heat(x, scale) {
+  const k = Math.max(-1, Math.min(1, x / scale)), rgb = mix(NEU, k >= 0 ? POS : NEG, Math.abs(k));
+  return { bg: "rgb(" + rgb.join(",") + ")", fg: Math.abs(k) > 0.55 ? "#fff" : "var(--ink)" };
+}
 function stockMatches(s, q) { return (s[0] + " " + s[1]).toLowerCase().includes(q); }
-function renderSectors() {
-  const body = $("#sx-body"), lists = $("#sx-lists"); lists.textContent = "";
-  if (!MK) { emptyBox(body, "Stock-level sector data is not available yet. It is built from the latest stock prices and fills in with the next check."); $("#sx-sub").textContent = ""; $("#sx-pill").hidden = true; return; }
-  $("#sx-pill").hidden = false;
-  livePill($("#sx-pill"), MK, "Closing prices of", "Prices run about 15 minutes behind the exchange. This page is rebuilt every few minutes while the market is open.");
-  $("#sx-sub").textContent = "Median return of the stocks in each sector. " + MK.priced + " of the Nifty 500, grouped by NSE industry."
-    + (MK.live ? " Today's session is included as it stands." : "")
-    + (MK.gaps && MK.gaps.length ? " The price feed has no data for " + MK.gaps.map(fmt).join(" and ") + ", so changes run from the session before it." : "");
-  const H = MK.horizons, hix = k => H.indexOf(k), q = SX.q.trim().toLowerCase();
-  const lead = SX.h === "default" ? "1W" : SX.h;
-  const ranked = MK.clusters.filter(c => c.med[lead] != null).sort((a, b) => b.med[lead] - a.med[lead]);
-  for (const [title, list] of [["Strongest sectors, " + lead, ranked.slice(0, 5)], ["Weakest sectors, " + lead, ranked.slice(-5).reverse()]]) {
-    const ol = el("ol", "rank"); ol.appendChild(el("h3", null, title));
-    for (const c of list) { const li = el("li"); li.appendChild(el("span", null, c.n)); li.appendChild(el("b", c.med[lead] >= 0 ? "up" : "dn", signed(c.med[lead]) + "%")); ol.appendChild(li); }
-    lists.appendChild(ol);
+function niceMax(max) { const p = Math.pow(10, Math.floor(Math.log10(max))), m = max / p; return (m <= 1 ? 1 : m <= 2 ? 2 : m <= 5 ? 5 : 10) * p; }
+function flowBar(x, max) {
+  const b = el("span", "fb"), w = Math.min(50, Math.abs(x) / (max || 1) * 50), i = el("i", x >= 0 ? "p" : "n");
+  i.style.left = (x >= 0 ? 50 : 50 - w) + "%"; i.style.width = w + "%"; b.appendChild(i); b.title = crs(x) + " crore"; return b;
+}
+const lastDay = () => FLX && FLX.days.length ? FLX.days[FLX.days.length - 1] : null;
+
+function renderPulse() {
+  const host = $("#sx-pulse"); host.textContent = "";
+  const add = (k, v, d, cls, small) => {
+    const t = el("div", "pt " + (cls || "")); t.appendChild(el("div", "k", k));
+    t.appendChild(el("div", "v" + (cls ? " " + cls : "") + (small ? " s" : ""), v)); t.appendChild(el("div", "d", d || " ")); host.appendChild(t);
+  };
+  const L = lastDay();
+  if (L) {
+    const when = shortDate(L.d), both = L.fn + L.dn;
+    add("FII / FPI net, " + when, crs(L.fn, 0) + " Cr", "Bought ₹" + crp(L.fb, 0) + " Cr, sold ₹" + crp(L.fs, 0) + " Cr", dirOf(L.fn));
+    add("DII net, " + when, crs(L.dn, 0) + " Cr", "Bought ₹" + crp(L.db, 0) + " Cr, sold ₹" + crp(L.ds, 0) + " Cr", dirOf(L.dn));
+    add("FII + DII net, " + when, crs(both, 0) + " Cr", "Cash market, all exchanges", dirOf(both));
+  } else {
+    add("FII / FPI net", "–", "Shown once the first exchange report is saved");
+    add("DII net", "–", "Shown once the first exchange report is saved");
+    add("FII + DII net", "–", " ");
   }
+  if (!MK) { add("Stocks up and down", "–", "Stock data is not available yet"); return; }
+  const up = MK.stocks.filter(s => s[3][0] > 0).length, dn = MK.stocks.filter(s => s[3][0] < 0).length;
+  add("Stocks up and down", up + " / " + dn, "of " + MK.priced + " Nifty 500 stocks, " + (MK.live ? "today so far" : "last session"));
+  const ranked = MK.clusters.filter(c => c.med[SX.h] != null).sort((a, b) => b.med[SX.h] - a.med[SX.h]);
+  if (ranked.length) {
+    const top = ranked[0], bot = ranked[ranked.length - 1];
+    add("Leading sector, " + SX.h, top.n, signed(top.med[SX.h]) + "% median return", "up", true);
+    add("Lagging sector, " + SX.h, bot.n, signed(bot.med[SX.h]) + "% median return", "dn", true);
+  }
+}
+
+function renderTiles() {
+  const host = $("#sx-tiles"); host.textContent = "";
+  if (!MK) { emptyBox(host, "Stock-level sector data is not available yet. It is built from the latest stock prices and fills in with the next check."); $("#tl-sub").textContent = ""; return; }
+  const h = SX.h, list = MK.clusters.filter(c => c.med[h] != null).sort((a, b) => b.med[h] - a.med[h]);
+  const scale = p90(MK.clusters.map(c => c.med[h]));
+  $("#tl-sub").textContent = "Median " + h + " return of the stocks in each sector, strongest first. " + MK.priced + " of the Nifty 500, grouped by NSE industry.";
+  for (const c of list) {
+    const x = c.med[h], t = heat(x, scale), b = el("button", "tile"); b.type = "button";
+    b.style.background = t.bg; b.style.color = t.fg;
+    b.appendChild(el("span", "n", c.n)); b.appendChild(el("span", "r", signed(x) + "%"));
+    b.appendChild(el("span", "m", stk(c.k) + (c.adv != null ? ", " + Math.round(c.adv * 100) + "% up today" : "")));
+    b.title = c.n + ", " + h + " median: " + signed(x) + "%. Select to see its stocks.";
+    b.addEventListener("click", () => {
+      const i = MK.clusters.indexOf(c); SX.open.add(i); SX.focus = i; SX.q = ""; $("#sc-q").value = ""; renderScore();
+      const row = $("#sc-body").querySelector('tr.sec[data-i="' + i + '"]'); if (row) row.scrollIntoView({ behavior: "smooth", block: "center" });
+    });
+    host.appendChild(b);
+  }
+}
+
+function flowChart(days) {
+  const W = 620, H = 196, L = 46, R = 8, T = 12, B = 26, n = days.length, half = (H - T - B) / 2;
+  const nice = niceMax(Math.max(1, ...days.flatMap(d => [Math.abs(d.fn), Math.abs(d.dn)])));
+  const y = v => T + half - v / nice * half;
+  const s = svg("svg", { viewBox: "0 0 " + W + " " + H, role: "img", "aria-label": "Daily net buying and selling by FII and DII, last " + n + " sessions" });
+  for (const v of [nice, nice / 2, 0, -nice / 2, -nice]) {
+    s.appendChild(svg("line", { x1: String(L), x2: String(W - R), y1: String(y(v)), y2: String(y(v)), stroke: v === 0 ? "#b9c3d2" : "#eef1f6", "stroke-width": "1" }));
+    const tx = svg("text", { x: String(L - 6), y: String(y(v) + 4), "text-anchor": "end", "font-size": "11", fill: "#8895aa" }); tx.textContent = (v > 0 ? "+" : v < 0 ? "−" : "") + crp(Math.abs(v), 0); s.appendChild(tx);
+  }
+  const gw = (W - L - R) / n, bw = Math.min(16, gw * 0.36), every = Math.ceil(n / 7);
+  days.forEach((d, i) => {
+    const cx = L + i * gw + gw / 2;
+    for (const [v, x, col] of [[d.fn, cx - bw - 1, C_FII], [d.dn, cx + 1, C_DII]]) {
+      const h = Math.max(1, Math.abs(v) / nice * half);
+      s.appendChild(svg("rect", { x: x.toFixed(1), y: (v >= 0 ? y(0) - h : y(0)).toFixed(1), width: bw.toFixed(1), height: h.toFixed(1), fill: col, rx: "2" }));
+    }
+    const hit = svg("rect", { x: (L + i * gw).toFixed(1), y: String(T), width: gw.toFixed(1), height: String(H - T - B), fill: "transparent" });
+    hover(hit, fmt(d.d), [{ k: "FII / FPI net", v: crs(d.fn, 0) + " Cr", cls: "" }, { k: "DII net", v: crs(d.dn, 0) + " Cr", cls: "" }, { k: "Combined", v: crs(d.fn + d.dn, 0) + " Cr", cls: "" }]);
+    s.appendChild(hit);
+    if (i % every === 0 || i === n - 1) { const tx = svg("text", { x: cx.toFixed(1), y: String(H - 8), "text-anchor": "middle", "font-size": "11", fill: "#8895aa" }); tx.textContent = shortDate(d.d); s.appendChild(tx); }
+  });
+  return s;
+}
+function legendLine() {
+  const l = el("div", "legend"); l.style.padding = "0 0 4px";
+  for (const [c, t] of [[C_FII, "FII / FPI net"], [C_DII, "DII net"]]) { const sp = el("span"); const sw = el("i", "sw"); sw.style.background = c; sp.appendChild(sw); sp.appendChild(document.createTextNode(t)); l.appendChild(sp); }
+  return l;
+}
+function renderInst() {
+  const brk = $("#in-break"), chart = $("#in-chart"), sum = $("#in-sum"), tbl = $("#in-table"), note = $("#in-note");
+  brk.textContent = ""; chart.textContent = ""; sum.textContent = ""; tbl.textContent = ""; note.textContent = "";
+  const L = lastDay();
+  if (!L) { brk.appendChild(el("div", "empty", "FII and DII figures appear after the radar saves the first exchange report. The report covers one day at a time, so a history builds up from there.")); return; }
+  $("#in-sub").textContent = "Cash market, all exchanges, " + fmt(L.d) + ". Amounts in ₹ crore.";
+  const max = Math.max(L.fb, L.fs, L.db, L.ds, 1);
+  for (const [name, b, s, n, col] of [["FII / FPI", L.fb, L.fs, L.fn, C_FII], ["DII", L.db, L.ds, L.dn, C_DII]]) {
+    const box = el("div"), h = el("div", "bs-h"); h.appendChild(el("b", null, name)); h.appendChild(el("span", dirOf(n), "Net " + crs(n, 1) + " Cr")); box.appendChild(h);
+    for (const [lab, v, op] of [["Bought", b, 1], ["Sold", s, .45]]) {
+      const r = el("div", "bs-r"); r.appendChild(el("span", null, lab));
+      const t = el("div", "bs-t"), i = el("i"); i.style.width = (v / max * 100).toFixed(1) + "%"; i.style.background = col; i.style.opacity = String(op); t.appendChild(i); r.appendChild(t);
+      r.appendChild(el("em", null, "₹" + crp(v, 1) + " Cr")); box.appendChild(r);
+    }
+    brk.appendChild(box);
+  }
+  const days = FLX.days.slice(-20);
+  if (days.length >= 2) {
+    chart.appendChild(legendLine()); chart.appendChild(flowChart(days));
+    const k5 = FLX.days.slice(-5), f5 = k5.reduce((a, d) => a + d.fn, 0), d5 = k5.reduce((a, d) => a + d.dn, 0);
+    for (const [t, v] of [["FII / FPI, last " + k5.length + " sessions", f5], ["DII, last " + k5.length + " sessions", d5]]) { const sp = el("span", null, t + ": "); sp.appendChild(el("b", dirOf(v), crs(v, 0) + " Cr")); sum.appendChild(sp); }
+  } else {
+    note.textContent = "The exchange report shows one day at a time, so the radar saves each day as it is published. Daily history and totals appear here from " + fmt(L.d) + " onward.";
+  }
+  if (FLX.days.length >= 2) {
+    const t = el("table", "tbl-view"), th = el("thead"), hr = el("tr");
+    for (const h of ["Date", "FII / FPI net", "DII net", "Combined"]) hr.appendChild(el("th", null, h)); th.appendChild(hr); t.appendChild(th);
+    const tb = el("tbody");
+    for (const d of FLX.days.slice(-7).reverse()) {
+      const r = el("tr"); r.appendChild(el("td", null, shortDate(d.d)));
+      for (const v of [d.fn, d.dn, d.fn + d.dn]) r.appendChild(el("td", dirOf(v), crs(v, 0)));
+      tb.appendChild(r);
+    }
+    t.appendChild(tb); tbl.appendChild(t); tbl.style.padding = "0 16px 14px";
+    note.textContent = "Provisional figures from the exchanges. Net is buy minus sell; a plus means net buying.";
+    note.style.paddingTop = "0";
+  }
+}
+
+function renderMoney() {
+  const body = $("#mf-body"); body.textContent = "";
+  for (const b of $("#mf-w").children) b.setAttribute("aria-pressed", String(b.dataset.v === SX.w));
+  if (!FL) { emptyBox(body, "Money flow is not available yet. It needs the F&O list and daily volumes, and fills in with the next check."); $("#mf-sub").textContent = ""; $("#mf-note").textContent = ""; return; }
+  const w = SX.w, nk = "n" + w, tk = "t" + w, sk = "s" + w, T = FL.total, last = FL.live ? "today so far" : "latest session";
+  const label = w === "1" ? last : w + " sessions";
+  $("#mf-sub").textContent = "Estimated net buying pressure in " + FL.count + " F&O stocks, " + label + ". Net " + crs(T[nk], 0) + " Cr of ₹" + crp(T[tk], 0) + " Cr traded; " + T.adv + " stocks up, " + T.dec + " down.";
+  const rows = FL.sectors.slice().sort((a, b) => b[nk] - a[nk]), max = Math.max(1, ...rows.map(s => Math.abs(s[nk])));
+  const hd = el("div", "mf-h"); for (const t of ["Sector", "Net flow, " + (w === "1" ? "1 day" : w + " days"), "₹ Cr", "Strength", "Last 20 sessions"]) hd.appendChild(el("span", null, t)); body.appendChild(hd);
+  for (const s of rows) {
+    const r = el("div", "mf-r"), nm = el("span", "nm", s.n); nm.appendChild(el("small", null, stk(s.k))); r.appendChild(nm);
+    const bar = el("span"); bar.appendChild(flowBar(s[nk], max)); r.appendChild(bar);
+    r.appendChild(el("span", "num " + dirOf(s[nk]), crs(s[nk])));
+    r.appendChild(el("span", "num " + dirOf(s[sk]), s[sk] == null ? "–" : signed(s[sk], 1) + "%"));
+    const sp = el("span"); const g = sparkBars(s.sp, 100, 26, s.n + " daily net flow, last 20 sessions"); g.setAttribute("class", "spk"); sp.appendChild(g); r.appendChild(sp);
+    body.appendChild(r);
+  }
+  $("#mf-note").textContent = "How it is worked out: each F&O stock's turnover (closing price times NSE volume, in crore) counts as inflow on a day the stock closes up and outflow on a day it closes down. Net flow adds these up for the window and strength is net flow as a share of turnover. It is an estimate from price and volume, not an exchange figure and not FII or DII data.";
+}
+
+function renderScore() {
+  const body = $("#sc-body"); body.textContent = "";
+  for (const b of $("#sc-ord").children) b.setAttribute("aria-pressed", String(b.dataset.v === SX.ord));
+  if (!MK) { emptyBox(body, "Stock-level sector data is not available yet."); $("#sc-sub").textContent = ""; return; }
+  const H = MK.horizons, hix = k => H.indexOf(k), q = SX.q.trim().toLowerCase(), w = SX.w, nk = "n" + w, fi = FLOW_IDX[w];
+  $("#sc-sub").textContent = "Median return by period for every sector, with its estimated net money flow over " + (w === "1" ? "1 day" : w + " days") + ". Select a sector to open its stocks."
+    + (MK.gaps && MK.gaps.length ? " The price feed has no data for " + MK.gaps.map(fmt).join(" and ") + ", so changes run from the session before it." : "");
   const secScale = {}, stkScale = {};
   for (const h of H) { secScale[h] = p90(MK.clusters.map(c => c.med[h])); stkScale[h] = p90(MK.stocks.map(s => s[3][hix(h)])); }
   let rows = MK.clusters.map((c, i) => ({ c, i, stocks: MK.stocks.filter(s => s[2] === i) }));
   if (q) rows = rows.filter(r => r.c.n.toLowerCase().includes(q) || r.stocks.some(s => stockMatches(s, q)));
-  rows.sort(SX.h === "default" ? (a, b) => a.c.n.localeCompare(b.c.n) : (a, b) => (b.c.med[SX.h] == null ? -1e9 : b.c.med[SX.h]) - (a.c.med[SX.h] == null ? -1e9 : a.c.med[SX.h]));
-  body.textContent = "";
+  const val = r => r.c.med[SX.h] == null ? -1e9 : r.c.med[SX.h];
+  rows.sort(SX.ord === "name" ? (a, b) => a.c.n.localeCompare(b.c.n) : (a, b) => val(b) - val(a));
   if (!rows.length) { body.appendChild(el("div", "empty", "No sector or stock matches that search.")); return; }
-  const t = el("table", "sx"), head = el("tr"); head.appendChild(el("th", "l", "Sector"));
+  const t = el("table", "sc"), head = el("tr"); head.appendChild(el("th", "l", "Sector"));
   for (const h of H) head.appendChild(el("th", null, h));
-  t.appendChild(head);
+  head.appendChild(el("th", null, "Net flow, " + (w === "1" ? "1D" : w + "D") + " (₹ Cr)")); t.appendChild(head);
+  const flowTd = x => { const td = el("td", "fx " + dirOf(x), x == null ? "–" : crs(x)); if (x == null) td.style.color = "var(--faint)"; return td; };
   for (const r of rows) {
     const open = SX.open.has(r.i) || (q && !r.c.n.toLowerCase().includes(q));
     const tr = el("tr", "sec"); tr.tabIndex = 0; tr.dataset.i = r.i; tr.setAttribute("role", "button"); tr.setAttribute("aria-expanded", String(!!open));
-    const nm = el("td", "nm"); nm.appendChild(el("span", "car", open ? "▾" : "▸")); nm.appendChild(el("b", null, r.c.n)); nm.appendChild(el("span", "muted", "  " + r.c.k + " stocks"));
-    tr.appendChild(nm);
+    const nm = el("td", "nm"); nm.appendChild(el("span", "car", open ? "▾" : "▸")); nm.appendChild(el("b", null, r.c.n)); nm.appendChild(el("span", "muted", "  " + stk(r.c.k))); tr.appendChild(nm);
     for (const h of H) { const td = el("td", "v"); tint(td, r.c.med[h], secScale[h]); td.title = r.c.n + ", " + h + " median: " + signed(r.c.med[h]) + "%"; tr.appendChild(td); }
-    const toggle = () => { SX.open.has(r.i) ? SX.open.delete(r.i) : SX.open.add(r.i); SX.focus = r.i; renderSectors(); };
+    const fs = FLMAP.get(r.c.n); tr.appendChild(flowTd(fs ? fs[nk] : null));
+    const toggle = () => { SX.open.has(r.i) ? SX.open.delete(r.i) : SX.open.add(r.i); SX.focus = r.i; renderScore(); };
     tr.addEventListener("click", toggle); tr.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggle(); } });
     t.appendChild(tr);
     if (!open) continue;
     let list = r.stocks.slice();
     if (q && !r.c.n.toLowerCase().includes(q)) list = list.filter(s => stockMatches(s, q));
-    const key = SX.h === "default" ? 0 : hix(SX.h);
+    const key = hix(SX.h) < 0 ? 0 : hix(SX.h);
     list.sort((a, b) => (b[3][key] == null ? -1e9 : b[3][key]) - (a[3][key] == null ? -1e9 : a[3][key]));
     const cap = SX.full.has(r.i) ? list.length : 25;
     for (const s of list.slice(0, cap)) {
       const sr = el("tr", "stk"), sn = el("td", "nm"); sn.appendChild(el("b", null, s[0])); sn.appendChild(el("span", "muted", "  " + s[1])); sn.title = s[0] + ", " + s[1]; sr.appendChild(sn);
       H.forEach((h, k) => { const td = el("td", "v"); tint(td, s[3][k], stkScale[h]); sr.appendChild(td); });
+      const f = FLSTK.get(s[0]); sr.appendChild(flowTd(f ? f[fi] : null));
       t.appendChild(sr);
     }
     if (list.length > cap) {
-      const mr = el("tr", "stk"), td = el("td", "more-c"); td.colSpan = H.length + 1;
-      const b = el("button", "btn", "Show all " + list.length + " stocks"); b.type = "button"; b.addEventListener("click", () => { SX.full.add(r.i); renderSectors(); });
+      const mr = el("tr", "stk"), td = el("td", "more-c"); td.colSpan = H.length + 2;
+      const b = el("button", "btn", "Show all " + list.length + " stocks"); b.type = "button"; b.addEventListener("click", () => { SX.full.add(r.i); renderScore(); });
       td.appendChild(b); mr.appendChild(td); t.appendChild(mr);
     }
   }
   body.appendChild(t);
-  if (SX.focus != null) { const f = body.querySelector('tr.sec[data-i="' + SX.focus + '"]'); if (f) f.focus(); SX.focus = null; }
+  if (SX.focus != null) { const f = body.querySelector('tr.sec[data-i="' + SX.focus + '"]'); if (f) f.focus({ preventScroll: true }); SX.focus = null; }
+}
+
+function renderSectors() {
+  hideTip();
+  const pill = $("#sx-pill");
+  if (MK) { pill.hidden = false; livePill(pill, MK, "Closing prices of", "Prices run about 15 minutes behind the exchange. This page is rebuilt every few minutes while the market is open."); }
+  else pill.hidden = true;
+  for (const b of $("#sx-h").children) b.setAttribute("aria-pressed", String(b.dataset.v === SX.h));
+  renderPulse(); renderTiles(); renderInst(); renderMoney(); renderScore(); renderHeatmap();
 }
 function buildSectorControls() {
-  const seg = $("#sx-sort");
-  for (const [v, t] of [["default", "Name"], ["1D", "1D"], ["1W", "1W"], ["1M", "1M"], ["3M", "3M"], ["6M", "6M"], ["1Y", "1Y"], ["YTD", "YTD"], ["2Y", "2Y"]]) {
-    const b = el("button", null, t); b.type = "button"; b.dataset.v = v; b.setAttribute("aria-pressed", String(v === SX.h)); seg.appendChild(b);
+  const seg = $("#sx-h");
+  for (const h of (MK ? MK.horizons : ["1D", "1W", "1M", "3M", "6M", "1Y", "YTD", "2Y"])) {
+    const b = el("button", null, h); b.type = "button"; b.dataset.v = h; seg.appendChild(b);
   }
-  seg.addEventListener("click", e => { const b = e.target.closest("button"); if (!b) return; SX.h = b.dataset.v; for (const x of seg.children) x.setAttribute("aria-pressed", String(x === b)); renderSectors(); });
-  let timer; $("#sx-q").addEventListener("input", e => { clearTimeout(timer); timer = setTimeout(() => { SX.q = e.target.value; renderSectors(); }, 120); });
+  seg.addEventListener("click", e => { const b = e.target.closest("button"); if (!b) return; SX.h = b.dataset.v; renderSectors(); });
+  $("#mf-w").addEventListener("click", e => { const b = e.target.closest("button"); if (!b) return; SX.w = b.dataset.v; renderMoney(); renderScore(); });
+  $("#sc-ord").addEventListener("click", e => { const b = e.target.closest("button"); if (!b) return; SX.ord = b.dataset.v; renderScore(); });
+  let timer; $("#sc-q").addEventListener("input", e => { clearTimeout(timer); timer = setTimeout(() => { SX.q = e.target.value; renderScore(); }, 120); });
 }
 
 /* ---------- IPO Desk ---------- */
@@ -1131,15 +1408,6 @@ function buildDeskControls() {
 /* ---------- shared drawing helpers ---------- */
 const SVGNS = "http://www.w3.org/2000/svg";
 function svg(tag, attrs) { const e = document.createElementNS(SVGNS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); return e; }
-function sparkLine(values, w, h, label) {
-  const s = svg("svg", { viewBox: "0 0 " + w + " " + h, width: w, height: h, role: "img", "aria-label": label });
-  const lo = Math.min(...values), hi = Math.max(...values), span = hi - lo || 1, step = (w - 4) / (values.length - 1 || 1);
-  const pts = values.map((v, k) => (2 + k * step).toFixed(1) + "," + (h - 3 - (v - lo) / span * (h - 6)).toFixed(1));
-  s.appendChild(svg("polyline", { points: pts.join(" "), fill: "none", stroke: "#203058", "stroke-width": "1.6", "stroke-linejoin": "round", "stroke-linecap": "round" }));
-  const [x, y] = pts[pts.length - 1].split(",");
-  s.appendChild(svg("circle", { cx: x, cy: y, r: "2.4", fill: "#B8A880", stroke: "#203058", "stroke-width": "1" }));
-  return s;
-}
 function sparkBars(values, w, h, label) {
   const s = svg("svg", { viewBox: "0 0 " + w + " " + h, width: w, height: h, role: "img", "aria-label": label });
   const max = Math.max(1e-9, ...values.map(Math.abs)), step = w / values.length, mid = h / 2;
@@ -1150,182 +1418,78 @@ function sparkBars(values, w, h, label) {
   s.appendChild(svg("line", { x1: "0", x2: String(w), y1: String(mid), y2: String(mid), stroke: "#E3E8F0", "stroke-width": "1" }));
   return s;
 }
-function gauge(host, k, v, d, cls) {
-  const g = el("div", "gauge"); g.appendChild(el("div", "k", k)); g.appendChild(el("div", "v" + (cls ? " " + cls : ""), v)); g.appendChild(el("div", "d", d || " ")); host.appendChild(g);
-}
 
-/* ---------- sector flow page ---------- */
-const FL = MK && MK.flow;
-const FS = { w: "5", o: "net", q: "", open: new Set(), full: new Set(), focus: null };
-const crs = (x, d) => x == null ? "–" : (x > 0 ? "+" : x < 0 ? "−" : "") + Math.abs(x).toLocaleString("en-IN", { minimumFractionDigits: d == null ? 1 : d, maximumFractionDigits: d == null ? 1 : d });
-const crp = x => x == null ? "–" : x.toLocaleString("en-IN", { maximumFractionDigits: 1 });
-const flowCell = (td, x) => { td.textContent = crs(x); td.className = "num " + (x > 0 ? "up" : x < 0 ? "dn" : ""); };
-function flowBar(x, max) {
-  const b = el("span", "fb"), w = Math.min(50, Math.abs(x) / (max || 1) * 50), i = el("i", x >= 0 ? "p" : "n");
-  i.style.left = (x >= 0 ? 50 : 50 - w) + "%"; i.style.width = w + "%"; b.appendChild(i); b.title = crs(x) + " crore"; return b;
+/* ---------- opening screen ---------- */
+const REDUCED = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const GATE = $("#gate"), LOGO = $("#logo3d");
+function buildLogo() {
+  const DEPTH = 18, lerp = (a, b, t) => a.map((v, i) => Math.round(v + (b[i] - v) * t));
+  const glow = el("span", "glow"); glow.setAttribute("aria-hidden", "true"); LOGO.appendChild(glow);
+  for (let i = DEPTH; i >= 1; i--) {
+    const ly = el("span", "ly"); ly.setAttribute("aria-hidden", "true"); ly.style.setProperty("--i", i);
+    ly.style.background = "rgb(" + lerp([196, 172, 104], [52, 40, 16], i / DEPTH).join(",") + ")"; LOGO.appendChild(ly);
+  }
+  const face = el("span", "ly face"); face.setAttribute("aria-hidden", "true"); face.style.setProperty("--i", 0); LOGO.appendChild(face);
 }
-function renderFlow() {
-  const body = $("#fl-body"), lists = $("#fl-lists"), kp = $("#fl-kpis"); body.textContent = ""; lists.textContent = ""; kp.textContent = "";
-  if (!FL) {
-    emptyBox(body, "Sector flow is not available yet. It needs the F&O list and daily volumes, and fills in with the next check.");
-    $("#fl-sub").textContent = ""; $("#fl-pill").hidden = true; $("#fl-note").textContent = ""; return;
-  }
-  $("#fl-pill").hidden = false;
-  livePill($("#fl-pill"), { asof: FL.asof, live: FL.live, updated: MK.updated }, "Closing prices of", "Prices run about 15 minutes behind the exchange. This page is rebuilt every few minutes while the market is open.");
-  const last = FL.live ? "today so far" : "latest session";
-  $("#fl-sub").textContent = "Estimated net buying pressure in " + FL.count + " F&O stocks, by sector. Amounts are in ₹ crore.";
-  const w = FS.w, nk = "n" + w, tk = "t" + w, sk = "s" + w, T = FL.total, q = FS.q.trim().toLowerCase();
-  gauge(kp, "Net flow, " + last, crs(T.n1) + " Cr", "of ₹" + crp(T.t1) + " Cr traded", T.n1 > 0 ? "up" : T.n1 < 0 ? "dn" : "");
-  gauge(kp, "Net flow, 5 sessions", crs(T.n5) + " Cr", "of ₹" + crp(T.t5) + " Cr traded", T.n5 > 0 ? "up" : T.n5 < 0 ? "dn" : "");
-  gauge(kp, "Net flow, 20 sessions", crs(T.n20) + " Cr", "of ₹" + crp(T.t20) + " Cr traded", T.n20 > 0 ? "up" : T.n20 < 0 ? "dn" : "");
-  gauge(kp, "Up and down, " + last, T.adv + " up, " + T.dec + " down", "among " + T.k + " F&O stocks");
-  kp.style.setProperty("--n", "4");
-  const ranked = FL.sectors.slice().sort((a, b) => b[nk] - a[nk]), label = w === "1" ? last : w + " sessions";
-  for (const [title, list, cls] of [["Strongest inflow, " + label, ranked.slice(0, 5), "up"], ["Heaviest outflow, " + label, ranked.slice(-5).reverse(), "dn"]]) {
-    const ol = el("ol", "rank"); ol.appendChild(el("h3", null, title));
-    for (const s of list) { const li = el("li"); li.appendChild(el("span", null, s.n)); li.appendChild(el("b", s[nk] >= 0 ? "up" : "dn", crs(s[nk]) + " Cr")); ol.appendChild(li); }
-    lists.appendChild(ol);
-  }
-  const max = Math.max(1, ...FL.sectors.map(s => Math.abs(s[nk])));
-  let rows = FL.sectors.map(s => ({ s, stocks: FL.stocks.filter(r => r[2] === s.n) }));
-  if (q) rows = rows.filter(r => r.s.n.toLowerCase().includes(q) || r.stocks.some(r2 => (r2[0] + " " + r2[1]).toLowerCase().includes(q)));
-  const by = { net: (a, b) => b.s[nk] - a.s[nk], str: (a, b) => (b.s[sk] == null ? -1e9 : b.s[sk]) - (a.s[sk] == null ? -1e9 : a.s[sk]), turn: (a, b) => b.s[tk] - a.s[tk], name: (a, b) => a.s.n.localeCompare(b.s.n) };
-  rows.sort(by[FS.o]);
-  if (!rows.length) { body.appendChild(el("div", "empty", "No sector or stock matches that search.")); return; }
-  const t = el("table", "fl"), head = el("tr");
-  for (const [h, left] of [["Sector", 1], ["Net flow (₹ Cr)"], ["Direction"], ["Strength"], ["Turnover (₹ Cr)"], ["Up / down"], ["Last 20 sessions"]]) head.appendChild(el("th", left ? "l" : "", h));
-  const thead = el("thead"); thead.appendChild(head); t.appendChild(thead);
-  const tb = el("tbody"), idx = { 1: 5, 5: 6, 20: 7 }[w];
-  for (const r of rows) {
-    const s = r.s, open = FS.open.has(s.n) || (q && !s.n.toLowerCase().includes(q));
-    const tr = el("tr", "sec"); tr.tabIndex = 0; tr.dataset.n = s.n; tr.setAttribute("role", "button"); tr.setAttribute("aria-expanded", String(!!open));
-    const nm = el("td", "nm"); nm.appendChild(el("span", "car", open ? "▾" : "▸")); nm.appendChild(el("b", null, s.n)); nm.appendChild(el("span", "muted", "  " + s.k + " stocks")); tr.appendChild(nm);
-    const n = el("td"); flowCell(n, s[nk]); tr.appendChild(n);
-    const bar = el("td"); bar.appendChild(flowBar(s[nk], max)); tr.appendChild(bar);
-    tr.appendChild(el("td", "num " + (s[sk] > 0 ? "up" : s[sk] < 0 ? "dn" : ""), s[sk] == null ? "–" : signed(s[sk], 1) + "%"));
-    tr.appendChild(el("td", "num", crp(s[tk])));
-    tr.appendChild(el("td", "num", s.adv + " / " + s.dec));
-    const sp = el("td"); const g = sparkBars(s.sp, 100, 26, s.n + " daily net flow, last 20 sessions"); g.setAttribute("class", "spk"); sp.appendChild(g); tr.appendChild(sp);
-    const toggle = () => { FS.open.has(s.n) ? FS.open.delete(s.n) : FS.open.add(s.n); FS.focus = s.n; renderFlow(); };
-    tr.addEventListener("click", toggle); tr.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggle(); } });
-    tb.appendChild(tr);
-    if (!open) continue;
-    let list = r.stocks.slice();
-    if (q && !s.n.toLowerCase().includes(q)) list = list.filter(r2 => (r2[0] + " " + r2[1]).toLowerCase().includes(q));
-    list.sort((a, b) => b[idx] - a[idx]);
-    const cap = FS.full.has(s.n) ? list.length : 12;
-    for (const st of list.slice(0, cap)) {
-      const sr = el("tr", "stk"), sn = el("td", "nm"); sn.appendChild(el("b", null, st[0])); sn.appendChild(el("span", "muted", "  " + st[1])); sr.appendChild(sn);
-      const sv = el("td"); flowCell(sv, st[idx]); sr.appendChild(sv);
-      const sb = el("td"); sb.appendChild(flowBar(st[idx], max / 6)); sr.appendChild(sb);
-      sr.appendChild(el("td", "num " + (st[3] > 0 ? "up" : st[3] < 0 ? "dn" : ""), st[3] == null ? "–" : "1D " + signed(st[3]) + "%"));
-      sr.appendChild(el("td", "num", "1D " + crp(st[4])));
-      sr.appendChild(el("td")); sr.appendChild(el("td"));
-      tb.appendChild(sr);
-    }
-    if (list.length > cap) {
-      const mr = el("tr", "stk"), td = el("td"); td.colSpan = 7;
-      const b = el("button", "btn", "Show all " + list.length + " stocks"); b.type = "button"; b.addEventListener("click", () => { FS.full.add(s.n); renderFlow(); });
-      td.appendChild(b); mr.appendChild(td); tb.appendChild(mr);
-    }
-  }
-  t.appendChild(tb); const wrap = el("div", "tw"); wrap.appendChild(t); body.appendChild(wrap);
-  $("#fl-note").textContent = "How it is worked out: each F&O stock's turnover (closing price times NSE volume, in crore) counts as inflow on a day the stock closes up and outflow on a day it closes down. Net flow adds these up for the sector. Strength is net flow as a share of turnover, from minus 100% (all selling pressure) to plus 100% (all buying pressure). It is an estimate from prices and volumes, not a record of what any fund bought or sold. Single-stock sectors are left out of the sector list. Stock rows in an open sector show the selected window's net flow, and the latest session's move and turnover.";
-  if (FS.focus != null) { const f = body.querySelector('tr.sec[data-n="' + CSS.escape(FS.focus) + '"]'); if (f) f.focus(); FS.focus = null; }
+let gateLoop = 0, pointer = { x: 0, y: 0, at: 0 }, pose = { x: 0, y: 0 };
+function gateFrame(t) {
+  const calm = t - pointer.at > 2600;
+  const tx = calm ? Math.sin(t / 2300) * 0.75 : pointer.x, ty = calm ? Math.sin(t / 3300) * 0.3 : pointer.y;
+  pose.x += (tx - pose.x) * 0.07; pose.y += (ty - pose.y) * 0.07;
+  LOGO.style.transform = "rotateY(" + (pose.x * 17).toFixed(2) + "deg) rotateX(" + (-pose.y * 10).toFixed(2) + "deg)";
+  gateLoop = requestAnimationFrame(gateFrame);
 }
-function buildFlowControls() {
-  for (const [id, key] of [["#fl-w", "w"], ["#fl-o", "o"]]) {
-    const seg = $(id); for (const b of seg.children) b.setAttribute("aria-pressed", String(b.dataset.v === FS[key]));
-    seg.addEventListener("click", e => { const b = e.target.closest("button"); if (!b) return; FS[key] = b.dataset.v; for (const x of seg.children) x.setAttribute("aria-pressed", String(x === b)); renderFlow(); });
-  }
-  let timer; $("#fl-q").addEventListener("input", e => { clearTimeout(timer); timer = setTimeout(() => { FS.q = e.target.value; renderFlow(); }, 120); });
+function startGate() {
+  if (REDUCED) { LOGO.style.transform = "rotateY(-9deg) rotateX(3deg)"; return; }
+  cancelAnimationFrame(gateLoop); gateLoop = requestAnimationFrame(gateFrame);
 }
-
-/* ---------- commodities page ---------- */
-const CM = DATA.commodities;
-const CS = { g: "all", o: "default", q: "" };
-const fmtPrice = p => p >= 1000 ? p.toLocaleString("en-US", { maximumFractionDigits: 2 }) : p >= 100 ? p.toFixed(2) : p >= 10 ? p.toFixed(2) : p.toFixed(3);
-function chip(v, abs, cls) {
-  if (v == null) return el("span", "chip muted", "–");
-  const s = el("span", "chip " + (v > 0 ? "up" : v < 0 ? "dn" : "") + (cls ? " " + cls : ""));
-  s.textContent = (v > 0 ? "▲ " : v < 0 ? "▼ " : "") + signed(v, 2) + (abs ? "" : "%"); return s;
+function stopGate() { cancelAnimationFrame(gateLoop); gateLoop = 0; }
+function openGate() {
+  GATE.classList.add("opened"); LOGO.setAttribute("aria-expanded", "true");
+  $("#gate-tag").textContent = "Choose a section";
+  const first = $("#portals a"); if (first) setTimeout(() => first.focus({ preventScroll: true }), 350);
 }
-function commodityCard(i, group) {
-  const c = el("article", "cm"), top = el("div");
-  top.appendChild(el("h4", null, i.n)); top.appendChild(el("div", "u", i.u + (group ? " · " + group : ""))); c.appendChild(top);
-  const pr = el("div", "pr"); pr.appendChild(el("span", "pv", fmtPrice(i.p))); pr.appendChild(chip(i.ch["1D"], false)); pr.title = "Change over the last session"; c.appendChild(pr);
-  c.appendChild(sparkLine(i.sp, 232, 40, i.n + " closing prices, last " + i.sp.length + " sessions"));
-  const r = el("div"); const rng = el("div", "rng"), mk = el("i"); mk.style.left = "calc(" + i.pos + "% - 1px)"; rng.appendChild(mk); r.appendChild(rng);
-  const lab = el("div", "rngl"); lab.appendChild(el("span", null, fmtPrice(i.lo))); lab.appendChild(el("span", null, "52-week range")); lab.appendChild(el("span", null, fmtPrice(i.hi))); r.appendChild(lab); c.appendChild(r);
-  const g = el("div", "chg");
-  for (const k of ["1W", "1M", "3M", "1Y", "YTD"]) { const d = el("div"); d.appendChild(el("small", null, k)); const v = i.ch[k]; d.appendChild(el("b", v > 0 ? "up" : v < 0 ? "dn" : "", v == null ? "–" : signed(v, 1) + "%")); g.appendChild(d); }
-  c.appendChild(g); return c;
-}
-function renderCommodities() {
-  const body = $("#cm-body"), gauges = $("#cm-gauges"); body.textContent = ""; gauges.textContent = "";
-  if (!CM) { emptyBox(body, "Commodity prices are not available yet. They load with the next check."); $("#cm-sub").textContent = ""; $("#cm-pill").hidden = true; $("#cm-note").textContent = ""; return; }
-  $("#cm-pill").hidden = false; livePill($("#cm-pill"), CM, "Prices as of", "Futures prices run about 10 minutes behind the exchange. They are fetched every 20 minutes while the markets trade, Monday to Friday, day and night.");
-  const total = CM.groups.reduce((n, g) => n + g.items.length, 0);
-  $("#cm-sub").textContent = total + " futures contracts in " + CM.groups.length + " groups, with the currency and rate gauges that move them.";
-  for (const x of CM.context) {
-    const v = x.y === "^TNX" ? x.p.toFixed(2) + "%" : x.p.toFixed(2);
-    const d = el("span"); d.appendChild(chip(x.ch["1D"], x.ab)); d.appendChild(document.createTextNode(x.ab ? " pts today" : " today"));
-    const g = el("div", "gauge"); g.appendChild(el("div", "k", x.n)); g.appendChild(el("div", "v", v)); const dd = el("div", "d"); dd.appendChild(d); g.appendChild(dd); gauges.appendChild(g);
-  }
-  if (CM.parity) {
-    if (CM.parity.gold10g) gauge(gauges, "Gold, India parity", "₹" + CM.parity.gold10g.toLocaleString("en-IN"), "per 10 g, before duty and GST");
-    if (CM.parity.silverkg) gauge(gauges, "Silver, India parity", "₹" + CM.parity.silverkg.toLocaleString("en-IN"), "per kg, before duty and GST");
-    if (CM.parity.ratio) gauge(gauges, "Gold to silver ratio", CM.parity.ratio.toFixed(1), "ounces of silver per ounce of gold");
-  }
-  gauges.style.setProperty("--n", String(Math.max(1, gauges.children.length)));
-  const q = CS.q.trim().toLowerCase();
-  const match = i => !q || (i.n + " " + i.y).toLowerCase().includes(q);
-  if (CS.o === "default") {
-    let shown = 0;
-    for (const g of CM.groups) {
-      if (CS.g !== "all" && CS.g !== g.n) continue;
-      const list = g.items.filter(match); if (!list.length) continue;
-      shown += list.length;
-      const box = el("section", "cm-group"); box.appendChild(el("h3", "sub-h", g.n));
-      const grid = el("div", "cmg"); for (const i of list) grid.appendChild(commodityCard(i)); box.appendChild(grid); body.appendChild(box);
-    }
-    if (!shown) body.appendChild(el("div", "empty", "No commodity matches that search."));
-  } else {
-    const all = [];
-    for (const g of CM.groups) if (CS.g === "all" || CS.g === g.n) for (const i of g.items) if (match(i)) all.push([i, g.n]);
-    all.sort((a, b) => (b[0].ch[CS.o] == null ? -1e9 : b[0].ch[CS.o]) - (a[0].ch[CS.o] == null ? -1e9 : a[0].ch[CS.o]));
-    if (!all.length) body.appendChild(el("div", "empty", "No commodity matches that search."));
-    else { const grid = el("div", "cmg"); for (const [i, g] of all) grid.appendChild(commodityCard(i, g)); body.appendChild(grid); }
-  }
-  $("#cm-note").textContent = "Prices are front-month futures from Yahoo Finance, in each contract's own unit, and can be delayed. Changes are close to close. India parity converts the world price at the day's USD/INR and leaves out import duty, GST and dealer margins, so it will not match the MCX or a jeweller's rate. Yields change in percentage points.";
-}
-function buildCommodityControls() {
-  if (CM) {
-    const seg = $("#cm-g");
-    for (const [v, t] of [["all", "All"]].concat(CM.groups.map(g => [g.n, g.n]))) { const b = el("button", null, t); b.type = "button"; b.dataset.v = v; b.setAttribute("aria-pressed", String(v === CS.g)); seg.appendChild(b); }
-  }
-  for (const [id, key] of [["#cm-g", "g"], ["#cm-o", "o"]]) {
-    const seg = $(id); for (const b of seg.children) b.setAttribute("aria-pressed", String(b.dataset.v === CS[key]));
-    seg.addEventListener("click", e => { const b = e.target.closest("button"); if (!b) return; CS[key] = b.dataset.v; for (const x of seg.children) x.setAttribute("aria-pressed", String(x === b)); renderCommodities(); });
-  }
-  let timer; $("#cm-q").addEventListener("input", e => { clearTimeout(timer); timer = setTimeout(() => { CS.q = e.target.value; renderCommodities(); }, 120); });
+function resetGate() { GATE.classList.remove("opened"); LOGO.setAttribute("aria-expanded", "false"); $("#gate-tag").textContent = "Click the mark to enter"; }
+addEventListener("pointermove", e => { pointer = { x: (e.clientX / innerWidth - 0.5) * 2, y: (e.clientY / innerHeight - 0.5) * 2, at: performance.now() }; });
+LOGO.addEventListener("click", () => { GATE.classList.contains("opened") ? resetGate() : openGate(); });
+document.addEventListener("visibilitychange", () => { if (document.hidden) stopGate(); else if (page === "home") startGate(); });
+function portalStats() {
+  const ip = IPOS || [], open = ip.filter(i => i.st === "open").length, soon = ip.filter(i => i.st === "upcoming").length;
+  $("#ps-desk").textContent = IPOS ? open + " open now, " + soon + " upcoming" : "";
+  const from = isoOf(addDays(today, -29)), n = C.filter(c => c.d && c.d >= from).length;
+  $("#ps-filings").textContent = plural(n, "filing") + " in the last 30 days";
+  const L = lastDay(), top = MK ? MK.clusters.filter(c => c.med["1W"] != null).sort((a, b) => b.med["1W"] - a.med["1W"])[0] : null;
+  const bits = [];
+  if (L) bits.push("FII net " + crs(L.fn, 0) + " Cr");
+  if (top) bits.push(top.n + " leads the week");
+  $("#ps-sectors").textContent = bits.join(", ");
 }
 
 /* ---------- page switching ---------- */
-function setPage(v) {
-  page = PAGES.includes(v) ? v : "desk";
-  for (const b of document.querySelectorAll(".tabs button")) { const on = b.dataset.v === page; b.setAttribute("aria-selected", String(on)); b.tabIndex = on ? 0 : -1; }
+const TITLES = { home: "IPO Filing Radar", desk: "IPO Desk", filings: "Filings", sectors: "Sector Outlook" };
+function setPage(v, push) {
+  page = PAGES.includes(v) ? v : "home";
+  document.body.classList.toggle("home", page === "home");
+  for (const p of PAGES) document.body.classList.toggle("p-" + p, p === page);
+  document.title = (page === "home" ? "" : TITLES[page] + " | ") + "IPO Filing Radar | afc | ashmavir Financial Consultants";
+  for (const b of document.querySelectorAll(".seg-nav button")) { const on = b.dataset.v === page; b.setAttribute("aria-selected", String(on)); b.tabIndex = on ? 0 : -1; }
   for (const p of PAGES) $("#v-" + p).hidden = p !== page;
   hideTip();
-  if (page === "desk") renderDesk(); else if (page === "sectors") renderSectors(); else if (page === "flow") renderFlow(); else if (page === "commodities") renderCommodities(); else render();
+  if (page === "home") { resetGate(); startGate(); } else stopGate();
+  if (push) history.pushState(null, "", location.pathname + location.search + (page === "home" ? "" : "#v=" + page));
+  if (page === "desk") renderDesk(); else if (page === "sectors") renderSectors(); else if (page === "filings") render();
   writeHash();
 }
+const pageFromHash = () => { const v = new URLSearchParams(location.hash.slice(1)).get("v"), m = LEGACY[v] || v; return PAGES.includes(m) ? m : "home"; };
 
-buildFilters(); buildSectorControls(); buildDeskControls(); buildFlowControls(); buildCommodityControls();
+buildLogo(); buildFilters(); buildSectorControls(); buildDeskControls();
 for (const b of document.querySelectorAll("th button")) b.addEventListener("click", () => { const k = b.dataset.k; sort = { k, dir: sort.k === k ? -sort.dir : (k === "n" ? 1 : -1) }; renderTable(C.filter(match).filter(c => inWin(c, window_()))); });
 $("#t-view").addEventListener("click", e => { const b = e.target.closest("button"); if (!b) return; view = b.dataset.v; for (const x of $("#t-view").children) x.setAttribute("aria-pressed", String(x === b)); render(); });
-for (const b of document.querySelectorAll(".tabs button")) b.addEventListener("click", () => { setPage(b.dataset.v); window.scrollTo(0, 0); });
-renderChrome(); renderHeatmap(); setPage(page);
+for (const b of document.querySelectorAll(".seg-nav button")) b.addEventListener("click", () => { setPage(b.dataset.v, true); window.scrollTo(0, 0); });
+for (const a of document.querySelectorAll("#portals a, #gate-skip")) a.addEventListener("click", e => { e.preventDefault(); setPage(a.dataset.v, true); window.scrollTo(0, 0); });
+$("#home-link").addEventListener("click", e => { e.preventDefault(); setPage("home", true); window.scrollTo(0, 0); });
+addEventListener("popstate", () => { setPage(pageFromHash(), false); window.scrollTo(0, 0); });
+renderChrome(); portalStats(); setPage(page, false);
 
 /* ---------- keep an open page current ---------- */
 /* Every couple of minutes, ask this site (headers only) whether a newer page has been published. If so, reload; the

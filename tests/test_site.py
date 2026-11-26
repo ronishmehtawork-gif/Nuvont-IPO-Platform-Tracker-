@@ -80,18 +80,28 @@ def test_ipos_get_sector_and_lead_managers_from_the_same_companys_filings_when_t
     assert "sc" not in items[0]  # the input is not changed
 
 
-def test_five_pages_in_the_right_order_and_no_market_breadth(tmp_path):
+def test_three_sections_and_a_landing_gate_with_no_commodities_or_breadth(tmp_path):
     out = tmp_path / "index.html"
-    commodities = {"asof": "2026-11-25", "updated": "x", "groups": [], "context": [], "parity": None, "horizons": ["1D"]}
-    build_site({"seen": {}}, str(out), datetime(2026, 11, 26, 12, 0, tzinfo=IST), commodities=commodities)
+    flows = {"asof": "2026-11-25", "updated": "x", "days": [{"d": "2026-11-25", "fb": 1.0, "fs": 1.0, "fn": 0.0, "db": 1.0, "ds": 1.0, "dn": 0.0}]}
+    build_site({"seen": {}}, str(out), datetime(2026, 11, 26, 12, 0, tzinfo=IST), flows=flows)
     html = out.read_text()
     tabs = re.findall(r'<button type="button" role="tab" id="tab-(\w+)"', html)
-    assert tabs == ["desk", "filings", "sectors", "flow", "commodities"]
-    assert re.search(r'id="tab-desk"[^>]*aria-selected="true"', html)  # the IPO Desk opens first
-    for pid in ("v-desk", "v-filings", "v-sectors", "v-flow", "v-commodities"):
+    assert tabs == ["desk", "filings", "sectors"]
+    for pid in ("v-desk", "v-filings", "v-sectors", "gate", "logo3d"):
         assert f'id="{pid}"' in html
-    assert "breadth" not in html.lower() and "v-ipos" not in html
-    assert '"commodities":{"asof":"2026-11-25"' in html
+    for gone in ("v-flow", "v-commodities", "v-ipos"):
+        assert f'id="{gone}"' not in html
+    assert "breadth" not in html.lower()
+    # Old bookmarks to the removed pages still land on a real page; nothing else mentions commodities.
+    assert "commodities" not in re.sub(r"const LEGACY = [^\n]*", "", html)
+    assert '"flows":{"asof":"2026-11-25"' in html
+    assert '"commodities"' not in html
+
+
+def test_the_page_builds_without_any_fii_dii_history(tmp_path):
+    out = tmp_path / "index.html"
+    build_site({"seen": {}}, str(out), datetime(2026, 11, 26, 12, 0, tzinfo=IST))
+    assert '"flows":null' in out.read_text()
 
 
 def test_page_script_has_no_inline_handlers_or_network_calls(tmp_path):
