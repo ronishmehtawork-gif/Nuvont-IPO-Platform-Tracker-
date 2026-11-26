@@ -102,7 +102,7 @@ template has too many variables for its length, add a sentence of fixed text to 
 - A bad or expired token, a locked account or a payment problem stops WhatsApp and sends **one** note to the Telegram
   admin chat, and one more when it recovers. A template that is not approved yet blocks only that template. Alerts
   from the last 24 hours are sent once it is fixed.
-- Throttling by Meta pauses the run and continues next hour. Messages per run are capped at 200.
+- Throttling by Meta pauses the run and continues on a later run. Messages per run are capped at 200.
 - Progress is saved after every alert, so a killed run does not repeat messages.
 - Phone numbers and the token are never printed or stored. The public state file keeps only a short keyed hash per
   recipient. If the token is replaced, alerts from the last 24 hours that were only partly delivered may be sent again.
