@@ -2,8 +2,7 @@
   "flows": {
     "asof": "2026-11-25",
     "days": 1,
-    "note": "kept previous data: ReadTimeout",
-    "ok": false
+    "ok": true
   },
   "ipo_pipeline": {
     "date_conflicts": 0,
