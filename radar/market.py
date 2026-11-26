@@ -258,6 +258,22 @@ def session_calendar(series: dict[str, dict]) -> list[date]:
     return sorted(d for d, c in counts.items() if c >= need)
 
 
+def coverage_report(series: dict[str, dict]) -> dict:
+    """How many stocks have a bar on each of the last few dates, and what the stocks that lack one look like.
+    Goes to the public diagnostics so a stuck page can be explained without guessing."""
+    counts: dict[date, int] = {}
+    for closes in series.values():
+        for d in closes:
+            counts[d] = counts.get(d, 0) + 1
+    recent = sorted(counts)[-5:]
+    out: dict = {"bars_per_date": {d.isoformat(): counts[d] for d in recent}, "stocks_with_prices": len(series)}
+    if len(recent) >= 2:
+        missing = [(sym, sorted(c)[-3:]) for sym, c in series.items() if recent[-2] not in c][:4]
+        if missing:
+            out["missing_prev_examples"] = [f"{sym}: last bars {', '.join(d.isoformat() for d in days)}" for sym, days in missing]
+    return out
+
+
 def build_market(universe: list[dict], series: dict[str, dict], now: datetime,
                  volumes: dict[str, dict] | None = None, fno: list[str] | None = None) -> dict:
     """All the arithmetic. Pure function: same inputs, same output."""
@@ -473,6 +489,7 @@ def refresh(make_fetcher, market_path: str, universe_path: str, now: datetime,
             info["fno_note"] = str(e)
         series, volumes, failures, examples = fetch_series(symbols, make_fetcher, started + BUDGET_SECONDS)
         info["stock_last_sessions"] = [d.isoformat() for d in session_calendar(series)[-3:]]
+        info.update(coverage_report(series))
         info["fetch_failures"] = failures
         if examples:
             info["failure_examples"] = examples
