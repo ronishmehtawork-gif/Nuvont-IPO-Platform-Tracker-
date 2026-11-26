@@ -2,12 +2,11 @@
   "flows": {
     "asof": "2026-11-26",
     "days": 2,
-    "ok": true,
-    "skipped": true
+    "ok": true
   },
   "ipo_pipeline": {
     "date_conflicts": 0,
-    "detail_fetched": 0,
+    "detail_fetched": 2,
     "detail_skipped": 0,
     "note": "saved",
     "ok": true,
@@ -17,9 +16,9 @@
     "with_bankers": 10,
     "with_gmp": 10,
     "with_listing": 9,
-    "with_lot": 8,
+    "with_lot": 6,
     "with_sector": 10,
-    "with_size": 9
+    "with_size": 8
   },
   "market": {
     "asof": "2026-11-26",
