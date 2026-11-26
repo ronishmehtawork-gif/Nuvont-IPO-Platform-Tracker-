@@ -36,11 +36,11 @@ MAX_TRIES = 6  # runs that may retry one alert (about six hours)
 MAX_PER_RUN = 200  # messages in one radar run
 NOT_STATED = "Not stated yet"
 SITE_LABEL = "Nuvont website"
-JOIN_TEXT = "Hi, please add me to the IPO Filing Radar WhatsApp alerts."
+JOIN_TEXT = "Hi, please add me to the Nuvont Capital WhatsApp alerts."
 
 HEADER = {"drhp": "New DRHP Filed!", "update": "Filing update"}
-FOOTER = "afc | ashmavir IPO Filing Radar"
-_CLOSING = ("This is an automated alert from afc | ashmavir based on public filings. "
+FOOTER = "Nuvont Capital"
+_CLOSING = ("This is an automated alert from Nuvont Capital based on public filings. "
             "It is not investment advice.")
 BODY = {
     "drhp": ("Company: {{1}}\nDate: {{2}}\nSector: {{3}}\nMerchant banker: {{4}}\nDRHP: {{5}}\n"

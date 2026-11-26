@@ -1,6 +1,6 @@
-# IPO Filing Radar
+# Nuvont Capital: IPO Filing Radar
 
-Built by the research desk at afc | ashmavir Financial Consultants Pvt. Ltd.
+Built by the Nuvont Capital research desk.
 
 Watches official and news sources for new SME / mainboard IPO filings (DRHP and related updates) and posts
 alerts to a Telegram channel and, optionally, to WhatsApp. Runs free on GitHub Actions, day and night (every 8 minutes while the Indian market is open), so nothing depends on a laptop.
@@ -52,8 +52,8 @@ Merchant banker: Example Capital Private Limited
 DRHP: https://.../example-drhp.pdf
 Nuvont website: https://.../#v=filings&r=all&q=Example%20Industries%20Limited
 
-This is an automated alert from afc | ashmavir based on public filings. It is not investment advice.
-afc | ashmavir IPO Filing Radar
+This is an automated alert from Nuvont Capital based on public filings. It is not investment advice.
+Nuvont Capital
 ```
 
 Other events (DRHP refiled, approval, addendum, issue news) use a second template with the same lines and an
@@ -199,18 +199,39 @@ python -m radar.run   # without a token it prints messages instead of sending th
 
 ## Dashboard
 
-`docs/index.html` is rebuilt on every run and served by GitHub Pages. It opens on the last 90 days, with filters for
-period, segment, exchange, status and sector, charts of filings over time, listing venues, sectors,
-lead managers and cities, and a searchable table with document links and a CSV download. The page is one static file:
-it makes no network calls when opened. With a WhatsApp join link set, the header shows **Get WhatsApp alerts**, and
-each filing has a **Share on WhatsApp** link (see above).
+`docs/index.html` is rebuilt on every run and served by GitHub Pages. The page is one static file: it makes no network
+calls when opened. With a WhatsApp join link set, the header shows **Get WhatsApp alerts**, and each filing has a
+**Share on WhatsApp** link (see above).
 
 The site opens on a landing screen: the Nuvont Capital mark in light 3D that tilts with the pointer (or sways on its
-own on a touch screen). Click the mark and it steps back to show three sections, **IPO Desk**, **Filings** and
-**Sector Outlook**, each with a live one-line status. A tab bar at the top moves between them, and the browser's back
-button returns to the landing screen. The 3D is plain CSS, with no outside library, and it stands still for visitors
-who ask their device for reduced motion. Addresses look like `#v=desk`, `#v=filings` and `#v=sectors`; old links to
-`#v=ipos`, `#v=flow` and `#v=commodities` still open a real page.
+own on a touch screen). Click the mark and it steps back to show three sections in this order, **Filings**,
+**IPO Desk** and **Sector Outlook**, each with a live one-line status. A tab bar at the top moves between them, and the
+browser's back button returns to the landing screen. The 3D is plain CSS, with no outside library, and it stands still
+for visitors who ask their device for reduced motion. Addresses look like `#v=filings`, `#v=desk` and `#v=sectors`;
+old links to `#v=ipos`, `#v=flow` and `#v=commodities` still open a real page.
+
+**Filings** puts the filings table first (three quarters of the width) and the summary on the left (one quarter):
+counts, filings over time, listing venues, sectors, lead managers and cities. Every table column has its own filter
+(company, sector, status, listing, latest filing, lead manager, documents), plus a CSV download. The **Lead managers**
+switch opens the directory: every lead manager the radar has found, SME and mainboard, ranked by filings, with the
+split, approvals noted, recent activity, IPOs seen on the IPO Desk and their size in crores. Opening one shows its
+IPO record, sectors, exchanges, co-managers and every filing.
+
+**IPO Desk** shows the issue cards or table with summary tiles on the left and, in the right quarter, a month
+calendar of key dates (opens, closes, allotment and refunds, listing) with the day's agenda and what is coming up.
+
+### Lead manager record
+
+Lead manager names are cleaned to one form per firm (`radar/bankers.py`), so renamed firms and spelling variants count
+once. Filing counts come from the radar's own filings. The IPO record builds in `data/bankers_record.json`, which the
+radar updates from the IPO Desk on every run (issue size in crores, issue price, lead managers).
+
+Listing-day results and returns since listing need a listing price, and no free public source reads from GitHub's
+servers: NSE and BSE refuse them, and Chittorgarh's full lead-manager report is a paid product. So those columns show
+only what is supplied in an optional file, `data/bankers_seed.csv`, and are never estimated. Columns:
+`company, segment (sme or mainboard), lead_managers (separated by ;), issue_size_cr (already in crores), issue_price,
+listing_date (YYYY-MM-DD), listing_price, current_price`. Rows missing a company, segment, manager or issue price are
+skipped and counted.
 
 ### IPO Desk and Sector Outlook
 

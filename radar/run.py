@@ -6,14 +6,14 @@ import sys
 from datetime import date, datetime, timedelta
 from zoneinfo import ZoneInfo
 
-from . import cadence, diag, flows, ipowatch
+from . import bankers, cadence, diag, flows, ipowatch
 from . import market as market_data
 from . import state as st
 from .documents import exchange_doc_label, find_pdf_links
 from .http import Fetcher
 from .models import ALERT_EVENTS, SEGMENT_RANK, SourceResult, label
 from .sectors import fetch_sector_heatmap
-from .site import build_site
+from .site import build_companies, build_site, enrich_ipos
 from .sources import all_sources
 from .whatsapp import WhatsApp, join_link
 from .telegram import (
@@ -313,9 +313,17 @@ def main() -> None:
     print("flows:", flow_info)
     market_path = os.getenv("RADAR_MARKET", "data/market.json")
     refresh_market(state, path, market_path, now, tg)
+    ledger_path, seed_path = os.getenv("RADAR_BANKERS", "data/bankers_record.json"), os.getenv("RADAR_BANKERS_SEED", "data/bankers_seed.csv")
+    try:
+        if ipos and ipos.get("items"):
+            bankers.update_ledger(enrich_ipos(ipos["items"], build_companies(state)), ledger_path, now.date().isoformat())
+        bankers_data = bankers.record(ledger_path, seed_path)
+    except Exception as e:  # noqa: BLE001 - the directory's record is optional; the page builds without it
+        print(f"bankers record failed: {type(e).__name__}", file=sys.stderr)
+        bankers_data = None
     build_site(state, os.getenv("RADAR_SITE", "docs/index.html"), now,
                market=market_data.load(market_path), ipos=ipos,
-               flows=flows.load(flows_path), whatsapp_join=join_link())
+               flows=flows.load(flows_path), whatsapp_join=join_link(), bankers=bankers_data)
 
 
 if __name__ == "__main__":

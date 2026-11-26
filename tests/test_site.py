@@ -86,7 +86,8 @@ def test_three_sections_and_a_landing_gate_with_no_commodities_or_breadth(tmp_pa
     build_site({"seen": {}}, str(out), datetime(2026, 11, 26, 12, 0, tzinfo=IST), flows=flows)
     html = out.read_text()
     tabs = re.findall(r'<button type="button" role="tab" id="tab-(\w+)"', html)
-    assert tabs == ["desk", "filings", "sectors"]
+    assert tabs == ["filings", "desk", "sectors"]
+    assert re.findall(r'<a class="portal" href="#v=(\w+)"', html) == ["filings", "desk", "sectors"]
     for pid in ("v-desk", "v-filings", "v-sectors", "gate", "logo3d"):
         assert f'id="{pid}"' in html
     for gone in ("v-flow", "v-commodities", "v-ipos"):
@@ -127,8 +128,29 @@ def test_site_address_follows_the_repository_name_unless_one_is_set():
     assert site_address({}) == ""
 
 
-def test_the_tab_is_named_nuvont_capital_afc(tmp_path):
+def test_the_tab_is_named_nuvont_capital(tmp_path):
     out = tmp_path / "index.html"
     build_site({"seen": {}}, str(out), datetime(2026, 11, 26, 12, 0, tzinfo=IST))
-    assert "<title>Nuvont Capital | AFC</title>" in out.read_text()
+    assert "<title>Nuvont Capital</title>" in out.read_text()
     assert "Click the mark to enter" not in out.read_text()
+
+
+def test_brand_is_nuvont_capital_only_and_the_landing_has_no_radar_label(tmp_path):
+    out = tmp_path / "index.html"
+    build_site({"seen": {}}, str(out), datetime(2026, 11, 26, 12, 0, tzinfo=IST))
+    html = out.read_text()
+    low = html.lower()
+    assert "ashmavir" not in low and "afc |" not in low and "afc-ashmavir" not in low
+    assert "IPO Filing Radar" not in html and "gate-name" not in html
+    assert 'id="gate-skip">Skip to Filings' in html
+
+
+def test_filings_page_has_a_filter_on_every_column_and_a_lead_managers_directory(tmp_path):
+    out = tmp_path / "index.html"
+    build_site({"seen": {}}, str(out), datetime(2026, 11, 26, 12, 0, tzinfo=IST))
+    html = out.read_text()
+    for fid in ("c-q", "c-s", "c-k", "c-l", "c-r", "c-b", "c-d", "f-mode", "b-split", "b-main", "b-kpis", "d-cal", "d-kpis"):
+        assert f'id="{fid}"' in html, fid
+    # the summary rail comes before the table in the Filings page, and the calendar sits after the issues on the Desk
+    assert html.index('aria-label="Filings summary"') < html.index('id="tbl"')
+    assert html.index('id="d-body"') < html.index('id="d-cal"')

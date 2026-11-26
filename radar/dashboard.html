@@ -7,7 +7,7 @@
 <meta name="referrer" content="no-referrer">
 <meta name="robots" content="noindex,nofollow">
 <meta name="color-scheme" content="light">
-<title>Nuvont Capital | AFC</title>
+<title>Nuvont Capital</title>
 <link rel="icon" type="image/png" href="assets/favicon.png">
 <style>
 @font-face{font-family:"IBM Plex Sans";font-weight:400;font-style:normal;font-display:swap;src:url(assets/fonts/ibm-plex-sans-latin-400-normal.woff2) format("woff2")}
@@ -44,8 +44,6 @@ button,select,input{font:inherit;color:inherit}
 .home-link:hover{opacity:.75}
 .appbar img{display:block;width:auto}
 .logo-nuvont{height:22px}
-.logo-afc{height:40px}
-.brand-sep{width:1px;height:30px;background:var(--line);flex:none}
 .seg-nav{display:flex;gap:2px;padding:3px;border:1px solid var(--line);border-radius:999px;background:var(--bg);margin-left:auto}
 .seg-nav button{display:flex;align-items:center;gap:8px;border:0;background:none;padding:7px 15px;border-radius:999px;font-weight:550;font-size:13.5px;color:var(--muted);cursor:pointer;white-space:nowrap;transition:background-color .15s,color .15s}
 .seg-nav button i{width:8px;height:8px;border-radius:50%;background:var(--dot);flex:none}
@@ -278,7 +276,6 @@ body:not(.home) #gate{display:none}
   background-size:80px 80px;transform:perspective(700px) rotateX(66deg);transform-origin:50% 100%;
   -webkit-mask-image:linear-gradient(to top,#000 0,#000 30%,transparent 100%);mask-image:linear-gradient(to top,#000 0,#000 30%,transparent 100%)}
 .gate-top{position:relative;z-index:2;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:22px 28px}
-.gate-name{font:400 22px/1 var(--serif);color:#e8dfc3;letter-spacing:.01em}
 .gate-wa{background:transparent;border-color:rgba(231,214,160,.5);color:#e8dfc3}
 .gate-wa:hover{background:rgba(255,255,255,.08)}
 .gate-main{position:relative;z-index:2;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 16px 8px}
@@ -311,8 +308,6 @@ body:not(.home) #gate{display:none}
 .portal .go svg{width:16px;height:16px;transition:transform .2s}
 .portal:hover .go svg{transform:translateX(4px)}
 .gate-foot{position:relative;z-index:2;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;padding:14px 28px 22px;font-size:12.5px;color:rgba(236,229,207,.7)}
-.gate-foot .plate{display:inline-flex;align-items:center;background:#fff;border-radius:8px;padding:5px 12px;margin-left:10px;vertical-align:middle}
-.gate-foot .plate img{display:block;height:30px;width:auto}
 .gate-foot a{color:#e8dfc3}
 .gate-note{display:flex;align-items:center;gap:0}
 @media (max-width:820px){
@@ -400,7 +395,7 @@ body:not(.home) #gate{display:none}
 }
 @media (max-width:720px){
   .bar-in{flex-wrap:wrap;gap:10px 12px;padding-top:10px;padding-bottom:12px}
-  .logo-afc{height:32px}.logo-nuvont{height:18px}
+  .logo-nuvont{height:18px}
   .seg-nav{order:3;width:100%;margin-left:0;overflow-x:auto;scrollbar-width:none}
   .seg-nav button{flex:1;justify-content:center;padding:7px 10px;font-size:13px}
   .bar-right{order:2;margin-left:auto}
@@ -432,13 +427,120 @@ body:not(.home) #gate{display:none}
 }
 @media print{.filters{position:static}.tools,.more,.f-end .btn{display:none}}
 @media (prefers-reduced-motion:no-preference){.slot,.row,.btn,.seg button{transition:background-color .12s}}
+/* ---- Nuvont layout: a quarter-width rail beside a three-quarter main column ---- */
+.gate-top{justify-content:flex-end}
+.split{display:grid;grid-template-columns:minmax(250px,1fr) minmax(0,3fr);gap:16px;align-items:start;padding:20px 0 8px}
+.split.rev{grid-template-columns:minmax(0,3fr) minmax(250px,1fr)}
+.split[hidden]{display:none}
+.rail,.main-col{display:grid;gap:16px;align-content:start;min-width:0}
+.rail.sticky{position:sticky;top:calc(var(--bar-h) + 12px)}
+.hero-tools .seg button{padding:7px 14px}
+.rail-kpis,.desk-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}
+.desk-kpis{grid-template-columns:repeat(4,minmax(0,1fr))}
+.rail-kpis .kpi{border-left:0;border-top:1px solid var(--line)}
+.rail-kpis .kpi:nth-child(-n+2){border-top:0}
+.rail-kpis .kpi:nth-child(even){border-left:1px solid var(--line)}
+.rail-kpis .kpi .v{font-size:30px}
+.rail-kpis .kpi .v.t{font-size:17px;line-height:1.35}
+.desk-kpis .kpi .v{font-size:30px}
+.desk-kpis .kpi .v.t{font-size:18px;line-height:1.4}
+.dfilters .f-in{padding:12px 16px}
+.dfilters .f-end{margin-left:auto}
+.bf{display:grid;gap:12px}
+.bf .search{max-width:none}
+.bf select{width:100%}
+.bf .seg{width:100%}.bf .seg button{flex:1}
+/* column filters in the table header */
+#tbl{min-width:860px}
+.t tr.hd th{padding-bottom:6px;border-bottom:0}
+.t tr.cf th{padding:0 8px 10px;font-weight:400;border-bottom:1px solid var(--line);vertical-align:top}
+.t tr.cf input,.t tr.cf select{width:100%;height:30px;font-size:12.5px;padding-left:8px}
+.t tr.cf select{padding-right:22px;background-position:right 7px center}
+.cf-stack{display:grid;gap:5px}
+.lm{border:0;background:none;padding:0;font:inherit;color:var(--navy-2);font-weight:600;cursor:pointer;text-align:left}
+.lm:hover{text-decoration:underline}
+.t td .lm{display:inline}
+/* league table and record */
+.t.fit{min-width:0}
+.t.fit th,.t.fit td{padding-left:9px;padding-right:9px}
+.lg td.nm .lm{font-size:13.5px}
+.meter{display:inline-block;width:30px;height:6px;border-radius:3px;background:var(--line-2);vertical-align:middle;margin-left:8px;overflow:hidden}
+.meter i{display:block;height:100%;background:var(--s1)}
+.bd-head{padding:14px 16px}
+.bd-head h2{margin:8px 0 0;font:400 28px/1.1 var(--serif);color:var(--navy)}
+.bd-head p{margin:6px 0 0;color:var(--muted);font-size:13px;max-width:680px}
+.bd-two{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.rec-sum{padding:8px 16px 0;font-size:13px;color:var(--muted)}
+.rec-sum b{color:var(--ink);font-weight:650}
+.dt td.dn{color:var(--neg)}.dt td.up{color:var(--pos)}
+/* key dates calendar */
+.calp{padding:14px 14px 12px}
+.cal-h{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px}
+.cal-h h2{font:400 21px/1.1 var(--serif);color:var(--navy);margin:0}
+.cal-nav{display:flex;gap:4px}
+.cal-nav button{min-width:28px;height:28px;border:1px solid var(--line);background:var(--panel);border-radius:7px;cursor:pointer;color:var(--navy-2);font-size:15px;line-height:1;padding:0 7px}
+.cal-nav button:hover{background:var(--line-2)}
+.cal-nav button.t{font-size:12px;font-weight:600}
+.cal-g{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:2px}
+.cal-w{font-size:11px;color:var(--faint);text-align:center;padding:2px 0 5px;font-weight:600}
+.cal-d{aspect-ratio:1/1;border:0;background:none;border-radius:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;cursor:pointer;font-size:12.5px;font-variant-numeric:tabular-nums;color:var(--ink);padding:0}
+.cal-d:hover{background:var(--bg)}
+.cal-d.out{color:var(--faint)}
+.cal-d.tod{box-shadow:inset 0 0 0 1.5px var(--acc)}
+.cal-d.sel{background:var(--navy);color:#fff}
+.cal-d .dots{display:flex;gap:2px;height:5px}
+.cal-d .dots i{width:5px;height:5px;border-radius:50%;display:block}
+.cal-d.sel .dots i{box-shadow:0 0 0 1px rgba(255,255,255,.85)}
+.e-o{background:#3a64b5}.e-c{background:#c8861f}.e-a{background:#8a96ab}.e-l{background:#0f8a5f}
+.cal-key{display:flex;flex-wrap:wrap;gap:4px 12px;margin:10px 0 2px;font-size:11.5px;color:var(--muted)}
+.cal-key span{display:inline-flex;align-items:center;gap:5px}
+.cal-key i{width:7px;height:7px;border-radius:50%;display:inline-block}
+.cal-ag{margin-top:12px;border-top:1px solid var(--line);padding-top:10px}
+.cal-ag h3{margin:0 0 4px;font:400 17px/1.2 var(--serif);color:var(--navy);display:flex;justify-content:space-between;gap:8px;align-items:baseline}
+.cal-ag h3 small{font:500 12px var(--sans);color:var(--muted)}
+.cal-ag ul{list-style:none;margin:0 0 10px;padding:0}
+.cal-ag li{display:grid;grid-template-columns:10px minmax(0,1fr);gap:8px;padding:7px 0;border-top:1px solid var(--line-2);font-size:12.5px}
+.cal-ag li i{width:8px;height:8px;border-radius:50%;margin-top:5px;display:block}
+.cal-ag li b{display:block;font-weight:600;color:var(--ink);overflow-wrap:anywhere}
+.cal-ag li span{color:var(--muted);font-size:12px}
+.cal-ag p.meta{margin:2px 0 10px}
+@media (max-width:1100px){
+  .split,.split.rev{grid-template-columns:minmax(0,1fr)}
+  .split>.rail{order:2}
+  .split.rev>.rail{order:-1}
+  .rail.sticky{position:static}
+  .rail{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .rail>.kpis{grid-column:1/-1}
+  .rail-kpis{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .rail-kpis .kpi,.rail-kpis .kpi:nth-child(even){border-left:1px solid var(--line);border-top:1px solid var(--line)}
+  .rail-kpis .kpi:nth-child(-n+3){border-top:0}
+  .rail-kpis .kpi:nth-child(3n+1){border-left:0}
+  .desk-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .bd-two{grid-template-columns:minmax(0,1fr)}
+}
+@media (max-width:720px){
+  .rail{grid-template-columns:minmax(0,1fr)}
+  .rail-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .rail-kpis .kpi,.rail-kpis .kpi:nth-child(3n+1){border-left:1px solid var(--line);border-top:1px solid var(--line)}
+  .rail-kpis .kpi:nth-child(odd){border-left:0}
+  .rail-kpis .kpi:nth-child(-n+2){border-top:0}
+  .split{padding-top:14px}
+  .hero-tools{width:100%}
+  #tbl{min-width:0}
+  .t thead{display:block}
+  .t tr.hd{display:none}
+  .t tr.cf{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;padding:10px 12px;border-bottom:1px solid var(--line)}
+  .t tr.cf th{display:block;padding:0;border:0}
+  .t tr.cf th::before{content:attr(data-l);display:block;font-size:11px;color:var(--faint);margin-bottom:2px;font-weight:550}
+  .t tr.cf th:first-child{grid-column:1/-1}
+  .dfilters .f-end{width:100%}
+}
 </style>
 </head>
 <body class="home">
 <div class="gate" id="gate">
   <div class="gate-floor" aria-hidden="true"></div>
   <div class="gate-top">
-    <span class="gate-name">IPO Filing Radar</span>
     <a class="wa-join gate-wa" id="wa-join-gate" href="#" target="_blank" rel="noopener noreferrer" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1h-9l-5 4v-4H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg><span>Get WhatsApp alerts</span></a>
   </div>
   <div class="gate-main">
@@ -446,14 +548,14 @@ body:not(.home) #gate{display:none}
       <button type="button" class="logo3d" id="logo3d" aria-label="Nuvont Capital. Press to open the sections" aria-expanded="false" aria-controls="portals"></button>
     </div>
     <nav class="portals" id="portals" aria-label="Sections">
-      <a class="portal" href="#v=desk" data-v="desk" style="--c:#cdb77e"><span class="pn">IPO Desk</span><span class="pd">Open and upcoming issues, key dates, grey market premium and lead managers.</span><span class="ps" id="ps-desk"></span><span class="go">Open IPO Desk <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
       <a class="portal" href="#v=filings" data-v="filings" style="--c:#7ea0e6"><span class="pn">Filings</span><span class="pd">Every DRHP, approval and addendum the radar has found, with documents.</span><span class="ps" id="ps-filings"></span><span class="go">Open Filings <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+      <a class="portal" href="#v=desk" data-v="desk" style="--c:#cdb77e"><span class="pn">IPO Desk</span><span class="pd">Open and upcoming issues, key dates, grey market premium and lead managers.</span><span class="ps" id="ps-desk"></span><span class="go">Open IPO Desk <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
       <a class="portal" href="#v=sectors" data-v="sectors" style="--c:#9a90f2"><span class="pn">Sector Outlook</span><span class="pd">Sector returns, FII and DII activity and money flow in one dashboard.</span><span class="ps" id="ps-sectors"></span><span class="go">Open Sector Outlook <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
     </nav>
   </div>
   <div class="gate-foot">
-    <span>afc | ashmavir Financial Consultants Pvt. Ltd. <span class="plate"><img src="assets/afc-ashmavir-logo.png" alt="afc | ashmavir"></span></span>
-    <a href="#v=desk" data-v="desk" id="gate-skip">Skip to the IPO Desk</a>
+    <span>Nuvont Capital</span>
+    <a href="#v=filings" data-v="filings" id="gate-skip">Skip to Filings</a>
   </div>
 </div>
 
@@ -461,11 +563,9 @@ body:not(.home) #gate{display:none}
 <header class="appbar" id="bar">
   <div class="wrap bar-in">
     <a class="home-link" id="home-link" href="./" aria-label="Nuvont Capital. Back to the opening screen"><img class="logo-nuvont" src="assets/nuvont-capital-logo.png" alt="Nuvont Capital"></a>
-    <span class="brand-sep" aria-hidden="true"></span>
-    <img class="logo-afc" src="assets/afc-ashmavir-logo.png" alt="afc | ashmavir Financial Consultants Pvt. Ltd">
     <nav class="seg-nav" aria-label="Sections" role="tablist">
-      <button type="button" role="tab" id="tab-desk" data-v="desk" style="--dot:#b8a880" aria-controls="v-desk" aria-selected="true"><i></i>IPO Desk</button>
-      <button type="button" role="tab" id="tab-filings" data-v="filings" style="--dot:#3a64b5" aria-controls="v-filings" aria-selected="false"><i></i>Filings</button>
+      <button type="button" role="tab" id="tab-filings" data-v="filings" style="--dot:#3a64b5" aria-controls="v-filings" aria-selected="true"><i></i>Filings</button>
+      <button type="button" role="tab" id="tab-desk" data-v="desk" style="--dot:#b8a880" aria-controls="v-desk" aria-selected="false"><i></i>IPO Desk</button>
       <button type="button" role="tab" id="tab-sectors" data-v="sectors" style="--dot:#5a4fcf" aria-controls="v-sectors" aria-selected="false"><i></i>Sector Outlook</button>
     </nav>
     <div class="bar-right">
@@ -475,71 +575,16 @@ body:not(.home) #gate{display:none}
   </div>
 </header>
 
-<div id="v-desk" role="tabpanel" aria-labelledby="tab-desk">
-<section class="wrap hero" aria-labelledby="h1-desk">
-  <div><span class="bar-acc"></span><h1 id="h1-desk">IPO Desk</h1><p>Open and upcoming issues with price band, key dates, grey market premium and lead managers.</p></div>
-</section>
-<div class="filters nosticky" role="region" aria-label="IPO filters">
-  <div class="wrap f-in">
-    <div class="f"><span class="l" id="l-dg">Segment</span>
-      <div class="seg" id="d-g" role="group" aria-labelledby="l-dg">
-        <button type="button" data-v="all">All</button><button type="button" data-v="M">Mainboard</button><button type="button" data-v="S">SME</button>
-      </div></div>
-    <div class="f"><span class="l" id="l-dk">Status</span>
-      <div class="seg" id="d-k" role="group" aria-labelledby="l-dk">
-        <button type="button" data-v="all">Any</button><button type="button" data-v="open">Open</button><button type="button" data-v="upcoming">Upcoming</button><button type="button" data-v="closed">Closed</button>
-      </div></div>
-    <div class="f"><label for="d-x">Exchange</label><select id="d-x"></select></div>
-    <div class="f"><label for="d-s">Sector</label><select id="d-s"></select></div>
-    <div class="f"><label for="d-b">Lead manager</label><select id="d-b"></select></div>
-    <div class="f"><label for="d-w">Key dates</label><select id="d-w"></select></div>
-    <div class="f"><label for="d-p">Premium (GMP)</label><select id="d-p"></select></div>
-    <div class="f search"><label for="d-q">Search</label><input id="d-q" type="search" placeholder="Company, sector or lead manager" autocomplete="off"></div>
-    <div class="f-end"><button class="btn" id="d-reset" type="button">Reset</button></div>
-  </div>
-</div>
-<main class="wrap">
-  <section class="panel" aria-labelledby="h-dk">
-    <div class="ph"><div><h2 id="h-dk">Ashmavir IPO Desk</h2><p id="d-sub"></p></div>
-      <div class="tools"><span class="pill" id="d-pill"><i></i><span></span></span>
-        <div class="f"><label for="d-o">Sort</label><select id="d-o"></select></div>
-        <div class="seg sm" id="d-v" role="group" aria-label="View"><button type="button" data-v="cards">Cards</button><button type="button" data-v="table">Table</button></div></div></div>
-    <div class="desk-top" id="d-cal"></div>
-    <div class="pb"><div id="d-body"></div>
-      <p class="note">Grey market premium (GMP) is unofficial and comes from ipowatch.in. It is not an exchange price and can move sharply before listing. Issue size is in crores. Minimum investment is one lot at the upper price band. Dates are as published and can change. For information only, not a recommendation to apply.</p></div>
-  </section>
-</main>
-</div>
-
-<div id="v-filings" role="tabpanel" hidden aria-labelledby="tab-filings">
+<div id="v-filings" role="tabpanel" aria-labelledby="tab-filings">
 <section class="wrap hero" aria-labelledby="h1-filings">
   <div><span class="bar-acc"></span><h1 id="h1-filings">Filings</h1><p>Draft prospectuses, approvals and addenda as they appear on SEBI and the exchanges, SME and mainboard.</p></div>
+  <div class="hero-tools"><div class="seg" id="f-mode" role="group" aria-label="Filings view"><button type="button" data-v="filings">All filings</button><button type="button" data-v="bankers">Lead managers</button></div></div>
 </section>
-<div class="filters" role="region" aria-label="Filters">
-  <div class="wrap f-in">
-    <div class="f"><span class="l" id="l-r">Filed in</span>
-      <div class="seg" id="f-r" role="group" aria-labelledby="l-r">
-        <button data-v="7">7D</button><button data-v="30">30D</button><button data-v="90">90D</button><button data-v="365">1Y</button><button data-v="all">All</button>
-      </div></div>
-    <div class="f"><span class="l" id="l-g">Segment</span>
-      <div class="seg" id="f-g" role="group" aria-labelledby="l-g">
-        <button data-v="all">All</button><button data-v="M">Mainboard</button><button data-v="S">SME</button>
-      </div></div>
-    <div class="f"><label for="f-x">Exchange</label><select id="f-x"></select></div>
-    <div class="f"><label for="f-k">Status</label><select id="f-k"></select></div>
-    <div class="f"><label for="f-s">Sector</label><select id="f-s"></select></div>
-    <div class="f search"><label for="f-q">Search</label><input id="f-q" type="search" placeholder="Company, city or manager" autocomplete="off"></div>
-    <div class="f-end">
-      <button class="btn" id="reset" type="button">Reset</button>
-    </div>
-  </div>
-</div>
 
 <main class="wrap">
-  <section class="panel kpis" id="kpis" aria-label="Summary"></section>
-  <div style="height:16px"></div>
-
-  <div class="grid g-2">
+  <div class="split" id="f-split">
+    <aside class="rail" aria-label="Filings summary">
+      <section class="panel kpis rail-kpis" id="kpis" aria-label="Summary"></section>
       <section class="panel" aria-labelledby="h-t">
         <div class="ph"><div><h2 id="h-t">Filings over time</h2><p id="t-sub"></p></div>
           <div class="tools"><div class="legend" id="t-leg"></div>
@@ -550,24 +595,96 @@ body:not(.home) #gate{display:none}
         <div class="ph"><div><h2 id="h-x">Where they are listed</h2><p>Companies by exchange</p></div></div>
         <div class="pb rk" id="x-body"></div>
       </section>
+      <section class="panel" aria-labelledby="h-sec"><div class="ph"><div><h2 id="h-sec">Busiest sectors</h2><p>Top 8 by number of companies</p></div></div><div class="pb rk" id="sec-body"></div></section>
+      <section class="panel" aria-labelledby="h-bk"><div class="ph"><div><h2 id="h-bk">Lead managers</h2><p>Most often named. Select one to open its record.</p></div></div><div class="pb rk" id="bk-body"></div></section>
+      <section class="panel" aria-labelledby="h-ct"><div class="ph"><div><h2 id="h-ct">Cities</h2><p>Registered office, top 8</p></div></div><div class="pb rk" id="ct-body"></div></section>
+    </aside>
+
+    <div class="main-col">
+      <section class="panel" aria-labelledby="h-tb">
+        <div class="ph"><div><h2 id="h-tb">Filings</h2><p id="tb-sub"></p></div>
+          <div class="tools"><button class="btn" id="reset" type="button">Reset filters</button><button class="btn" id="csv" type="button">Download CSV</button></div></div>
+        <div class="tw"><table class="t" id="tbl"><thead>
+          <tr class="hd"><th><button data-k="n" type="button">Company</button></th><th>Status</th><th>Listing</th>
+            <th><button data-k="d" type="button">Latest filing</button></th><th>Lead managers</th><th>Documents</th></tr>
+          <tr class="cf">
+            <th data-l="Company"><div class="cf-stack"><input id="c-q" type="search" placeholder="Name, sector, city or manager" aria-label="Search company, sector, city or lead manager" autocomplete="off"><select id="c-s" aria-label="Filter by sector"></select></div></th>
+            <th data-l="Status"><select id="c-k" aria-label="Filter by status"></select></th>
+            <th data-l="Listing"><select id="c-l" aria-label="Filter by segment or exchange"></select></th>
+            <th data-l="Latest filing"><select id="c-r" aria-label="Filter by latest filing date"></select></th>
+            <th data-l="Lead managers"><input id="c-b" type="search" list="bk-list" placeholder="Lead manager" aria-label="Filter by lead manager" autocomplete="off"><datalist id="bk-list"></datalist></th>
+            <th data-l="Documents"><select id="c-d" aria-label="Filter by documents"></select></th>
+          </tr>
+        </thead><tbody id="tb"></tbody></table></div>
+        <div class="more" id="more"></div>
+      </section>
+    </div>
   </div>
 
-  <div class="grid g-3">
-    <section class="panel" aria-labelledby="h-sec"><div class="ph"><div><h2 id="h-sec">Busiest sectors</h2><p>Top 8 by number of companies</p></div></div><div class="pb rk" id="sec-body"></div></section>
-    <section class="panel" aria-labelledby="h-bk"><div class="ph"><div><h2 id="h-bk">Lead managers</h2><p>Most often named first or second</p></div></div><div class="pb rk" id="bk-body"></div></section>
-    <section class="panel" aria-labelledby="h-ct"><div class="ph"><div><h2 id="h-ct">Cities</h2><p>Registered office, top 8</p></div></div><div class="pb rk" id="ct-body"></div></section>
+  <div class="split" id="b-split" hidden>
+    <aside class="rail" aria-label="Lead manager filters">
+      <section class="panel kpis rail-kpis" id="b-kpis" aria-label="Summary"></section>
+      <section class="panel" aria-labelledby="h-bf">
+        <div class="ph"><div><h2 id="h-bf">Find a lead manager</h2><p>Narrow the league table</p></div></div>
+        <div class="pb bf">
+          <div class="f"><span class="l" id="l-bg">Segment</span><div class="seg" id="b-g" role="group" aria-labelledby="l-bg"><button type="button" data-v="all">All</button><button type="button" data-v="M">Mainboard</button><button type="button" data-v="S">SME</button></div></div>
+          <div class="f"><label for="b-w">Filed in</label><select id="b-w"></select></div>
+          <div class="f"><label for="b-z">Rank by</label><select id="b-z"></select></div>
+          <div class="f search"><label for="b-q">Search</label><input id="b-q" type="search" placeholder="Lead manager name" autocomplete="off"></div>
+          <button class="btn" id="b-reset" type="button">Reset</button>
+        </div>
+      </section>
+      <section class="panel" aria-labelledby="h-bn">
+        <div class="ph"><div><h2 id="h-bn">How to read this</h2></div></div>
+        <div class="pb"><p class="note" style="margin-top:0">Counts come from the draft prospectuses the radar has found on SEBI and the exchanges. A lead manager is counted once per company. Approval noted means SEBI approval was recorded for that company.</p>
+          <p class="note">IPO size comes from the IPO Desk and is in crores. Listing-day results and returns since listing are shown only where a listing price has been supplied, never estimated.</p></div>
+      </section>
+    </aside>
+    <div class="main-col" id="b-main"></div>
   </div>
+</main>
+</div>
 
-  <section class="panel" aria-labelledby="h-tb">
-    <div class="ph"><div><h2 id="h-tb">Filings</h2><p id="tb-sub"></p></div>
-      <div class="tools"><button class="btn" id="csv" type="button">Download CSV</button></div></div>
-    <div class="tw"><table class="t" id="tbl"><thead><tr>
-      <th><button data-k="n" type="button">Company</button></th><th>Status</th><th>Listing</th>
-      <th><button data-k="d" type="button">Latest filing</button></th><th>Lead managers</th><th>Documents</th>
-    </tr></thead><tbody id="tb"></tbody></table></div>
-    <div class="more" id="more"></div>
-  </section>
-
+<div id="v-desk" role="tabpanel" hidden aria-labelledby="tab-desk">
+<section class="wrap hero" aria-labelledby="h1-desk">
+  <div><span class="bar-acc"></span><h1 id="h1-desk">IPO Desk</h1><p>Open and upcoming issues with price band, key dates, grey market premium and lead managers.</p></div>
+</section>
+<main class="wrap">
+  <div class="split rev">
+    <div class="main-col">
+      <section class="panel kpis desk-kpis" id="d-kpis" aria-label="Summary"></section>
+      <section class="panel dfilters" role="region" aria-label="IPO filters">
+        <div class="f-in">
+          <div class="f"><span class="l" id="l-dg">Segment</span>
+            <div class="seg" id="d-g" role="group" aria-labelledby="l-dg">
+              <button type="button" data-v="all">All</button><button type="button" data-v="M">Mainboard</button><button type="button" data-v="S">SME</button>
+            </div></div>
+          <div class="f"><span class="l" id="l-dk">Status</span>
+            <div class="seg" id="d-k" role="group" aria-labelledby="l-dk">
+              <button type="button" data-v="all">Any</button><button type="button" data-v="open">Open</button><button type="button" data-v="upcoming">Upcoming</button><button type="button" data-v="closed">Closed</button>
+            </div></div>
+          <div class="f"><label for="d-x">Exchange</label><select id="d-x"></select></div>
+          <div class="f"><label for="d-s">Sector</label><select id="d-s"></select></div>
+          <div class="f"><label for="d-b">Lead manager</label><select id="d-b"></select></div>
+          <div class="f"><label for="d-w">Key dates</label><select id="d-w"></select></div>
+          <div class="f"><label for="d-p">Premium (GMP)</label><select id="d-p"></select></div>
+          <div class="f search"><label for="d-q">Search</label><input id="d-q" type="search" placeholder="Company, sector or lead manager" autocomplete="off"></div>
+          <div class="f-end"><button class="btn" id="d-reset" type="button">Reset</button></div>
+        </div>
+      </section>
+      <section class="panel" aria-labelledby="h-dk">
+        <div class="ph"><div><h2 id="h-dk">Issues</h2><p id="d-sub"></p></div>
+          <div class="tools"><span class="pill" id="d-pill"><i></i><span></span></span>
+            <div class="f"><label for="d-o">Sort</label><select id="d-o"></select></div>
+            <div class="seg sm" id="d-v" role="group" aria-label="View"><button type="button" data-v="cards">Cards</button><button type="button" data-v="table">Table</button></div></div></div>
+        <div class="pb"><div id="d-body"></div>
+          <p class="note">Grey market premium (GMP) is unofficial and comes from ipowatch.in. It is not an exchange price and can move sharply before listing. Issue size is in crores. Minimum investment is one lot at the upper price band. Dates are as published and can change. For information only, not a recommendation to apply.</p></div>
+      </section>
+    </div>
+    <aside class="rail sticky" aria-label="Key dates calendar">
+      <section class="panel calp" id="d-cal"></section>
+    </aside>
+  </div>
 </main>
 </div>
 
@@ -627,7 +744,7 @@ body:not(.home) #gate{display:none}
   <p class="alerts-note" id="alerts"></p>
   <p>Filings are compiled from public sources and shown as published. Check the official document before relying on any item. This page is for research and is not investment advice.</p>
   <p>Sector returns and money flow are worked out from the NSE Nifty 500 and F&amp;O stock lists with daily prices and volumes from Yahoo Finance. While the market is open they include the day's session as it stands, fetched every few minutes and running about 15 minutes behind the exchange; after the close they show the finished day. Money flow is an estimate from price and volume, not an exchange figure. FII and DII figures come from the combined MSE, NSE and BSE cash-market report, are provisional, and are saved one day at a time. The radar runs day and night, and an open page reloads itself when new data is published. IPO dates, lead managers, sectors and grey market premiums come from ipowatch.in and are unofficial. Data can be delayed or wrong.</p>
-  <p>afc | ashmavir Financial Consultants Pvt. Ltd. and Nuvont Capital. Research desk.</p>
+  <p>Nuvont Capital. Research desk.</p>
 </footer>
 </div>
 <div class="tip" id="tip" role="tooltip"></div>
@@ -658,7 +775,7 @@ const minus = s => s.replace("-", "−");
 for (const c of C) c._h = [c.n, c.sec, c.c, c.b.join(" "), c.x].join(" ").toLowerCase();
 
 /* ---------- state ---------- */
-const DEF = { r: "90", g: "all", x: "all", k: "all", s: "all", q: "" };
+const DEF = { r: "90", g: "all", x: "all", k: "all", s: "all", q: "", b: "", dc: "all", m: "filings", bn: "", bg: "all", bw: "all", bq: "", bz: "t" };
 const S = Object.assign({}, DEF);
 const RANGES = ["7", "30", "90", "365", "all"];
 (function readHash() {
@@ -688,6 +805,12 @@ function match(c) {
   if (S.x !== "all" && (c.x || "Not stated") !== S.x) return false;
   if (S.k !== "all" && !c.st.includes(S.k)) return false;
   if (S.s !== "all" && (c.sec || "Unspecified") !== S.s) return false;
+  const lm = S.b.trim().toLowerCase();
+  if (lm && !c.b.some(n => n.toLowerCase().includes(lm))) return false;
+  const hasDoc = c.docs.some(d => safeUrl(d[1])), hasPage = c.p.length > 0 && safeUrl(c.p[1]);
+  if (S.dc === "doc" && !hasDoc) return false;
+  if (S.dc === "page" && !hasPage) return false;
+  if (S.dc === "none" && (hasDoc || hasPage)) return false;
   const q = S.q.trim().toLowerCase();
   return !q || c._h.includes(q);
 }
@@ -731,23 +854,31 @@ function fillSelect(id, options, current) {
   s.value = options.some(o => o[0] === current) ? current : "all";
 }
 function countBy(list, f) { const m = new Map(); for (const c of list) { const k = f(c); if (k) m.set(k, (m.get(k) || 0) + 1); } return [...m].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0])); }
+const LISTING = [["all", "All listings"], ["g:M", "Mainboard"], ["g:S", "SME"]];
+const PERIODS = [["7", "Last 7 days"], ["30", "Last 30 days"], ["90", "Last 90 days"], ["365", "Last year"], ["all", "Any time"]];
+const DOCF = [["all", "Any documents"], ["doc", "Has a DRHP file"], ["page", "Has a SEBI or exchange page"], ["none", "No link yet"]];
+const listingValue = () => S.x !== "all" ? "x:" + S.x : S.g !== "all" ? "g:" + S.g : "all";
+function setSel(id, v) { const s = $(id); s.value = [...s.options].some(o => o.value === v) ? v : "all"; }
 function buildFilters() {
-  fillSelect("#f-x", [["all", "All exchanges"]].concat(countBy(C, c => c.x || "Not stated").map(([k, n]) => [k, k + " (" + n + ")"])), S.x);
-  fillSelect("#f-k", [["all", "Any status"]].concat(Object.entries(STATUS).map(([k, t]) => [k, t])), S.k);
-  fillSelect("#f-s", [["all", "All sectors"]].concat(countBy(C, c => c.sec || "Unspecified").map(([k, n]) => [k, k + " (" + n + ")"])), S.sec || S.s);
-  $("#f-q").value = S.q;
-  for (const [id, key] of [["#f-r", "r"], ["#f-g", "g"]]) {
-    $(id).addEventListener("click", e => { const b = e.target.closest("button"); if (!b) return; S[key] = b.dataset.v; shown = 25; render(); });
-  }
-  for (const [id, key] of [["#f-x", "x"], ["#f-k", "k"], ["#f-s", "s"]]) {
-    $(id).addEventListener("change", e => { S[key] = e.target.value; shown = 25; render(); });
-  }
-  let timer; $("#f-q").addEventListener("input", e => { clearTimeout(timer); timer = setTimeout(() => { S.q = e.target.value; shown = 25; render(); }, 120); });
-  $("#reset").addEventListener("click", () => { Object.assign(S, DEF); $("#f-q").value = ""; for (const id of ["#f-x", "#f-k", "#f-s"]) $(id).value = "all"; shown = 25; render(); });
+  fillSelect("#c-l", LISTING.concat(countBy(C, c => c.x || "Not stated").map(([k, n]) => ["x:" + k, k + " (" + n + ")"])), listingValue());
+  fillSelect("#c-k", [["all", "Any status"]].concat(Object.entries(STATUS)), S.k);
+  fillSelect("#c-s", [["all", "All sectors"]].concat(countBy(C, c => c.sec || "Unspecified").map(([k, n]) => [k, k + " (" + n + ")"])), S.s);
+  fillSelect("#c-r", PERIODS, S.r); fillSelect("#c-d", DOCF, S.dc);
+  const dl = $("#bk-list"); for (const n of [...new Set(C.flatMap(c => c.b))].sort((a, b) => a.localeCompare(b))) { const o = el("option"); o.value = n; dl.appendChild(o); }
+  $("#c-q").value = S.q; $("#c-b").value = S.b;
+  $("#c-l").addEventListener("change", e => { const v = e.target.value; S.g = "all"; S.x = "all"; if (v.startsWith("g:")) S.g = v.slice(2); else if (v.startsWith("x:")) S.x = v.slice(2); shown = 25; render(); });
+  for (const [id, key] of [["#c-k", "k"], ["#c-s", "s"], ["#c-r", "r"], ["#c-d", "dc"]]) $(id).addEventListener("change", e => { S[key] = e.target.value; shown = 25; render(); });
+  for (const [id, key] of [["#c-q", "q"], ["#c-b", "b"]]) { let timer; $(id).addEventListener("input", e => { clearTimeout(timer); timer = setTimeout(() => { S[key] = e.target.value; shown = 25; render(); }, 120); }); }
+  $("#reset").addEventListener("click", () => { for (const k of ["r", "g", "x", "k", "s", "q", "b", "dc"]) S[k] = DEF[k]; shown = 25; render(); });
+  $("#f-mode").addEventListener("click", e => { const b = e.target.closest("button"); if (!b) return; S.m = b.dataset.v; if (S.m !== "bankers") S.bn = ""; render(); window.scrollTo(0, 0); });
 }
 function syncFilters() {
-  for (const [id, key] of [["#f-r", "r"], ["#f-g", "g"]]) for (const b of $(id).children) b.setAttribute("aria-pressed", String(b.dataset.v === S[key]));
+  setSel("#c-l", listingValue()); setSel("#c-k", S.k); setSel("#c-s", S.s); setSel("#c-r", S.r); setSel("#c-d", S.dc);
+  if (document.activeElement !== $("#c-q")) $("#c-q").value = S.q;
+  if (document.activeElement !== $("#c-b")) $("#c-b").value = S.b;
+  for (const b of $("#f-mode").children) b.setAttribute("aria-pressed", String(b.dataset.v === S.m));
 }
+
 
 /* ---------- KPI strip ---------- */
 function kpiTile(label, value, delta, small) {
@@ -836,8 +967,8 @@ function renderTime(items, w) {
 }
 
 /* ---------- ranking bars ---------- */
-function renderRank(sel, entries, rows) {
-  const box = $(sel); box.textContent = "";
+function renderRank(sel, entries, rows, pick) {
+  const box = typeof sel === "string" ? $(sel) : sel; box.textContent = "";
   if (!entries.length) { box.appendChild(el("div", "empty", "Nothing to show for these filters.")); return; }
   const top = entries.slice(0, rows), max = top[0].t;
   for (const e of top) {
@@ -846,6 +977,7 @@ function renderRank(sel, entries, rows) {
     for (const k of ["M", "S", "U"]) if (e[k]) { const s = el("i", SEG[k].cls); s.style.width = (e[k] / max * 100) + "%"; tr.appendChild(s); }
     row.appendChild(tr); row.appendChild(el("span", "n", String(e.t)));
     hover(row, e.name, [{ k: "Mainboard", v: e.M, cls: SEG.M.cls }, { k: "SME", v: e.S, cls: SEG.S.cls }].concat(e.U ? [{ k: "Unclassified", v: e.U, cls: SEG.U.cls }] : []).concat([{ k: "Total", v: e.t }]));
+    if (pick) { row.style.cursor = "pointer"; row.addEventListener("click", () => pick(e.name)); row.addEventListener("keydown", ev => { if (ev.key === "Enter") pick(e.name); }); }
     box.appendChild(row);
   }
 }
@@ -919,7 +1051,10 @@ function renderTable(items) {
     const st = el("td"); st.dataset.l = "Status"; const bs = el("div", "badges"); for (const s of c.st) bs.appendChild(badge(s)); st.appendChild(bs); tr.appendChild(st);
     const ls = el("td"); ls.dataset.l = "Listing"; const l = el("div", "lst"); l.appendChild(el("i", "sw " + SEG[c.g].cls)); const lt = el("div"); lt.appendChild(el("div", null, SEG[c.g].name)); if (c.x) lt.appendChild(el("div", "muted", c.x)); l.appendChild(lt); ls.appendChild(l); tr.appendChild(ls);
     const dt = el("td"); dt.dataset.l = "Latest filing"; if (c.d) { dt.appendChild(el("div", null, fmt(c.d))); dt.appendChild(el("div", "muted", ago(c.d))); } else dt.textContent = "Not stated"; tr.appendChild(dt);
-    const bk = el("td"); bk.dataset.l = "Lead managers"; bk.textContent = c.b.join(", ") || "Not stated"; if (!c.b.length) bk.className = "muted"; tr.appendChild(bk);
+    const bk = el("td"); bk.dataset.l = "Lead managers";
+    if (!c.b.length) { bk.textContent = "Not stated"; bk.className = "muted"; }
+    else c.b.forEach((n, i) => { if (i) bk.appendChild(document.createTextNode(", ")); const b = el("button", "lm", n); b.type = "button"; b.title = "Open " + n + " in the lead managers directory"; b.addEventListener("click", () => openBanker(n)); bk.appendChild(b); });
+    tr.appendChild(bk);
     const dc = el("td"); dc.dataset.l = "Documents"; const lk = el("div", "lk");
     for (const [t, u] of c.docs) if (safeUrl(u)) { const a = el("a", null, t); a.href = u; a.target = "_blank"; a.rel = "noopener noreferrer"; lk.appendChild(a); }
     if (c.p.length && safeUrl(c.p[1])) { const a = el("a", "pg", c.p[0]); a.href = c.p[1]; a.target = "_blank"; a.rel = "noopener noreferrer"; lk.appendChild(a); }
@@ -957,6 +1092,9 @@ function renderChrome() {
 /* ---------- render ---------- */
 function render() {
   hideTip(); syncFilters(); writeHash();
+  const bank = S.m === "bankers";
+  $("#f-split").hidden = bank; $("#b-split").hidden = !bank;
+  if (bank) { renderBankers(); return; }
   const w = window_(), base = C.filter(match);
   const items = base.filter(c => inWin(c, w));
   let prev = [];
@@ -964,13 +1102,13 @@ function render() {
   renderKpis(items, prev, w); renderTime(items, w);
   const byEx = tally(items, c => [c.x || "Not stated"]); renderRank("#x-body", byEx, 6);
   renderRank("#sec-body", tally(items, c => [c.sec]), 8);
-  renderRank("#bk-body", tally(items, c => c.b), 8);
+  renderRank("#bk-body", tally(items, c => c.b), 8, openBanker);
   renderRank("#ct-body", tally(items, c => [c.c]), 8);
   renderTable(items);
   $("#csv").onclick = () => exportCsv(items.slice().sort((a, b) => (b.d || "").localeCompare(a.d || "")));
 }
 /* ---------- shared helpers for the data pages ---------- */
-const PAGES = ["desk", "filings", "sectors"];
+const PAGES = ["filings", "desk", "sectors"];
 const LEGACY = { ipos: "desk", flow: "sectors", commodities: "sectors" };
 let page = "home";
 { const v = new URLSearchParams(location.hash.slice(1)).get("v"), m = LEGACY[v] || v; if (PAGES.includes(m)) page = m; }
@@ -1273,35 +1411,69 @@ function deskMatch(i) {
   const q = D.dq.trim().toLowerCase();
   return !q || i._h.includes(q);
 }
-let CALFULL = false;
-const CAL_DAYS = innerWidth < 720 ? 3 : 5;
+const CAL = { y: today.getFullYear(), m: today.getMonth(), sel: isoOf(today) };
+const EV = { o: "e-o", c: "e-c", al: "e-a", rf: "e-a", dc: "e-a", ls: "e-l" };
+const FULLMON = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 const WEEKDAY = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+const FULLDAY = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+const eventLine = e => [e.label, e.i.sg === "S" ? "SME" : "Mainboard", venueOf(e.i)].join(" · ");
+function agendaList(items) {
+  const ul = el("ul");
+  for (const e of items) { const li = el("li"); li.appendChild(el("i", EV[e.k])); const d = el("div"); d.appendChild(el("b", null, e.i.n)); d.appendChild(el("span", null, (e.showDate ? shortDate(e.d) + " · " : "") + eventLine(e))); li.appendChild(d); ul.appendChild(li); }
+  return ul;
+}
 function renderCal(list) {
   const host = $("#d-cal"); host.textContent = "";
-  host.appendChild(el("h3", "sub-h", "Key dates, next 14 days"));
-  const events = [];
-  for (const i of list) for (const [k, label] of DKEYS) if (within(i[k], 0, 14)) events.push({ d: i[k], k, label, i });
-  if (!events.length) { host.appendChild(el("p", "meta", "No key dates in the next 14 days for these filters.")); return; }
-  const order = k => DKEYS.findIndex(e => e[0] === k);
-  events.sort((a, b) => a.d.localeCompare(b.d) || order(a.k) - order(b.k) || a.i.n.localeCompare(b.i.n));
-  const days = new Map();
-  for (const e of events) { if (!days.has(e.d)) days.set(e.d, []); days.get(e.d).push(e); }
-  const grid = el("div", "cal"); let n = 0;
-  for (const [d, items] of days) {
-    if (!CALFULL && ++n > CAL_DAYS) break;
-    const away = dayFrom(d), card = el("div", "day" + (away === 0 ? " today" : ""));
-    const h = el("h4", null, WEEKDAY[parse(d).getDay()] + " " + shortDate(d));
-    h.appendChild(el("small", null, away === 0 ? "Today" : away === 1 ? "Tomorrow" : "In " + away + " days"));
-    card.appendChild(h);
-    const ul = el("ul");
-    for (const e of items) { const li = el("li"); li.appendChild(el("em", null, e.label)); const s = el("span", null, e.i.n); s.title = e.i.n; li.appendChild(s); ul.appendChild(li); }
-    card.appendChild(ul); grid.appendChild(card);
+  const byDay = new Map(), order = k => DKEYS.findIndex(e => e[0] === k);
+  for (const i of list) for (const [k, label] of DKEYS) if (i[k]) { if (!byDay.has(i[k])) byDay.set(i[k], []); byDay.get(i[k]).push({ d: i[k], k, label, i }); }
+  for (const v of byDay.values()) v.sort((a, b) => order(a.k) - order(b.k) || a.i.n.localeCompare(b.i.n));
+  const go = n => { const d = new Date(CAL.y, CAL.m + n, 1); CAL.y = d.getFullYear(); CAL.m = d.getMonth(); renderCal(list); };
+  const head = el("div", "cal-h"); head.appendChild(el("h2", null, FULLMON[CAL.m] + " " + CAL.y));
+  const nav = el("div", "cal-nav");
+  const nb = (txt, label, fn, cls) => { const b = el("button", cls || "", txt); b.type = "button"; b.setAttribute("aria-label", label); b.addEventListener("click", fn); nav.appendChild(b); };
+  nb("‹", "Previous month", () => go(-1));
+  nb("Today", "Go to today", () => { CAL.y = today.getFullYear(); CAL.m = today.getMonth(); CAL.sel = isoOf(today); renderCal(list); }, "t");
+  nb("›", "Next month", () => go(1));
+  head.appendChild(nav); host.appendChild(head);
+  const grid = el("div", "cal-g");
+  for (const w of ["M", "T", "W", "T", "F", "S", "S"]) grid.appendChild(el("div", "cal-w", w));
+  const first = new Date(CAL.y, CAL.m, 1), lead = (first.getDay() + 6) % 7, days = new Date(CAL.y, CAL.m + 1, 0).getDate(), cells = Math.ceil((lead + days) / 7) * 7;
+  for (let n = 0; n < cells; n++) {
+    const d = addDays(first, n - lead), iso = isoOf(d), evs = byDay.get(iso) || [];
+    const b = el("button", "cal-d" + (d.getMonth() !== CAL.m ? " out" : "") + (iso === isoOf(today) ? " tod" : "") + (iso === CAL.sel ? " sel" : ""));
+    b.type = "button"; b.appendChild(el("span", null, String(d.getDate())));
+    const dots = el("span", "dots"); for (const c of [...new Set(evs.map(e => EV[e.k]))].slice(0, 3)) dots.appendChild(el("i", c)); b.appendChild(dots);
+    b.setAttribute("aria-label", d.getDate() + " " + FULLMON[d.getMonth()] + " " + d.getFullYear() + ", " + (evs.length ? plural(evs.length, "event") : "no events"));
+    b.setAttribute("aria-pressed", String(iso === CAL.sel));
+    b.addEventListener("click", () => { CAL.sel = iso; if (d.getMonth() !== CAL.m) { CAL.y = d.getFullYear(); CAL.m = d.getMonth(); } renderCal(list); });
+    grid.appendChild(b);
   }
   host.appendChild(grid);
-  if (days.size > CAL_DAYS) {
-    const b = el("button", "btn", CALFULL ? "Show fewer days" : "Show all " + days.size + " days with dates"); b.type = "button"; b.style.marginTop = "10px";
-    b.addEventListener("click", () => { CALFULL = !CALFULL; renderCal(list); }); host.appendChild(b);
-  }
+  const key = el("div", "cal-key");
+  for (const [c, t] of [["e-o", "Opens"], ["e-c", "Closes"], ["e-a", "Allotment and refunds"], ["e-l", "Lists"]]) { const s = el("span"); s.appendChild(el("i", c)); s.appendChild(document.createTextNode(t)); key.appendChild(s); }
+  host.appendChild(key);
+  const ag = el("div", "cal-ag"), sel = parse(CAL.sel), away = dayFrom(CAL.sel);
+  const h = el("h3", null, FULLDAY[sel.getDay()] + ", " + shortDate(CAL.sel));
+  h.appendChild(el("small", null, away === 0 ? "Today" : away === 1 ? "Tomorrow" : away === -1 ? "Yesterday" : away > 0 ? "In " + away + " days" : -away + " days ago"));
+  ag.appendChild(h);
+  const todays = byDay.get(CAL.sel) || [];
+  if (todays.length) ag.appendChild(agendaList(todays)); else ag.appendChild(el("p", "meta", "Nothing scheduled on this day."));
+  const next = [];
+  for (const d of [...byDay.keys()].sort()) if (d > CAL.sel) for (const e of byDay.get(d)) next.push(Object.assign({ showDate: true }, e));
+  if (next.length) { ag.appendChild(el("h3", null, "Coming up")); ag.appendChild(agendaList(next.slice(0, 6))); }
+  host.appendChild(ag);
+}
+function renderDeskKpis(list) {
+  const box = $("#d-kpis"); box.textContent = "";
+  const of = s => list.filter(i => i.st === s), cr = a => a.reduce((x, i) => x + (i.sz || 0), 0);
+  const open = of("open"), up = of("upcoming"), done = of("closed");
+  box.appendChild(kpiTile("Open now", String(open.length), open.length ? crAmt(cr(open)) + " on offer" : "None open"));
+  const nextOpen = up.map(i => i.o).filter(Boolean).sort()[0];
+  box.appendChild(kpiTile("Upcoming", String(up.length), nextOpen ? "Next opens " + shortDate(nextOpen) : " "));
+  const nextList = done.map(i => i.ls).filter(d => d && dayFrom(d) >= 0).sort()[0];
+  box.appendChild(kpiTile("Recently closed", String(done.length), nextList ? "Next listing " + shortDate(nextList) : " "));
+  const gm = list.filter(i => i.pct != null && i.st !== "closed").sort((a, b) => b.pct - a.pct)[0];
+  box.appendChild(kpiTile("Top premium", gm ? signed(gm.pct) + "%" : "None quoted", gm ? gm.n : "No premium quoted yet", !gm));
 }
 function ipoSteps(i) {
   const ol = el("ol", "steps"); let marked = false;
@@ -1370,7 +1542,7 @@ function deskTable(list) {
 const STATE_WORD = { open: "Open", upcoming: "Upcoming", closed: "Closed" };
 function renderDesk() {
   const body = $("#d-body"); body.textContent = "";
-  if (!IPOS) { emptyBox(body, "IPO data is not available yet. It loads with the next check."); $("#d-sub").textContent = ""; $("#d-pill").hidden = true; $("#d-cal").textContent = ""; return; }
+  if (!IPOS) { emptyBox(body, "IPO data is not available yet. It loads with the next check."); $("#d-sub").textContent = ""; $("#d-pill").hidden = true; $("#d-cal").textContent = ""; $("#d-kpis").textContent = ""; return; }
   const ups = IPOS.map(i => i.up).filter(Boolean).sort();
   const pill = $("#d-pill"); pill.hidden = !ups.length; if (ups.length) setPill(pill, ups[ups.length - 1], 3, 7, "Premiums as of");
   for (const [id, key] of [["#d-g", "dg"], ["#d-k", "dk"], ["#d-v", "dv"]]) for (const b of $(id).children) b.setAttribute("aria-pressed", String(b.dataset.v === D[key]));
@@ -1378,7 +1550,7 @@ function renderDesk() {
   if (SORTERS[D.dz]) list = list.slice().sort(SORTERS[D.dz]);
   const n = s => list.filter(i => i.st === s).length;
   $("#d-sub").textContent = plural(list.length, "issue") + " shown of " + IPOS.length + ": " + n("open") + " open, " + n("upcoming") + " upcoming, " + n("closed") + " recently closed";
-  renderCal(list);
+  renderCal(list); renderDeskKpis(list);
   if (!list.length) { body.appendChild(el("div", "empty", "No issues match these filters. Reset them to see all " + IPOS.length + ".")); writeHash(); return; }
   if (D.dv === "table") body.appendChild(deskTable(list));
   else { const grid = el("div", "cards"); for (const i of list) grid.appendChild(ipoCard(i)); body.appendChild(grid); }
@@ -1399,6 +1571,184 @@ function buildDeskControls() {
   for (const k in DSEL) $(DSEL[k]).addEventListener("change", e => { D[k] = e.target.value; renderDesk(); });
   let timer; $("#d-q").addEventListener("input", e => { clearTimeout(timer); timer = setTimeout(() => { D.dq = e.target.value; renderDesk(); }, 120); });
   $("#d-reset").addEventListener("click", () => { Object.assign(D, DDEF); $("#d-q").value = ""; for (const k in DSEL) $(DSEL[k]).value = D[k]; renderDesk(); });
+}
+
+/* ---------- lead managers directory (inside Filings) ---------- */
+const REC = DATA.bankers || { since: "", ipos: [], seed: 0, skipped: 0 };
+const RECIPOS = REC.ipos.length ? REC.ipos : (IPOS || []).map(i => ({ n: i.n, sg: i.sg, bk: i.bk || [], sz: i.sz, ip: i.hi, ls: i.ls, o: i.o }));
+const crAmt = x => "₹" + x.toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " Cr";
+const BSORT = {
+  t: ["Most filings", (a, b) => b.t - a.t],
+  m: ["Most mainboard filings", (a, b) => b.m - a.m || b.t - a.t],
+  s: ["Most SME filings", (a, b) => b.s - a.s || b.t - a.t],
+  a: ["Most approvals noted", (a, b) => b.a - a.a || b.t - a.t],
+  r: ["Most active, last 90 days", (a, b) => b.r - a.r || b.t - a.t],
+  d: ["Latest filing", (a, b) => (b.last || "").localeCompare(a.last || "") || b.t - a.t],
+  c: ["Largest IPOs on the Desk", (a, b) => b.cr - a.cr || b.t - a.t],
+  n: ["Name A to Z", (a, b) => a.n.localeCompare(b.n)],
+};
+if (!BSORT[S.bz]) S.bz = DEF.bz;
+if (!["filings", "bankers"].includes(S.m)) S.m = "filings";
+if (!["all", "M", "S"].includes(S.bg)) S.bg = "all";
+if (!RANGES.includes(S.bw)) S.bw = "all";
+let bankShown = 25;
+const BK = new Map();
+for (const c of C) for (const n of new Set(c.b)) { let r = BK.get(n); if (!r) BK.set(n, r = { n, f: [] }); r.f.push(c); }
+for (const i of RECIPOS) for (const n of i.bk || []) if (!BK.has(n)) BK.set(n, { n, f: [] });
+const recOf = n => RECIPOS.filter(i => (i.bk || []).includes(n));
+function bankStat(n, fl) {
+  const r90 = isoOf(addDays(today, -89)), rec = recOf(n);
+  return { n, fl, rec, t: fl.length, m: fl.filter(c => c.g === "M").length, s: fl.filter(c => c.g === "S").length,
+    a: fl.filter(c => c.st.includes("approved")).length, r: fl.filter(c => c.d && c.d >= r90).length,
+    last: fl.reduce((x, c) => (c.d || "") > x ? c.d : x, ""), cr: rec.reduce((x, i) => x + (i.sz || 0), 0) };
+}
+function bankRows() {
+  const from = S.bw === "all" ? "" : isoOf(addDays(today, -(+S.bw - 1))), q = S.bq.trim().toLowerCase(), rows = [];
+  for (const r of BK.values()) {
+    if (q && !r.n.toLowerCase().includes(q)) continue;
+    const fl = r.f.filter(c => (S.bg === "all" || c.g === S.bg) && (!from || (c.d && c.d >= from)));
+    if (!fl.length && !(S.bg === "all" && S.bw === "all" && recOf(r.n).length)) continue;
+    rows.push(bankStat(r.n, fl));
+  }
+  return rows.sort((a, b) => BSORT[S.bz][1](a, b) || a.n.localeCompare(b.n));
+}
+function openBanker(n) { S.m = "bankers"; S.bn = n; if (page !== "filings") setPage("filings", true); else render(); window.scrollTo(0, 0); }
+function buildBankerControls() {
+  fillSelect("#b-w", PERIODS.slice(0, 4).map(([v, t]) => [v, t]).concat([["all", "Any time"]]), S.bw);
+  fillSelect("#b-z", Object.entries(BSORT).map(([k, v]) => [k, v[0]]), S.bz);
+  $("#b-q").value = S.bq;
+  $("#b-g").addEventListener("click", e => { const b = e.target.closest("button"); if (!b) return; S.bg = b.dataset.v; S.bn = ""; bankShown = 25; render(); });
+  $("#b-w").addEventListener("change", e => { S.bw = e.target.value; S.bn = ""; bankShown = 25; render(); });
+  $("#b-z").addEventListener("change", e => { S.bz = e.target.value; bankShown = 25; render(); });
+  let t; $("#b-q").addEventListener("input", e => { clearTimeout(t); t = setTimeout(() => { S.bq = e.target.value; S.bn = ""; bankShown = 25; render(); }, 120); });
+  $("#b-reset").addEventListener("click", () => { for (const k of ["bg", "bw", "bq", "bz", "bn"]) S[k] = DEF[k]; $("#b-q").value = ""; bankShown = 25; render(); });
+}
+function bankKpis(rows) {
+  const box = $("#b-kpis"); box.textContent = "";
+  const best = key => { const r = rows.slice().sort((a, b) => b[key] - a[key] || a.n.localeCompare(b.n))[0]; return r && r[key] ? [r.n, r[key]] : null; };
+  const cos_ = new Set(), ap = new Set();
+  for (const r of rows) for (const c of r.fl) { cos_.add(c.n); if (c.st.includes("approved")) ap.add(c.n); }
+  box.appendChild(kpiTile("Lead managers", String(rows.length), S.bg === "all" ? "SME and mainboard" : SEG[S.bg].name));
+  box.appendChild(kpiTile("Companies named", String(cos_.size), ap.size + " with approval noted"));
+  for (const [label, key, unit] of [["Most filings", "t", "filings"], ["Most mainboard", "m", "mainboard"], ["Most SME", "s", "SME"]]) {
+    const b = best(key); box.appendChild(kpiTile(label, b ? b[0] : "None", b ? b[1] + " " + unit : " ", true));
+  }
+  const raised = rows.reduce((x, r) => x + r.cr, 0);
+  box.appendChild(kpiTile("IPOs seen on the Desk", raised ? crAmt(raised) : "None yet", raised ? "Issue size, since " + (REC.since ? fmt(REC.since) : "the record began") : "Builds as issues pass through", true));
+}
+function leagueTable(rows) {
+  const panel = el("section", "panel"), head = el("div", "ph"), t = el("div");
+  t.appendChild(el("h2", null, "Lead managers")); t.appendChild(el("p", null, plural(rows.length, "lead manager") + ". Select a name to open its record."));
+  head.appendChild(t); panel.appendChild(head);
+  if (!rows.length) { panel.appendChild(el("div", "empty", "No lead managers match these filters. Reset them to see everyone.")); return panel; }
+  const wrap = el("div", "tw"), tb = el("table", "t dt lg fit"), hr = el("tr");
+  for (const [h, num] of [["Lead manager"], ["Filings", 1], ["Mainboard", 1], ["SME", 1], ["Approval noted", 1], ["Last 90 days", 1], ["Latest filing"], ["IPOs seen", 1], ["IPO size (₹ Cr)", 1]]) hr.appendChild(el("th", num ? "num" : "", h));
+  const th = el("thead"); th.appendChild(hr); tb.appendChild(th);
+  const body = el("tbody");
+  for (const r of rows.slice(0, bankShown)) {
+    const tr = el("tr"), td = (txt, cls, lab) => { const x = el("td", cls || "", txt); if (lab) x.dataset.l = lab; tr.appendChild(x); return x; };
+    const nm = td("", "nm"); const b = el("button", "lm", r.n); b.type = "button"; b.addEventListener("click", () => openBanker(r.n)); nm.appendChild(b);
+    td(String(r.t), "num", "Filings"); td(String(r.m), "num", "Mainboard"); td(String(r.s), "num", "SME");
+    const ap = td(r.t ? r.a + " (" + Math.round(r.a / r.t * 100) + "%)" : "–", "num", "Approval noted");
+    if (r.t) { const m = el("span", "meter"), i = el("i"); i.style.width = Math.round(r.a / r.t * 100) + "%"; m.appendChild(i); ap.appendChild(m); }
+    td(String(r.r), "num", "Last 90 days"); td(r.last ? fmt(r.last) : "–", "", "Latest filing");
+    td(r.rec.length ? String(r.rec.length) : "–", "num", "IPOs seen"); td(r.cr ? r.cr.toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : "–", "num", "IPO size (₹ Cr)");
+    body.appendChild(tr);
+  }
+  tb.appendChild(body); wrap.appendChild(tb); panel.appendChild(wrap);
+  if (rows.length > bankShown) { const more = el("div", "more"), b = el("button", "btn", "Show " + Math.min(25, rows.length - bankShown) + " more"); b.type = "button"; b.addEventListener("click", () => { bankShown += 25; renderBankers(); }); more.appendChild(b); panel.appendChild(more); }
+  return panel;
+}
+function bankRecord(r) {
+  const panel = el("section", "panel"), head = el("div", "ph"), t = el("div");
+  t.appendChild(el("h2", null, "IPO record")); t.appendChild(el("p", null, "Issues this lead manager has taken through the IPO Desk. Sizes in crores, prices per share."));
+  head.appendChild(t); panel.appendChild(head);
+  const list = r.rec.slice().sort((a, b) => (b.ls || b.o || "").localeCompare(a.ls || a.o || ""));
+  if (!list.length) { panel.appendChild(el("div", "empty", "No IPOs recorded for this lead manager yet. The record builds as issues pass through the IPO Desk.")); return panel; }
+  const sme = list.filter(i => i.sg === "S"), mb = list.filter(i => i.sg !== "S"), sum = a => a.reduce((x, i) => x + (i.sz || 0), 0);
+  const gains = list.filter(i => i.lp && i.ip).map(i => (i.lp / i.ip - 1) * 100);
+  const line = el("p", "rec-sum");
+  line.appendChild(el("b", null, plural(list.length, "IPO")));
+  line.appendChild(document.createTextNode(" recorded since " + (REC.since ? fmt(REC.since) : "the record began") + ": " + mb.length + " mainboard" + (sum(mb) ? " (" + crAmt(sum(mb)) + ")" : "") + ", " + sme.length + " SME" + (sum(sme) ? " (" + crAmt(sum(sme)) + ")" : "") + ". "));
+  if (gains.length) {
+    const avg = gains.reduce((x, g) => x + g, 0) / gains.length;
+    line.appendChild(document.createTextNode("Listing day: average " + signed(avg, 1) + "% across " + plural(gains.length, "IPO") + ", " + gains.filter(g => g > 0).length + " above and " + gains.filter(g => g < 0).length + " below the issue price."));
+  } else line.appendChild(document.createTextNode("No listing prices are recorded yet, so listing-day results and returns since listing are not shown. They are never estimated."));
+  panel.appendChild(line);
+  const wrap = el("div", "tw"), tb = el("table", "t dt fit"), hr = el("tr");
+  for (const [h, num] of [["Company"], ["Segment"], ["Opens"], ["Size (₹ Cr)", 1], ["Issue price", 1], ["Listing price", 1], ["Listing gain", 1], ["Since listing", 1]]) hr.appendChild(el("th", num ? "num" : "", h));
+  const th = el("thead"); th.appendChild(hr); tb.appendChild(th);
+  const body = el("tbody");
+  for (const i of list) {
+    const tr = el("tr"), td = (txt, cls, lab) => { const x = el("td", cls || "", txt); if (lab) x.dataset.l = lab; tr.appendChild(x); return x; };
+    td(i.n, "nm"); td(i.sg === "S" ? "SME" : "Mainboard", "", "Segment"); td(i.o ? shortDate(i.o) : "–", "", "Opens");
+    td(i.sz ? i.sz.toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : "–", "num", "Size (₹ Cr)");
+    td(i.ip ? inr(i.ip) : "–", "num", "Issue price"); td(i.lp ? inr(i.lp) : "Not recorded", "num", "Listing price");
+    const g = i.lp && i.ip ? (i.lp / i.ip - 1) * 100 : null, s = i.cp && i.ip ? (i.cp / i.ip - 1) * 100 : null;
+    td(g == null ? "–" : signed(g, 1) + "%", "num" + (g > 0 ? " up" : g < 0 ? " dn" : ""), "Listing gain");
+    td(s == null ? "–" : signed(s, 1) + "%", "num" + (s > 0 ? " up" : s < 0 ? " dn" : ""), "Since listing");
+    body.appendChild(tr);
+  }
+  tb.appendChild(body); wrap.appendChild(tb); panel.appendChild(wrap);
+  return panel;
+}
+function bankFilings(r) {
+  const panel = el("section", "panel"), head = el("div", "ph"), t = el("div");
+  t.appendChild(el("h2", null, "Filings")); t.appendChild(el("p", null, "Every draft prospectus the radar has found naming this lead manager, newest first."));
+  head.appendChild(t); panel.appendChild(head);
+  if (!r.fl.length) { panel.appendChild(el("div", "empty", "No filings found for this lead manager.")); return panel; }
+  const rows = r.fl.slice().sort((a, b) => (b.d || "").localeCompare(a.d || "") || a.n.localeCompare(b.n));
+  const wrap = el("div", "tw"), tb = el("table", "t dt fit"), hr = el("tr");
+  for (const h of ["Company", "Listing", "Status", "Latest filing", "Document"]) hr.appendChild(el("th", null, h));
+  const th = el("thead"); th.appendChild(hr); tb.appendChild(th);
+  const body = el("tbody");
+  for (const c of rows.slice(0, bankShown)) {
+    const tr = el("tr"), td = (lab) => { const x = el("td"); if (lab) x.dataset.l = lab; tr.appendChild(x); return x; };
+    const nm = td(); nm.className = "nm"; nm.appendChild(el("b", null, c.n)); nm.appendChild(el("small", null, [c.sec, c.c].filter(Boolean).join(" · ") || " "));
+    const ls = td("Listing"); ls.textContent = SEG[c.g].name + (c.x ? ", " + c.x : "");
+    const st = td("Status"); const bs = el("div", "badges"); for (const s of c.st) bs.appendChild(badge(s)); st.appendChild(bs);
+    td("Latest filing").textContent = c.d ? fmt(c.d) : "Not stated";
+    const dc = td("Document"), u = [(c.docs[0] || [])[1], (c.p || [])[1]].find(safeUrl);
+    if (u) { const a = el("a", null, c.docs.length ? c.docs[0][0] : c.p[0]); a.href = u; a.target = "_blank"; a.rel = "noopener noreferrer"; dc.appendChild(a); } else dc.appendChild(el("span", "muted", "No link yet"));
+    body.appendChild(tr);
+  }
+  tb.appendChild(body); wrap.appendChild(tb); panel.appendChild(wrap);
+  if (rows.length > bankShown) { const more = el("div", "more"), b = el("button", "btn", "Show " + Math.min(25, rows.length - bankShown) + " more"); b.type = "button"; b.addEventListener("click", () => { bankShown += 25; renderBankers(); }); more.appendChild(b); panel.appendChild(more); }
+  return panel;
+}
+function bankDetail(r) {
+  const box = el("div", "main-col"), head = el("section", "panel bd-head");
+  const back = el("button", "btn", "‹ All lead managers"); back.type = "button"; back.addEventListener("click", () => { S.bn = ""; bankShown = 25; render(); window.scrollTo(0, 0); });
+  head.appendChild(back); head.appendChild(el("h2", null, r.n));
+  head.appendChild(el("p", null, r.t ? "Named as a lead manager on " + plural(r.t, "draft filing") + ", " + r.m + " mainboard and " + r.s + " SME." : "No draft filings found for this lead manager."));
+  box.appendChild(head);
+  const k = el("section", "panel kpis");
+  k.appendChild(kpiTile("Filings", String(r.t), r.m + " mainboard, " + r.s + " SME"));
+  k.appendChild(kpiTile("Approval noted", String(r.a), r.t ? Math.round(r.a / r.t * 100) + "% of filings" : " "));
+  k.appendChild(kpiTile("Last 90 days", String(r.r), "Filings in the period"));
+  k.appendChild(kpiTile("Latest filing", r.last ? fmt(r.last) : "None", r.last ? ago(r.last) : " ", true));
+  k.appendChild(kpiTile("IPOs seen", String(r.rec.length), r.rec.length ? "On the IPO Desk" : "None yet"));
+  k.appendChild(kpiTile("IPO size", r.cr ? crAmt(r.cr) : "None yet", r.cr ? "Issue size, all seen" : " ", true));
+  box.appendChild(k);
+  box.appendChild(bankRecord(r));
+  const two = el("div", "bd-two");
+  for (const [title, sub, entries] of [["Sectors", "Where the filings are", tally(r.fl, c => [c.sec])], ["Exchanges", "Where they plan to list", tally(r.fl, c => [c.x || "Not stated"])], ["Often alongside", "Other lead managers on the same filings", tally(r.fl, c => c.b.filter(x => x !== r.n))]]) {
+    const p = el("section", "panel"), h = el("div", "ph"), t = el("div"); t.appendChild(el("h2", null, title)); t.appendChild(el("p", null, sub)); h.appendChild(t); p.appendChild(h);
+    const body = el("div", "pb rk"); p.appendChild(body); renderRank(body, entries, 6, title === "Often alongside" ? openBanker : null); two.appendChild(p);
+  }
+  box.appendChild(two);
+  box.appendChild(bankFilings(r));
+  return box;
+}
+function renderBankers() {
+  setSel("#b-w", S.bw); setSel("#b-z", S.bz); if (document.activeElement !== $("#b-q")) $("#b-q").value = S.bq;
+  for (const b of $("#b-g").children) b.setAttribute("aria-pressed", String(b.dataset.v === S.bg));
+  const rows = bankRows(); bankKpis(rows);
+  const main = $("#b-main"); main.textContent = "";
+  const known = S.bn && BK.get(S.bn);
+  if (known) main.appendChild(bankDetail(bankStat(S.bn, BK.get(S.bn).f)));
+  else { if (S.bn) S.bn = ""; main.appendChild(leagueTable(rows)); }
+  writeHash();
 }
 
 /* ---------- shared drawing helpers ---------- */
@@ -1461,12 +1811,12 @@ function portalStats() {
 }
 
 /* ---------- page switching ---------- */
-const TITLES = { home: "IPO Filing Radar", desk: "IPO Desk", filings: "Filings", sectors: "Sector Outlook" };
+const TITLES = { filings: "Filings", desk: "IPO Desk", sectors: "Sector Outlook" };
 function setPage(v, push) {
   page = PAGES.includes(v) ? v : "home";
   document.body.classList.toggle("home", page === "home");
   for (const p of PAGES) document.body.classList.toggle("p-" + p, p === page);
-  document.title = (page === "home" ? "" : TITLES[page] + " | ") + "Nuvont Capital | AFC";
+  document.title = (page === "home" ? "" : TITLES[page] + " | ") + "Nuvont Capital";
   for (const b of document.querySelectorAll(".seg-nav button")) { const on = b.dataset.v === page; b.setAttribute("aria-selected", String(on)); b.tabIndex = on ? 0 : -1; }
   for (const p of PAGES) $("#v-" + p).hidden = p !== page;
   hideTip();
@@ -1477,7 +1827,7 @@ function setPage(v, push) {
 }
 const pageFromHash = () => { const v = new URLSearchParams(location.hash.slice(1)).get("v"), m = LEGACY[v] || v; return PAGES.includes(m) ? m : "home"; };
 
-buildLogo(); buildFilters(); buildSectorControls(); buildDeskControls();
+buildLogo(); buildFilters(); buildBankerControls(); buildSectorControls(); buildDeskControls();
 for (const b of document.querySelectorAll("th button")) b.addEventListener("click", () => { const k = b.dataset.k; sort = { k, dir: sort.k === k ? -sort.dir : (k === "n" ? 1 : -1) }; renderTable(C.filter(match).filter(c => inWin(c, window_()))); });
 $("#t-view").addEventListener("click", e => { const b = e.target.closest("button"); if (!b) return; view = b.dataset.v; for (const x of $("#t-view").children) x.setAttribute("aria-pressed", String(x === b)); render(); });
 for (const b of document.querySelectorAll(".seg-nav button")) b.addEventListener("click", () => { setPage(b.dataset.v, true); window.scrollTo(0, 0); });

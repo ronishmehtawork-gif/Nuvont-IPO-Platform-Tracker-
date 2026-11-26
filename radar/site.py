@@ -1,4 +1,4 @@
-"""Build the afc | ashmavir IPO Filing Radar dashboard into docs/index.html.
+"""Build the Nuvont Capital dashboard (Filings, IPO Desk, Sector Outlook) into docs/index.html.
 
 The page is one static file: the data travels inside it as JSON and a small script draws the filters, charts and
 tables in the browser. Nothing is fetched at view time, so the page makes no network calls of its own."""
@@ -11,6 +11,7 @@ import re
 from datetime import datetime
 from pathlib import Path
 
+from . import bankers as bk
 from .models import label
 
 TEMPLATE = Path(__file__).with_name("dashboard.html")
@@ -56,12 +57,7 @@ def _page_link(entries: list[dict]) -> tuple[str, str]:
 def _bankers(text: str) -> list[str]:
     """IPO Platform lists the first two managers and then '+N more'; keep the names, drop the tail."""
     text = re.sub(r"\s*\+\s*\d+\s*more\s*$", "", text or "").strip()
-    names = []
-    for part in text.split(","):
-        name = re.sub(r"\s+(Private Limited|Pvt\.? Ltd\.?|Limited|Ltd\.?)$", "", part.strip(), flags=re.I)
-        if name:
-            names.append(name)
-    return names
+    return bk.canon_list(text.split(","))
 
 
 def _segment(entries: list[dict]) -> str:
@@ -139,6 +135,7 @@ def enrich_ipos(items: list[dict], companies: list[dict]) -> list[dict]:
                 item["bk"] = list(company["b"])
             if company.get("docs"):
                 item["dl"] = company["docs"][0]
+        item["bk"] = bk.canon_list(item.get("bk"))
         out.append(item)
     return out
 
@@ -166,7 +163,7 @@ def _script_hash(html: str) -> str:
 
 
 def build_site(state: dict, out_path: str, now: datetime, market: dict | None = None, ipos: dict | None = None,
-               flows: dict | None = None, whatsapp_join: str = "") -> None:
+               flows: dict | None = None, whatsapp_join: str = "", bankers: dict | None = None) -> None:
     updated = now.strftime("%d %b %Y, %I:%M %p IST").lstrip("0")
     companies = build_companies(state)
     payload = {
@@ -179,6 +176,7 @@ def build_site(state: dict, out_path: str, now: datetime, market: dict | None = 
         "market": market,
         "ipos": enrich_ipos(ipos["items"], companies) if ipos and ipos.get("items") is not None else None,
         "flows": flows,
+        "bankers": bankers,
         "whatsapp": {"join": whatsapp_join} if whatsapp_join.startswith("https://") else None,
     }
     html = TEMPLATE.read_text(encoding="utf-8")
