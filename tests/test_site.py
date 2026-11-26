@@ -123,7 +123,7 @@ def test_page_script_has_no_inline_handlers_or_network_calls(tmp_path):
 
 def test_site_address_follows_the_repository_name_unless_one_is_set():
     from radar.run import site_address
-    assert site_address({"GITHUB_REPOSITORY": "Owner-X/nuvont-capital-afc"}) == "https://owner-x.github.io/nuvont-capital-afc/"
+    assert site_address({"GITHUB_REPOSITORY": "Owner-X/nuvont-capital"}) == "https://owner-x.github.io/nuvont-capital/"
     assert site_address({"GITHUB_REPOSITORY": "o/r", "RADAR_SITE_URL": "https://example.com/x/"}) == "https://example.com/x/"
     assert site_address({}) == ""
 
