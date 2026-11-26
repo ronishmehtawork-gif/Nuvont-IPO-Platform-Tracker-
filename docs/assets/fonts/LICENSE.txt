@@ -1,6 +1,6 @@
 Fonts in this folder are served from this site (no third-party requests).
-IBM Plex Sans: Copyright 2019 IBM Corp., SIL Open Font License 1.1.
-Instrument Serif: Copyright 2022 The Instrument Serif Project Authors, SIL Open Font License 1.1.
+Jost: Copyright 2020 The Jost Project Authors (https://github.com/indestructible-type/Jost), SIL Open Font License 1.1.
+Source Serif 4: Copyright 2014-2021 Adobe (http://www.adobe.com/), with Reserved Font Name Source, SIL Open Font License 1.1.
 
 SIL OPEN FONT LICENSE Version 1.1 - full text: https://openfontlicense.org
 

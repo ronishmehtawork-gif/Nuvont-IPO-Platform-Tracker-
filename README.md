@@ -244,8 +244,11 @@ skipped and counted.
 | Sector Outlook: scorecard and indices | One table with every sector's return across all periods and its estimated money flow, opening to the stocks in each sector, plus the Nifty sector indices | Same as above, plus the NSE sector indices from Yahoo Finance | Same as above |
 
 Market breadth and, later, the Commodities and Sector flow pages were removed. The sector flow numbers now live inside
-Sector Outlook. Fonts (Instrument Serif and IBM Plex Sans, both under the SIL Open Font License) are served from
-`docs/assets/fonts`, so the page still makes no outside request.
+Sector Outlook. The colours and type follow the Nuvont Capital brand book: deep green `#063631`, accent greens `#044F48`,
+`#427872` and `#64908B`, off-white `#F4EEE6`, white and black, with Source Serif 4 for headings and Jost for text. Both
+fonts (SIL Open Font License) are served from `docs/assets/fonts`, so the page still makes no outside request. The colour
+tokens sit at the top of `radar/dashboard.html`, so changing the palette later is a single edit there. Red and amber are
+kept only for falls and warnings.
 
 How the backend protects the page (`radar/market.py`, `radar/ipowatch.py`):
 

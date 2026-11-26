@@ -2,6 +2,7 @@
 import base64
 import hashlib
 import re
+from pathlib import Path
 from datetime import datetime
 
 from radar import site
@@ -154,3 +155,16 @@ def test_filings_page_has_a_filter_on_every_column_and_a_lead_managers_directory
     # the summary rail comes before the table in the Filings page, and the calendar sits after the issues on the Desk
     assert html.index('aria-label="Filings summary"') < html.index('id="tbl"')
     assert html.index('id="d-body"') < html.index('id="d-cal"')
+
+
+def test_site_uses_the_brand_book_palette_and_fonts(tmp_path):
+    out = tmp_path / "index.html"
+    build_site({"seen": {}}, str(out), datetime(2026, 11, 26, 12, 0, tzinfo=IST))
+    html = out.read_text()
+    for hexcode in ("#063631", "#044f48", "#427872", "#64908b", "#f4eee6"):
+        assert hexcode in html.lower()
+    assert '"Source Serif 4"' in html and '"Jost"' in html
+    for old in ("IBM Plex", "Instrument Serif", "#203058", "#b8a880", "#3a64b5"):
+        assert old not in html
+    fonts = {m for m in re.findall(r"assets/fonts/([\w.-]+\.woff2)", html)}
+    assert fonts and all((Path(__file__).resolve().parents[1] / "docs" / "assets" / "fonts" / f).exists() for f in fonts)
