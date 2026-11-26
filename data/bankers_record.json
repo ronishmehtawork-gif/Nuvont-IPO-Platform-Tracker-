@@ -1,0 +1,132 @@
+{
+ "since": "2026-11-26",
+ "ipos": [
+  {
+   "n": "Mahanadi Coalfields",
+   "sg": "M",
+   "bk": [
+    "Axis Capital",
+    "BOB Capital Markets",
+    "IDBI Capital Market Services",
+    "IIFL Capital Services",
+    "SBI Capital Markets"
+   ],
+   "sz": 8981.12,
+   "ip": 136.0,
+   "ls": "2026-11-27",
+   "o": "2026-11-19",
+   "seen": "2026-11-26"
+  },
+  {
+   "n": "Watrana Rentals",
+   "sg": "S",
+   "bk": [
+    "Oneview Corporate Advisors"
+   ],
+   "sz": 120.1,
+   "ip": 245.0,
+   "ls": "2026-11-27",
+   "o": "2026-11-19",
+   "seen": "2026-11-26"
+  },
+  {
+   "n": "Shree Siddhivinayak Greentech Industries",
+   "sg": "S",
+   "bk": [
+    "Erudore Capital"
+   ],
+   "sz": 93.66,
+   "ip": 142.0,
+   "ls": "2026-12-02",
+   "o": "2026-11-25",
+   "seen": "2026-11-26"
+  },
+  {
+   "n": "Foodlink F&B Holdings",
+   "sg": "M",
+   "bk": [
+    "Equirus Capital",
+    "JM Financial"
+   ],
+   "sz": 360.76,
+   "ip": 191.0,
+   "ls": "2026-12-03",
+   "o": "2026-11-26",
+   "seen": "2026-11-26"
+  },
+  {
+   "n": "Airpro Technology",
+   "sg": "S",
+   "bk": [
+    "Horizon Management"
+   ],
+   "sz": 35.64,
+   "ip": 99.0,
+   "ls": "2026-12-04",
+   "o": "2026-11-27",
+   "seen": "2026-11-26"
+  },
+  {
+   "n": "Integris Medtech",
+   "sg": "M",
+   "bk": [
+    "Axis Capital",
+    "Citigroup Global Markets India",
+    "ICICI Securities",
+    "IIFL Capital Services"
+   ],
+   "ls": "2026-12-04",
+   "o": "2026-11-27",
+   "seen": "2026-11-26"
+  },
+  {
+   "n": "A J Packaging",
+   "sg": "S",
+   "bk": [
+    "D&A Financial Services"
+   ],
+   "sz": 54.0,
+   "ip": 180.0,
+   "ls": "2026-12-08",
+   "o": "2026-12-01",
+   "seen": "2026-11-26"
+  },
+  {
+   "n": "Matangi Rubber",
+   "sg": "M",
+   "bk": [
+    "Sarthi Capital Advisors"
+   ],
+   "sz": 125.16,
+   "ip": 172.0,
+   "ls": "2026-12-08",
+   "o": "2026-12-01",
+   "seen": "2026-11-26"
+  },
+  {
+   "n": "Monomark Engineering",
+   "sg": "M",
+   "bk": [
+    "Holani Consultants"
+   ],
+   "sz": 175.5,
+   "ip": 65.0,
+   "ls": "2026-12-09",
+   "o": "2026-12-02",
+   "seen": "2026-11-26"
+  },
+  {
+   "n": "Encube Ethicals",
+   "sg": "M",
+   "bk": [
+    "Axis Capital",
+    "JM Financial",
+    "Kotak Mahindra Capital Company"
+   ],
+   "sz": 3000.0,
+   "ls": "2026-12-10",
+   "o": "2026-12-03",
+   "seen": "2026-11-26"
+  }
+ ]
+}
