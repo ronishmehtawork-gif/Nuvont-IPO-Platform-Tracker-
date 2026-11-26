@@ -26,9 +26,9 @@
   },
   "rss_ipocentral": {
    "down_alerted": true,
-   "empty_streak": 55,
+   "empty_streak": 56,
    "ever_parsed": true,
-   "failures": 40,
+   "failures": 41,
    "last_note": "0 items matched",
    "last_ok": "2026-11-26"
   },
@@ -217,7 +217,7 @@
     }
    ]
   },
-  "updated": "26 Nov 2026, 08:56 PM IST"
+  "updated": "26 Nov 2026, 09:27 PM IST"
  },
  "seen": {
   "aarish outdoors|drhp_filed": {
