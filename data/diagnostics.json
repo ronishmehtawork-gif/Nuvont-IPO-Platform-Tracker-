@@ -27,7 +27,7 @@
       "2026-11-19": 495,
       "2026-11-20": 495,
       "2026-11-23": 495,
-      "2026-11-25": 309,
+      "2026-11-25": 495,
       "2026-11-26": 495
     },
     "dropped": {
@@ -46,22 +46,14 @@
       "stocks": 216
     },
     "fno_note": "F&O list fetched from nsearchives.nseindia.com",
-    "gaps": [
-      "2026-11-25"
-    ],
+    "gaps": [],
     "live": true,
-    "missing_prev_examples": [
-      "AIAENG: no bar on 2026-11-25, last bars 2026-11-20, 2026-11-23, 2026-11-26",
-      "ACC: no bar on 2026-11-25, last bars 2026-11-20, 2026-11-23, 2026-11-26",
-      "ABBOTINDIA: no bar on 2026-11-25, last bars 2026-11-20, 2026-11-23, 2026-11-26",
-      "ABSLAMC: no bar on 2026-11-25, last bars 2026-11-20, 2026-11-23, 2026-11-26"
-    ],
     "note": "saved",
     "ok": true,
     "priced": 493,
     "stock_last_sessions": [
-      "2026-11-20",
       "2026-11-23",
+      "2026-11-25",
       "2026-11-26"
     ],
     "stocks_with_prices": 495,
