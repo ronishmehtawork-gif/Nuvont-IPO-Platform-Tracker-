@@ -245,7 +245,7 @@ skipped and counted.
 
 Market breadth and, later, the Commodities and Sector flow pages were removed. The sector flow numbers now live inside
 Sector Outlook. The colours and type follow the Nuvont Capital brand book: deep green `#063631`, accent greens `#044F48`,
-`#427872` and `#64908B`, off-white `#F4EEE6`, white and black, with Source Serif 4 for headings and Jost for text. Both
+`#427872` and `#64908B`, off-white `#F4EEE6`, white and black, with Instrument Serif for headings and IBM Plex Sans for text. The
 fonts (SIL Open Font License) are served from `docs/assets/fonts`, so the page still makes no outside request. The colour
 tokens sit at the top of `radar/dashboard.html`, so changing the palette later is a single edit there. Red and amber are
 kept only for falls and warnings.
