@@ -7,7 +7,7 @@
   },
   "ipo_pipeline": {
     "date_conflicts": 0,
-    "detail_fetched": 10,
+    "detail_fetched": 0,
     "detail_skipped": 0,
     "note": "saved",
     "ok": true,
