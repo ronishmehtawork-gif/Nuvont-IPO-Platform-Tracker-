@@ -25,9 +25,22 @@
   },
   "market": {
     "asof_kept": "2026-11-23",
+    "bars_per_date": {
+      "2026-11-19": 495,
+      "2026-11-20": 495,
+      "2026-11-23": 495,
+      "2026-11-25": 309,
+      "2026-11-26": 495
+    },
     "fetch_failures": {},
     "fetched": 495,
     "fno_note": "F&O list fetched from nsearchives.nseindia.com",
+    "missing_prev_examples": [
+      "ACC: last bars 2026-11-20, 2026-11-23, 2026-11-26",
+      "AIAENG: last bars 2026-11-20, 2026-11-23, 2026-11-26",
+      "ABBOTINDIA: last bars 2026-11-20, 2026-11-23, 2026-11-26",
+      "ABSLAMC: last bars 2026-11-20, 2026-11-23, 2026-11-26"
+    ],
     "note": "kept previous data: only 307 of 495 stocks have a fresh close on 2026-11-25",
     "ok": false,
     "stock_last_sessions": [
@@ -35,6 +48,7 @@
       "2026-11-25",
       "2026-11-26"
     ],
+    "stocks_with_prices": 495,
     "universe_note": "universe fetched from nsearchives.nseindia.com"
   },
   "whatsapp": {
