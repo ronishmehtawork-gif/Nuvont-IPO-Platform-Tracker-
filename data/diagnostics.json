@@ -1,4 +1,9 @@
 {
+  "flows": {
+    "asof": "2026-11-25",
+    "days": 1,
+    "ok": true
+  },
   "ipo_pipeline": {
     "date_conflicts": 0,
     "detail_fetched": 0,
