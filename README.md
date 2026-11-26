@@ -3,7 +3,7 @@
 Built by the research desk at afc | ashmavir Financial Consultants Pvt. Ltd.
 
 Watches official and news sources for new SME / mainboard IPO filings (DRHP and related updates) and posts
-alerts to a Telegram channel and, optionally, to WhatsApp. Runs free on GitHub Actions, hourly from about 7 AM to 7 PM IST (resting overnight), so nothing depends on a laptop.
+alerts to a Telegram channel and, optionally, to WhatsApp. Runs free on GitHub Actions, day and night (every 10 minutes while the Indian market is open), so nothing depends on a laptop.
 
 ## What it watches
 
@@ -88,7 +88,7 @@ link back to the page, and the button links to the WhatsApp number people messag
      (`HEADER`, `BODY`, `FOOTER`), category Utility, language English. Meta answers in minutes to a day.
    - `status` shows whether the token works and whether each template is `APPROVED`.
    - `send_test` sends both templates, with sample facts, to the first recipient only.
-7. Once `status` says `APPROVED`, the next hourly run sends real alerts.
+7. Once `status` says `APPROVED`, the next run, within minutes, sends real alerts.
 
 Changing any template word means a new template and a new approval, so agree the wording first. If Meta says a
 template has too many variables for its length, add a sentence of fixed text to `BODY`.
@@ -138,6 +138,31 @@ Business Settings.
 - **Daily check** (after 9 am IST) tells the admin chat the tool is alive.
 - **If Telegram delivery fails**, the item is retried on the next run instead of being lost.
 
+## How often it runs
+
+GitHub's own cron schedule is unreliable: in three days it fired only a handful of the hourly runs and none of the
+market ones. So the radar no longer waits for GitHub's clock. Each `radar` run ends by starting a small waiting job
+(`tick`, `.github/workflows/tick.yml`) that starts the next run after a pause set in `radar/cadence.py`:
+
+| When (IST) | Pause between runs |
+|---|---|
+| Weekdays 09:00 to 16:15, Indian market open | 10 minutes |
+| Rest of Monday 04:30 to Saturday 03:30, commodity futures trading | 20 minutes |
+| Saturday 03:30 to Monday 04:30, everything shut | 45 minutes |
+
+What a run refreshes: filings and IPO data every time; stock prices (heatmap and flow) about every 12 minutes while
+the market is open, once after 15:45 to settle the day, and otherwise at most every 12 hours; commodity prices every
+time. The page itself is rebuilt after each run, and an open page checks its own site every couple of minutes and
+reloads when a newer one is published. Yahoo's feeds run about 10 to 15 minutes behind the exchange.
+
+- Only one waiting job exists at a time, so the chain cannot multiply. A run that fails still starts the next one.
+- The old hourly schedule stays as a backup. If the chain ever breaks, the next scheduled run starts it again.
+- **To stop the chain**, add a repository variable `RADAR_CHAIN` set to `off` (Settings, Secrets and variables,
+  Actions, Variables). Delete it to start again by running `radar` once from the Actions tab.
+- Each run uses a few minutes of Actions time. This is a public repository, so that is free.
+- A date the price feed has only half filled (for example 25 Nov 2026, with prices for 309 of 495 stocks) is skipped
+  and listed under `gaps` in `data/diagnostics.json`, instead of holding the whole page back.
+
 ## If a source fails
 
 The **catch-up** workflow (Actions tab, Run workflow, enter a start date) announces filings dated on or after
@@ -184,10 +209,10 @@ other three are built from market data.
 
 | Tab | What it shows | Source | Refreshed |
 |---|---|---|---|
-| IPO Desk | Open, upcoming and recently closed issues as cards or a table. Each shows the grey market premium, price band, issue size (in crores), lot size, minimum investment, key dates (opens, closes, allotment, refunds start, demat credit, listing), lead managers (merchant bankers), registrar, sector and exchange. A calendar of the next 14 days of dates sits on top. Filters: segment, status, exchange, sector, lead manager, key dates (closing in 3 days, opening in 7, allotment in 7, listing in 7), premium, search, and sort | ipowatch.in (table and issue pages), with sector and lead managers filled from the Filings data when an issue page lacks them | Every hourly `radar` run |
-| Sector heatmap | Median 1D, 1W, 1M, 3M, 6M, 1Y, YTD and 2Y return of the stocks in each NSE industry, with the stocks themselves one click away | NSE Nifty 500 list and Yahoo Finance daily closes | `market` workflow, 16:37 and 19:07 IST on weekdays |
-| Sector flow | Estimated net buying pressure per sector over 1, 5 and 20 sessions, in crores, for the NSE F&O stocks: net flow, strength (net as a share of turnover), turnover, advancers and decliners, a 20-session daily sparkline, and the stocks in each sector. Turnover is closing price times volume. It counts as inflow on a day the stock closes up and outflow on a day it closes down, so it is an estimate from prices and volumes, not a record of what any fund traded | NSE F&O lot file and Yahoo Finance closes and volumes | `market` workflow |
-| Commodities | 27 futures in five groups (precious metals, energy, industrial metals, grains and oilseeds, softs and livestock) with price, 1D, 1W, 1M, 3M, 1Y and YTD change, a 52-week range and a sparkline. Gauges for USD/INR, the dollar index, the US 10-year yield and India VIX. Gold and silver in rupees at international parity (before duty and GST, so not the MCX rate) | Yahoo Finance | Every hourly `radar` run |
+| IPO Desk | Open, upcoming and recently closed issues as cards or a table. Each shows the grey market premium, price band, issue size (in crores), lot size, minimum investment, key dates (opens, closes, allotment, refunds start, demat credit, listing), lead managers (merchant bankers), registrar, sector and exchange. A calendar of the next 14 days of dates sits on top. Filters: segment, status, exchange, sector, lead manager, key dates (closing in 3 days, opening in 7, allotment in 7, listing in 7), premium, search, and sort | ipowatch.in (table and issue pages), with sector and lead managers filled from the Filings data when an issue page lacks them | Every `radar` run (see "How often it runs") |
+| Sector heatmap | Median 1D, 1W, 1M, 3M, 6M, 1Y, YTD and 2Y return of the stocks in each NSE industry, with the stocks themselves one click away | NSE Nifty 500 list and Yahoo Finance daily closes | Every `radar` run: about every 12 minutes while the market is open (today's session shown as it stands), once after the close to settle the day, then left alone |
+| Sector flow | Estimated net buying pressure per sector over 1, 5 and 20 sessions, in crores, for the NSE F&O stocks: net flow, strength (net as a share of turnover), turnover, advancers and decliners, a 20-session daily sparkline, and the stocks in each sector. Turnover is closing price times volume. It counts as inflow on a day the stock closes up and outflow on a day it closes down, so it is an estimate from prices and volumes, not a record of what any fund traded | NSE F&O lot file and Yahoo Finance closes and volumes | Same as the heatmap: "today so far" while the market is open, the finished day after the close |
+| Commodities | 27 futures in five groups (precious metals, energy, industrial metals, grains and oilseeds, softs and livestock) with price, 1D, 1W, 1M, 3M, 1Y and YTD change, a 52-week range and a sparkline. Gauges for USD/INR, the dollar index, the US 10-year yield and India VIX. Gold and silver in rupees at international parity (before duty and GST, so not the MCX rate) | Yahoo Finance | Every `radar` run, so about every 20 minutes while futures trade (Monday morning to Saturday morning IST, day and night) |
 
 Market breadth was removed from the page and its backend. Old links to `#v=ipos` open the IPO Desk.
 

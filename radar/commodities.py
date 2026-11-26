@@ -17,6 +17,8 @@ from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 from urllib.parse import quote
 
+from .cadence import futures_open
+
 IST = timezone(timedelta(hours=5, minutes=30))
 CHART_URL = "https://query1.finance.yahoo.com/v8/finance/chart/{symbol}?range=2y&interval=1d"
 
@@ -186,6 +188,7 @@ def build(closes_by_symbol: dict[str, dict[date, float]], now: datetime) -> tupl
     return {
         "asof": max(dates) if dates else "",
         "updated": now.astimezone(IST).isoformat(timespec="minutes"),
+        "live": futures_open(now),
         "groups": groups,
         "context": context,
         "parity": parity(done),

@@ -13,11 +13,20 @@ def at(day, h, m=0):
     return datetime(2026, 11, day, h, m, tzinfo=IST)  # 26 Nov 2026 is a Thursday, 28 Nov a Saturday
 
 
-def test_pause_between_runs_is_short_in_market_hours_and_hourly_at_night_and_weekends():
-    assert c.next_delay_minutes(at(26, 11)) == 10
-    assert c.next_delay_minutes(at(26, 8)) == 25 and c.next_delay_minutes(at(26, 18)) == 25
-    assert c.next_delay_minutes(at(26, 23)) == 55 and c.next_delay_minutes(at(26, 3)) == 55
-    assert c.next_delay_minutes(at(28, 11)) == 55
+def test_the_radar_runs_day_and_night_and_slows_down_only_over_the_weekend():
+    assert c.next_delay_minutes(at(26, 11)) == 10  # Indian market open
+    assert c.next_delay_minutes(at(26, 8)) == 20 and c.next_delay_minutes(at(26, 18)) == 20
+    assert c.next_delay_minutes(at(26, 23)) == 20 and c.next_delay_minutes(at(26, 3)) == 20  # futures trade overnight
+    assert c.next_delay_minutes(at(28, 2)) == 20      # Saturday 02:00: Friday's US session is still running
+    assert c.next_delay_minutes(at(28, 11)) == 45 and c.next_delay_minutes(at(29, 20)) == 45
+    assert c.next_delay_minutes(at(30, 3)) == 45      # Monday before futures reopen
+    assert c.next_delay_minutes(at(30, 5)) == 20
+
+
+def test_commodity_futures_count_as_trading_from_monday_morning_to_saturday_morning():
+    assert c.futures_open(at(30, 4, 29)) is False and c.futures_open(at(30, 4, 30)) is True
+    assert c.futures_open(at(27, 1)) is True and c.futures_open(at(28, 3, 29)) is True
+    assert c.futures_open(at(28, 3, 30)) is False and c.futures_open(at(29, 12)) is False
 
 
 def test_stock_prices_are_refetched_often_while_the_market_is_open():

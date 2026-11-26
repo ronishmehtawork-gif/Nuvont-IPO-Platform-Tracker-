@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src '__SCRIPT_HASH__'; style-src 'unsafe-inline'; img-src 'self' data:; connect-src 'none'; form-action 'none'; base-uri 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src '__SCRIPT_HASH__'; style-src 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; form-action 'none'; base-uri 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="robots" content="noindex,nofollow">
 <meta name="color-scheme" content="light">
@@ -516,7 +516,7 @@ table.t{border-collapse:collapse;width:100%;min-width:980px}
   <div class="src" id="src"></div>
   <p class="alerts-note" id="alerts"></p>
   <p>Filings are compiled from public sources and shown as published. Check the official document before relying on any item. This page is for research and is not investment advice.</p>
-  <p>Sector heatmap and sector flow are worked out from the NSE Nifty 500 and F&amp;O stock lists with daily prices and volumes from Yahoo Finance, once a day after the market closes. Commodity prices are futures prices from Yahoo Finance. IPO dates, lead managers, sectors and grey market premiums come from ipowatch.in and are unofficial. Data can be delayed or wrong.</p>
+  <p>Sector heatmap and sector flow are worked out from the NSE Nifty 500 and F&amp;O stock lists with daily prices and volumes from Yahoo Finance. While the market is open they include the day's session as it stands, fetched about every 12 minutes and running about 15 minutes behind the exchange; after the close they show the finished day. Commodity prices are futures prices from Yahoo Finance, fetched about every 20 minutes while the markets trade. The radar runs day and night, and an open page reloads itself when new data is published. IPO dates, lead managers, sectors and grey market premiums come from ipowatch.in and are unofficial. Data can be delayed or wrong.</p>
   <p>afc | ashmavir Financial Consultants Pvt. Ltd. and Nuvont Capital. Research desk.</p>
 </footer>
 <div class="tip" id="tip" role="tooltip"></div>
@@ -829,11 +829,11 @@ function exportCsv(items) {
 
 /* ---------- masthead and footer ---------- */
 function renderChrome() {
-  const hrs = (Date.now() - Date.parse(DATA.generated)) / 36e5, p = $("#fresh");
-  const cls = hrs <= 16 ? "good" : hrs <= 40 ? "warn" : "bad";
-  const age = hrs < 1 ? "just now" : hrs < 48 ? Math.round(hrs) + "h ago" : Math.round(hrs / 24) + " days ago";
+  const mins = (Date.now() - Date.parse(DATA.generated)) / 6e4, hrs = mins / 60, p = $("#fresh");
+  const cls = hrs <= 3 ? "good" : hrs <= 8 ? "warn" : "bad";
+  const age = mins < 2 ? "just now" : mins < 60 ? Math.round(mins) + " min ago" : hrs < 48 ? Math.round(hrs) + "h ago" : Math.round(hrs / 24) + " days ago";
   p.className = "pill " + cls; p.lastChild.textContent = (cls === "bad" ? "Out of date. Updated " : "Updated ") + age + ", " + DATA.updated;
-  p.title = "The radar checks the sources through the day and rebuilds this page after each check.";
+  p.title = "The radar checks the sources day and night and rebuilds this page after each check. An open page looks for new data every few minutes and reloads itself.";
   $("#alerts").textContent = DATA.alerts ? plural(DATA.alerts, "Telegram alert") + " sent" : "";
   const wj = $("#wa-join"), wurl = DATA.whatsapp && DATA.whatsapp.join;
   if (wj && safeUrl(wurl)) { wj.href = wurl; wj.hidden = false; }
@@ -870,6 +870,18 @@ function setPill(node, iso, good, warn, label) {
   node.className = "pill " + cls; node.textContent = "";
   node.appendChild(el("i")); node.appendChild(el("span", null, (cls === "bad" ? "Out of date. " : "") + label + " " + fmt(iso)));
 }
+const clockOf = ts => { const m = /T(\d\d:\d\d)/.exec(String(ts || "")); return m ? m[1] : ""; };
+const minsSince = ts => { const t = Date.parse(ts); return isNaN(t) ? Infinity : (Date.now() - t) / 6e4; };
+/* o = { asof, live, updated }. While a market is trading the pill says Live and when the numbers were fetched;
+   once it has closed it falls back to the day the prices belong to. */
+function livePill(node, o, closedLabel, liveNote) {
+  node.title = "";
+  if (!o.live) { setPill(node, o.asof, 4, 8, closedLabel); return; }
+  const m = minsSince(o.updated), cls = m <= 60 ? "good" : m <= 240 ? "warn" : "bad";
+  node.className = "pill " + cls; node.textContent = ""; node.appendChild(el("i"));
+  node.appendChild(el("span", null, (cls === "bad" ? "Out of date. " : "") + "Live, updated " + clockOf(o.updated) + " IST"));
+  node.title = liveNote;
+}
 function emptyBox(host, text) { host.textContent = ""; host.appendChild(el("div", "empty", text)); }
 function tint(td, x, scale) {
   if (x == null) { td.textContent = "–"; td.style.color = "var(--faint)"; return; }
@@ -884,9 +896,12 @@ const SX = { h: "default", q: "", open: new Set(), full: new Set(), focus: null 
 function stockMatches(s, q) { return (s[0] + " " + s[1]).toLowerCase().includes(q); }
 function renderSectors() {
   const body = $("#sx-body"), lists = $("#sx-lists"); lists.textContent = "";
-  if (!MK) { emptyBox(body, "Stock-level sector data is not available yet. It is built once a day after the market closes."); $("#sx-sub").textContent = ""; $("#sx-pill").hidden = true; return; }
-  $("#sx-pill").hidden = false; setPill($("#sx-pill"), MK.asof, 4, 8, "Data as of");
-  $("#sx-sub").textContent = "Median return of the stocks in each sector. " + MK.priced + " of the Nifty 500, grouped by NSE industry.";
+  if (!MK) { emptyBox(body, "Stock-level sector data is not available yet. It is built from the latest stock prices and fills in with the next check."); $("#sx-sub").textContent = ""; $("#sx-pill").hidden = true; return; }
+  $("#sx-pill").hidden = false;
+  livePill($("#sx-pill"), MK, "Closing prices of", "Prices run about 15 minutes behind the exchange. This page is rebuilt every few minutes while the market is open.");
+  $("#sx-sub").textContent = "Median return of the stocks in each sector. " + MK.priced + " of the Nifty 500, grouped by NSE industry."
+    + (MK.live ? " Today's session is included as it stands." : "")
+    + (MK.gaps && MK.gaps.length ? " The price feed has no data for " + MK.gaps.map(fmt).join(" and ") + ", so changes run from the session before it." : "");
   const H = MK.horizons, hix = k => H.indexOf(k), q = SX.q.trim().toLowerCase();
   const lead = SX.h === "default" ? "1W" : SX.h;
   const ranked = MK.clusters.filter(c => c.med[lead] != null).sort((a, b) => b.med[lead] - a.med[lead]);
@@ -1082,7 +1097,7 @@ function deskTable(list) {
 const STATE_WORD = { open: "Open", upcoming: "Upcoming", closed: "Closed" };
 function renderDesk() {
   const body = $("#d-body"); body.textContent = "";
-  if (!IPOS) { emptyBox(body, "IPO data is not available yet. It loads with the next hourly check."); $("#d-sub").textContent = ""; $("#d-pill").hidden = true; $("#d-cal").textContent = ""; return; }
+  if (!IPOS) { emptyBox(body, "IPO data is not available yet. It loads with the next check."); $("#d-sub").textContent = ""; $("#d-pill").hidden = true; $("#d-cal").textContent = ""; return; }
   const ups = IPOS.map(i => i.up).filter(Boolean).sort();
   const pill = $("#d-pill"); pill.hidden = !ups.length; if (ups.length) setPill(pill, ups[ups.length - 1], 3, 7, "Premiums as of");
   for (const [id, key] of [["#d-g", "dg"], ["#d-k", "dk"], ["#d-v", "dv"]]) for (const b of $(id).children) b.setAttribute("aria-pressed", String(b.dataset.v === D[key]));
@@ -1152,18 +1167,20 @@ function flowBar(x, max) {
 function renderFlow() {
   const body = $("#fl-body"), lists = $("#fl-lists"), kp = $("#fl-kpis"); body.textContent = ""; lists.textContent = ""; kp.textContent = "";
   if (!FL) {
-    emptyBox(body, "Sector flow is not available yet. It needs the F&O list and daily volumes, and is built once a day after the market closes.");
+    emptyBox(body, "Sector flow is not available yet. It needs the F&O list and daily volumes, and fills in with the next check.");
     $("#fl-sub").textContent = ""; $("#fl-pill").hidden = true; $("#fl-note").textContent = ""; return;
   }
-  $("#fl-pill").hidden = false; setPill($("#fl-pill"), FL.asof, 4, 8, "Data as of");
+  $("#fl-pill").hidden = false;
+  livePill($("#fl-pill"), { asof: FL.asof, live: FL.live, updated: MK.updated }, "Closing prices of", "Prices run about 15 minutes behind the exchange. This page is rebuilt every few minutes while the market is open.");
+  const last = FL.live ? "today so far" : "latest session";
   $("#fl-sub").textContent = "Estimated net buying pressure in " + FL.count + " F&O stocks, by sector. Amounts are in ₹ crore.";
   const w = FS.w, nk = "n" + w, tk = "t" + w, sk = "s" + w, T = FL.total, q = FS.q.trim().toLowerCase();
-  gauge(kp, "Net flow, latest session", crs(T.n1) + " Cr", "of ₹" + crp(T.t1) + " Cr traded", T.n1 > 0 ? "up" : T.n1 < 0 ? "dn" : "");
+  gauge(kp, "Net flow, " + last, crs(T.n1) + " Cr", "of ₹" + crp(T.t1) + " Cr traded", T.n1 > 0 ? "up" : T.n1 < 0 ? "dn" : "");
   gauge(kp, "Net flow, 5 sessions", crs(T.n5) + " Cr", "of ₹" + crp(T.t5) + " Cr traded", T.n5 > 0 ? "up" : T.n5 < 0 ? "dn" : "");
   gauge(kp, "Net flow, 20 sessions", crs(T.n20) + " Cr", "of ₹" + crp(T.t20) + " Cr traded", T.n20 > 0 ? "up" : T.n20 < 0 ? "dn" : "");
-  gauge(kp, "Up and down, latest session", T.adv + " up, " + T.dec + " down", "among " + T.k + " F&O stocks");
+  gauge(kp, "Up and down, " + last, T.adv + " up, " + T.dec + " down", "among " + T.k + " F&O stocks");
   kp.style.setProperty("--n", "4");
-  const ranked = FL.sectors.slice().sort((a, b) => b[nk] - a[nk]), label = w === "1" ? "latest session" : w + " sessions";
+  const ranked = FL.sectors.slice().sort((a, b) => b[nk] - a[nk]), label = w === "1" ? last : w + " sessions";
   for (const [title, list, cls] of [["Strongest inflow, " + label, ranked.slice(0, 5), "up"], ["Heaviest outflow, " + label, ranked.slice(-5).reverse(), "dn"]]) {
     const ol = el("ol", "rank"); ol.appendChild(el("h3", null, title));
     for (const s of list) { const li = el("li"); li.appendChild(el("span", null, s.n)); li.appendChild(el("b", s[nk] >= 0 ? "up" : "dn", crs(s[nk]) + " Cr")); ol.appendChild(li); }
@@ -1246,8 +1263,8 @@ function commodityCard(i, group) {
 }
 function renderCommodities() {
   const body = $("#cm-body"), gauges = $("#cm-gauges"); body.textContent = ""; gauges.textContent = "";
-  if (!CM) { emptyBox(body, "Commodity prices are not available yet. They load with the next hourly check."); $("#cm-sub").textContent = ""; $("#cm-pill").hidden = true; $("#cm-note").textContent = ""; return; }
-  $("#cm-pill").hidden = false; setPill($("#cm-pill"), CM.asof, 4, 8, "Prices as of");
+  if (!CM) { emptyBox(body, "Commodity prices are not available yet. They load with the next check."); $("#cm-sub").textContent = ""; $("#cm-pill").hidden = true; $("#cm-note").textContent = ""; return; }
+  $("#cm-pill").hidden = false; livePill($("#cm-pill"), CM, "Prices as of", "Futures prices run about 10 minutes behind the exchange. They are fetched every 20 minutes while the markets trade, Monday to Friday, day and night.");
   const total = CM.groups.reduce((n, g) => n + g.items.length, 0);
   $("#cm-sub").textContent = total + " futures contracts in " + CM.groups.length + " groups, with the currency and rate gauges that move them.";
   for (const x of CM.context) {
@@ -1309,6 +1326,34 @@ for (const b of document.querySelectorAll("th button")) b.addEventListener("clic
 $("#t-view").addEventListener("click", e => { const b = e.target.closest("button"); if (!b) return; view = b.dataset.v; for (const x of $("#t-view").children) x.setAttribute("aria-pressed", String(x === b)); render(); });
 for (const b of document.querySelectorAll(".tabs button")) b.addEventListener("click", () => { setPage(b.dataset.v); window.scrollTo(0, 0); });
 renderChrome(); renderHeatmap(); setPage(page);
+
+/* ---------- keep an open page current ---------- */
+/* Every couple of minutes, ask this site (headers only) whether a newer page has been published. If so, reload; the
+   open tab, filters and search live in the address, so the view comes back as it was. Never interrupts typing. */
+(function watchForNewData() {
+  if (!/^https?:$/.test(location.protocol) || typeof fetch !== "function") return;
+  let tag = null, busy = false;
+  const stamp = r => (r.headers.get("etag") || "") + "|" + (r.headers.get("last-modified") || "");
+  async function check() {
+    if (busy || document.hidden) return;
+    busy = true;
+    try {
+      const r = await fetch(location.pathname, { method: "HEAD", cache: "no-store" });
+      const s = r.ok ? stamp(r) : "|";
+      if (s !== "|") {
+        if (tag === null) tag = s;
+        else if (s !== tag) {
+          const a = document.activeElement;
+          if (!(a && /^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName))) location.reload();
+        }
+      }
+    } catch (e) { /* offline or blocked: try again next time */ }
+    busy = false;
+  }
+  check();
+  setInterval(check, 150000);
+  document.addEventListener("visibilitychange", () => { if (!document.hidden) check(); });
+})();
 })();
 </script>
 </body>

@@ -48,7 +48,7 @@ def test_csp_hash_matches_the_only_executable_script(tmp_path):
     code = re.search(r"<script>(.*?)</script>", html, re.S).group(1)
     digest = "sha256-" + base64.b64encode(hashlib.sha256(code.encode()).digest()).decode()
     assert f"script-src '{digest}'" in html
-    assert "connect-src 'none'" in html and "default-src 'none'" in html
+    assert "connect-src 'self'" in html and "default-src 'none'" in html  # the page may only ask its own site about new data
     assert "__DATA__" not in html and "__SCRIPT_HASH__" not in html
     assert len(re.findall(r"<script>", html)) == 1  # the data block is type=application/json, not executable
 
@@ -103,5 +103,8 @@ def test_page_script_has_no_inline_handlers_or_network_calls(tmp_path):
     assert re.findall(r"<link[^>]*>", head) == ['<link rel="icon" type="image/png" href="assets/favicon.png">']  # only the local icon
     assert not re.search(r"<(img|script|iframe)[^>]*(src)=\"https?:", html, re.I)
     code = re.search(r"<script>(.*?)</script>", html, re.S).group(1)
-    for banned in ("fetch(", "XMLHttpRequest", "WebSocket", "import(", "localStorage", "sendBeacon"):
+    for banned in ("XMLHttpRequest", "WebSocket", "import(", "localStorage", "sendBeacon"):
         assert banned not in code, banned
+    # The one network call is the page asking its own site, headers only, whether newer data has been published.
+    assert code.count("fetch(") == 1 and 'fetch(location.pathname, { method: "HEAD"' in code
+    assert not re.search(r"fetch\(\s*[\"']https?:", code)

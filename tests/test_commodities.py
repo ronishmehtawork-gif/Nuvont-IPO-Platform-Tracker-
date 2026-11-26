@@ -135,6 +135,17 @@ def test_job_saves_groups_context_and_parity_and_survives_partial_failures(tmp_p
     assert c.load(path)["asof"] == "2026-11-25"
 
 
+def test_the_payload_says_whether_futures_are_trading_so_the_page_can_show_live(tmp_path):
+    from datetime import timedelta
+    weekday = NOW.replace(hour=14, minute=0)
+    payload, _ = c.refresh(lambda: FakeNet(all_charts()), str(tmp_path / "a.json"), weekday)
+    assert payload["live"] is (weekday.weekday() < 5)
+    saturday = weekday + timedelta(days=(5 - weekday.weekday()) % 7 or 7)
+    saturday = saturday.replace(hour=12)
+    payload, _ = c.refresh(lambda: FakeNet(all_charts()), str(tmp_path / "b.json"), saturday)
+    assert payload["live"] is False
+
+
 def test_job_keeps_the_last_good_file_when_the_site_fails(tmp_path):
     path = str(tmp_path / "commodities.json")
     good, _ = c.refresh(lambda: FakeNet(all_charts()), path, NOW)

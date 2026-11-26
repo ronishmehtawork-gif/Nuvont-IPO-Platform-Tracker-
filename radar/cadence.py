@@ -1,6 +1,7 @@
 """When things run. GitHub's own schedule fires only a few times a day (it dropped most of the hourly runs), so the
 radar keeps itself going: each run starts a small waiting job (tick.yml) that starts the next run after the pause
-chosen here. The old hourly schedule stays as a backup that restarts the chain if it ever breaks.
+chosen here, so it runs day and night. The old hourly schedule stays as a backup that restarts the chain if it
+ever breaks.
 
 All times are IST. Nothing here makes a network call."""
 from __future__ import annotations
@@ -11,10 +12,13 @@ from datetime import datetime, time, timedelta, timezone
 IST = timezone(timedelta(hours=5, minutes=30))
 
 SESSION_OPEN, SESSION_CLOSE = time(9, 15), time(15, 45)  # the second is when the day's bar is treated as final
-BUSY_FROM, BUSY_TO = time(9, 0), time(16, 15)            # market hours plus a margin: check often
-EXTENDED_FROM, EXTENDED_TO = time(7, 0), time(22, 0)     # filings and commodities: check a few times an hour
+BUSY_FROM, BUSY_TO = time(9, 0), time(16, 15)            # stock market hours plus a margin: check every 10 minutes
+FUTURES_OPEN, FUTURES_CLOSE = time(4, 30), time(3, 30)   # commodity futures: Monday 04:30 IST to Saturday 03:30 IST
 
-LIVE_EVERY = 12  # minutes between stock-price refreshes while the market is open
+BUSY_EVERY = 10       # minutes between runs while the Indian market is open
+FUTURES_EVERY = 20    # minutes between runs while commodity futures trade (day and night, Monday to Friday)
+WEEKEND_EVERY = 45    # minutes between runs while every market is shut
+LIVE_EVERY = 12       # minutes between stock-price refreshes while the market is open
 IDLE_REFRESH_HOURS = 12  # outside the session, stock data is refreshed at most this often
 
 
@@ -22,15 +26,26 @@ def _ist(now: datetime) -> datetime:
     return now.astimezone(IST)
 
 
-def next_delay_minutes(now: datetime) -> int:
-    """Pause before the next run. Short while the market is open, longer around it, hourly at night and weekends."""
+def futures_open(now: datetime) -> bool:
+    """Are commodity futures trading? World futures run nearly round the clock from Monday morning to Saturday
+    morning, India time. The short daily maintenance break is counted as open; it makes no difference to a 20-minute
+    check."""
     t = _ist(now)
-    if t.weekday() < 5:
-        if BUSY_FROM <= t.time() < BUSY_TO:
-            return 10
-        if EXTENDED_FROM <= t.time() < EXTENDED_TO:
-            return 25
-    return 55
+    d, at = t.weekday(), t.time()
+    if d == 0:
+        return at >= FUTURES_OPEN
+    if d == 5:
+        return at < FUTURES_CLOSE
+    return d < 5
+
+
+def next_delay_minutes(now: datetime) -> int:
+    """Pause before the next run. Short while the Indian market is open, steady while commodities trade, slower only
+    over the weekend."""
+    t = _ist(now)
+    if t.weekday() < 5 and BUSY_FROM <= t.time() < BUSY_TO:
+        return BUSY_EVERY
+    return FUTURES_EVERY if futures_open(t) else WEEKEND_EVERY
 
 
 def session_open(now: datetime) -> bool:
