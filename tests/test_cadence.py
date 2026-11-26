@@ -14,7 +14,7 @@ def at(day, h, m=0):
 
 
 def test_the_radar_runs_day_and_night_and_slows_down_after_hours():
-    assert c.next_delay_minutes(at(26, 11)) == 10  # Indian market open
+    assert c.next_delay_minutes(at(26, 11)) == 8  # Indian market open
     assert c.next_delay_minutes(at(26, 8)) == 30 and c.next_delay_minutes(at(26, 18)) == 30
     assert c.next_delay_minutes(at(26, 23)) == 30 and c.next_delay_minutes(at(26, 3)) == 30
     assert c.next_delay_minutes(at(28, 2)) == 60 and c.next_delay_minutes(at(28, 11)) == 60  # Saturday
@@ -80,3 +80,8 @@ def test_nothing_is_fetched_when_the_data_is_fresh(monkeypatch, tmp_path):
     monkeypatch.setattr(radar_run.market_data, "refresh", lambda *a: (_ for _ in ()).throw(AssertionError("fetched")))
     radar_run.refresh_market(st.empty_state(), str(tmp_path / "s.json"), str(market), now, TG())
     assert now - at(26, 11, 0) < timedelta(minutes=12)
+
+
+def test_every_run_in_market_hours_refreshes_the_prices():
+    # A run starts BUSY_EVERY minutes plus its own run time after the last one; the price refresh must be due by then.
+    assert c.LIVE_EVERY < c.BUSY_EVERY + 1

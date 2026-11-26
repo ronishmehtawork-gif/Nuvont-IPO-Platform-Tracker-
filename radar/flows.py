@@ -11,13 +11,16 @@ from __future__ import annotations
 import html
 import json
 import re
-from datetime import date, datetime
+from datetime import date, datetime, time, timedelta, timezone
 from pathlib import Path
 
 URL = "https://www.msei.in/downloads/equity-reports/fii-dii-activities"
 KEEP_DAYS = 400       # rows kept in the file
 SHOW_DAYS = 90        # rows sent to the page
 REFRESH_MINUTES = 60  # the report changes once a day, so there is no need to ask more often
+EVENING_REFRESH_MINUTES = 15  # but on a weekday evening, until that day's report is saved, look more often
+EVENING = (time(16, 0), time(22, 0))  # the exchanges usually publish the day's figures in this window
+IST = timezone(timedelta(hours=5, minutes=30))
 
 _NUM = r"(-?[\d,]+(?:\.\d+)?)"
 _DATE = r"(\d{1,2}-[A-Za-z]{3}-\d{4})"
@@ -72,6 +75,15 @@ def merge(days: list[dict], row: dict) -> list[dict]:
     return [out[k] for k in sorted(out)][-KEEP_DAYS:]
 
 
+def _waiting_for_today(now: datetime, saved: dict) -> bool:
+    """A weekday evening when today's report is not saved yet: it should appear any time now."""
+    t = now.astimezone(IST)
+    if t.weekday() >= 5 or not (EVENING[0] <= t.time() < EVENING[1]):
+        return False
+    days = saved.get("days") or []
+    return not days or str(days[-1].get("d", "")) < t.date().isoformat()
+
+
 def due(now: datetime, saved: dict | None) -> bool:
     if not saved or not saved.get("days"):
         return True
@@ -81,7 +93,8 @@ def due(now: datetime, saved: dict | None) -> bool:
         return True
     if updated.tzinfo is None:
         updated = updated.replace(tzinfo=now.tzinfo)
-    return (now - updated).total_seconds() >= REFRESH_MINUTES * 60
+    minutes = EVENING_REFRESH_MINUTES if _waiting_for_today(now, saved) else REFRESH_MINUTES
+    return (now - updated).total_seconds() >= minutes * 60
 
 
 def _read(path: str) -> dict | None:

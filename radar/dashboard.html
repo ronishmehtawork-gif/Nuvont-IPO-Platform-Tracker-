@@ -7,7 +7,7 @@
 <meta name="referrer" content="no-referrer">
 <meta name="robots" content="noindex,nofollow">
 <meta name="color-scheme" content="light">
-<title>IPO Filing Radar | afc | ashmavir Financial Consultants</title>
+<title>Nuvont Capital | AFC</title>
 <link rel="icon" type="image/png" href="assets/favicon.png">
 <style>
 @font-face{font-family:"IBM Plex Sans";font-weight:400;font-style:normal;font-display:swap;src:url(assets/fonts/ibm-plex-sans-latin-400-normal.woff2) format("woff2")}
@@ -292,9 +292,6 @@ body:not(.home) #gate{display:none}
 .logo3d .glow{position:absolute;left:8%;right:8%;top:-60%;bottom:-60%;transform:translateZ(calc(var(--dz) * -26));pointer-events:none;
   background:radial-gradient(ellipse at center,rgba(226,200,120,.34) 0,rgba(226,200,120,0) 62%);filter:blur(14px)}
 @keyframes sheen{0%{background-position:100% 0}55%,100%{background-position:0 0}}
-.gate-tag{margin:clamp(26px,6vh,54px) 0 0;font:400 clamp(20px,2.4vw,26px)/1.2 var(--serif);color:#e8dfc3;text-align:center;display:flex;align-items:center;gap:12px}
-.gate-tag::before{content:"";width:9px;height:9px;border-radius:50%;background:#e6d6a4;box-shadow:0 0 0 0 rgba(230,214,164,.55);animation:ping 2.2s ease-out infinite}
-.gate.opened .gate-tag::before{animation:none;box-shadow:none}
 @keyframes ping{0%{box-shadow:0 0 0 0 rgba(230,214,164,.55)}80%,100%{box-shadow:0 0 0 14px rgba(230,214,164,0)}}
 .portals{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;width:min(1060px,94vw);margin-top:26px;perspective:1300px;visibility:hidden}
 .gate.opened .portals{visibility:visible}
@@ -325,7 +322,7 @@ body:not(.home) #gate{display:none}
   .portal{padding:16px 18px 14px}.portal .pn{font-size:28px}
 }
 @media (prefers-reduced-motion:reduce){
-  .logo3d .face,.gate-tag::before{animation:none}
+  .logo3d .face{animation:none}
   .stage,.portal{transition:none}
 }
 /* Sector Outlook */
@@ -448,7 +445,6 @@ body:not(.home) #gate{display:none}
     <div class="stage" id="stage">
       <button type="button" class="logo3d" id="logo3d" aria-label="Nuvont Capital. Press to open the sections" aria-expanded="false" aria-controls="portals"></button>
     </div>
-    <p class="gate-tag" id="gate-tag">Click the mark to enter</p>
     <nav class="portals" id="portals" aria-label="Sections">
       <a class="portal" href="#v=desk" data-v="desk" style="--c:#cdb77e"><span class="pn">IPO Desk</span><span class="pd">Open and upcoming issues, key dates, grey market premium and lead managers.</span><span class="ps" id="ps-desk"></span><span class="go">Open IPO Desk <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
       <a class="portal" href="#v=filings" data-v="filings" style="--c:#7ea0e6"><span class="pn">Filings</span><span class="pd">Every DRHP, approval and addendum the radar has found, with documents.</span><span class="ps" id="ps-filings"></span><span class="go">Open Filings <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
@@ -630,7 +626,7 @@ body:not(.home) #gate{display:none}
   <div class="src" id="src"></div>
   <p class="alerts-note" id="alerts"></p>
   <p>Filings are compiled from public sources and shown as published. Check the official document before relying on any item. This page is for research and is not investment advice.</p>
-  <p>Sector returns and money flow are worked out from the NSE Nifty 500 and F&amp;O stock lists with daily prices and volumes from Yahoo Finance. While the market is open they include the day's session as it stands, fetched about every 12 minutes and running about 15 minutes behind the exchange; after the close they show the finished day. Money flow is an estimate from price and volume, not an exchange figure. FII and DII figures come from the combined MSE, NSE and BSE cash-market report, are provisional, and are saved one day at a time. The radar runs day and night, and an open page reloads itself when new data is published. IPO dates, lead managers, sectors and grey market premiums come from ipowatch.in and are unofficial. Data can be delayed or wrong.</p>
+  <p>Sector returns and money flow are worked out from the NSE Nifty 500 and F&amp;O stock lists with daily prices and volumes from Yahoo Finance. While the market is open they include the day's session as it stands, fetched every few minutes and running about 15 minutes behind the exchange; after the close they show the finished day. Money flow is an estimate from price and volume, not an exchange figure. FII and DII figures come from the combined MSE, NSE and BSE cash-market report, are provisional, and are saved one day at a time. The radar runs day and night, and an open page reloads itself when new data is published. IPO dates, lead managers, sectors and grey market premiums come from ipowatch.in and are unofficial. Data can be delayed or wrong.</p>
   <p>afc | ashmavir Financial Consultants Pvt. Ltd. and Nuvont Capital. Research desk.</p>
 </footer>
 </div>
@@ -1446,10 +1442,9 @@ function startGate() {
 function stopGate() { cancelAnimationFrame(gateLoop); gateLoop = 0; }
 function openGate() {
   GATE.classList.add("opened"); LOGO.setAttribute("aria-expanded", "true");
-  $("#gate-tag").textContent = "Choose a section";
   const first = $("#portals a"); if (first) setTimeout(() => first.focus({ preventScroll: true }), 350);
 }
-function resetGate() { GATE.classList.remove("opened"); LOGO.setAttribute("aria-expanded", "false"); $("#gate-tag").textContent = "Click the mark to enter"; }
+function resetGate() { GATE.classList.remove("opened"); LOGO.setAttribute("aria-expanded", "false"); }
 addEventListener("pointermove", e => { pointer = { x: (e.clientX / innerWidth - 0.5) * 2, y: (e.clientY / innerHeight - 0.5) * 2, at: performance.now() }; });
 LOGO.addEventListener("click", () => { GATE.classList.contains("opened") ? resetGate() : openGate(); });
 document.addEventListener("visibilitychange", () => { if (document.hidden) stopGate(); else if (page === "home") startGate(); });
@@ -1471,7 +1466,7 @@ function setPage(v, push) {
   page = PAGES.includes(v) ? v : "home";
   document.body.classList.toggle("home", page === "home");
   for (const p of PAGES) document.body.classList.toggle("p-" + p, p === page);
-  document.title = (page === "home" ? "" : TITLES[page] + " | ") + "IPO Filing Radar | afc | ashmavir Financial Consultants";
+  document.title = (page === "home" ? "" : TITLES[page] + " | ") + "Nuvont Capital | AFC";
   for (const b of document.querySelectorAll(".seg-nav button")) { const on = b.dataset.v === page; b.setAttribute("aria-selected", String(on)); b.tabIndex = on ? 0 : -1; }
   for (const p of PAGES) $("#v-" + p).hidden = p !== page;
   hideTip();

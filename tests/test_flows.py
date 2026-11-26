@@ -93,15 +93,44 @@ def test_nothing_is_saved_when_the_very_first_fetch_fails(tmp_path):
     assert data is None and info["ok"] is False and not path.exists() and flows.load(str(path)) is None
 
 
-def test_the_report_is_asked_for_at_most_once_an_hour(tmp_path):
+def test_the_report_is_asked_for_at_most_once_an_hour_by_day(tmp_path):
+    midday = datetime(2026, 11, 26, 12, 0, tzinfo=IST)  # today's report cannot exist yet, so no need to hurry
     path = str(tmp_path / "flows.json")
-    flows.refresh(Fake(REPORT), path, NOW)
+    flows.refresh(Fake(REPORT), path, midday)
     quiet = Fake(REPORT)
-    _, info = flows.refresh(quiet, path, NOW + timedelta(minutes=30))
+    _, info = flows.refresh(quiet, path, midday + timedelta(minutes=30))
     assert quiet.calls == 0 and info["skipped"] is True
     again = Fake(REPORT)
-    flows.refresh(again, path, NOW + timedelta(minutes=61))
+    flows.refresh(again, path, midday + timedelta(minutes=61))
     assert again.calls == 1
+
+
+def test_on_a_weekday_evening_it_looks_every_15_minutes_until_todays_report_is_saved(tmp_path):
+    path = str(tmp_path / "flows.json")
+    flows.refresh(Fake(REPORT), path, NOW)  # 20:00; the saved report is 25 Nov, today is 26 Nov
+    early = Fake(REPORT)
+    flows.refresh(early, path, NOW + timedelta(minutes=10))
+    assert early.calls == 0
+    soon = Fake(REPORT)
+    flows.refresh(soon, path, NOW + timedelta(minutes=16))
+    assert soon.calls == 1
+    # Once a row for today is saved the hourly pace returns.
+    today = REPORT.replace("25-Nov-2026", "26-Nov-2026")
+    later = NOW + timedelta(minutes=40)
+    flows.refresh(Fake(today), path, later)
+    calm = Fake(today)
+    flows.refresh(calm, path, later + timedelta(minutes=20))
+    assert calm.calls == 0
+
+
+def test_the_evening_pace_stays_off_at_weekends_and_overnight(tmp_path):
+    path = str(tmp_path / "flows.json")
+    flows.refresh(Fake(REPORT), path, NOW)
+    saved = flows._read(path)
+    saturday = datetime(2026, 11, 28, 20, 0, tzinfo=IST)
+    assert flows._waiting_for_today(saturday, saved) is False
+    assert flows._waiting_for_today(datetime(2026, 11, 26, 23, 30, tzinfo=IST), saved) is False
+    assert flows._waiting_for_today(datetime(2026, 11, 26, 17, 0, tzinfo=IST), saved) is True
 
 
 def test_the_page_gets_only_the_newest_rows(tmp_path):

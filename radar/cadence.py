@@ -12,12 +12,13 @@ from datetime import datetime, time, timedelta, timezone
 IST = timezone(timedelta(hours=5, minutes=30))
 
 SESSION_OPEN, SESSION_CLOSE = time(9, 15), time(15, 45)  # the second is when the day's bar is treated as final
-BUSY_FROM, BUSY_TO = time(9, 0), time(16, 15)            # stock market hours plus a margin: check every 10 minutes
+BUSY_FROM, BUSY_TO = time(9, 0), time(16, 15)            # stock market hours plus a margin: check every 8 minutes
 
-BUSY_EVERY = 10       # minutes between runs while the Indian market is open
+BUSY_EVERY = 8        # minutes between runs while the Indian market is open
 EVENING_EVERY = 30    # minutes between runs on weekday evenings and nights (filings are still being published)
 WEEKEND_EVERY = 60    # minutes between runs over the weekend
-LIVE_EVERY = 12       # minutes between stock-price refreshes while the market is open
+LIVE_EVERY = 7        # minutes between stock-price refreshes while the market is open; kept below the gap
+                      # between runs (BUSY_EVERY plus about a minute of run time) so every run refreshes the prices
 IDLE_REFRESH_HOURS = 12  # outside the session, stock data is refreshed at most this often
 
 

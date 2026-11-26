@@ -118,3 +118,17 @@ def test_page_script_has_no_inline_handlers_or_network_calls(tmp_path):
     # The one network call is the page asking its own site, headers only, whether newer data has been published.
     assert code.count("fetch(") == 1 and 'fetch(location.pathname, { method: "HEAD"' in code
     assert not re.search(r"fetch\(\s*[\"']https?:", code)
+
+
+def test_site_address_follows_the_repository_name_unless_one_is_set():
+    from radar.run import site_address
+    assert site_address({"GITHUB_REPOSITORY": "Owner-X/nuvont-capital-afc"}) == "https://owner-x.github.io/nuvont-capital-afc/"
+    assert site_address({"GITHUB_REPOSITORY": "o/r", "RADAR_SITE_URL": "https://example.com/x/"}) == "https://example.com/x/"
+    assert site_address({}) == ""
+
+
+def test_the_tab_is_named_nuvont_capital_afc(tmp_path):
+    out = tmp_path / "index.html"
+    build_site({"seen": {}}, str(out), datetime(2026, 11, 26, 12, 0, tzinfo=IST))
+    assert "<title>Nuvont Capital | AFC</title>" in out.read_text()
+    assert "Click the mark to enter" not in out.read_text()

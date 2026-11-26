@@ -4,8 +4,9 @@ on:
   schedule:
     # Backup only. GitHub fires its own schedule a few times a day at best, so each run starts the next one
     # (see the last step and tick.yml). If that chain ever breaks, one of these restarts it.
-    # GitHub reads cron in UTC: 01:33-13:33 UTC = 07:03-19:03 IST. Minute 33 avoids the busy :00/:30 marks.
-    - cron: "33 1-13 * * *"
+    # GitHub reads cron in UTC. Every hour, day and night, at minute 33 to avoid the busy :00/:30 marks. A backup
+    # run while the chain is healthy only adds one extra run: the last step never starts a second wait.
+    - cron: "33 * * * *"
   workflow_dispatch:
 
 concurrency:
@@ -38,7 +39,8 @@ jobs:
           TELEGRAM_ADMIN_CHAT_ID: ${{ secrets.TELEGRAM_ADMIN_CHAT_ID }}
           ALERT_SEGMENTS: ${{ vars.ALERT_SEGMENTS || 'sme,unknown,mainboard' }}
           ALERT_MAX_AGE_DAYS: ${{ vars.ALERT_MAX_AGE_DAYS || '45' }}
-          RADAR_SITE_URL: ${{ vars.RADAR_SITE_URL || 'https://ronishmehtawork-gif.github.io/Nuvont-IPO-Platform-Tracker-/' }}
+          # No site address is set here: radar/run.py works it out from GITHUB_REPOSITORY (set by Actions), so a
+          # rename of the repository cannot leave alerts pointing at an old link.
           # WhatsApp is optional. Without the first three it stays off and Telegram carries on as before.
           WHATSAPP_TOKEN: ${{ secrets.WHATSAPP_TOKEN }}
           WHATSAPP_PHONE_ID: ${{ secrets.WHATSAPP_PHONE_ID }}

@@ -3,7 +3,7 @@
 Built by the research desk at afc | ashmavir Financial Consultants Pvt. Ltd.
 
 Watches official and news sources for new SME / mainboard IPO filings (DRHP and related updates) and posts
-alerts to a Telegram channel and, optionally, to WhatsApp. Runs free on GitHub Actions, day and night (every 10 minutes while the Indian market is open), so nothing depends on a laptop.
+alerts to a Telegram channel and, optionally, to WhatsApp. Runs free on GitHub Actions, day and night (every 8 minutes while the Indian market is open), so nothing depends on a laptop.
 
 ## What it watches
 
@@ -31,7 +31,7 @@ A company seen first in news and later in an official source gets a reply under 
 5. **Optional variables** (Settings, Secrets and variables, Actions, Variables):
    - `ALERT_SEGMENTS`: default `sme,unknown,mainboard` (all filings alert). Set it to `sme,unknown` to drop mainboard alerts
    - `ALERT_MAX_AGE_DAYS`: default `45`. A filing dated older than this is saved quietly and never alerted (see below)
-   - `RADAR_SITE_URL`: your GitHub Pages address, so alert digests can link to the searchable list
+   - The page address in alerts is worked out from the repository name (`owner.github.io/repo-name/`), so renaming the repository moves the links with it. To point alerts somewhere else, such as a custom domain, put the address in the workflow's `RADAR_SITE_URL` setting.
 6. **Web page (optional).** Settings, Pages, deploy from branch `main`, folder `/docs`.
 7. **First run.** Actions tab, "radar", Run workflow. The admin chat gets a source report.
 
@@ -146,17 +146,20 @@ market ones. So the radar no longer waits for GitHub's clock. Each `radar` run e
 
 | When (IST) | Pause between runs |
 |---|---|
-| Weekdays 09:00 to 16:15, Indian market open | 10 minutes |
+| Weekdays 09:00 to 16:15, Indian market open | 8 minutes (a new run roughly every 9, counting the run itself) |
 | Rest of the weekday, evenings and nights | 30 minutes |
 | Saturday and Sunday | 60 minutes |
 
-What a run refreshes: filings and IPO data every time; stock prices (the sector map and money flow) about every 12
-minutes while the market is open, once after 15:45 to settle the day, and otherwise at most every 12 hours; the FII
-and DII report at most once an hour. The page itself is rebuilt after each run, and an open page checks its own site every couple of minutes and
+What a run refreshes: filings and IPO data every time; stock prices (the sector map and money flow) on every run
+while the market is open, once after 15:45 to settle the day, and otherwise at most every 12 hours; the FII and DII
+report at most once an hour, and every 15 minutes on a weekday evening (16:00 to 22:00 IST) until that day's figures
+are saved. The page itself is rebuilt after each run, and an open page checks its own site every couple of minutes and
 reloads when a newer one is published. Yahoo's feeds run about 10 to 15 minutes behind the exchange.
 
 - Only one waiting job exists at a time, so the chain cannot multiply. A run that fails still starts the next one.
-- The old hourly schedule stays as a backup. If the chain ever breaks, the next scheduled run starts it again.
+- An hourly schedule, day and night, stays as a backup. If the chain ever breaks, the next scheduled run starts it
+  again. (Before the chain was added, on 26 Nov, the page relied on GitHub's schedule alone and went hours without a
+  run; the chain is what fixed that.)
 - **To stop the chain**, add a repository variable `RADAR_CHAIN` set to `off` (Settings, Secrets and variables,
   Actions, Variables). Delete it to start again by running `radar` once from the Actions tab.
 - Each run uses a few minutes of Actions time. This is a public repository, so that is free.
@@ -214,8 +217,8 @@ who ask their device for reduced motion. Addresses look like `#v=desk`, `#v=fili
 | Section | What it shows | Source | Refreshed |
 |---|---|---|---|
 | IPO Desk | Open, upcoming and recently closed issues as cards or a table. Each shows the grey market premium, price band, issue size (in crores), lot size, minimum investment, key dates (opens, closes, allotment, refunds start, demat credit, listing), lead managers (merchant bankers), registrar, sector and exchange. A calendar of the next 14 days of dates sits on top. Filters: segment, status, exchange, sector, lead manager, key dates (closing in 3 days, opening in 7, allotment in 7, listing in 7), premium, search, and sort | ipowatch.in (table and issue pages), with sector and lead managers filled from the Filings data when an issue page lacks them | Every `radar` run (see "How often it runs") |
-| Sector Outlook: sector map | Median 1D, 1W, 1M, 3M, 6M, 1Y, 2Y and YTD return of the stocks in each NSE industry as a coloured tile map, strongest first, with the stocks themselves one click away in the scorecard | NSE Nifty 500 list and Yahoo Finance daily closes | Every `radar` run: about every 12 minutes while the market is open (today's session shown as it stands), once after the close to settle the day, then left alone |
-| Sector Outlook: FII and DII activity | Cash-market buying, selling and net for foreign portfolio investors (FII / FPI) and domestic institutions (DII) for the latest day, a daily net chart and a table of the last sessions, all in crores. The exchanges call these figures provisional | The combined MSE, NSE and BSE report at msei.in. It shows one day at a time, so the radar keeps its own history in `data/flows.json` (up to 400 days kept, 90 shown) | At most once an hour; the report itself changes once a day |
+| Sector Outlook: sector map | Median 1D, 1W, 1M, 3M, 6M, 1Y, 2Y and YTD return of the stocks in each NSE industry as a coloured tile map, strongest first, with the stocks themselves one click away in the scorecard | NSE Nifty 500 list and Yahoo Finance daily closes | Every `radar` run while the market is open (today's session shown as it stands), once after the close to settle the day, then left alone |
+| Sector Outlook: FII and DII activity | Cash-market buying, selling and net for foreign portfolio investors (FII / FPI) and domestic institutions (DII) for the latest day, a daily net chart and a table of the last sessions, all in crores. The exchanges call these figures provisional | The combined MSE, NSE and BSE report at msei.in. It shows one day at a time, so the radar keeps its own history in `data/flows.json` (up to 400 days kept, 90 shown) | At most once an hour; every 15 minutes on weekday evenings until the day's figures are in. The report itself changes once a day |
 | Sector Outlook: money flow | Estimated net buying pressure per sector over 1, 5 and 20 sessions, in crores, for the NSE F&O stocks: net flow, strength (net as a share of turnover), a 20-session daily sparkline. Turnover is closing price times volume. It counts as inflow on a day the stock closes up and outflow on a day it closes down, so it is an estimate from prices and volumes, not a record of what any fund traded or of the FII and DII figures above | NSE F&O lot file and Yahoo Finance closes and volumes | Same as the sector map |
 | Sector Outlook: scorecard and indices | One table with every sector's return across all periods and its estimated money flow, opening to the stocks in each sector, plus the Nifty sector indices | Same as above, plus the NSE sector indices from Yahoo Finance | Same as above |
 

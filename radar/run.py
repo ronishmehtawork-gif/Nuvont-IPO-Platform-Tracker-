@@ -259,6 +259,17 @@ def refresh_market(state: dict, state_path: str, market_path: str, now: datetime
         print(f"market refresh failed: {type(e).__name__}", file=sys.stderr)
 
 
+def site_address(env=None) -> str:
+    """Where the dashboard lives, for the links inside alerts. RADAR_SITE_URL wins when set; otherwise it is worked out
+    from the repository (owner/name), so renaming the repository moves the links with it."""
+    env = os.environ if env is None else env
+    url = (env.get("RADAR_SITE_URL") or "").strip()
+    if url:
+        return url
+    owner, _, name = (env.get("GITHUB_REPOSITORY") or "").partition("/")
+    return f"https://{owner.lower()}.github.io/{name}/" if owner and name else ""
+
+
 def main() -> None:
     path = os.getenv("RADAR_STATE", "data/state.json")
     tg = Telegram(
@@ -276,7 +287,7 @@ def main() -> None:
     fetcher = Fetcher(snapshot_dir=os.getenv("RADAR_SNAPSHOTS", "snapshots"))
     state = st.load(path)
     now = datetime.now(IST)
-    site_url = os.getenv("RADAR_SITE_URL", "")
+    site_url = site_address()
     run_once(all_sources(), fetcher, tg, state, now, segments, site_url)
     st.save(path, state)  # save first: alerts are already out, so nothing below may cause a repeat
     # WhatsApp is a second, independent channel: it sends the alerts Telegram has just announced, one message
