@@ -41,6 +41,10 @@ button,select,input{font:inherit;color:inherit}
 .pill i{width:8px;height:8px;border-radius:50%;display:inline-block;background:var(--faint)}
 .pill.good i{background:var(--pos)} .pill.warn i{background:#f2a600} .pill.bad i{background:var(--neg)}
 .mast-note{font-size:12.5px;color:var(--muted)}
+.wa-join{display:inline-flex;align-items:center;gap:7px;border:1px solid #0b7a52;color:#0b7a52;background:var(--panel);border-radius:999px;padding:4px 13px;font-size:12.5px;font-weight:600;text-decoration:none;white-space:nowrap}
+.wa-join:hover{background:#eaf6f0}
+.wa-join[hidden]{display:none}
+.wa-join svg{width:15px;height:15px;flex:none}
 
 /* filters */
 .filters{background:var(--panel);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:30}
@@ -153,6 +157,8 @@ table.t{border-collapse:collapse;width:100%;min-width:980px}
 .lk a{font-size:12.5px;font-weight:550;text-decoration:none;border:1px solid var(--line);border-radius:6px;padding:2px 9px;color:var(--navy-2);white-space:nowrap}
 .lk a:hover{background:var(--line-2)}
 .lk a.pg{border-color:transparent;padding-left:2px;text-decoration:underline;color:var(--muted)}
+.lk a.wa{color:#0b7a52;border-color:#cfe8dc}
+.lk a.wa:hover{background:#eaf6f0}
 .more{display:flex;justify-content:center;padding:14px}
 .foot{padding:22px 0 40px;color:var(--muted);font-size:12.5px}
 .foot .src{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 10px}
@@ -339,6 +345,7 @@ table.t{border-collapse:collapse;width:100%;min-width:980px}
       <span class="brand-title"><b>IPO Filing Radar</b><small>DRHP, approval and addendum tracker for SME and mainboard issues</small></span>
     </a>
     <div class="mast-right">
+      <a class="wa-join" id="wa-join" href="#" target="_blank" rel="noopener noreferrer" hidden title="Message us on WhatsApp to be added to the alert list"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1h-9l-5 4v-4H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg><span>Get WhatsApp alerts</span></a>
       <span class="mast-note" id="alerts"></span>
       <span class="pill" id="fresh"><i></i><span>Checking</span></span>
     </div>
@@ -766,6 +773,14 @@ function renderHeatmap() {
 
 /* ---------- table ---------- */
 function badge(s) { const b = el("span", "b" + (s === "approved" ? " ok" : (s === "addendum" || s === "refiled") ? " chg" : ""), (s === "approved" ? "✓ " : s === "refiled" ? "↻ " : s === "addendum" ? "+ " : "") + STATUS[s]); return b; }
+/* The same layout the WhatsApp alert uses, so a filing can be passed on from here in one tap. */
+const NOT_YET = "Not stated yet";
+function waShare(c) {
+  const doc = [(c.docs[0] || [])[1], (c.p || [])[1]].find(safeUrl) || "Not available yet";
+  const link = location.href.split("#")[0] + "#v=filings&r=all&q=" + encodeURIComponent(c.n);
+  return ["*New DRHP Filed!*", "Company: " + c.n, "Date: " + (c.d ? fmt(c.d) : NOT_YET), "Sector: " + (c.sec || NOT_YET),
+    "Merchant banker: " + (c.b.join(", ") || NOT_YET), "DRHP: " + doc, "Nuvont website: " + link].join("\n");
+}
 function renderTable(items) {
   const k = sort.k, dir = sort.dir;
   const rows = items.slice().sort((a, b) => { const x = k === "n" ? a.n.toLowerCase() : (a.d || ""), y = k === "n" ? b.n.toLowerCase() : (b.d || ""); return (x < y ? -1 : x > y ? 1 : a.n.localeCompare(b.n)) * dir; });
@@ -787,6 +802,7 @@ function renderTable(items) {
     for (const [t, u] of c.docs) if (safeUrl(u)) { const a = el("a", null, t); a.href = u; a.target = "_blank"; a.rel = "noopener noreferrer"; lk.appendChild(a); }
     if (c.p.length && safeUrl(c.p[1])) { const a = el("a", "pg", c.p[0]); a.href = c.p[1]; a.target = "_blank"; a.rel = "noopener noreferrer"; lk.appendChild(a); }
     if (!lk.children.length) lk.appendChild(el("span", "muted", "No link yet"));
+    const wa = el("a", "wa", "Share on WhatsApp"); wa.href = "https://wa.me/?text=" + encodeURIComponent(waShare(c)); wa.target = "_blank"; wa.rel = "noopener noreferrer"; lk.appendChild(wa);
     dc.appendChild(lk); tr.appendChild(dc); tb.appendChild(tr);
   }
   const more = $("#more"); more.textContent = "";
@@ -809,6 +825,8 @@ function renderChrome() {
   p.className = "pill " + cls; p.lastChild.textContent = (cls === "bad" ? "Out of date. Updated " : "Updated ") + age + ", " + DATA.updated;
   p.title = "The radar checks the sources through the day and rebuilds this page after each check.";
   $("#alerts").textContent = DATA.alerts ? plural(DATA.alerts, "Telegram alert") + " sent" : "";
+  const wj = $("#wa-join"), wurl = DATA.whatsapp && DATA.whatsapp.join;
+  if (wj && safeUrl(wurl)) { wj.href = wurl; wj.hidden = false; }
   const src = $("#src"); src.textContent = "";
   for (const h of DATA.health) { const s = el("span", "pill " + (h.ok ? "good" : "warn")); s.appendChild(el("i")); s.appendChild(el("span", null, h.name + (h.ok ? "" : ", having trouble"))); src.appendChild(s); }
 }

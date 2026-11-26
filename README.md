@@ -3,7 +3,7 @@
 Built by the research desk at afc | ashmavir Financial Consultants Pvt. Ltd.
 
 Watches official and news sources for new SME / mainboard IPO filings (DRHP and related updates) and posts
-alerts to a Telegram channel. Runs free on GitHub Actions, hourly from about 7 AM to 7 PM IST (resting overnight), so nothing depends on a laptop.
+alerts to a Telegram channel and, optionally, to WhatsApp. Runs free on GitHub Actions, hourly from about 7 AM to 7 PM IST (resting overnight), so nothing depends on a laptop.
 
 ## What it watches
 
@@ -34,6 +34,95 @@ A company seen first in news and later in an official source gets a reply under 
    - `RADAR_SITE_URL`: your GitHub Pages address, so alert digests can link to the searchable list
 6. **Web page (optional).** Settings, Pages, deploy from branch `main`, folder `/docs`.
 7. **First run.** Actions tab, "radar", Run workflow. The admin chat gets a source report.
+
+## WhatsApp alerts (optional)
+
+A second channel beside Telegram, built the same way and sending the same alerts. It stays off until the secrets below
+are set, and nothing about Telegram changes either way. It uses Meta's official WhatsApp Business Cloud API.
+
+**What a subscriber receives** (the layout from the notification note):
+
+```
+New DRHP Filed!
+
+Company: Example Industries Limited
+Date: 25 Nov 2026
+Sector: Engineering
+Merchant banker: Example Capital Private Limited
+DRHP: https://.../example-drhp.pdf
+Nuvont website: https://.../#v=filings&r=all&q=Example%20Industries%20Limited
+
+This is an automated alert from afc | ashmavir based on public filings. It is not investment advice.
+afc | ashmavir IPO Filing Radar
+```
+
+Other events (DRHP refiled, approval, addendum, issue news) use a second template with the same lines and an
+`Update:` line on top. A fact that is not known yet reads `Not stated yet`. The website line opens that company's
+row on the Filings page.
+
+**How it connects to the website.** The page shows a **Get WhatsApp alerts** button (when `WHATSAPP_JOIN_NUMBER` or
+`WHATSAPP_JOIN_URL` is set) and every filing has a **Share on WhatsApp** link that writes the same layout. Messages
+link back to the page, and the button links to the WhatsApp number people message to ask to be added.
+
+### Set-up
+
+1. **Meta account.** At developers.facebook.com create an app of type Business and add the WhatsApp product. Meta gives
+   a free test number that can message up to five numbers you verify, enough to try everything. For real use, add your
+   own number to a WhatsApp Business Account and complete business verification.
+2. **Two ids.** On the app's WhatsApp, API Setup page copy the **Phone number ID** and the **WhatsApp Business Account ID**.
+3. **A token that does not expire.** In Meta Business Settings, Users, System users, add a system user, assign it the
+   WhatsApp account with full control, and generate a token with the permissions `whatsapp_business_messaging` and
+   `whatsapp_business_management`. The 24-hour token on the API Setup page stops working after a day.
+4. **GitHub secrets** (Settings, Secrets and variables, Actions):
+   - `WHATSAPP_TOKEN`: the token from step 3
+   - `WHATSAPP_PHONE_ID`: the Phone number ID
+   - `WHATSAPP_BUSINESS_ID`: the Business Account ID (only the set-up helper uses it)
+   - `WHATSAPP_RECIPIENTS`: the subscribers' numbers, separated by commas or new lines, with country code
+     (`+91 98765 43210`). A bare 10-digit number is read as Indian.
+5. **Variables** (all optional): `WHATSAPP_JOIN_NUMBER` (the number people message to join; it appears on the page, so
+   use the business number), or `WHATSAPP_JOIN_URL` for a `wa.me` link of your own, `WHATSAPP_TEMPLATE_DRHP`
+   (default `new_drhp_filed`), `WHATSAPP_TEMPLATE_UPDATE` (default `filing_update`), `WHATSAPP_API_VERSION` (default `v23.0`).
+6. **Templates.** Actions, **whatsapp-check**, Run workflow:
+   - `preview` sends both layouts, filled with sample facts, to the Telegram admin chat. No Meta account needed.
+   - `create_templates` submits both templates to Meta. The text is fixed in `radar/whatsapp.py`
+     (`HEADER`, `BODY`, `FOOTER`), category Utility, language English. Meta answers in minutes to a day.
+   - `status` shows whether the token works and whether each template is `APPROVED`.
+   - `send_test` sends both templates, with sample facts, to the first recipient only.
+7. Once `status` says `APPROVED`, the next hourly run sends real alerts.
+
+Changing any template word means a new template and a new approval, so agree the wording first. If Meta says a
+template has too many variables for its length, add a sentence of fixed text to `BODY`.
+
+### How delivery behaves
+
+- It sends only alerts Telegram has just announced, once per recipient. Filings found before WhatsApp was switched on,
+  baseline and backfill entries, and anything older than 24 hours are never sent.
+- A recipient who cannot receive it (not on WhatsApp, or not on the test number's list) is skipped quietly. A
+  temporary Meta error is retried on later runs for up to six runs, then dropped.
+- A bad or expired token, a locked account or a payment problem stops WhatsApp and sends **one** note to the Telegram
+  admin chat, and one more when it recovers. A template that is not approved yet blocks only that template. Alerts
+  from the last 24 hours are sent once it is fixed.
+- Throttling by Meta pauses the run and continues next hour. Messages per run are capped at 200.
+- Progress is saved after every alert, so a killed run does not repeat messages.
+- Phone numbers and the token are never printed or stored. The public state file keeps only a short keyed hash per
+  recipient. If the token is replaced, alerts from the last 24 hours that were only partly delivered may be sent again.
+- `data/diagnostics.json` has a `whatsapp` section: counts sent, retried and undeliverable, error codes, and which
+  template is down.
+- The catch-up workflow stays Telegram only, because it announces older filings.
+
+### Subscribers and consent
+
+Meta only allows business-started messages to people who agreed to them. The button on the page sends people to your
+WhatsApp number with a ready message asking to join. Add their number to `WHATSAPP_RECIPIENTS` once you have that
+message. GitHub Actions cannot receive WhatsApp replies on its own, so adding and removing numbers is manual, and a
+person who asks to stop should be removed from the secret the same day.
+
+### Cost
+
+Meta charges for each delivered template message, by category and country. An alert to 20 subscribers, 5 times a
+day, is 100 messages a day, so check Meta's current India rate card before going live. If Meta decides a template is
+Marketing instead of Utility, it costs more per message. The app account also needs a payment method added in Meta
+Business Settings.
 
 ## How a run behaves
 
@@ -85,7 +174,8 @@ python -m radar.run   # without a token it prints messages instead of sending th
 `docs/index.html` is rebuilt on every run and served by GitHub Pages. It opens on the last 90 days, with filters for
 period, segment, exchange, status and sector, a sector heatmap, charts of filings over time, listing venues, sectors,
 lead managers and cities, and a searchable table with document links and a CSV download. The page is one static file:
-it makes no network calls when opened.
+it makes no network calls when opened. With a WhatsApp join link set, the header shows **Get WhatsApp alerts**, and
+each filing has a **Share on WhatsApp** link (see above).
 
 The page has five tabs, in this order. **IPO Desk** opens first. **Filings** is the logbook view described above. The
 other three are built from market data.
@@ -136,5 +226,7 @@ Run the market job by hand from the Actions tab: choose **market**, then **Run w
 - **Workflows** run with the least permission they need (`contents: read`, and `contents: write` only where state is
   committed). Third-party actions are pinned to exact commit SHAs, and Dependabot proposes updates weekly.
 - **The bot** should be an administrator of the channel with only the "Post messages" right.
+- **WhatsApp.** The token and recipient list are Actions secrets only. The page carries nothing but the join link
+  (a `wa.me` address, checked before it is used). Recipients are never written to the repo.
 - **Public page.** GitHub Pages on a public repo is visible to anyone with the link. The page is marked `noindex`, but
   keep the repo private (Pages then needs a paid plan) if the content should not be public.

@@ -1,0 +1,50 @@
+name: whatsapp-check
+
+# Manual. Set-up helper for the WhatsApp channel. The public log only gets short yes/no lines;
+# anything more detailed goes to the private Telegram admin chat.
+#   preview           sample messages to the admin chat (no Meta account needed)
+#   status            token, phone number ID and template approval status
+#   create_templates  submit the two message templates to Meta for approval
+#   send_test         send both templates, with sample facts, to the first recipient only
+on:
+  workflow_dispatch:
+    inputs:
+      action:
+        description: What to do
+        type: choice
+        default: preview
+        options:
+          - preview
+          - status
+          - create_templates
+          - send_test
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -r requirements.txt
+      - run: python -m radar.whatsapp_check
+        env:
+          WA_ACTION: ${{ inputs.action }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHANNEL: ${{ secrets.TELEGRAM_CHANNEL }}
+          TELEGRAM_ADMIN_CHAT_ID: ${{ secrets.TELEGRAM_ADMIN_CHAT_ID }}
+          WHATSAPP_TOKEN: ${{ secrets.WHATSAPP_TOKEN }}
+          WHATSAPP_PHONE_ID: ${{ secrets.WHATSAPP_PHONE_ID }}
+          WHATSAPP_BUSINESS_ID: ${{ secrets.WHATSAPP_BUSINESS_ID }}
+          WHATSAPP_RECIPIENTS: ${{ secrets.WHATSAPP_RECIPIENTS }}
+          WHATSAPP_TEMPLATE_DRHP: ${{ vars.WHATSAPP_TEMPLATE_DRHP }}
+          WHATSAPP_TEMPLATE_UPDATE: ${{ vars.WHATSAPP_TEMPLATE_UPDATE }}
+          WHATSAPP_API_VERSION: ${{ vars.WHATSAPP_API_VERSION }}
+          WHATSAPP_JOIN_NUMBER: ${{ vars.WHATSAPP_JOIN_NUMBER }}
+          WHATSAPP_JOIN_URL: ${{ vars.WHATSAPP_JOIN_URL }}

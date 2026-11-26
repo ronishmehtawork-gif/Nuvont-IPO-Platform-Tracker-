@@ -166,7 +166,7 @@ def _script_hash(html: str) -> str:
 
 
 def build_site(state: dict, out_path: str, now: datetime, market: dict | None = None, ipos: dict | None = None,
-               commodities: dict | None = None) -> None:
+               commodities: dict | None = None, whatsapp_join: str = "") -> None:
     updated = now.strftime("%d %b %Y, %I:%M %p IST").lstrip("0")
     companies = build_companies(state)
     payload = {
@@ -179,6 +179,7 @@ def build_site(state: dict, out_path: str, now: datetime, market: dict | None = 
         "market": market,
         "ipos": enrich_ipos(ipos["items"], companies) if ipos and ipos.get("items") is not None else None,
         "commodities": commodities,
+        "whatsapp": {"join": whatsapp_join} if whatsapp_join.startswith("https://") else None,
     }
     html = TEMPLATE.read_text(encoding="utf-8")
     html = html.replace("__SCRIPT_HASH__", _script_hash(html))

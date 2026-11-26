@@ -37,6 +37,9 @@ jobs:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHANNEL: ${{ secrets.TELEGRAM_CHANNEL }}
           TELEGRAM_ADMIN_CHAT_ID: ${{ secrets.TELEGRAM_ADMIN_CHAT_ID }}
+          # Only for the website's "Get WhatsApp alerts" button, so rebuilding the page here keeps it.
+          WHATSAPP_JOIN_NUMBER: ${{ vars.WHATSAPP_JOIN_NUMBER }}
+          WHATSAPP_JOIN_URL: ${{ vars.WHATSAPP_JOIN_URL }}
 
       - name: Save data
         if: always()

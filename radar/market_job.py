@@ -11,6 +11,7 @@ from .http import Fetcher
 from .run import IST
 from .site import build_site
 from .telegram import Telegram, esc
+from .whatsapp import join_link
 
 
 def main() -> None:
@@ -31,7 +32,8 @@ def main() -> None:
     state = st.load(os.getenv("RADAR_STATE", "data/state.json"))
     ipos = ipowatch.load(os.getenv("RADAR_IPOS", "data/ipos.json"))
     prices = commodities.load(os.getenv("RADAR_COMMODITIES", "data/commodities.json"))
-    build_site(state, os.getenv("RADAR_SITE", "docs/index.html"), now, market=payload, ipos=ipos, commodities=prices)
+    build_site(state, os.getenv("RADAR_SITE", "docs/index.html"), now, market=payload, ipos=ipos, commodities=prices,
+               whatsapp_join=join_link())
     if not info["ok"] and not payload:
         sys.exit(1)  # nothing to show at all: fail the run so it is noticed
 

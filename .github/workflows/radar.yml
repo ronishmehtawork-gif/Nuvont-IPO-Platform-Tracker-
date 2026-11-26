@@ -37,6 +37,15 @@ jobs:
           ALERT_SEGMENTS: ${{ vars.ALERT_SEGMENTS || 'sme,unknown,mainboard' }}
           ALERT_MAX_AGE_DAYS: ${{ vars.ALERT_MAX_AGE_DAYS || '45' }}
           RADAR_SITE_URL: ${{ vars.RADAR_SITE_URL || 'https://ronishmehtawork-gif.github.io/Nuvont-IPO-Platform-Tracker-/' }}
+          # WhatsApp is optional. Without the first three it stays off and Telegram carries on as before.
+          WHATSAPP_TOKEN: ${{ secrets.WHATSAPP_TOKEN }}
+          WHATSAPP_PHONE_ID: ${{ secrets.WHATSAPP_PHONE_ID }}
+          WHATSAPP_RECIPIENTS: ${{ secrets.WHATSAPP_RECIPIENTS }}
+          WHATSAPP_TEMPLATE_DRHP: ${{ vars.WHATSAPP_TEMPLATE_DRHP }}
+          WHATSAPP_TEMPLATE_UPDATE: ${{ vars.WHATSAPP_TEMPLATE_UPDATE }}
+          WHATSAPP_API_VERSION: ${{ vars.WHATSAPP_API_VERSION }}
+          WHATSAPP_JOIN_NUMBER: ${{ vars.WHATSAPP_JOIN_NUMBER }}
+          WHATSAPP_JOIN_URL: ${{ vars.WHATSAPP_JOIN_URL }}
 
       - name: Keep page snapshots for debugging
         if: always()

@@ -15,6 +15,7 @@ from .models import ALERT_EVENTS, SEGMENT_RANK, SourceResult, label
 from .sectors import fetch_sector_heatmap
 from .site import build_site
 from .sources import all_sources
+from .whatsapp import WhatsApp, join_link
 from .telegram import (
     Telegram,
     esc,
@@ -255,8 +256,16 @@ def main() -> None:
     fetcher = Fetcher(snapshot_dir=os.getenv("RADAR_SNAPSHOTS", "snapshots"))
     state = st.load(path)
     now = datetime.now(IST)
-    run_once(all_sources(), fetcher, tg, state, now, segments, os.getenv("RADAR_SITE_URL", ""))
+    site_url = os.getenv("RADAR_SITE_URL", "")
+    run_once(all_sources(), fetcher, tg, state, now, segments, site_url)
     st.save(path, state)  # save first: alerts are already out, so nothing below may cause a repeat
+    # WhatsApp is a second, independent channel: it sends the alerts Telegram has just announced, one message
+    # per recipient, and saves its own progress after each alert. Whatever happens there, Telegram is done.
+    wa = WhatsApp.from_env()
+    wa_info = wa.deliver(state, now, site_url, admin=tg, checkpoint=lambda: st.save(path, state))
+    st.save(path, state)
+    diag.record("whatsapp", wa_info)
+    print("whatsapp:", wa_info)
     try:
         sectors = fetch_sector_heatmap(fetcher, now)
         if sectors["groups"]:
@@ -271,7 +280,8 @@ def main() -> None:
     diag.record("commodities", price_info)
     print("commodities:", {k: v for k, v in price_info.items() if k not in ("not_fetched", "left_out")})
     build_site(state, os.getenv("RADAR_SITE", "docs/index.html"), now,
-               market=market_data.load(os.getenv("RADAR_MARKET", "data/market.json")), ipos=ipos, commodities=prices)
+               market=market_data.load(os.getenv("RADAR_MARKET", "data/market.json")), ipos=ipos, commodities=prices,
+               whatsapp_join=join_link())
 
 
 if __name__ == "__main__":
