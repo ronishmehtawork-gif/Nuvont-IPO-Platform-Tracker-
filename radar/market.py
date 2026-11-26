@@ -248,14 +248,38 @@ def _median(values: list[float]) -> float | None:
     return round(statistics.median(values), 2) if values else None
 
 
-def session_calendar(series: dict[str, dict]) -> list[date]:
-    """Trading sessions as the stocks themselves show them. The index feed can lag a day or two behind."""
+RECENT_DAYS = 45  # completeness is demanded of recent dates only; older history has fewer stocks (later listings)
+
+
+def _bar_counts(series: dict[str, dict]) -> dict[date, int]:
     counts: dict[date, int] = {}
     for closes in series.values():
         for d in closes:
             counts[d] = counts.get(d, 0) + 1
-    need = MIN_SESSION_SHARE * len(series)
-    return sorted(d for d, c in counts.items() if c >= need)
+    return counts
+
+
+def _recent_cut(counts: dict[date, int], need: float, today: date | None) -> date | None:
+    seen = [d for d, c in counts.items() if c >= need]
+    anchor = today or (max(seen) if seen else None)
+    return anchor - timedelta(days=RECENT_DAYS) if anchor else None
+
+
+def session_calendar(series: dict[str, dict], today: date | None = None) -> list[date]:
+    """Trading sessions as the stocks themselves show them. A recent date counts only when almost every stock has a
+    close on it, so a day the price feed only half filled is left out instead of blocking the whole update."""
+    counts = _bar_counts(series)
+    need, full = MIN_SESSION_SHARE * len(series), MIN_COVERAGE * len(series)
+    cut = _recent_cut(counts, need, today)
+    return sorted(d for d, c in counts.items() if c >= (full if cut and d >= cut else need))
+
+
+def partial_sessions(series: dict[str, dict], today: date | None = None) -> list[date]:
+    """Recent dates that look like trading days but that too many stocks have no close for (a hole in the feed)."""
+    counts = _bar_counts(series)
+    need, full = MIN_SESSION_SHARE * len(series), MIN_COVERAGE * len(series)
+    cut = _recent_cut(counts, need, today)
+    return sorted(d for d, c in counts.items() if cut and d >= cut and need <= c < full)
 
 
 def coverage_report(series: dict[str, dict]) -> dict:
@@ -267,20 +291,31 @@ def coverage_report(series: dict[str, dict]) -> dict:
             counts[d] = counts.get(d, 0) + 1
     recent = sorted(counts)[-5:]
     out: dict = {"bars_per_date": {d.isoformat(): counts[d] for d in recent}, "stocks_with_prices": len(series)}
-    if len(recent) >= 2:
-        missing = [(sym, sorted(c)[-3:]) for sym, c in series.items() if recent[-2] not in c][:4]
-        if missing:
-            out["missing_prev_examples"] = [f"{sym}: last bars {', '.join(d.isoformat() for d in days)}" for sym, days in missing]
+    if recent:
+        weak = min(recent, key=lambda d: counts[d])  # the recent date the most stocks have no close for
+        if counts[weak] < len(series):
+            missing = [(sym, sorted(c)[-3:]) for sym, c in series.items() if weak not in c][:4]
+            out["missing_prev_examples"] = [
+                f"{sym}: no bar on {weak.isoformat()}, last bars {', '.join(d.isoformat() for d in days)}"
+                for sym, days in missing]
     return out
 
 
 def build_market(universe: list[dict], series: dict[str, dict], now: datetime,
                  volumes: dict[str, dict] | None = None, fno: list[str] | None = None) -> dict:
     """All the arithmetic. Pure function: same inputs, same output."""
-    calendar = session_calendar(series)
-    today = now.astimezone(IST).date()
-    if calendar and calendar[-1] == today and now.astimezone(IST).time() < dtime(15, 45):
-        calendar = calendar[:-1]  # today's bar is still forming; use the last finished session
+    ist_now = now.astimezone(IST)
+    today = ist_now.date()
+    calendar = session_calendar(series, today)
+    gaps = partial_sessions(series, today)
+    live = False
+    if calendar and calendar[-1] == today and ist_now.time() < dtime(15, 45):
+        # Today's session is still running. Once nearly every stock has a bar for it, show it as a live (delayed)
+        # view; in the first minutes, or when the feed is still thin, use the last finished session instead.
+        if ist_now.time() >= dtime(9, 30):
+            live = True
+        else:
+            calendar = calendar[:-1]
     if len(calendar) < 100:
         raise MarketError(f"only {len(calendar)} trading sessions found in the stock prices")
     asof = calendar[-1]
@@ -347,8 +382,15 @@ def build_market(universe: list[dict], series: dict[str, dict], now: datetime,
 
     flow = build_flow(grid, volumes or {}, calendar, meta, fno or [], asof)
 
+    flow_live = flow
+    if flow_live:
+        flow_live["live"] = live
+    recent = calendar[-10] if len(calendar) >= 10 else calendar[0]
     return {
         "asof": asof.isoformat(),
+        "updated": ist_now.isoformat(timespec="seconds"),
+        "live": live,
+        "gaps": [d.isoformat() for d in gaps if recent < d < asof],  # dates the feed skipped for many stocks
         "universe": len(universe),
         "priced": len(grid),
         "horizons": HORIZON_KEYS,
@@ -488,7 +530,7 @@ def refresh(make_fetcher, market_path: str, universe_path: str, now: datetime,
         except MarketError as e:
             info["fno_note"] = str(e)
         series, volumes, failures, examples = fetch_series(symbols, make_fetcher, started + BUDGET_SECONDS)
-        info["stock_last_sessions"] = [d.isoformat() for d in session_calendar(series)[-3:]]
+        info["stock_last_sessions"] = [d.isoformat() for d in session_calendar(series, now.astimezone(IST).date())[-3:]]
         info.update(coverage_report(series))
         info["fetch_failures"] = failures
         if examples:
@@ -499,7 +541,8 @@ def refresh(make_fetcher, market_path: str, universe_path: str, now: datetime,
         info["flow"] = {"stocks": flow["count"], "listed": flow["listed"]} if flow else "not built"
         validate(payload, previous)
         _write_json(market_path, payload)
-        info.update(ok=True, asof=payload["asof"], universe=payload["universe"], priced=payload["priced"],
+        info.update(ok=True, asof=payload["asof"], live=payload["live"], gaps=payload["gaps"],
+                    universe=payload["universe"], priced=payload["priced"],
                     dropped=payload["dropped"], note="saved")
         return payload, info
     except MarketError as e:

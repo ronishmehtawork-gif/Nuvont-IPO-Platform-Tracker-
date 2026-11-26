@@ -111,15 +111,59 @@ def test_clusters_and_returns_are_exact():
     assert stock[3][0] == 10.0 and len(stock[3]) == len(m.HORIZON_KEYS)
 
 
-def test_todays_unfinished_bar_is_ignored():
-    uni, series, nifty, cal = make_market()
+def with_today(series, nifty=None, price=101.0, share=1.0):
     today = date(2026, 11, 26)
-    for s in series.values():
-        s[today] = 101.0
-    nifty[today] = 99999.0
-    during = datetime(2026, 11, 26, 11, 0, tzinfo=m.IST)
-    assert m.build_market(uni, series, during)["asof"] == "2026-11-25"
-    assert m.build_market(uni, series, NOW)["asof"] == "2026-11-26"
+    for i, s in enumerate(series.values()):
+        if i < share * len(series):
+            s[today] = price
+
+
+def test_a_running_session_is_shown_live_and_the_finished_one_is_final():
+    uni, series, nifty, cal = make_market()
+    with_today(series)
+    live = m.build_market(uni, series, datetime(2026, 11, 26, 11, 0, tzinfo=m.IST))
+    assert live["asof"] == "2026-11-26" and live["live"] is True and live["updated"].startswith("2026-11-26T11:00")
+    assert live["clusters"][0]["med"]["1D"] == 1.0  # today's move so far against yesterday's close
+    final = m.build_market(uni, series, datetime(2026, 11, 26, 16, 0, tzinfo=m.IST))
+    assert final["asof"] == "2026-11-26" and final["live"] is False
+
+
+def test_just_before_the_open_or_with_a_thin_feed_the_last_finished_session_is_used():
+    uni, series, nifty, cal = make_market()
+    with_today(series)
+    assert m.build_market(uni, series, datetime(2026, 11, 26, 9, 5, tzinfo=m.IST))["asof"] == "2026-11-25"
+    uni, series, nifty, cal = make_market()
+    with_today(series, share=0.5)  # only half the stocks have traded yet
+    out = m.build_market(uni, series, datetime(2026, 11, 26, 11, 0, tzinfo=m.IST))
+    assert out["asof"] == "2026-11-25" and out["live"] is False
+
+
+def test_a_session_the_price_feed_only_half_filled_is_skipped_not_fatal():
+    """The real case: 25 Nov had a close for only 62% of the stocks. The page used to stay stuck on 23 Nov."""
+    def mutate(series, cal):
+        for i, s in enumerate(series.values()):
+            if i % 8 >= 5:
+                del s[cal[-1]]  # 3 of every 8 stocks (37.5%) have no close on 25 Nov
+    uni, series, nifty, cal = make_market(mutate=mutate)
+    with_today(series)
+    out = m.build_market(uni, series, datetime(2026, 11, 26, 11, 0, tzinfo=m.IST))
+    assert out["asof"] == "2026-11-26" and out["gaps"] == ["2026-11-25"] and out["priced"] == 420
+    assert out["clusters"][0]["med"]["1D"] == 1.0
+    # today's bar missing too: fall back to the last complete session instead of failing
+    uni, series, nifty, cal = make_market(mutate=mutate)
+    out = m.build_market(uni, series, NOW)
+    assert out["asof"] == "2026-11-24" and out["gaps"] == []
+
+
+def test_session_coverage_report_names_the_gap():
+    def mutate(series, cal):
+        for i, s in enumerate(series.values()):
+            if i % 8 >= 5:
+                del s[cal[-1]]
+    uni, series, nifty, cal = make_market(mutate=mutate)
+    rep = m.coverage_report(series)
+    assert rep["bars_per_date"]["2026-11-25"] == 264 and rep["bars_per_date"]["2026-11-24"] == 420
+    assert rep["missing_prev_examples"][0].startswith("STK005: no bar on 2026-11-25")
 
 
 # ----------------------------------------------------------------------------- checks

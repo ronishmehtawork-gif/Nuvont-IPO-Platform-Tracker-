@@ -2,8 +2,9 @@ name: radar
 
 on:
   schedule:
-    # Hourly from about 7 AM to 7 PM IST, then a 12-hour rest. GitHub reads cron in UTC:
-    # 01:33-13:33 UTC = 07:03-19:03 IST (13 runs a day). Minute 33 avoids the busy :00/:30 marks.
+    # Backup only. GitHub fires its own schedule a few times a day at best, so each run starts the next one
+    # (see the last step and tick.yml). If that chain ever breaks, one of these restarts it.
+    # GitHub reads cron in UTC: 01:33-13:33 UTC = 07:03-19:03 IST. Minute 33 avoids the busy :00/:30 marks.
     - cron: "33 1-13 * * *"
   workflow_dispatch:
 
@@ -13,11 +14,12 @@ concurrency:
 
 permissions:
   contents: write
+  actions: write   # to start the next run through tick.yml
 
 jobs:
   run:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
 
@@ -74,4 +76,21 @@ jobs:
             done
             echo "Could not save after 3 tries" >&2
             exit 1
+          fi
+
+      # Keeps the radar going without depending on GitHub's schedule: start one waiting job (tick.yml) that starts
+      # the next run after the pause chosen in radar/cadence.py. Only one wait exists at a time. To stop the chain,
+      # set the repository variable RADAR_CHAIN to off; the backup schedule above then runs hourly as before.
+      - name: Start the next run
+        if: always() && vars.RADAR_CHAIN != 'off'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          waiting=$(gh run list --workflow tick.yml --status in_progress --json databaseId --jq length)
+          queued=$(gh run list --workflow tick.yml --status queued --json databaseId --jq length)
+          if [ "$((waiting + queued))" -gt 0 ]; then
+            echo "A wait is already running"
+          else
+            gh workflow run tick.yml --ref "$GITHUB_REF_NAME" -f minutes="$(python -m radar.cadence)"
           fi

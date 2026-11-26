@@ -31,16 +31,19 @@ button,select,input{font:inherit;color:inherit}
 .mast{background:var(--panel);box-shadow:inset 0 -3px 0 var(--gold)}
 .mast-in{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-top:14px;padding-bottom:17px;flex-wrap:wrap}
 .brand{display:flex;align-items:center;gap:16px;text-decoration:none;color:inherit;min-width:0}
-.brand img{display:block;height:44px;width:auto}
+.brand-logos{display:flex;align-items:center;gap:16px;flex:none}
+.brand img{display:block;width:auto}
+.logo-afc{height:44px}
+.logo-nuvont{height:23px}
 .brand-sep{width:1px;height:34px;background:var(--line)}
 .brand-title{display:flex;flex-direction:column;min-width:0}
 .brand-title b{font-size:19px;line-height:1.2;font-weight:650;color:var(--navy);letter-spacing:-.01em}
-.brand-title small{font-size:12.5px;color:var(--muted)}
+.brand-title small{font-size:12.5px;color:var(--muted);max-width:300px;line-height:1.35}
 .mast-right{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
 .pill{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line);border-radius:999px;padding:4px 11px;font-size:12.5px;font-weight:550;background:var(--panel);white-space:nowrap}
 .pill i{width:8px;height:8px;border-radius:50%;display:inline-block;background:var(--faint)}
 .pill.good i{background:var(--pos)} .pill.warn i{background:#f2a600} .pill.bad i{background:var(--neg)}
-.mast-note{font-size:12.5px;color:var(--muted)}
+.alerts-note:empty{display:none}
 .wa-join{display:inline-flex;align-items:center;gap:7px;border:1px solid #0b7a52;color:#0b7a52;background:var(--panel);border-radius:999px;padding:4px 13px;font-size:12.5px;font-weight:600;text-decoration:none;white-space:nowrap}
 .wa-join:hover{background:#eaf6f0}
 .wa-join[hidden]{display:none}
@@ -308,7 +311,10 @@ table.t{border-collapse:collapse;width:100%;min-width:980px}
   .seg{max-width:100%;overflow-x:auto}
   .mast-in{padding-top:12px;padding-bottom:14px;gap:10px}
   .brand{gap:12px;width:100%}
-  .brand img{height:34px} .brand-sep{display:none} .brand-title b{font-size:17px} .brand-title small{display:none}
+  .brand{flex-wrap:wrap;row-gap:8px}
+  .brand-logos{gap:12px;width:100%}
+  .logo-afc{height:34px} .logo-nuvont{height:17px}
+  .brand-sep-title{display:none} .brand-title b{font-size:17px} .brand-title small{display:none}
   .mast-right{width:100%;justify-content:space-between;gap:8px}
   .pill{white-space:normal;line-height:1.35}
   .kpis{grid-template-columns:repeat(2,minmax(0,1fr))}
@@ -339,14 +345,17 @@ table.t{border-collapse:collapse;width:100%;min-width:980px}
 <body>
 <header class="mast">
   <div class="wrap mast-in">
-    <a class="brand" href="./" aria-label="afc | ashmavir Financial Consultants, IPO Filing Radar">
-      <img src="assets/afc-ashmavir-logo.png" alt="afc | ashmavir Financial Consultants Pvt. Ltd">
-      <span class="brand-sep" aria-hidden="true"></span>
+    <a class="brand" href="./" aria-label="afc | ashmavir Financial Consultants and Nuvont Capital, IPO Filing Radar">
+      <span class="brand-logos">
+        <img class="logo-afc" src="assets/afc-ashmavir-logo.png" alt="afc | ashmavir Financial Consultants Pvt. Ltd">
+        <span class="brand-sep" aria-hidden="true"></span>
+        <img class="logo-nuvont" src="assets/nuvont-capital-logo.png" alt="Nuvont Capital">
+      </span>
+      <span class="brand-sep brand-sep-title" aria-hidden="true"></span>
       <span class="brand-title"><b>IPO Filing Radar</b><small>DRHP, approval and addendum tracker for SME and mainboard issues</small></span>
     </a>
     <div class="mast-right">
       <a class="wa-join" id="wa-join" href="#" target="_blank" rel="noopener noreferrer" hidden title="Message us on WhatsApp to be added to the alert list"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1h-9l-5 4v-4H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg><span>Get WhatsApp alerts</span></a>
-      <span class="mast-note" id="alerts"></span>
       <span class="pill" id="fresh"><i></i><span>Checking</span></span>
     </div>
   </div>
@@ -505,9 +514,10 @@ table.t{border-collapse:collapse;width:100%;min-width:980px}
 
 <footer class="wrap foot">
   <div class="src" id="src"></div>
+  <p class="alerts-note" id="alerts"></p>
   <p>Filings are compiled from public sources and shown as published. Check the official document before relying on any item. This page is for research and is not investment advice.</p>
   <p>Sector heatmap and sector flow are worked out from the NSE Nifty 500 and F&amp;O stock lists with daily prices and volumes from Yahoo Finance, once a day after the market closes. Commodity prices are futures prices from Yahoo Finance. IPO dates, lead managers, sectors and grey market premiums come from ipowatch.in and are unofficial. Data can be delayed or wrong.</p>
-  <p>afc | ashmavir Financial Consultants Pvt. Ltd. Research desk.</p>
+  <p>afc | ashmavir Financial Consultants Pvt. Ltd. and Nuvont Capital. Research desk.</p>
 </footer>
 <div class="tip" id="tip" role="tooltip"></div>
 

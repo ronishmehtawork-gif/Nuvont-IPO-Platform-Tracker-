@@ -6,7 +6,7 @@ import sys
 from datetime import date, datetime, timedelta
 from zoneinfo import ZoneInfo
 
-from . import commodities, diag, ipowatch
+from . import cadence, commodities, diag, ipowatch
 from . import market as market_data
 from . import state as st
 from .documents import exchange_doc_label, find_pdf_links
@@ -239,6 +239,26 @@ def _update_health(results, state, tg, stamp) -> None:
             )
 
 
+def refresh_market(state: dict, state_path: str, market_path: str, now: datetime, tg) -> None:
+    """Refresh the stock prices behind the heatmap and sector flow when they are due (see cadence.market_due):
+    every few minutes while the market is open, once after the close, and now and then otherwise.
+    A failure keeps the last good data and tells the admin chat once a day."""
+    try:
+        if not cadence.market_due(now, market_data.load(market_path)):
+            print("market: not due")
+            return
+        _, info = market_data.refresh(lambda: Fetcher(), market_path, os.getenv("RADAR_UNIVERSE", "data/universe.json"), now)
+        diag.record("market", info)
+        print("market:", {k: v for k, v in info.items() if k not in ("dropped", "bars_per_date", "missing_prev_examples")})
+        day = now.astimezone(IST).date().isoformat()
+        if not info["ok"] and state.get("market_note") != day and tg.enabled:
+            tg.send_admin(f"<b>Market data problem</b>\n{esc(info['note'])[:400]}")
+            state["market_note"] = day
+            st.save(state_path, state)
+    except Exception as e:  # noqa: BLE001 - the stock pages must never stop filings, alerts or the page build
+        print(f"market refresh failed: {type(e).__name__}", file=sys.stderr)
+
+
 def main() -> None:
     path = os.getenv("RADAR_STATE", "data/state.json")
     tg = Telegram(
@@ -279,8 +299,10 @@ def main() -> None:
     prices, price_info = commodities.refresh(lambda: Fetcher(), os.getenv("RADAR_COMMODITIES", "data/commodities.json"), now)
     diag.record("commodities", price_info)
     print("commodities:", {k: v for k, v in price_info.items() if k not in ("not_fetched", "left_out")})
+    market_path = os.getenv("RADAR_MARKET", "data/market.json")
+    refresh_market(state, path, market_path, now, tg)
     build_site(state, os.getenv("RADAR_SITE", "docs/index.html"), now,
-               market=market_data.load(os.getenv("RADAR_MARKET", "data/market.json")), ipos=ipos, commodities=prices,
+               market=market_data.load(market_path), ipos=ipos, commodities=prices,
                whatsapp_join=join_link())
 
 

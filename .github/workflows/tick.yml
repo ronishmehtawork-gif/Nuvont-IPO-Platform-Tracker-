@@ -1,0 +1,33 @@
+name: tick
+
+# Waits, then starts the next radar run. GitHub's own schedule fires only a few times a day, so the radar runs
+# itself in a chain: radar -> tick (this wait) -> radar. Each radar run starts one wait, and only if none exists.
+# It does nothing else, and uses no secrets.
+on:
+  workflow_dispatch:
+    inputs:
+      minutes:
+        description: Minutes to wait before the next radar run (1 to 60)
+        default: "25"
+
+permissions:
+  actions: write
+  contents: read
+
+jobs:
+  wait:
+    runs-on: ubuntu-latest
+    timeout-minutes: 70
+    steps:
+      - name: Wait, then start the next radar run
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          MINUTES: ${{ inputs.minutes }}
+        run: |
+          m="${MINUTES:-25}"
+          case "$m" in ''|*[!0-9]*) m=25 ;; esac
+          [ "$m" -lt 1 ] && m=1
+          [ "$m" -gt 60 ] && m=60
+          sleep $((m * 60))
+          gh workflow run radar.yml --ref "$GITHUB_REF_NAME"
