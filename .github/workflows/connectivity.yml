@@ -51,19 +51,20 @@ jobs:
       - name: Probe FII and DII flow sources (prints table text only)
         run: |
           UA="Mozilla/5.0 (compatible; sme-drhp-radar/0.1; personal research tool)"
+          cat > /tmp/show.py <<'PY'
+          import re
+          t = open('/tmp/b', errors='replace').read()
+          t = re.sub(r'(?is)<(script|style).*?</\1>', ' ', t)
+          t = re.sub(r'<[^>]+>', ' ', t)
+          t = re.sub(r'\s+', ' ', t)
+          i = t.find('Category')
+          print(t[max(0, i - 200): i + 900] if i >= 0 else t[:500])
+          PY
           for url in \
             "https://www.msei.in/downloads/equity-reports/fii-dii-activities" \
             "https://www.fpi.nsdl.co.in/web/Reports/Latest.aspx" \
             "https://www.nseindia.com/reports/fii-dii"; do
             echo "=== $url"
-            curl -sS -m 25 -A "$UA" -D /tmp/h -o /tmp/b -w 'HTTP %{http_code}, %{size_download} bytes, %{time_total}s\n' "$url" 2>&1 | tail -1 || true
-            python3 - <<'PY'
-import re
-t = open('/tmp/b', errors='replace').read()
-t = re.sub(r'(?is)<(script|style).*?</\1>', ' ', t)
-t = re.sub(r'<[^>]+>', ' ', t)
-t = re.sub(r'\s+', ' ', t)
-i = t.find('Category')
-print(t[max(0, i - 200): i + 900] if i >= 0 else t[:500])
-PY
+            curl -sS -m 25 -A "$UA" -o /tmp/b -w 'HTTP %{http_code}, %{size_download} bytes, %{time_total}s\n' "$url" 2>&1 | tail -1 || true
+            python3 -I /tmp/show.py
           done
