@@ -1,0 +1,79 @@
+name: bankers-probe
+
+# Manual check: which public IPO-history sources can this runner read? Prints a status code, size and the first
+# few hundred characters of public pages. Used to decide where the lead-manager track record can come from.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - name: Probe robots files and public pages
+        run: |
+          UA="Mozilla/5.0 (compatible; nuvont-research-radar/0.1; personal research tool)"
+          probe() { # label url [extra curl args]
+            local label="$1" url="$2"; shift 2
+            echo "=== $label"
+            curl -sS -m 30 -A "$UA" "$@" -D /tmp/h -o /tmp/b -w 'HTTP %{http_code}, %{size_download} bytes, %{time_total}s\n' "$url" 2>&1 | tail -1 || true
+            grep -i '^content-type' /tmp/h 2>/dev/null | head -1 || true
+            head -c 500 /tmp/b 2>/dev/null | tr '\n\r' '  ' || true
+            echo
+          }
+          probe "chittorgarh robots" "https://www.chittorgarh.com/robots.txt"
+          probe "ipowatch robots" "https://ipowatch.in/robots.txt"
+          probe "nse robots" "https://www.nseindia.com/robots.txt"
+          probe "bse robots" "https://www.bseindia.com/robots.txt"
+          probe "sebi robots" "https://www.sebi.gov.in/robots.txt"
+
+      - name: Probe NSE public issue APIs (cookie warm-up first)
+        run: |
+          UA="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124 Safari/537.36"
+          curl -sS -m 30 -A "$UA" -c /tmp/jar -o /dev/null -w 'home HTTP %{http_code}\n' "https://www.nseindia.com/" || true
+          for path in \
+            "api/public-past-issues" \
+            "api/all-upcoming-issues?category=ipo" \
+            "api/ipo-current-issue" \
+            "api/public-past-issues?securityType=ipo"; do
+            echo "=== NSE $path"
+            curl -sS -m 30 -A "$UA" -b /tmp/jar -H "Accept: application/json" -H "Referer: https://www.nseindia.com/market-data/all-upcoming-issues-ipo" \
+              -D /tmp/h -o /tmp/b -w 'HTTP %{http_code}, %{size_download} bytes\n' "https://www.nseindia.com/$path" 2>&1 | tail -1 || true
+            head -c 600 /tmp/b 2>/dev/null | tr '\n\r' '  ' || true
+            echo
+          done
+
+      - name: Probe BSE and SEBI lists
+        run: |
+          UA="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124 Safari/537.36"
+          probe() {
+            local label="$1" url="$2"; shift 2
+            echo "=== $label"
+            curl -sS -m 30 -A "$UA" "$@" -D /tmp/h -o /tmp/b -w 'HTTP %{http_code}, %{size_download} bytes\n' "$url" 2>&1 | tail -1 || true
+            grep -i '^content-type' /tmp/h 2>/dev/null | head -1 || true
+            head -c 500 /tmp/b 2>/dev/null | tr '\n\r' '  ' || true
+            echo
+          }
+          probe "BSE past public issues page" "https://www.bseindia.com/markets/publicIssues/BSEIPOIssuse.aspx?id=1&Type=p"
+          probe "BSE API issue list" "https://api.bseindia.com/BseIndiaAPI/api/IPOIssueNew/w?Type=P&status=L" -e "https://www.bseindia.com/" -H "Accept: application/json"
+          probe "SEBI merchant bankers list" "https://www.sebi.gov.in/sebiweb/other/OtherAction.do?doRecognisedFpi=yes&intmId=3"
+
+      - name: Probe Yahoo daily history for a recent listing (price after listing)
+        run: |
+          UA="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124 Safari/537.36"
+          for sym in LENSKART.NS GROWW.NS TATACAP.NS; do
+            echo "=== Yahoo $sym"
+            curl -sS -m 30 -A "$UA" -o /tmp/b -w 'HTTP %{http_code}, %{size_download} bytes\n' "https://query1.finance.yahoo.com/v8/finance/chart/$sym?range=2y&interval=1d" 2>&1 | tail -1 || true
+            python3 - <<'PY'
+          import json
+          try:
+              r = json.load(open('/tmp/b'))['chart']['result'][0]
+              t = r['timestamp']; c = r['indicators']['quote'][0]['close']
+              print('bars', len(t), 'first', t[0], c[0], 'last', t[-1], c[-1])
+          except Exception as e:
+              print('no data', e)
+          PY
+          done
