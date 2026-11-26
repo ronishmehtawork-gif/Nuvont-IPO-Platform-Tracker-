@@ -24,32 +24,17 @@
     "with_size": 9
   },
   "market": {
-    "asof": "2026-11-23",
-    "dropped": {
-      "no_data": 0,
-      "outlier": [
-        "HEGAM",
-        "VEDL"
-      ],
-      "short": 0,
-      "stale": 0
-    },
+    "asof_kept": "2026-11-23",
     "fetch_failures": {},
     "fetched": 495,
-    "flow": {
-      "listed": 218,
-      "stocks": 216
-    },
     "fno_note": "F&O list fetched from nsearchives.nseindia.com",
-    "note": "saved",
-    "ok": true,
-    "priced": 493,
+    "note": "kept previous data: only 307 of 495 stocks have a fresh close on 2026-11-25",
+    "ok": false,
     "stock_last_sessions": [
-      "2026-11-19",
-      "2026-11-20",
-      "2026-11-23"
+      "2026-11-23",
+      "2026-11-25",
+      "2026-11-26"
     ],
-    "universe": 495,
     "universe_note": "universe fetched from nsearchives.nseindia.com"
   },
   "whatsapp": {
