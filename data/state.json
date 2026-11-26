@@ -26,9 +26,9 @@
   },
   "rss_ipocentral": {
    "down_alerted": true,
-   "empty_streak": 39,
+   "empty_streak": 40,
    "ever_parsed": true,
-   "failures": 24,
+   "failures": 25,
    "last_note": "0 items matched",
    "last_ok": "2026-11-26"
   },
@@ -108,9 +108,9 @@
       "1M": 16.06,
       "1W": 4.42,
       "1Y": -10.6,
-      "3M": 4.52,
+      "3M": 4.51,
       "3Y": -3.4,
-      "6M": -0.96
+      "6M": -0.97
      },
      "symbol": "^CNXFMCG"
     }
@@ -139,7 +139,7 @@
       "1W": -4.16,
       "1Y": 11.61,
       "3M": -12.46,
-      "3Y": 80.38,
+      "3Y": 80.37,
       "6M": -12.23
      },
      "symbol": "^CNXMETAL"
@@ -149,13 +149,13 @@
     {
      "name": "Nifty Energy",
      "returns": {
-      "1D": 0.57,
-      "1M": 5.3,
+      "1D": 0.58,
+      "1M": 5.31,
       "1W": -0.27,
-      "1Y": 1.7,
+      "1Y": 1.71,
       "3M": -3.8,
-      "3Y": 39.43,
-      "6M": -9.12
+      "3Y": 39.44,
+      "6M": -9.11
      },
      "symbol": "^CNXENERGY"
     }
@@ -164,13 +164,13 @@
     {
      "name": "Nifty Realty",
      "returns": {
-      "1D": 3.29,
-      "1M": 23.21,
-      "1W": 5.91,
-      "1Y": 3.38,
-      "3M": 6.09,
-      "3Y": 66.49,
-      "6M": 23.78
+      "1D": 3.27,
+      "1M": 23.19,
+      "1W": 5.9,
+      "1Y": 3.37,
+      "3M": 6.08,
+      "3Y": 66.47,
+      "6M": 23.76
      },
      "symbol": "^CNXREALTY"
     },
@@ -217,7 +217,7 @@
     }
    ]
   },
-  "updated": "26 Nov 2026, 03:29 PM IST"
+  "updated": "26 Nov 2026, 03:37 PM IST"
  },
  "seen": {
   "aarish outdoors|drhp_filed": {
