@@ -26,9 +26,9 @@
   },
   "rss_ipocentral": {
    "down_alerted": true,
-   "empty_streak": 117,
+   "empty_streak": 118,
    "ever_parsed": true,
-   "failures": 102,
+   "failures": 103,
    "last_note": "0 items matched",
    "last_ok": "2026-11-26"
   },
@@ -49,13 +49,13 @@
     {
      "name": "Nifty Auto",
      "returns": {
-      "1D": -1.17,
-      "1M": 11.63,
-      "1W": -1.09,
-      "1Y": 2.97,
-      "3M": -3.18,
-      "3Y": 74.51,
-      "6M": 6.83
+      "1D": -1.18,
+      "1M": 11.62,
+      "1W": -1.1,
+      "1Y": 2.96,
+      "3M": -3.19,
+      "3Y": 74.49,
+      "6M": 6.82
      },
      "symbol": "^CNXAUTO"
     }
@@ -64,39 +64,39 @@
     {
      "name": "Nifty Bank",
      "returns": {
-      "1D": -0.62,
-      "1M": 16.98,
-      "1W": 0.12,
-      "1Y": 7.2,
-      "3M": 9.78,
-      "3Y": 47.37,
-      "6M": 14.61
+      "1D": -0.56,
+      "1M": 17.06,
+      "1W": 0.19,
+      "1Y": 7.27,
+      "3M": 9.85,
+      "3Y": 47.46,
+      "6M": 14.68
      },
      "symbol": "^NSEBANK"
     },
     {
      "name": "PSU Banks",
      "returns": {
-      "1D": -0.23,
-      "1M": 16.99,
-      "1W": -2.6,
-      "1Y": 11.97,
-      "3M": 10.51,
-      "3Y": 99.24,
-      "6M": 15.94
+      "1D": -0.2,
+      "1M": 17.03,
+      "1W": -2.57,
+      "1Y": 12.0,
+      "3M": 10.54,
+      "3Y": 99.3,
+      "6M": 15.98
      },
      "symbol": "^CNXPSUBANK"
     },
     {
      "name": "Financial Services",
      "returns": {
-      "1D": -1.15,
-      "1M": 16.8,
-      "1W": 0.31,
-      "1Y": 2.68,
-      "3M": 8.16,
-      "3Y": 47.67,
-      "6M": 9.47
+      "1D": -1.09,
+      "1M": 16.88,
+      "1W": 0.37,
+      "1Y": 2.75,
+      "3M": 8.22,
+      "3Y": 47.76,
+      "6M": 9.54
      },
      "symbol": "NIFTY_FIN_SERVICE.NS"
     }
@@ -105,13 +105,13 @@
     {
      "name": "Nifty FMCG",
      "returns": {
-      "1D": -0.89,
-      "1M": 14.18,
-      "1W": 1.37,
-      "1Y": -11.58,
-      "3M": 3.2,
-      "3Y": -3.88,
-      "6M": -1.98
+      "1D": -0.84,
+      "1M": 14.23,
+      "1W": 1.42,
+      "1Y": -11.53,
+      "3M": 3.25,
+      "3Y": -3.83,
+      "6M": -1.93
      },
      "symbol": "^CNXFMCG"
     }
@@ -120,13 +120,13 @@
     {
      "name": "Nifty Pharma",
      "returns": {
-      "1D": -0.38,
-      "1M": 10.33,
-      "1W": 2.15,
-      "1Y": 26.74,
-      "3M": 9.1,
-      "3Y": 96.14,
-      "6M": 17.53
+      "1D": -0.34,
+      "1M": 10.37,
+      "1W": 2.19,
+      "1Y": 26.78,
+      "3M": 9.14,
+      "3Y": 96.22,
+      "6M": 17.57
      },
      "symbol": "^CNXPHARMA"
     }
@@ -150,13 +150,13 @@
     {
      "name": "Nifty Energy",
      "returns": {
-      "1D": 0.12,
-      "1M": 4.71,
-      "1W": -1.29,
-      "1Y": 1.32,
-      "3M": -3.62,
-      "3Y": 40.24,
-      "6M": -9.53
+      "1D": 0.09,
+      "1M": 4.68,
+      "1W": -1.31,
+      "1Y": 1.29,
+      "3M": -3.65,
+      "3Y": 40.2,
+      "6M": -9.56
      },
      "symbol": "^CNXENERGY"
     }
@@ -165,12 +165,12 @@
     {
      "name": "Nifty Realty",
      "returns": {
-      "1D": -1.13,
-      "1M": 19.48,
-      "1W": 4.2,
-      "1Y": 1.75,
-      "3M": 4.8,
-      "3Y": 66.19,
+      "1D": -1.12,
+      "1M": 19.49,
+      "1W": 4.21,
+      "1Y": 1.76,
+      "3M": 4.81,
+      "3Y": 66.2,
       "6M": 23.01
      },
      "symbol": "^CNXREALTY"
@@ -178,13 +178,13 @@
     {
      "name": "Nifty Infra",
      "returns": {
-      "1D": -0.87,
-      "1M": 9.09,
-      "1W": -1.14,
-      "1Y": -1.36,
-      "3M": 1.26,
-      "3Y": 57.21,
-      "6M": 1.08
+      "1D": -0.9,
+      "1M": 9.06,
+      "1W": -1.17,
+      "1Y": -1.38,
+      "3M": 1.24,
+      "3Y": 57.17,
+      "6M": 1.05
      },
      "symbol": "^CNXINFRA"
     }
@@ -193,13 +193,13 @@
     {
      "name": "Nifty IT",
      "returns": {
-      "1D": -1.48,
-      "1M": 2.19,
-      "1W": 6.38,
-      "1Y": -8.57,
-      "3M": 6.89,
-      "3Y": 7.56,
-      "6M": 13.51
+      "1D": -1.46,
+      "1M": 2.21,
+      "1W": 6.41,
+      "1Y": -8.55,
+      "3M": 6.92,
+      "3Y": 7.58,
+      "6M": 13.53
      },
      "symbol": "^CNXIT"
     },
@@ -218,7 +218,7 @@
     }
    ]
   },
-  "updated": "27 Nov 2026, 02:43 PM IST"
+  "updated": "27 Nov 2026, 02:52 PM IST"
  },
  "seen": {
   "aarish outdoors|drhp_filed": {
@@ -19714,6 +19714,32 @@
    "segment": "mainboard",
    "sources": {
     "ipoplatform": "https://www.ipoplatform.com/ipo/swaraj-green-power-fuel-ipo/4615"
+   }
+  },
+  "swaraj green power and fuel|drhp_refiled": {
+   "alerted": true,
+   "baseline": false,
+   "company": "Swaraj Green Power and Fuel Limited",
+   "documents": [
+    {
+     "label": "UDRHP-1 (PDF)",
+     "url": "https://www.sebi.gov.in/sebi_data/attachdocs/nov-2026/1795771270025.pdf"
+    },
+    {
+     "label": "Draft Abridged Prospectus (PDF)",
+     "url": "https://www.sebi.gov.in/sebi_data/commondocs/nov-2026/Swaraj%20Green%20Power%20and%20Fuel%20Limited-P_p.pdf"
+    }
+   ],
+   "event": "drhp_refiled",
+   "exchange": "SEBI",
+   "filed_on": "2026-11-27",
+   "first_seen": "2026-11-27T14:52:42+05:30",
+   "message_id": 9,
+   "official_url": "https://www.sebi.gov.in/filings/public-issues/nov-2026/swaraj-green-power-and-fuel-limited-udrhp-1_103847.html",
+   "sebi_checked": true,
+   "segment": "mainboard",
+   "sources": {
+    "sebi": "https://www.sebi.gov.in/filings/public-issues/nov-2026/swaraj-green-power-and-fuel-limited-udrhp-1_103847.html"
    }
   },
   "swid renewables|drhp_filed": {
