@@ -26,9 +26,9 @@
   },
   "rss_ipocentral": {
    "down_alerted": true,
-   "empty_streak": 120,
+   "empty_streak": 121,
    "ever_parsed": true,
-   "failures": 105,
+   "failures": 106,
    "last_note": "0 items matched",
    "last_ok": "2026-11-26"
   },
@@ -49,13 +49,13 @@
     {
      "name": "Nifty Auto",
      "returns": {
-      "1D": -1.47,
-      "1M": 11.3,
-      "1W": -1.39,
-      "1Y": 2.66,
-      "3M": -3.47,
-      "3Y": 73.98,
-      "6M": 6.51
+      "1D": -1.62,
+      "1M": 11.12,
+      "1W": -1.55,
+      "1Y": 2.5,
+      "3M": -3.62,
+      "3Y": 73.71,
+      "6M": 6.34
      },
      "symbol": "^CNXAUTO"
     }
@@ -64,13 +64,13 @@
     {
      "name": "Nifty Bank",
      "returns": {
-      "1D": -0.82,
-      "1M": 16.75,
-      "1W": -0.08,
-      "1Y": 6.99,
-      "3M": 9.56,
-      "3Y": 47.07,
-      "6M": 14.38
+      "1D": -0.84,
+      "1M": 16.73,
+      "1W": -0.09,
+      "1Y": 6.97,
+      "3M": 9.55,
+      "3Y": 47.05,
+      "6M": 14.36
      },
      "symbol": "^NSEBANK"
     },
@@ -78,11 +78,11 @@
      "name": "PSU Banks",
      "returns": {
       "1D": -0.46,
-      "1M": 16.73,
+      "1M": 16.72,
       "1W": -2.82,
       "1Y": 11.71,
-      "3M": 10.26,
-      "3Y": 98.79,
+      "3M": 10.25,
+      "3Y": 98.78,
       "6M": 15.68
      },
      "symbol": "^CNXPSUBANK"
@@ -90,13 +90,13 @@
     {
      "name": "Financial Services",
      "returns": {
-      "1D": -1.31,
+      "1D": -1.32,
       "1M": 16.61,
-      "1W": 0.15,
+      "1W": 0.14,
       "1Y": 2.51,
-      "3M": 7.98,
-      "3Y": 47.43,
-      "6M": 9.29
+      "3M": 7.97,
+      "3Y": 47.42,
+      "6M": 9.28
      },
      "symbol": "NIFTY_FIN_SERVICE.NS"
     }
@@ -105,13 +105,13 @@
     {
      "name": "Nifty FMCG",
      "returns": {
-      "1D": -0.96,
-      "1M": 14.1,
-      "1W": 1.3,
-      "1Y": -11.64,
-      "3M": 3.12,
-      "3Y": -3.95,
-      "6M": -2.05
+      "1D": -0.93,
+      "1M": 14.13,
+      "1W": 1.33,
+      "1Y": -11.61,
+      "3M": 3.16,
+      "3Y": -3.91,
+      "6M": -2.02
      },
      "symbol": "^CNXFMCG"
     }
@@ -120,12 +120,12 @@
     {
      "name": "Nifty Pharma",
      "returns": {
-      "1D": -0.59,
+      "1D": -0.58,
       "1M": 10.1,
-      "1W": 1.93,
-      "1Y": 26.46,
+      "1W": 1.94,
+      "1Y": 26.47,
       "3M": 8.87,
-      "3Y": 95.72,
+      "3Y": 95.73,
       "6M": 17.28
      },
      "symbol": "^CNXPHARMA"
@@ -135,13 +135,13 @@
     {
      "name": "Nifty Metal",
      "returns": {
-      "1D": 1.4,
-      "1M": 0.6,
-      "1W": -3.44,
-      "1Y": 13.16,
-      "3M": -11.18,
-      "3Y": 82.62,
-      "6M": -11.97
+      "1D": 1.21,
+      "1M": 0.41,
+      "1W": -3.62,
+      "1Y": 12.95,
+      "3M": -11.35,
+      "3Y": 82.28,
+      "6M": -12.14
      },
      "symbol": "^CNXMETAL"
     }
@@ -150,13 +150,13 @@
     {
      "name": "Nifty Energy",
      "returns": {
-      "1D": -0.01,
-      "1M": 4.58,
-      "1W": -1.42,
-      "1Y": 1.19,
-      "3M": -3.75,
-      "3Y": 40.06,
-      "6M": -9.65
+      "1D": -0.07,
+      "1M": 4.51,
+      "1W": -1.47,
+      "1Y": 1.13,
+      "3M": -3.8,
+      "3Y": 39.98,
+      "6M": -9.7
      },
      "symbol": "^CNXENERGY"
     }
@@ -165,26 +165,26 @@
     {
      "name": "Nifty Realty",
      "returns": {
-      "1D": -1.23,
-      "1M": 19.35,
-      "1W": 4.09,
-      "1Y": 1.64,
-      "3M": 4.69,
-      "3Y": 66.01,
-      "6M": 22.87
+      "1D": -1.37,
+      "1M": 19.19,
+      "1W": 3.94,
+      "1Y": 1.5,
+      "3M": 4.54,
+      "3Y": 65.77,
+      "6M": 22.7
      },
      "symbol": "^CNXREALTY"
     },
     {
      "name": "Nifty Infra",
      "returns": {
-      "1D": -0.98,
-      "1M": 8.97,
-      "1W": -1.25,
-      "1Y": -1.47,
-      "3M": 1.15,
-      "3Y": 57.04,
-      "6M": 0.97
+      "1D": -1.04,
+      "1M": 8.91,
+      "1W": -1.31,
+      "1Y": -1.52,
+      "3M": 1.09,
+      "3Y": 56.94,
+      "6M": 0.91
      },
      "symbol": "^CNXINFRA"
     }
@@ -193,13 +193,13 @@
     {
      "name": "Nifty IT",
      "returns": {
-      "1D": -1.79,
-      "1M": 1.86,
-      "1W": 6.04,
-      "1Y": -8.86,
-      "3M": 6.55,
-      "3Y": 7.21,
-      "6M": 13.15
+      "1D": -1.84,
+      "1M": 1.81,
+      "1W": 6.0,
+      "1Y": -8.9,
+      "3M": 6.5,
+      "3Y": 7.16,
+      "6M": 13.1
      },
      "symbol": "^CNXIT"
     },
@@ -218,7 +218,7 @@
     }
    ]
   },
-  "updated": "27 Nov 2026, 03:10 PM IST"
+  "updated": "27 Nov 2026, 03:13 PM IST"
  },
  "seen": {
   "aarish outdoors|drhp_filed": {
@@ -340,7 +340,7 @@
    "filed_on": "2026-09-22",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "Axis Capital Limited, ICICI Securities Limited +2 more",
+    "bankers": "Axis Capital Limited, ICICI Securities Limited, IIFL Securities Limited, Jm Financial Limited",
     "city": "Mumbai",
     "sector": "Financial Services - Wealth Management"
    },
@@ -678,7 +678,7 @@
    "filed_on": "2026-01-19",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "Axis Capital Limited, Citigroup Global Markets India Private Limited +3 more",
+    "bankers": "Axis Capital Limited, Citigroup Global Markets India Private Limited, Goldman Sachs (India) Securities Private Limited, Jm Financial Limited, Morgan Stanley India Company Private Limited",
     "city": "Mumbai",
     "sector": "Agro"
    },
@@ -704,7 +704,7 @@
    "filed_on": "2026-01-19",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "Axis Capital Limited, Citigroup Global Markets India Private Limited +3 more",
+    "bankers": "Axis Capital Limited, Citigroup Global Markets India Private Limited, Goldman Sachs (India) Securities Private Limited, Jm Financial Limited, Morgan Stanley India Company Private Limited",
     "city": "Mumbai",
     "sector": "Agro"
    },
@@ -1304,7 +1304,7 @@
    "filed_on": "2026-09-30",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "ICICI Securities Limited, IIFL Securities Limited +1 more",
+    "bankers": "ICICI Securities Limited, IIFL Securities Limited, 360 ONE WAM Limited",
     "city": "Mumbai",
     "sector": "Real Estate"
    },
@@ -1656,7 +1656,7 @@
    "filed_on": "2026-08-26",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "Axis Capital Limited, Citigroup Global Markets India Private Limited +2 more",
+    "bankers": "Axis Capital Limited, Citigroup Global Markets India Private Limited, Goldman Sachs (India) Securities Private Limited, Jm Financial Limited",
     "city": "Hyderabad",
     "sector": "Pharmaceutical"
    },
@@ -1884,7 +1884,7 @@
    "filed_on": "2021-02-14",
    "first_seen": "2026-11-24T01:59:46+05:30",
    "info": {
-    "bankers": "Dam Capital Advisors Limited (Formerly Idfc Securities Limited), Motilal Oswal Investment Advisors Limited +1 more",
+    "bankers": "Dam Capital Advisors Limited (Formerly Idfc Securities Limited), Motilal Oswal Investment Advisors Limited, SBI Capital Markets Limited",
     "city": "Kolkata",
     "sector": "Banking and Finance - FinTech"
    },
@@ -1904,7 +1904,7 @@
    "filed_on": "2021-02-14",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "Dam Capital Advisors Limited (Formerly Idfc Securities Limited), Motilal Oswal Investment Advisors Limited +1 more",
+    "bankers": "Dam Capital Advisors Limited (Formerly Idfc Securities Limited), Motilal Oswal Investment Advisors Limited, SBI Capital Markets Limited",
     "city": "Kolkata",
     "sector": "Banking and Finance - FinTech"
    },
@@ -2094,7 +2094,7 @@
    "filed_on": "2026-08-20",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "Avendus Capital Private Limited, ICICI Securities Limited +1 more",
+    "bankers": "Avendus Capital Private Limited, ICICI Securities Limited, IIFL Securities Limited",
     "city": "Mumbai",
     "sector": "Consumer Goods"
    },
@@ -2120,7 +2120,7 @@
    "filed_on": "2026-08-20",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "Avendus Capital Private Limited, ICICI Securities Limited +1 more",
+    "bankers": "Avendus Capital Private Limited, ICICI Securities Limited, IIFL Securities Limited",
     "city": "Mumbai",
     "sector": "Consumer Goods"
    },
@@ -2224,7 +2224,7 @@
    "filed_on": "2025-10-18",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "Axis Capital Limited, Bofa Securities India Limited +4 more",
+    "bankers": "Axis Capital Limited, Bofa Securities India Limited, Hsbc Securities & Capital Markets Private limited, ICICI Securities Limited, IIFL Securities Limited, SBI Capital Markets Limited",
     "city": "Noida",
     "sector": "Power and Energy"
    },
@@ -2250,7 +2250,7 @@
    "filed_on": "2025-10-18",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "Axis Capital Limited, Bofa Securities India Limited +4 more",
+    "bankers": "Axis Capital Limited, Bofa Securities India Limited, Hsbc Securities & Capital Markets Private limited, ICICI Securities Limited, IIFL Securities Limited, SBI Capital Markets Limited",
     "city": "Noida",
     "sector": "Power and Energy"
    },
@@ -2276,7 +2276,7 @@
    "filed_on": "2024-07-31",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "Avendus Capital Private Limited, J.P. Morgan India Private Limited +4 more",
+    "bankers": "Avendus Capital Private Limited, J.P. Morgan India Private Limited, Kotak Mahindra Capital Company Limited, Nomura Financial Advisory And Securities (India) Private Limited, Nuvama Wealth Management Limited, SBI Capital Markets Limited",
     "city": "Mumbai",
     "sector": "Banking and Finance"
    },
@@ -2562,7 +2562,7 @@
    "filed_on": "2019-04-04",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "Idbi Capital Market Services Limited, Edelweiss Financial Services Limited +2 more",
+    "bankers": "Idbi Capital Market Services Limited, Edelweiss Financial Services Limited, IIFL Securities Limited, SBI Capital Markets Limited",
     "city": "Mumbai",
     "sector": "Power and Energy"
    },
@@ -2588,7 +2588,7 @@
    "filed_on": "2019-04-04",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "Idbi Capital Market Services Limited, Edelweiss Financial Services Limited +2 more",
+    "bankers": "Idbi Capital Market Services Limited, Edelweiss Financial Services Limited, IIFL Securities Limited, SBI Capital Markets Limited",
     "city": "Mumbai",
     "sector": "Power and Energy"
    },
@@ -2926,7 +2926,7 @@
    "filed_on": "2022-01-26",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "Axis Bank Limited, Bofa Securities India Limited +2 more",
+    "bankers": "Axis Bank Limited, Bofa Securities India Limited, Credit Suisse Securities (India) Private Limited, ICICI Securities Limited",
     "city": "Mumbai",
     "sector": "Electric Equipments"
    },
@@ -3082,7 +3082,7 @@
    "filed_on": "2025-09-30",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "ICICI Securities Limited, Jm Financial Limited +1 more",
+    "bankers": "ICICI Securities Limited, Jm Financial Limited, Motilal Oswal Investment Advisors Limited",
     "city": "Pune",
     "sector": "Corporate Solutions"
    },
@@ -3108,7 +3108,7 @@
    "filed_on": "2025-09-30",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "ICICI Securities Limited, Jm Financial Limited +1 more",
+    "bankers": "ICICI Securities Limited, Jm Financial Limited, Motilal Oswal Investment Advisors Limited",
     "city": "Pune",
     "sector": "Corporate Solutions"
    },
@@ -3154,7 +3154,7 @@
    "filed_on": "2026-07-01",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "Citigroup Global Markets India Private Limited, J.P. Morgan India Private Limited +1 more",
+    "bankers": "Citigroup Global Markets India Private Limited, J.P. Morgan India Private Limited, Kotak Mahindra Capital Company Limited",
     "city": "New Delhi",
     "sector": "Liquor and Distilleries"
    },
@@ -3174,7 +3174,7 @@
    "filed_on": "2026-07-01",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "Citigroup Global Markets India Private Limited, J.P. Morgan India Private Limited +1 more",
+    "bankers": "Citigroup Global Markets India Private Limited, J.P. Morgan India Private Limited, Kotak Mahindra Capital Company Limited",
     "city": "New Delhi",
     "sector": "Liquor and Distilleries"
    },
@@ -3524,7 +3524,7 @@
    "filed_on": "2024-11-19",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "Ambit Private Limited, Centrum Capital Limited +1 more",
+    "bankers": "Ambit Private Limited, Centrum Capital Limited, Hdfc Bank Limited",
     "city": "Chennai",
     "sector": "Human Resources and Manpower"
    },
@@ -3550,7 +3550,7 @@
    "filed_on": "2024-11-19",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "Ambit Private Limited, Centrum Capital Limited +1 more",
+    "bankers": "Ambit Private Limited, Centrum Capital Limited, Hdfc Bank Limited",
     "city": "Chennai",
     "sector": "Human Resources and Manpower"
    },
@@ -3810,7 +3810,7 @@
    "filed_on": "2024-12-09",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "Ambit Private Limited, Citigroup Global Markets India Private Limited +2 more",
+    "bankers": "Ambit Private Limited, Citigroup Global Markets India Private Limited, Jm Financial Limited, Kotak Mahindra Capital Company Limited",
     "city": "Chennai",
     "sector": "Solar"
    },
@@ -3836,7 +3836,7 @@
    "filed_on": "2024-12-09",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "Ambit Private Limited, Citigroup Global Markets India Private Limited +2 more",
+    "bankers": "Ambit Private Limited, Citigroup Global Markets India Private Limited, Jm Financial Limited, Kotak Mahindra Capital Company Limited",
     "city": "Chennai",
     "sector": "Solar"
    },
@@ -4148,7 +4148,7 @@
    "filed_on": "2025-06-26",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "Axis Capital Limited, Citigroup Global Markets India Private Limited +3 more",
+    "bankers": "Axis Capital Limited, Citigroup Global Markets India Private Limited, Goldman Sachs (India) Securities Private Limited, IIFL Securities Limited, Jefferies India Private Limited",
     "city": "Mumbai",
     "sector": "Banking and Finance"
    },
@@ -4174,7 +4174,7 @@
    "filed_on": "2025-06-26",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "Axis Capital Limited, Citigroup Global Markets India Private Limited +3 more",
+    "bankers": "Axis Capital Limited, Citigroup Global Markets India Private Limited, Goldman Sachs (India) Securities Private Limited, IIFL Securities Limited, Jefferies India Private Limited",
     "city": "Mumbai",
     "sector": "Banking and Finance"
    },
@@ -4252,7 +4252,7 @@
    "filed_on": "2026-07-06",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "Axis Capital Limited, Goldman Sachs (India) Securities Private Limited +3 more",
+    "bankers": "Axis Capital Limited, Goldman Sachs (India) Securities Private Limited, Jefferies India Private Limited, Jm Financial Limited, Morgan Stanley India Company Private Limited",
     "city": "Chennai",
     "sector": "Sports and Gaming"
    },
@@ -4278,7 +4278,7 @@
    "filed_on": "2026-07-06",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "Axis Capital Limited, Goldman Sachs (India) Securities Private Limited +3 more",
+    "bankers": "Axis Capital Limited, Goldman Sachs (India) Securities Private Limited, Jefferies India Private Limited, Jm Financial Limited, Morgan Stanley India Company Private Limited",
     "city": "Chennai",
     "sector": "Sports and Gaming"
    },
@@ -4304,7 +4304,7 @@
    "filed_on": "2025-06-28",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "IIFL Securities Limited, Jm Financial Limited +1 more",
+    "bankers": "IIFL Securities Limited, Jm Financial Limited, Nuvama Wealth Management Limited",
     "city": "Bengaluru",
     "sector": "Hotels and Resorts - QSR"
    },
@@ -4330,7 +4330,7 @@
    "filed_on": "2025-06-28",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "IIFL Securities Limited, Jm Financial Limited +1 more",
+    "bankers": "IIFL Securities Limited, Jm Financial Limited, Nuvama Wealth Management Limited",
     "city": "Bengaluru",
     "sector": "Hotels and Resorts - QSR"
    },
@@ -4683,7 +4683,7 @@
    "filed_on": "2025-01-23",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "Citigroup Global Markets India Private Limited, Hsbc Securities & Capital Markets Private limited +4 more",
+    "bankers": "Citigroup Global Markets India Private Limited, Hsbc Securities & Capital Markets Private limited, J.P. Morgan India Private Limited, Jm Financial Limited, Morgan Stanley India Company Private Limited, Motilal Oswal Investment Advisors Limited",
     "city": "Kachchh",
     "sector": "Chemical - Speciality"
    },
@@ -4709,7 +4709,7 @@
    "filed_on": "2025-01-23",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "Citigroup Global Markets India Private Limited, Hsbc Securities & Capital Markets Private limited +4 more",
+    "bankers": "Citigroup Global Markets India Private Limited, Hsbc Securities & Capital Markets Private limited, J.P. Morgan India Private Limited, Jm Financial Limited, Morgan Stanley India Company Private Limited, Motilal Oswal Investment Advisors Limited",
     "city": "Kachchh",
     "sector": "Chemical - Speciality"
    },
@@ -4905,7 +4905,7 @@
    "filed_on": "2025-12-09",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "Axis Capital Limited, Jm Financial Limited +1 more",
+    "bankers": "Axis Capital Limited, Jm Financial Limited, Motilal Oswal Investment Advisors Limited",
     "city": "New Delhi",
     "sector": "Power and Energy"
    },
@@ -4925,7 +4925,7 @@
    "filed_on": "2025-12-09",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "Axis Capital Limited, Jm Financial Limited +1 more",
+    "bankers": "Axis Capital Limited, Jm Financial Limited, Motilal Oswal Investment Advisors Limited",
     "city": "New Delhi",
     "sector": "Power and Energy"
    },
@@ -4977,7 +4977,7 @@
    "filed_on": "2024-08-15",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "Axis Capital Limited, IIFL Securities Limited +2 more",
+    "bankers": "Axis Capital Limited, IIFL Securities Limited, Kotak Mahindra Capital Company Limited, Ubs Securities India Private Limited",
     "city": "New Delhi",
     "sector": "Logistics"
    },
@@ -5003,7 +5003,7 @@
    "filed_on": "2024-08-15",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "Axis Capital Limited, IIFL Securities Limited +2 more",
+    "bankers": "Axis Capital Limited, IIFL Securities Limited, Kotak Mahindra Capital Company Limited, Ubs Securities India Private Limited",
     "city": "New Delhi",
     "sector": "Logistics"
    },
@@ -5324,7 +5324,7 @@
    "filed_on": "2026-08-01",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "Axis Capital Limited, Jm Financial Limited +1 more",
+    "bankers": "Axis Capital Limited, Jm Financial Limited, Kotak Mahindra Capital Company Limited",
     "city": "Mumbai",
     "sector": "Pharmaceutical"
    },
@@ -5350,7 +5350,7 @@
    "filed_on": "2026-08-01",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "Axis Capital Limited, Jm Financial Limited +1 more",
+    "bankers": "Axis Capital Limited, Jm Financial Limited, Kotak Mahindra Capital Company Limited",
     "city": "Mumbai",
     "sector": "Pharmaceutical"
    },
@@ -5454,7 +5454,7 @@
    "filed_on": "2026-06-28",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "Dam Capital Advisors Limited (Formerly Idfc Securities Limited), ICICI Securities Limited +1 more",
+    "bankers": "Dam Capital Advisors Limited (Formerly Idfc Securities Limited), ICICI Securities Limited, Motilal Oswal Investment Advisors Limited",
     "city": "Coimbatore",
     "sector": "Recycling"
    },
@@ -5480,7 +5480,7 @@
    "filed_on": "2026-06-28",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "Dam Capital Advisors Limited (Formerly Idfc Securities Limited), ICICI Securities Limited +1 more",
+    "bankers": "Dam Capital Advisors Limited (Formerly Idfc Securities Limited), ICICI Securities Limited, Motilal Oswal Investment Advisors Limited",
     "city": "Coimbatore",
     "sector": "Recycling"
    },
@@ -5558,7 +5558,7 @@
    "filed_on": "2026-09-28",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "ICICI Securities Limited, Motilal Oswal Investment Advisors Limited +1 more",
+    "bankers": "ICICI Securities Limited, Motilal Oswal Investment Advisors Limited, Nuvama Wealth Management Limited",
     "city": "New Delhi",
     "sector": "HoReCa"
    },
@@ -5584,7 +5584,7 @@
    "filed_on": "2025-07-23",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "ICICI Securities Limited, Kotak Mahindra Capital Company Limited +1 more",
+    "bankers": "ICICI Securities Limited, Kotak Mahindra Capital Company Limited, Nomura Financial Advisory And Securities (India) Private Limited",
     "city": "Mumbai",
     "sector": "Corporate Solutions"
    },
@@ -5656,7 +5656,7 @@
    "filed_on": "2026-11-23",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "Credit Suisse Securities (India) Private Limited, Equirus Capital Private Limited +4 more",
+    "bankers": "Credit Suisse Securities (India) Private Limited, Equirus Capital Private Limited, ICICI Securities Limited, J.P. Morgan India Private Limited, Nomura Financial Advisory And Securities (India) Private Limited, SBI Capital Markets Limited",
     "city": "New Delhi",
     "sector": "Retail"
    },
@@ -6171,7 +6171,7 @@
    "filed_on": "2026-11-23",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "Axis Capital Limited, ICICI Securities Limited +2 more",
+    "bankers": "Axis Capital Limited, ICICI Securities Limited, IIFL Securities Limited, SBI Capital Markets Limited",
     "city": "Chennai",
     "sector": "Aerospace"
    },
@@ -6191,7 +6191,7 @@
    "filed_on": "2026-11-23",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "Axis Capital Limited, ICICI Securities Limited +2 more",
+    "bankers": "Axis Capital Limited, ICICI Securities Limited, IIFL Securities Limited, SBI Capital Markets Limited",
     "city": "Chennai",
     "sector": "Aerospace"
    },
@@ -6295,7 +6295,7 @@
    "filed_on": "2021-08-07",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "Axis Capital Limited, Credit Suisse Securities (India) Private Limited +2 more",
+    "bankers": "Axis Capital Limited, Credit Suisse Securities (India) Private Limited, Kotak Mahindra Capital Company Limited, Nomura Financial Advisory And Securities (India) Private Limited",
     "city": "Hyderabad",
     "sector": "FMCG"
    },
@@ -6706,7 +6706,7 @@
    "filed_on": "2024-12-23",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "IIFL Securities Limited, Jm Financial Limited +1 more",
+    "bankers": "IIFL Securities Limited, Jm Financial Limited, Motilal Oswal Investment Advisors Limited",
     "city": "Vellore",
     "sector": "Engineering - Automotive"
    },
@@ -6732,7 +6732,7 @@
    "filed_on": "2024-12-23",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "IIFL Securities Limited, Jm Financial Limited +1 more",
+    "bankers": "IIFL Securities Limited, Jm Financial Limited, Motilal Oswal Investment Advisors Limited",
     "city": "Vellore",
     "sector": "Engineering - Automotive"
    },
@@ -6908,7 +6908,7 @@
    "filed_on": "2025-09-30",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "ICICI Securities Limited, Jefferies India Private Limited +1 more",
+    "bankers": "ICICI Securities Limited, Jefferies India Private Limited, Kotak Mahindra Capital Company Limited",
     "city": "Mumbai",
     "sector": "Real Estate - Infrastructure"
    },
@@ -6928,7 +6928,7 @@
    "filed_on": "2025-09-30",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "ICICI Securities Limited, Jefferies India Private Limited +1 more",
+    "bankers": "ICICI Securities Limited, Jefferies India Private Limited, Kotak Mahindra Capital Company Limited",
     "city": "Mumbai",
     "sector": "Real Estate - Infrastructure"
    },
@@ -6954,7 +6954,7 @@
    "filed_on": "2024-07-31",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "Axis Capital Limited, Bofa Securities India Limited +6 more",
+    "bankers": "Axis Capital Limited, Bofa Securities India Limited, Hdfc Bank Limited, Hsbc Securities & Capital Markets Private limited, ICICI Securities Limited, Jefferies India Private Limited, Jm Financial Limited, SBI Capital Markets Limited",
     "city": "New Delhi",
     "sector": "Banking and Finance"
    },
@@ -6980,7 +6980,7 @@
    "filed_on": "2024-07-31",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "Axis Capital Limited, Bofa Securities India Limited +6 more",
+    "bankers": "Axis Capital Limited, Bofa Securities India Limited, Hdfc Bank Limited, Hsbc Securities & Capital Markets Private limited, ICICI Securities Limited, Jefferies India Private Limited, Jm Financial Limited, SBI Capital Markets Limited",
     "city": "New Delhi",
     "sector": "Banking and Finance"
    },
@@ -7058,7 +7058,7 @@
    "filed_on": "2026-11-12",
    "first_seen": "2026-11-23T12:47:29+05:30",
    "info": {
-    "bankers": "Axis Capital Limited, Citigroup Global Markets India Private Limited +5 more",
+    "bankers": "Axis Capital Limited, Citigroup Global Markets India Private Limited, Goldman Sachs (India) Securities Private Limited, IIFL Securities Limited, J.P. Morgan India Private Limited, Kotak Mahindra Capital Company Limited, Morgan Stanley India Company Private Limited",
     "city": "New Delhi",
     "sector": "FMCG - Snacks and Beverages"
    },
@@ -7425,7 +7425,7 @@
    "filed_on": "2026-11-17",
    "first_seen": "2026-11-23T12:47:29+05:30",
    "info": {
-    "bankers": "Axis Capital Limited, Jefferies India Private Limited +1 more",
+    "bankers": "Axis Capital Limited, Jefferies India Private Limited, Motilal Oswal Investment Advisors Limited",
     "city": "Pune",
     "sector": "Electric Equipments"
    },
@@ -7479,7 +7479,7 @@
    "filed_on": "2025-11-06",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "IIFL Securities Limited, Incred Capital Financial Services Private Limited +3 more",
+    "bankers": "IIFL Securities Limited, Incred Capital Financial Services Private Limited, Kotak Mahindra Capital Company Limited, Nomura Financial Advisory And Securities (India) Private Limited, Ubs Securities India Private Limited",
     "city": "Mumbai",
     "sector": "Banking and Finance"
    },
@@ -7505,7 +7505,7 @@
    "filed_on": "2025-11-06",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "IIFL Securities Limited, Incred Capital Financial Services Private Limited +3 more",
+    "bankers": "IIFL Securities Limited, Incred Capital Financial Services Private Limited, Kotak Mahindra Capital Company Limited, Nomura Financial Advisory And Securities (India) Private Limited, Ubs Securities India Private Limited",
     "city": "Mumbai",
     "sector": "Banking and Finance"
    },
@@ -7685,7 +7685,7 @@
    "filed_on": "2025-06-15",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "IIFL Securities Limited, J.P. Morgan India Private Limited +3 more",
+    "bankers": "IIFL Securities Limited, J.P. Morgan India Private Limited, Kotak Mahindra Capital Company Limited, Nomura Financial Advisory And Securities (India) Private Limited, Ubs Securities India Private Limited",
     "city": "Mumbai",
     "sector": "Healthcare"
    },
@@ -7705,7 +7705,7 @@
    "filed_on": "2025-06-15",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "IIFL Securities Limited, J.P. Morgan India Private Limited +3 more",
+    "bankers": "IIFL Securities Limited, J.P. Morgan India Private Limited, Kotak Mahindra Capital Company Limited, Nomura Financial Advisory And Securities (India) Private Limited, Ubs Securities India Private Limited",
     "city": "Mumbai",
     "sector": "Healthcare"
    },
@@ -7881,7 +7881,7 @@
    "filed_on": "2025-02-13",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "Dam Capital Advisors Limited (Formerly Idfc Securities Limited), ICICI Securities Limited +3 more",
+    "bankers": "Dam Capital Advisors Limited (Formerly Idfc Securities Limited), ICICI Securities Limited, Jm Financial Limited, Motilal Oswal Investment Advisors Limited, Shannon Advisors Private Limited",
     "city": "New Delhi",
     "sector": "Information Technology"
    },
@@ -7907,7 +7907,7 @@
    "filed_on": "2025-02-13",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "Dam Capital Advisors Limited (Formerly Idfc Securities Limited), ICICI Securities Limited +3 more",
+    "bankers": "Dam Capital Advisors Limited (Formerly Idfc Securities Limited), ICICI Securities Limited, Jm Financial Limited, Motilal Oswal Investment Advisors Limited, Shannon Advisors Private Limited",
     "city": "New Delhi",
     "sector": "Information Technology"
    },
@@ -7933,7 +7933,7 @@
    "filed_on": "2026-09-30",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "Citigroup Global Markets India Private Limited, ICICI Securities Limited +2 more",
+    "bankers": "Citigroup Global Markets India Private Limited, ICICI Securities Limited, J.P. Morgan India Private Limited, Kotak Mahindra Capital Company Limited",
     "city": "Mumbai",
     "sector": "Oil and Gas"
    },
@@ -7959,7 +7959,7 @@
    "filed_on": "2026-09-29",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "Clsa India Private Limited, Hsbc Securities & Capital Markets Private limited +7 more",
+    "bankers": "Clsa India Private Limited, Hsbc Securities & Capital Markets Private limited, ICICI Securities Limited, IIFL Securities Limited, Jm Financial Limited, Motilal Oswal Investment Advisors Limited, Nuvama Wealth Management Limited, Ubs Securities India Private Limited, Emirates NBD Capital India Private Limited",
     "city": "Vadodara",
     "sector": "Power and Energy"
    },
@@ -8078,7 +8078,7 @@
    "filed_on": "2025-10-09",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "Axis Capital Limited, Citigroup Global Markets India Private Limited +2 more",
+    "bankers": "Axis Capital Limited, Citigroup Global Markets India Private Limited, ICICI Securities Limited, IIFL Securities Limited",
     "city": "New Delhi",
     "sector": "Pharmaceutical"
    },
@@ -8104,7 +8104,7 @@
    "filed_on": "2025-10-09",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "Axis Capital Limited, Citigroup Global Markets India Private Limited +2 more",
+    "bankers": "Axis Capital Limited, Citigroup Global Markets India Private Limited, ICICI Securities Limited, IIFL Securities Limited",
     "city": "New Delhi",
     "sector": "Pharmaceutical"
    },
@@ -8130,7 +8130,7 @@
    "filed_on": "2026-10-07",
    "first_seen": "2026-11-23T12:47:29+05:30",
    "info": {
-    "bankers": "Beeline Capital Advisors Private Limited, Centrum Capital Limited +1 more",
+    "bankers": "Beeline Capital Advisors Private Limited, Centrum Capital Limited, Mefcom Capital Markets Limited",
     "city": "Bengaluru",
     "sector": "Power and Energy - Solar"
    },
@@ -9096,7 +9096,7 @@
    "filed_on": "2026-09-24",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "PL Capital Markets Private Limited, ICICI Securities Limited +3 more",
+    "bankers": "PL Capital Markets Private Limited, ICICI Securities Limited, Jm Financial Limited, Kotak Mahindra Capital Company Limited, SBI Capital Markets Limited",
     "city": "Mumbai",
     "sector": "Infrastructure"
    },
@@ -9226,7 +9226,7 @@
    "filed_on": "2025-05-22",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "Oneview Corporate Advisors Private Limited (Formerly known as Guiness Corporate Advisors), Anand Rathi Securities Limited +1 more",
+    "bankers": "Oneview Corporate Advisors Private Limited (Formerly known as Guiness Corporate Advisors), Anand Rathi Securities Limited, IIFL Securities Limited",
     "city": "Bulandshahr",
     "sector": "Cement"
    },
@@ -9252,7 +9252,7 @@
    "filed_on": "2025-05-22",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "Oneview Corporate Advisors Private Limited (Formerly known as Guiness Corporate Advisors), Anand Rathi Securities Limited +1 more",
+    "bankers": "Oneview Corporate Advisors Private Limited (Formerly known as Guiness Corporate Advisors), Anand Rathi Securities Limited, IIFL Securities Limited",
     "city": "Bulandshahr",
     "sector": "Cement"
    },
@@ -9714,7 +9714,7 @@
    "filed_on": "2026-06-04",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "Axis Capital Limited, Jefferies India Private Limited +2 more",
+    "bankers": "Axis Capital Limited, Jefferies India Private Limited, Jm Financial Limited, Kotak Mahindra Capital Company Limited",
     "city": "Mumbai",
     "sector": "Advertising and Media"
    },
@@ -9734,7 +9734,7 @@
    "filed_on": "2026-06-04",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "Axis Capital Limited, Jefferies India Private Limited +2 more",
+    "bankers": "Axis Capital Limited, Jefferies India Private Limited, Jm Financial Limited, Kotak Mahindra Capital Company Limited",
     "city": "Mumbai",
     "sector": "Advertising and Media"
    },
@@ -9864,7 +9864,7 @@
    "filed_on": "2025-09-29",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "IIFL Securities Limited, Motilal Oswal Investment Advisors Limited +1 more",
+    "bankers": "IIFL Securities Limited, Motilal Oswal Investment Advisors Limited, Nuvama Wealth Management Limited",
     "city": "Kolkata",
     "sector": "Engineering"
    },
@@ -9890,7 +9890,7 @@
    "filed_on": "2025-09-29",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "IIFL Securities Limited, Motilal Oswal Investment Advisors Limited +1 more",
+    "bankers": "IIFL Securities Limited, Motilal Oswal Investment Advisors Limited, Nuvama Wealth Management Limited",
     "city": "Kolkata",
     "sector": "Engineering"
    },
@@ -10607,7 +10607,7 @@
    "filed_on": "2026-09-13",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "Idbi Capital Market Services Limited, Elara Capital (India) Private Limited +1 more",
+    "bankers": "Idbi Capital Market Services Limited, Elara Capital (India) Private Limited, Dolat Finserv Capital Limited",
     "city": "Mumbai",
     "sector": "FMCG"
    },
@@ -10745,7 +10745,7 @@
    "filed_on": "2024-08-20",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "Avendus Capital Private Limited, Citigroup Global Markets India Private Limited +3 more",
+    "bankers": "Avendus Capital Private Limited, Citigroup Global Markets India Private Limited, Goldman Sachs (India) Securities Private Limited, ICICI Securities Limited, Jm Financial Limited",
     "city": "Bengaluru",
     "sector": "Packaging & Disposables"
    },
@@ -10771,7 +10771,7 @@
    "filed_on": "2024-08-20",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "Avendus Capital Private Limited, Citigroup Global Markets India Private Limited +3 more",
+    "bankers": "Avendus Capital Private Limited, Citigroup Global Markets India Private Limited, Goldman Sachs (India) Securities Private Limited, ICICI Securities Limited, Jm Financial Limited",
     "city": "Bengaluru",
     "sector": "Packaging & Disposables"
    },
@@ -10849,7 +10849,7 @@
    "filed_on": "2026-02-01",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "IIFL Securities Limited, Motilal Oswal Investment Advisors Limited +1 more",
+    "bankers": "IIFL Securities Limited, Motilal Oswal Investment Advisors Limited, Nuvama Wealth Management Limited",
     "city": "Hyderabad",
     "sector": "Retail"
    },
@@ -10875,7 +10875,7 @@
    "filed_on": "2026-02-01",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "IIFL Securities Limited, Motilal Oswal Investment Advisors Limited +1 more",
+    "bankers": "IIFL Securities Limited, Motilal Oswal Investment Advisors Limited, Nuvama Wealth Management Limited",
     "city": "Hyderabad",
     "sector": "Retail"
    },
@@ -11062,7 +11062,7 @@
    "filed_on": "2026-09-30",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "ICICI Securities Limited, IIFL Securities Limited +1 more",
+    "bankers": "ICICI Securities Limited, IIFL Securities Limited, Jm Financial Limited",
     "city": "Chennai",
     "sector": "Healthcare - Hospitals and Clinic"
    },
@@ -11349,7 +11349,7 @@
    "filed_on": "2024-08-12",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "Axis Capital Limited, ICICI Securities Limited +1 more",
+    "bankers": "Axis Capital Limited, ICICI Securities Limited, Motilal Oswal Investment Advisors Limited",
     "city": "New Delhi",
     "sector": "Steel"
    },
@@ -11375,7 +11375,7 @@
    "filed_on": "2024-08-12",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "Axis Capital Limited, ICICI Securities Limited +1 more",
+    "bankers": "Axis Capital Limited, ICICI Securities Limited, Motilal Oswal Investment Advisors Limited",
     "city": "New Delhi",
     "sector": "Steel"
    },
@@ -11479,7 +11479,7 @@
    "filed_on": "2025-11-18",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "Axis Capital Limited, Jm Financial Limited +1 more",
+    "bankers": "Axis Capital Limited, Jm Financial Limited, Motilal Oswal Investment Advisors Limited",
     "city": "Solan",
     "sector": "Electric Equipments"
    },
@@ -11505,7 +11505,7 @@
    "filed_on": "2025-11-18",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "Axis Capital Limited, Jm Financial Limited +1 more",
+    "bankers": "Axis Capital Limited, Jm Financial Limited, Motilal Oswal Investment Advisors Limited",
     "city": "Solan",
     "sector": "Electric Equipments"
    },
@@ -11733,7 +11733,7 @@
    "filed_on": "2025-05-05",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "ICICI Securities Limited, Jm Financial Limited +1 more",
+    "bankers": "ICICI Securities Limited, Jm Financial Limited, Nuvama Wealth Management Limited",
     "city": "Hyderabad",
     "sector": "Information Technology - Data Solutions"
    },
@@ -11759,7 +11759,7 @@
    "filed_on": "2025-05-05",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "ICICI Securities Limited, Jm Financial Limited +1 more",
+    "bankers": "ICICI Securities Limited, Jm Financial Limited, Nuvama Wealth Management Limited",
     "city": "Hyderabad",
     "sector": "Information Technology - Data Solutions"
    },
@@ -11967,7 +11967,7 @@
    "filed_on": "2026-08-12",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "Jm Financial Limited, Kotak Mahindra Capital Company Limited +2 more",
+    "bankers": "Jm Financial Limited, Kotak Mahindra Capital Company Limited, Morgan Stanley India Company Private Limited, SBI Capital Markets Limited",
     "city": "Thiruvananthapuram",
     "sector": "Banking and Finance"
    },
@@ -12700,7 +12700,7 @@
    "filed_on": "2026-08-20",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "ICICI Securities Limited, Motilal Oswal Investment Advisors Limited +1 more",
+    "bankers": "ICICI Securities Limited, Motilal Oswal Investment Advisors Limited, SBI Capital Markets Limited",
     "city": "Mumbai",
     "sector": "Healthcare - Personal Care"
    },
@@ -13119,7 +13119,7 @@
    "filed_on": "2025-12-31",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "Intensive Fiscal Services Private Limited, Axis Capital Limited +6 more",
+    "bankers": "Intensive Fiscal Services Private Limited, Axis Capital Limited, Citigroup Global Markets India Private Limited, Goldman Sachs (India) Securities Private Limited, ICICI Securities Limited, Incred Capital Financial Services Private Limited, Jm Financial Limited, SBI Capital Markets Limited",
     "city": "Ahmedabad",
     "sector": "Hospitality"
    },
@@ -13139,7 +13139,7 @@
    "filed_on": "2025-12-31",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "Intensive Fiscal Services Private Limited, Axis Capital Limited +6 more",
+    "bankers": "Intensive Fiscal Services Private Limited, Axis Capital Limited, Citigroup Global Markets India Private Limited, Goldman Sachs (India) Securities Private Limited, ICICI Securities Limited, Incred Capital Financial Services Private Limited, Jm Financial Limited, SBI Capital Markets Limited",
     "city": "Ahmedabad",
     "sector": "Hospitality"
    },
@@ -13839,7 +13839,7 @@
    "filed_on": "2026-03-13",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "Axis Capital Limited, Bofa Securities India Limited +3 more",
+    "bankers": "Axis Capital Limited, Bofa Securities India Limited, Goldman Sachs (India) Securities Private Limited, Hsbc Securities & Capital Markets Private limited, SBI Capital Markets Limited",
     "city": "Mumbai",
     "sector": "Glass"
    },
@@ -13859,7 +13859,7 @@
    "filed_on": "2026-03-13",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "Axis Capital Limited, Bofa Securities India Limited +3 more",
+    "bankers": "Axis Capital Limited, Bofa Securities India Limited, Goldman Sachs (India) Securities Private Limited, Hsbc Securities & Capital Markets Private limited, SBI Capital Markets Limited",
     "city": "Mumbai",
     "sector": "Glass"
    },
@@ -13905,7 +13905,7 @@
    "filed_on": "2025-09-23",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "Axis Capital Limited, Citigroup Global Markets India Private Limited +6 more",
+    "bankers": "Axis Capital Limited, Citigroup Global Markets India Private Limited, Goldman Sachs (India) Securities Private Limited, J.P. Morgan India Private Limited, Jefferies India Private Limited, Jm Financial Limited, Kotak Mahindra Capital Company Limited, Morgan Stanley India Company Private Limited",
     "city": "Bengaluru",
     "sector": "Banking and Finance - FinTech"
    },
@@ -14061,7 +14061,7 @@
    "filed_on": "2026-04-23",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "Axis Capital Limited, J.P. Morgan India Private Limited +1 more",
+    "bankers": "Axis Capital Limited, J.P. Morgan India Private Limited, Morgan Stanley India Company Private Limited",
     "city": "Bengaluru",
     "sector": "Sports and Gaming"
    },
@@ -14087,7 +14087,7 @@
    "filed_on": "2026-04-23",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "Axis Capital Limited, J.P. Morgan India Private Limited +1 more",
+    "bankers": "Axis Capital Limited, J.P. Morgan India Private Limited, Morgan Stanley India Company Private Limited",
     "city": "Bengaluru",
     "sector": "Sports and Gaming"
    },
@@ -14426,7 +14426,7 @@
    "filed_on": "2025-04-24",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "Clsa India Private Limited, J.P. Morgan India Private Limited +2 more",
+    "bankers": "Clsa India Private Limited, J.P. Morgan India Private Limited, Jm Financial Limited, Kotak Mahindra Capital Company Limited",
     "city": "Bengaluru",
     "sector": "Healthcare - Hospitals and Clinic"
    },
@@ -14452,7 +14452,7 @@
    "filed_on": "2025-04-24",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "Clsa India Private Limited, J.P. Morgan India Private Limited +2 more",
+    "bankers": "Clsa India Private Limited, J.P. Morgan India Private Limited, Jm Financial Limited, Kotak Mahindra Capital Company Limited",
     "city": "Bengaluru",
     "sector": "Healthcare - Hospitals and Clinic"
    },
@@ -14546,7 +14546,7 @@
    "filed_on": "2026-06-29",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "Axis Capital Limited, Clsa India Private Limited +1 more",
+    "bankers": "Axis Capital Limited, Clsa India Private Limited, SBI Capital Markets Limited",
     "city": "New Delhi",
     "sector": "Logistics"
    },
@@ -14566,7 +14566,7 @@
    "filed_on": "2026-06-29",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "Axis Capital Limited, Clsa India Private Limited +1 more",
+    "bankers": "Axis Capital Limited, Clsa India Private Limited, SBI Capital Markets Limited",
     "city": "New Delhi",
     "sector": "Logistics"
    },
@@ -14722,7 +14722,7 @@
    "filed_on": "2026-05-26",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "Systematix Corporate Services Limited, ICICI Securities Limited +1 more",
+    "bankers": "Systematix Corporate Services Limited, ICICI Securities Limited, IIFL Securities Limited",
     "city": "Indore",
     "sector": "FMCG"
    },
@@ -14748,7 +14748,7 @@
    "filed_on": "2026-05-26",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "Systematix Corporate Services Limited, ICICI Securities Limited +1 more",
+    "bankers": "Systematix Corporate Services Limited, ICICI Securities Limited, IIFL Securities Limited",
     "city": "Indore",
     "sector": "FMCG"
    },
@@ -15216,7 +15216,7 @@
    "filed_on": "2026-07-01",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "Axis Capital Limited, Dam Capital Advisors Limited (Formerly Idfc Securities Limited) +1 more",
+    "bankers": "Axis Capital Limited, Dam Capital Advisors Limited (Formerly Idfc Securities Limited), Motilal Oswal Investment Advisors Limited",
     "city": "Secunderabad",
     "sector": "Retail - Supermarket"
    },
@@ -15242,7 +15242,7 @@
    "filed_on": "2026-07-01",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "Axis Capital Limited, Dam Capital Advisors Limited (Formerly Idfc Securities Limited) +1 more",
+    "bankers": "Axis Capital Limited, Dam Capital Advisors Limited (Formerly Idfc Securities Limited), Motilal Oswal Investment Advisors Limited",
     "city": "Secunderabad",
     "sector": "Retail - Supermarket"
    },
@@ -15398,7 +15398,7 @@
    "filed_on": "2025-06-25",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "Ambit Private Limited, IIFL Securities Limited +1 more",
+    "bankers": "Ambit Private Limited, IIFL Securities Limited, SBI Capital Markets Limited",
     "city": "Surat",
     "sector": "Solar"
    },
@@ -15418,7 +15418,7 @@
    "filed_on": "2026-06-12",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "Axis Capital Limited, Citigroup Global Markets India Private Limited +2 more",
+    "bankers": "Axis Capital Limited, Citigroup Global Markets India Private Limited, J.P. Morgan India Private Limited, Kotak Mahindra Capital Company Limited",
     "city": "Bengaluru",
     "sector": "Banking and Finance - FinTech"
    },
@@ -15438,7 +15438,7 @@
    "filed_on": "2026-06-12",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "Axis Capital Limited, Citigroup Global Markets India Private Limited +2 more",
+    "bankers": "Axis Capital Limited, Citigroup Global Markets India Private Limited, J.P. Morgan India Private Limited, Kotak Mahindra Capital Company Limited",
     "city": "Bengaluru",
     "sector": "Banking and Finance - FinTech"
    },
@@ -16039,7 +16039,7 @@
    "filed_on": "2025-09-26",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "Clsa India Private Limited, Equirus Capital Private Limited +1 more",
+    "bankers": "Clsa India Private Limited, Equirus Capital Private Limited, Jm Financial Limited",
     "city": "Anand",
     "sector": "Electric Equipments"
    },
@@ -16065,7 +16065,7 @@
    "filed_on": "2025-09-26",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "Clsa India Private Limited, Equirus Capital Private Limited +1 more",
+    "bankers": "Clsa India Private Limited, Equirus Capital Private Limited, Jm Financial Limited",
     "city": "Anand",
     "sector": "Electric Equipments"
    },
@@ -16169,7 +16169,7 @@
    "filed_on": "2025-08-14",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "Hdfc Bank Limited, IIFL Securities Limited +1 more",
+    "bankers": "Hdfc Bank Limited, IIFL Securities Limited, Motilal Oswal Investment Advisors Limited",
     "city": "Hyderabad",
     "sector": "Retail"
    },
@@ -16195,7 +16195,7 @@
    "filed_on": "2025-08-14",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "Hdfc Bank Limited, IIFL Securities Limited +1 more",
+    "bankers": "Hdfc Bank Limited, IIFL Securities Limited, Motilal Oswal Investment Advisors Limited",
     "city": "Hyderabad",
     "sector": "Retail"
    },
@@ -16273,7 +16273,7 @@
    "filed_on": "2025-09-30",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "Bob Capital Markets Limited, ICICI Securities Limited +2 more",
+    "bankers": "Bob Capital Markets Limited, ICICI Securities Limited, IIFL Securities Limited, Jm Financial Limited",
     "city": "Mumbai",
     "sector": "Real Estate - Residential and Commercial"
    },
@@ -16299,7 +16299,7 @@
    "filed_on": "2025-09-30",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "Bob Capital Markets Limited, ICICI Securities Limited +2 more",
+    "bankers": "Bob Capital Markets Limited, ICICI Securities Limited, IIFL Securities Limited, Jm Financial Limited",
     "city": "Mumbai",
     "sector": "Real Estate - Residential and Commercial"
    },
@@ -16507,7 +16507,7 @@
    "filed_on": "2025-11-03",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "Ambit Private Limited, ICICI Securities Limited +2 more",
+    "bankers": "Ambit Private Limited, ICICI Securities Limited, Jm Financial Limited, Kotak Mahindra Capital Company Limited",
     "city": "Firozpur",
     "sector": "Power and Energy"
    },
@@ -16533,7 +16533,7 @@
    "filed_on": "2025-11-03",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "Ambit Private Limited, ICICI Securities Limited +2 more",
+    "bankers": "Ambit Private Limited, ICICI Securities Limited, Jm Financial Limited, Kotak Mahindra Capital Company Limited",
     "city": "Firozpur",
     "sector": "Power and Energy"
    },
@@ -16559,7 +16559,7 @@
    "filed_on": "2025-07-03",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "Axis Capital Limited, Jm Financial Limited +1 more",
+    "bankers": "Axis Capital Limited, Jm Financial Limited, SBI Capital Markets Limited",
     "city": "New Delhi",
     "sector": "Chemical - Pesticides"
    },
@@ -16585,7 +16585,7 @@
    "filed_on": "2025-07-03",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "Axis Capital Limited, Jm Financial Limited +1 more",
+    "bankers": "Axis Capital Limited, Jm Financial Limited, SBI Capital Markets Limited",
     "city": "New Delhi",
     "sector": "Chemical - Pesticides"
    },
@@ -16663,7 +16663,7 @@
    "filed_on": "2026-08-06",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "IIFL Securities Limited, Jm Financial Limited +2 more",
+    "bankers": "IIFL Securities Limited, Jm Financial Limited, Kotak Mahindra Capital Company Limited, Ubs Securities India Private Limited",
     "city": "Mumbai",
     "sector": "Defence"
    },
@@ -16689,7 +16689,7 @@
    "filed_on": "2026-08-06",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "IIFL Securities Limited, Jm Financial Limited +2 more",
+    "bankers": "IIFL Securities Limited, Jm Financial Limited, Kotak Mahindra Capital Company Limited, Ubs Securities India Private Limited",
     "city": "Mumbai",
     "sector": "Defence"
    },
@@ -17251,7 +17251,7 @@
    "filed_on": "2025-02-11",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "Dam Capital Advisors Limited (Formerly Idfc Securities Limited), Equirus Capital Private Limited +1 more",
+    "bankers": "Dam Capital Advisors Limited (Formerly Idfc Securities Limited), Equirus Capital Private Limited, SBI Capital Markets Limited",
     "city": "Telangana",
     "sector": "Agro"
    },
@@ -17277,7 +17277,7 @@
    "filed_on": "2025-02-11",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "Dam Capital Advisors Limited (Formerly Idfc Securities Limited), Equirus Capital Private Limited +1 more",
+    "bankers": "Dam Capital Advisors Limited (Formerly Idfc Securities Limited), Equirus Capital Private Limited, SBI Capital Markets Limited",
     "city": "Telangana",
     "sector": "Agro"
    },
@@ -17381,7 +17381,7 @@
    "filed_on": "2026-08-26",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "Axis Capital Limited, Citigroup Global Markets India Private Limited +5 more",
+    "bankers": "Axis Capital Limited, Citigroup Global Markets India Private Limited, Clsa India Private Limited, Hsbc Securities & Capital Markets Private limited, ICICI Securities Limited, IIFL Securities Limited, Kotak Mahindra Capital Company Limited",
     "city": "Gurugram",
     "sector": "Power and Energy"
    },
@@ -17407,7 +17407,7 @@
    "filed_on": "2026-08-26",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "Axis Capital Limited, Citigroup Global Markets India Private Limited +5 more",
+    "bankers": "Axis Capital Limited, Citigroup Global Markets India Private Limited, Clsa India Private Limited, Hsbc Securities & Capital Markets Private limited, ICICI Securities Limited, IIFL Securities Limited, Kotak Mahindra Capital Company Limited",
     "city": "Gurugram",
     "sector": "Power and Energy"
    },
@@ -17563,7 +17563,7 @@
    "filed_on": "2025-09-05",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "Axis Capital Limited, IIFL Securities Limited +1 more",
+    "bankers": "Axis Capital Limited, IIFL Securities Limited, Jm Financial Limited",
     "city": "New Delhi",
     "sector": "Infrastructure"
    },
@@ -17589,7 +17589,7 @@
    "filed_on": "2025-09-05",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "Axis Capital Limited, IIFL Securities Limited +1 more",
+    "bankers": "Axis Capital Limited, IIFL Securities Limited, Jm Financial Limited",
     "city": "New Delhi",
     "sector": "Infrastructure"
    },
@@ -18031,7 +18031,7 @@
    "filed_on": "2025-10-16",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "Clsa India Private Limited, J.P. Morgan India Private Limited +3 more",
+    "bankers": "Clsa India Private Limited, J.P. Morgan India Private Limited, Jm Financial Limited, Kotak Mahindra Capital Company Limited, Morgan Stanley India Company Private Limited",
     "city": "Chennai",
     "sector": "Data Centre"
    },
@@ -18057,7 +18057,7 @@
    "filed_on": "2025-10-16",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "Clsa India Private Limited, J.P. Morgan India Private Limited +3 more",
+    "bankers": "Clsa India Private Limited, J.P. Morgan India Private Limited, Jm Financial Limited, Kotak Mahindra Capital Company Limited, Morgan Stanley India Company Private Limited",
     "city": "Chennai",
     "sector": "Data Centre"
    },
@@ -18150,7 +18150,7 @@
    "filed_on": "2025-08-07",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "Choice Capital Advisors Private Limited, ICICI Securities Limited +2 more",
+    "bankers": "Choice Capital Advisors Private Limited, ICICI Securities Limited, Jm Financial Limited, Motilal Oswal Investment Advisors Limited",
     "city": "Rajkot",
     "sector": "Electric Equipments"
    },
@@ -18438,7 +18438,7 @@
    "filed_on": "2024-10-18",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "Axis Capital Limited, ICICI Securities Limited +3 more",
+    "bankers": "Axis Capital Limited, ICICI Securities Limited, IIFL Securities Limited, Jm Financial Limited, Motilal Oswal Investment Advisors Limited",
     "city": "Sangrur",
     "sector": "Defence"
    },
@@ -18464,7 +18464,7 @@
    "filed_on": "2024-10-18",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "Axis Capital Limited, ICICI Securities Limited +3 more",
+    "bankers": "Axis Capital Limited, ICICI Securities Limited, IIFL Securities Limited, Jm Financial Limited, Motilal Oswal Investment Advisors Limited",
     "city": "Sangrur",
     "sector": "Defence"
    },
@@ -18490,7 +18490,7 @@
    "filed_on": "2021-12-20",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "Axis Bank Limited, Bofa Securities India Limited +2 more",
+    "bankers": "Axis Bank Limited, Bofa Securities India Limited, Clsa India Private Limited, Jm Financial Limited",
     "city": "New Delhi",
     "sector": "E-Commerce"
    },
@@ -18609,7 +18609,7 @@
    "filed_on": "2026-06-29",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "Axis Capital Limited, Dam Capital Advisors Limited (Formerly Idfc Securities Limited) +2 more",
+    "bankers": "Axis Capital Limited, Dam Capital Advisors Limited (Formerly Idfc Securities Limited), Jm Financial Limited, Kotak Mahindra Capital Company Limited",
     "city": "Pune",
     "sector": "Banking and Finance - FinTech"
    },
@@ -18635,7 +18635,7 @@
    "filed_on": "2026-06-29",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "Axis Capital Limited, Dam Capital Advisors Limited (Formerly Idfc Securities Limited) +2 more",
+    "bankers": "Axis Capital Limited, Dam Capital Advisors Limited (Formerly Idfc Securities Limited), Jm Financial Limited, Kotak Mahindra Capital Company Limited",
     "city": "Pune",
     "sector": "Banking and Finance - FinTech"
    },
@@ -18832,7 +18832,7 @@
    "filed_on": "2026-11-04",
    "first_seen": "2026-11-23T12:47:29+05:30",
    "info": {
-    "bankers": "Idbi Capital Market Services Limited, ICICI Securities Limited +2 more",
+    "bankers": "Idbi Capital Market Services Limited, ICICI Securities Limited, Motilal Oswal Investment Advisors Limited, SBI Capital Markets Limited",
     "city": "Bilaspur",
     "sector": "Power and Energy"
    },
@@ -19119,7 +19119,7 @@
    "filed_on": "2024-12-04",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "Ambit Private Limited, Equirus Capital Private Limited +1 more",
+    "bankers": "Ambit Private Limited, Equirus Capital Private Limited, Jm Financial Limited",
     "city": "Mumbai",
     "sector": "Agro"
    },
@@ -19249,7 +19249,7 @@
    "filed_on": "2025-09-29",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "Axis Capital Limited, Motilal Oswal Investment Advisors Limited +1 more",
+    "bankers": "Axis Capital Limited, Motilal Oswal Investment Advisors Limited, Nuvama Wealth Management Limited",
     "city": "Pune",
     "sector": "Power and Energy"
    },
@@ -19613,7 +19613,7 @@
    "filed_on": "2026-08-13",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "Avendus Capital Private Limited, Axis Capital Limited +3 more",
+    "bankers": "Avendus Capital Private Limited, Axis Capital Limited, IIFL Securities Limited, Kotak Mahindra Capital Company Limited, SBI Capital Markets Limited",
     "city": "Mumbai",
     "sector": "Banking and Finance"
    },
@@ -19685,7 +19685,7 @@
    "filed_on": "2026-03-10",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "Centrum Capital Limited, Incred Capital Financial Services Private Limited +1 more",
+    "bankers": "Centrum Capital Limited, Incred Capital Financial Services Private Limited, Pnb Investment Services Limited",
     "city": "Satara",
     "sector": "Power and Energy - Bio"
    },
@@ -19705,7 +19705,7 @@
    "filed_on": "2026-03-10",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "Centrum Capital Limited, Incred Capital Financial Services Private Limited +1 more",
+    "bankers": "Centrum Capital Limited, Incred Capital Financial Services Private Limited, Pnb Investment Services Limited",
     "city": "Satara",
     "sector": "Power and Energy - Bio"
    },
@@ -19890,7 +19890,7 @@
    "filed_on": "2026-08-10",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "Axis Capital Limited, Bofa Securities India Limited +3 more",
+    "bankers": "Axis Capital Limited, Bofa Securities India Limited, Clsa India Private Limited, IIFL Securities Limited, Jm Financial Limited",
     "city": "Bengaluru",
     "sector": "Corporate Solutions"
    },
@@ -20410,7 +20410,7 @@
    "filed_on": "2026-09-08",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "Axis Capital Limited, Citigroup Global Markets India Private Limited +1 more",
+    "bankers": "Axis Capital Limited, Citigroup Global Markets India Private Limited, Kotak Mahindra Capital Company Limited",
     "city": "Ahmedabad",
     "sector": "Oil and Gas"
    },
@@ -20508,7 +20508,7 @@
    "filed_on": "2025-12-17",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "IIFL Securities Limited, Motilal Oswal Investment Advisors Limited +1 more",
+    "bankers": "IIFL Securities Limited, Motilal Oswal Investment Advisors Limited, Nuvama Wealth Management Limited",
     "city": "New Delhi",
     "sector": "Travel and Tourism"
    },
@@ -20534,7 +20534,7 @@
    "filed_on": "2025-12-17",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "IIFL Securities Limited, Motilal Oswal Investment Advisors Limited +1 more",
+    "bankers": "IIFL Securities Limited, Motilal Oswal Investment Advisors Limited, Nuvama Wealth Management Limited",
     "city": "New Delhi",
     "sector": "Travel and Tourism"
    },
@@ -20653,7 +20653,7 @@
    "filed_on": "2026-03-09",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "IIFL Securities Limited, Jefferies India Private Limited +2 more",
+    "bankers": "IIFL Securities Limited, Jefferies India Private Limited, Jm Financial Limited, Kotak Mahindra Capital Company Limited",
     "city": "Chennai",
     "sector": "Banking and Finance"
    },
@@ -20679,7 +20679,7 @@
    "filed_on": "2026-03-09",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "IIFL Securities Limited, Jefferies India Private Limited +2 more",
+    "bankers": "IIFL Securities Limited, Jefferies India Private Limited, Jm Financial Limited, Kotak Mahindra Capital Company Limited",
     "city": "Chennai",
     "sector": "Banking and Finance"
    },
@@ -21200,7 +21200,7 @@
    "filed_on": "2024-09-30",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "Equirus Capital Private Limited, ICICI Securities Limited +1 more",
+    "bankers": "Equirus Capital Private Limited, ICICI Securities Limited, IIFL Securities Limited",
     "city": "New Delhi",
     "sector": "Engineering - EPC"
    },
@@ -21226,7 +21226,7 @@
    "filed_on": "2024-09-30",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "Equirus Capital Private Limited, ICICI Securities Limited +1 more",
+    "bankers": "Equirus Capital Private Limited, ICICI Securities Limited, IIFL Securities Limited",
     "city": "New Delhi",
     "sector": "Engineering - EPC"
    },
@@ -21252,7 +21252,7 @@
    "filed_on": "2025-01-31",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "Axis Bank Limited, Clsa India Private Limited +2 more",
+    "bankers": "Axis Bank Limited, Clsa India Private Limited, IIFL Securities Limited, SBI Capital Markets Limited",
     "city": "Ahmedabad",
     "sector": "Pharmaceutical"
    },
@@ -21278,7 +21278,7 @@
    "filed_on": "2025-01-31",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "Axis Bank Limited, Clsa India Private Limited +2 more",
+    "bankers": "Axis Bank Limited, Clsa India Private Limited, IIFL Securities Limited, SBI Capital Markets Limited",
     "city": "Ahmedabad",
     "sector": "Pharmaceutical"
    },
@@ -21304,7 +21304,7 @@
    "filed_on": "2025-01-18",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "Hdfc Bank Limited, ICICI Securities Limited +3 more",
+    "bankers": "Hdfc Bank Limited, ICICI Securities Limited, Jefferies India Private Limited, Kotak Mahindra Capital Company Limited, Nuvama Wealth Management Limited",
     "city": "Chennai",
     "sector": "Banking and Finance"
    },
@@ -21330,7 +21330,7 @@
    "filed_on": "2025-01-18",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "Hdfc Bank Limited, ICICI Securities Limited +3 more",
+    "bankers": "Hdfc Bank Limited, ICICI Securities Limited, Jefferies India Private Limited, Kotak Mahindra Capital Company Limited, Nuvama Wealth Management Limited",
     "city": "Chennai",
     "sector": "Banking and Finance"
    },
@@ -21512,7 +21512,7 @@
    "filed_on": "2026-09-30",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "ICICI Securities Limited, IIFL Securities Limited +1 more",
+    "bankers": "ICICI Securities Limited, IIFL Securities Limited, SBI Capital Markets Limited",
     "city": "Ahmedabad",
     "sector": "Solar"
    },
@@ -21538,7 +21538,7 @@
    "filed_on": "2025-09-29",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "Axis Capital Limited, Dam Capital Advisors Limited (Formerly Idfc Securities Limited) +1 more",
+    "bankers": "Axis Capital Limited, Dam Capital Advisors Limited (Formerly Idfc Securities Limited), Jm Financial Limited",
     "city": "Mumbai",
     "sector": "ESG - Waste"
    },
@@ -21564,7 +21564,7 @@
    "filed_on": "2025-09-29",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "Axis Capital Limited, Dam Capital Advisors Limited (Formerly Idfc Securities Limited) +1 more",
+    "bankers": "Axis Capital Limited, Dam Capital Advisors Limited (Formerly Idfc Securities Limited), Jm Financial Limited",
     "city": "Mumbai",
     "sector": "ESG - Waste"
    },
@@ -22209,7 +22209,7 @@
    "filed_on": "2025-12-26",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "Axis Capital Limited, Goldman Sachs (India) Securities Private Limited +5 more",
+    "bankers": "Axis Capital Limited, Goldman Sachs (India) Securities Private Limited, Hsbc Securities & Capital Markets Private limited, IIFL Securities Limited, Jm Financial Limited, Morgan Stanley India Company Private Limited, Motilal Oswal Investment Advisors Limited",
     "city": "Bengaluru",
     "sector": "Quick Commerce"
    },
@@ -22235,7 +22235,7 @@
    "filed_on": "2025-12-26",
    "first_seen": "2026-11-23T13:02:53+05:30",
    "info": {
-    "bankers": "Axis Capital Limited, Goldman Sachs (India) Securities Private Limited +5 more",
+    "bankers": "Axis Capital Limited, Goldman Sachs (India) Securities Private Limited, Hsbc Securities & Capital Markets Private limited, IIFL Securities Limited, Jm Financial Limited, Morgan Stanley India Company Private Limited, Motilal Oswal Investment Advisors Limited",
     "city": "Bengaluru",
     "sector": "Quick Commerce"
    },
