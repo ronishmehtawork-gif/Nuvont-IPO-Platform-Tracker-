@@ -5,7 +5,11 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src '__SCRIPT_HASH__'; style-src 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; form-action 'none'; base-uri 'none'">
 <meta name="referrer" content="no-referrer">
-<meta name="robots" content="noindex,nofollow"> <meta name="description" content="Indian IPO filings, DRHP radar, grey market premiums, FII/DII flows, and Nifty 500 sector outlook."> <meta property="og:title" content="Nuvont Capital — Indian IPO &amp; Market Research Desk"> <meta property="og:description" content="Live DRHP filings, IPO Desk with GMP &amp; key dates, FII/DII flows, and Sector Outlook."> <meta property="og:type" content="website">
+<meta name="robots" content="noindex,nofollow">
+<meta name="description" content="Indian IPO filings, DRHP radar, grey market premiums, FII/DII flows, and Nifty 500 sector outlook.">
+<meta property="og:title" content="Nuvont Capital — Indian IPO &amp; Market Research Desk">
+<meta property="og:description" content="Live DRHP filings, IPO Desk with GMP &amp; key dates, 5-session debut tracking, FII/DII flows, and Sector Outlook.">
+<meta property="og:type" content="website">
 <meta name="color-scheme" content="light">
 <title>Nuvont Capital</title>
 <link rel="icon" type="image/png" href="assets/favicon.png">
@@ -541,7 +545,7 @@ body:not(.home) #gate{display:none}
   .dfilters .f-end{width:100%}
 }
 /* New Listings (5-Session Debut Tracker) */
-.l-cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.l-cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;align-items:start}
 .l-head{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;flex-wrap:wrap}
 .l-pills{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
 .l-ver{font-size:11.5px;font-weight:600;border-radius:999px;padding:2px 9px;border:1px solid var(--line);background:var(--bg);color:var(--muted)}
@@ -721,7 +725,7 @@ body:not(.home) #gate{display:none}
           <p class="note">Grey market premium (GMP) is unofficial and comes from ipowatch.in. It is not an exchange price and can move sharply before listing. Issue size is in crores. Minimum investment is one lot at the upper price band. Dates are as published and can change. For information only, not a recommendation to apply.</p></div>
       </section>
     </div>
-  <aside class="rail sticky" aria-label="Key dates calendar">
+    <aside class="rail sticky" aria-label="Key dates calendar">
       <section class="panel calp" id="d-cal"></section>
     </aside>
   </div>
@@ -745,13 +749,11 @@ body:not(.home) #gate{display:none}
     <section class="panel" aria-labelledby="h-nl">
       <div class="ph"><div><h2 id="h-nl">New listings · First 5 trading sessions</h2><p id="l-sub"></p></div></div>
       <div class="pb"><div id="l-body"></div>
-        <p class="note">Tracks newly listed IPOs from Day 1 through Day 5 using daily exchange OHLCV data from Yahoo Finance. Listing gain is Day-1 open vs. issue price; Open-to-LTP measures post-open accumulation or fading. NSE (.NS) turnover excludes BSE volume for dual-listed mainboard issues. For research only, not investment advice.</p></div>
+        <p class="note">Tracks newly listed IPOs from Day 1 through Day 5 using daily exchange OHLCV and 15-minute intraday data from Yahoo Finance. Listing gain is Day-1 open vs. issue price; Open-to-LTP measures post-open accumulation or fading. NSE (.NS) turnover excludes BSE volume for dual-listed mainboard issues. For research only, not investment advice.</p></div>
     </section>
   </div>
 </main>
 </div>
-
-<div id="v-sectors"
 
 <div id="v-sectors" role="tabpanel" aria-labelledby="tab-sectors" hidden>
 <section class="wrap hero" aria-labelledby="h1-sectors">
@@ -1613,30 +1615,79 @@ const LSORT = {
   drift: (a, b) => (b.o2c_pct == null ? -1e9 : b.o2c_pct) - (a.o2c_pct == null ? -1e9 : a.o2c_pct),
   churn: (a, b) => (b.churn == null ? -1 : b.churn) - (a.churn == null ? -1 : a.churn),
 };
-function debutTrajectory(sess) {
-  const W = 340, H = 74, mid = 36, step = W / 5;
-  const maxC = Math.max(2, ...sess.map(s => Math.abs(s.chg || 0)));
-  const maxV = Math.max(1, ...sess.map(s => s.v || 0));
-  const g = svg("svg", { viewBox: "0 0 " + W + " " + H, role: "img", "aria-label": "5-session daily return and volume trajectory" });
-  g.appendChild(svg("line", { x1: "0", x2: String(W), y1: String(mid), y2: String(mid), stroke: "#e2dacd", "stroke-width": "1" }));
-  for (let i = 0; i < 5; i++) {
-    const cx = i * step + step / 2, s = sess[i];
-    const lbl = svg("text", { x: cx.toFixed(1), y: String(H - 2), "text-anchor": "middle", "font-size": "10", fill: "#5e6a66" });
-    lbl.textContent = "D" + (i + 1); g.appendChild(lbl);
-    if (!s) continue;
-    const bh = Math.max(2, Math.abs(s.chg) / maxC * 26);
-    g.appendChild(svg("rect", { x: (cx - 14).toFixed(1), y: (s.chg >= 0 ? mid - bh : mid).toFixed(1), width: "28", height: bh.toFixed(1), rx: "2", fill: s.chg >= 0 ? "#044f48" : "#b3382c" }));
-    if (s.v > 0) {
-      const vh = Math.max(2, s.v / maxV * 14);
-      g.appendChild(svg("rect", { x: (cx - 14).toFixed(1), y: (H - 14 - vh).toFixed(1), width: "28", height: vh.toFixed(1), rx: "1.5", fill: "#64908b", opacity: "0.45" }));
+function debutTrajectory(i) {
+  let pts = (i.pts && i.pts.length >= 2) ? i.pts : [];
+  if (!pts.length && i.sess && i.sess.length) {
+    pts = [];
+    for (const s of i.sess) {
+      pts.push([shortDate(s.d) + ", Open", s.o, 0]);
+      pts.push([shortDate(s.d) + ", Close", s.c, s.v || 0]);
     }
-    const hit = svg("rect", { x: (i * step).toFixed(1), y: "0", width: step.toFixed(1), height: String(H), fill: "transparent" });
-    hover(hit, "Day " + (i + 1) + " · " + shortDate(s.d), [
-      { k: "Open / Close", v: inr(s.o) + " / " + inr(s.c) },
-      { k: "High / Low", v: inr(s.h) + " / " + inr(s.l) },
-      { k: i === 0 ? "Open-to-Close" : "Day change", v: signed(s.chg) + "%" },
-      { k: "Turnover", v: s.t ? "₹" + crp(s.t, 1) + " Cr" : "–" },
-    ]);
+  }
+  const W = 380, H = 142, L = 6, R = 324, T = 14, B = 92, VT = 100, VB = 122;
+  const g = svg("svg", { viewBox: "0 0 " + W + " " + H, role: "img", "aria-label": i.n + " stock price chart" });
+  if (!pts.length) return g;
+  const prices = pts.map(p => p[1]).concat(i.ip ? [i.ip] : []);
+  let lo = Math.min(...prices), hi = Math.max(...prices);
+  if (hi - lo < 0.05) { lo -= 1; hi += 1; }
+  const padP = (hi - lo) * 0.1; lo -= padP; hi += padP;
+  const xOf = idx => pts.length === 1 ? (L + R) / 2 : L + idx / (pts.length - 1) * (R - L);
+  const yOf = p => B - (p - lo) / (hi - lo) * (B - T);
+  const up = i.ip ? pts[pts.length - 1][1] >= i.ip : pts[pts.length - 1][1] >= pts[0][1];
+  const col = up ? "#044f48" : "#b3382c";
+
+  for (const p of [hi - padP, lo + padP]) {
+    const yy = yOf(p).toFixed(1);
+    g.appendChild(svg("line", { x1: String(L), x2: String(R), y1: yy, y2: yy, stroke: "#ece6dc", "stroke-width": "1" }));
+    const tx = svg("text", { x: String(R + 5), y: String(+yy + 3.5), "font-size": "9.5", fill: "#5e6a66" });
+    tx.textContent = "₹" + p.toFixed(p >= 1000 ? 0 : 1); g.appendChild(tx);
+  }
+
+  let lastDayLbl = "";
+  pts.forEach((p, idx) => {
+    const dayLbl = p[0].split(",")[0];
+    if (dayLbl !== lastDayLbl) {
+      const xx = xOf(idx).toFixed(1);
+      if (idx > 0) g.appendChild(svg("line", { x1: xx, x2: xx, y1: String(T), y2: String(VB), stroke: "#e2dacd", "stroke-dasharray": "2 2", "stroke-width": "1" }));
+      const dl = svg("text", { x: String(Math.min(R - 14, Math.max(L + 14, +xx + 14))), y: String(H - 4), "text-anchor": "middle", "font-size": "9.5", fill: "#5e6a66" });
+      dl.textContent = dayLbl; g.appendChild(dl);
+      lastDayLbl = dayLbl;
+    }
+  });
+
+  if (i.ip) {
+    const iy = yOf(i.ip).toFixed(1);
+    g.appendChild(svg("line", { x1: String(L), x2: String(R), y1: iy, y2: iy, stroke: "#063631", "stroke-dasharray": "4 3", "stroke-width": "1.1", opacity: "0.7" }));
+    const il = svg("text", { x: String(R + 5), y: String(+iy + 3.5), "font-size": "9.5", "font-weight": "600", fill: "#063631" });
+    il.textContent = "IPO " + i.ip; g.appendChild(il);
+  }
+
+  const dLine = pts.map((p, idx) => (idx ? "L" : "M") + xOf(idx).toFixed(1) + "," + yOf(p[1]).toFixed(1)).join(" ");
+  const dArea = dLine + " L" + xOf(pts.length - 1).toFixed(1) + "," + B + " L" + xOf(0).toFixed(1) + "," + B + " Z";
+  g.appendChild(svg("path", { d: dArea, fill: col, opacity: "0.12" }));
+  g.appendChild(svg("path", { d: dLine, fill: "none", stroke: col, "stroke-width": "2", "stroke-linejoin": "round", "stroke-linecap": "round" }));
+
+  const lastX = xOf(pts.length - 1), lastY = yOf(pts[pts.length - 1][1]);
+  g.appendChild(svg("circle", { cx: lastX.toFixed(1), cy: lastY.toFixed(1), r: "3.5", fill: col, stroke: "#fff", "stroke-width": "1.5" }));
+
+  g.appendChild(svg("line", { x1: String(L), x2: String(R), y1: "96", y2: "96", stroke: "#ece6dc", "stroke-width": "1" }));
+  const maxV = Math.max(1, ...pts.map(p => p[2] || 0));
+  const bw = Math.max(1.5, Math.min(8, (R - L) / pts.length * 0.72));
+  pts.forEach((p, idx) => {
+    if (!p[2]) return;
+    const vh = Math.max(1.5, p[2] / maxV * (VB - VT));
+    g.appendChild(svg("rect", { x: (xOf(idx) - bw / 2).toFixed(1), y: (VB - vh).toFixed(1), width: bw.toFixed(1), height: vh.toFixed(1), rx: "1", fill: "#64908b", opacity: "0.55" }));
+  });
+
+  const step = Math.max(1, Math.ceil(pts.length / 32));
+  for (let idx = 0; idx < pts.length; idx += step) {
+    const p = pts[idx], x0 = idx === 0 ? L : (xOf(idx - step) + xOf(idx)) / 2;
+    const x1 = idx + step >= pts.length ? R : (xOf(idx) + xOf(idx + step)) / 2;
+    const hit = svg("rect", { x: x0.toFixed(1), y: String(T), width: Math.max(4, x1 - x0).toFixed(1), height: String(VB - T), fill: "transparent" });
+    const rows = [{ k: "Price", v: inr(p[1]) }];
+    if (i.ip) rows.push({ k: "Vs IPO price", v: signed((p[1] / i.ip - 1) * 100) + "%" });
+    if (p[2]) rows.push({ k: "Bar volume", v: p[2].toLocaleString("en-IN") });
+    hover(hit, p[0] + " IST", rows);
     g.appendChild(hit);
   }
   return g;
@@ -1709,9 +1760,9 @@ function listingCard(i) {
 
     const trk = el("div", "l-trk");
     const th = el("div", "l-trk-h");
-    th.appendChild(el("span", null, "5-session trajectory (return & volume)"));
-    th.appendChild(el("span", null, i.sym && i.sym.endsWith(".NS") ? "NSE feed" : "Exchange feed"));
-    trk.appendChild(th); trk.appendChild(debutTrajectory(i.sess));
+    th.appendChild(el("span", null, "Price path & volume" + (i.trend ? " · " + i.trend : "")));
+    th.appendChild(el("span", null, (i.pts && i.pts.length >= 2 ? "15m " : "Daily ") + (i.sym && i.sym.endsWith(".NS") ? "NSE feed" : "feed")));
+    trk.appendChild(th); trk.appendChild(debutTrajectory(i));
     c.appendChild(trk);
   }
 
