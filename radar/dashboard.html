@@ -578,6 +578,21 @@ body:not(.home) #gate{display:none}
 .l-wait{border-radius:8px;padding:12px;background:var(--bg);font-size:13px;color:var(--muted)}
 @media (max-width:960px){.l-cards{grid-template-columns:minmax(0,1fr)}}
 @media (max-width:600px){.l-band{grid-template-columns:minmax(0,1fr);gap:8px}.l-facts{grid-template-columns:repeat(2,minmax(0,1fr))}}
+/* Lead Managers — full-width institutional directory & tear-sheet */
+.b-wrap{padding:20px 0 8px}
+.b-bar .search{flex:1 1 200px;max-width:300px}
+.b-bar select{width:170px}
+.lg td.rk-n{color:var(--faint);font-variant-numeric:tabular-nums;width:38px;text-align:right}
+.lg th.rk-n{width:38px;text-align:right}
+.mix{display:inline-flex;align-items:center;gap:8px;justify-content:flex-end}
+.mix-bar{display:inline-flex;width:64px;height:8px;border-radius:4px;overflow:hidden;background:var(--line-2);flex:none}
+.mix-bar i{display:block;height:100%}
+.mix-bar i.m{background:var(--s1)}.mix-bar i.s{background:var(--s2)}.mix-bar i.u{background:var(--s3)}
+.bd-top{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.bd-head h2{margin:10px 0 0;font:400 32px/1.08 var(--serif);color:var(--brand)}
+.bd-badges{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.b-note{padding:0 16px 14px;font-size:12px;color:var(--muted)}
+@media (max-width:720px){.mix-bar{display:none}.lg td.rk-n{display:none}}
 </style>
 </head>
 <body class="home">
@@ -664,25 +679,17 @@ body:not(.home) #gate{display:none}
     </div>
   </div>
 
-  <div class="split" id="b-split" hidden>
-    <aside class="rail" aria-label="Lead manager filters">
-      <section class="panel kpis rail-kpis" id="b-kpis" aria-label="Summary"></section>
-      <section class="panel" aria-labelledby="h-bf">
-        <div class="ph"><div><h2 id="h-bf">Find a lead manager</h2><p>Narrow the league table</p></div></div>
-        <div class="pb bf">
-          <div class="f"><span class="l" id="l-bg">Segment</span><div class="seg" id="b-g" role="group" aria-labelledby="l-bg"><button type="button" data-v="all">All</button><button type="button" data-v="M">Mainboard</button><button type="button" data-v="S">SME</button></div></div>
-          <div class="f"><label for="b-w">Filed in</label><select id="b-w"></select></div>
-          <div class="f"><label for="b-z">Rank by</label><select id="b-z"></select></div>
-          <div class="f search"><label for="b-q">Search</label><input id="b-q" type="search" placeholder="Lead manager name" autocomplete="off"></div>
-          <button class="btn" id="b-reset" type="button">Reset</button>
-        </div>
-      </section>
-      <section class="panel" aria-labelledby="h-bn">
-        <div class="ph"><div><h2 id="h-bn">How to read this</h2></div></div>
-        <div class="pb"><p class="note" style="margin-top:0">Counts come from the draft prospectuses the radar has found on SEBI and the exchanges. A lead manager is counted once per company. Approval noted means SEBI approval was recorded for that company.</p>
-          <p class="note">IPO size comes from the IPO Desk and is in crores. Listing-day results and returns since listing are shown only where a listing price has been supplied, never estimated.</p></div>
-      </section>
-    </aside>
+  <div class="main-col b-wrap" id="b-split" hidden>
+    <section class="panel kpis desk-kpis" id="b-kpis" aria-label="Lead managers summary"></section>
+    <section class="panel dfilters b-bar" id="b-bar" role="region" aria-label="Lead manager filters">
+      <div class="f-in">
+        <div class="f"><span class="l" id="l-bg">Segment</span><div class="seg" id="b-g" role="group" aria-labelledby="l-bg"><button type="button" data-v="all">All</button><button type="button" data-v="M">Mainboard</button><button type="button" data-v="S">SME</button></div></div>
+        <div class="f"><label for="b-w">Filed in</label><select id="b-w"></select></div>
+        <div class="f"><label for="b-z">Rank by</label><select id="b-z"></select></div>
+        <div class="f search"><label for="b-q">Search</label><input id="b-q" type="search" placeholder="Lead manager name" autocomplete="off"></div>
+        <div class="f-end"><button class="btn" id="b-reset" type="button">Reset</button></div>
+      </div>
+    </section>
     <div class="main-col" id="b-main"></div>
   </div>
 </main>
@@ -1860,9 +1867,10 @@ const BSORT = {
   a: ["Most approvals noted", (a, b) => b.a - a.a || b.t - a.t],
   r: ["Most active, last 90 days", (a, b) => b.r - a.r || b.t - a.t],
   d: ["Latest filing", (a, b) => (b.last || "").localeCompare(a.last || "") || b.t - a.t],
-  c: ["Largest IPOs on the Desk", (a, b) => b.cr - a.cr || b.t - a.t],
+  c: ["Largest Desk IPOs", (a, b) => b.cr - a.cr || b.t - a.t],
   n: ["Name A to Z", (a, b) => a.n.localeCompare(b.n)],
 };
+const BWIN_LABEL = { "7": "Last 7 days", "30": "Last 30 days", "90": "Last 90 days", "365": "Last year", "all": "All time" };
 if (!BSORT[S.bz]) S.bz = DEF.bz;
 if (!["filings", "bankers"].includes(S.m)) S.m = "filings";
 if (!["all", "M", "S"].includes(S.bg)) S.bg = "all";
@@ -1875,7 +1883,8 @@ const recOf = n => RECIPOS.filter(i => (i.bk || []).includes(n));
 function bankStat(n, fl) {
   const r90 = isoOf(addDays(today, -89)), rec = recOf(n);
   return { n, fl, rec, t: fl.length, m: fl.filter(c => c.g === "M").length, s: fl.filter(c => c.g === "S").length,
-    a: fl.filter(c => c.st.includes("approved")).length, r: fl.filter(c => c.d && c.d >= r90).length,
+    u: fl.filter(c => c.g === "U").length, a: fl.filter(c => c.st.includes("approved")).length,
+    r: fl.filter(c => c.d && c.d >= r90).length,
     last: fl.reduce((x, c) => (c.d || "") > x ? c.d : x, ""), cr: rec.reduce((x, i) => x + (i.sz || 0), 0) };
 }
 function bankRows() {
@@ -1904,35 +1913,65 @@ function bankKpis(rows) {
   const best = key => { const r = rows.slice().sort((a, b) => b[key] - a[key] || a.n.localeCompare(b.n))[0]; return r && r[key] ? [r.n, r[key]] : null; };
   const cos_ = new Set(), ap = new Set();
   for (const r of rows) for (const c of r.fl) { cos_.add(c.n); if (c.st.includes("approved")) ap.add(c.n); }
-  box.appendChild(kpiTile("Lead managers", String(rows.length), S.bg === "all" ? "SME and mainboard" : SEG[S.bg].name));
-  box.appendChild(kpiTile("Companies named", String(cos_.size), ap.size + " with approval noted"));
-  for (const [label, key, unit] of [["Most filings", "t", "filings"], ["Most mainboard", "m", "mainboard"], ["Most SME", "s", "SME"]]) {
-    const b = best(key); box.appendChild(kpiTile(label, b ? b[0] : "None", b ? b[1] + " " + unit : " ", true));
+  // Deduplicate Desk IPOs by unique company name so co-managed issues are never counted multiple times.
+  const uniqIpos = new Map();
+  for (const r of rows) for (const i of r.rec) {
+    if (S.bg !== "all" && i.sg !== S.bg) continue;
+    if (!uniqIpos.has(i.n)) uniqIpos.set(i.n, i);
   }
-  const raised = rows.reduce((x, r) => x + r.cr, 0);
-  box.appendChild(kpiTile("IPOs seen on the Desk", raised ? crAmt(raised) : "None yet", raised ? "Issue size, since " + (REC.since ? fmt(REC.since) : "the record began") : "Builds as issues pass through", true));
+  const uniqRaised = [...uniqIpos.values()].reduce((x, i) => x + (i.sz || 0), 0);
+  box.appendChild(kpiTile("Active lead managers", String(rows.length), (S.bg === "all" ? "Mainboard & SME" : SEG[S.bg].name) + " · " + (BWIN_LABEL[S.bw] || "All time")));
+  box.appendChild(kpiTile("Companies tracked", String(cos_.size), ap.size + " with SEBI approval noted"));
+  const topKey = S.bg === "M" ? "m" : S.bg === "S" ? "s" : "t";
+  const topB = best(topKey);
+  const topSub = S.bg === "all"
+    ? (best("s") ? best("t")[1] + " filings · Top SME: " + best("s")[0] + " (" + best("s")[1] + ")" : " ")
+    : (topB ? topB[1] + " " + SEG[S.bg].name.toLowerCase() + " filings" : " ");
+  box.appendChild(kpiTile(S.bg === "S" ? "Most active SME BRLM" : "Most active BRLM", topB ? topB[0] : "None", topSub, true));
+  box.appendChild(kpiTile("Desk IPOs tracked", uniqRaised ? crAmt(uniqRaised) : "None yet",
+    uniqIpos.size ? plural(uniqIpos.size, "unique IPO") + " since " + (REC.since ? fmt(REC.since) : "start") : "Builds as issues pass through", true));
 }
 function leagueTable(rows) {
   const panel = el("section", "panel"), head = el("div", "ph"), t = el("div");
-  t.appendChild(el("h2", null, "Lead managers")); t.appendChild(el("p", null, plural(rows.length, "lead manager") + ". Select a name to open its record."));
-  head.appendChild(t); panel.appendChild(head);
+  t.appendChild(el("h2", null, "Lead managers league table"));
+  t.appendChild(el("p", null, plural(rows.length, "lead manager") + " · " + (BWIN_LABEL[S.bw] || "All time") + ". Select any firm to open its full tear-sheet."));
+  head.appendChild(t);
+  const leg = el("div", "legend");
+  for (const k of ["M", "S"]) { const sp = el("span"); sp.appendChild(el("i", "sw " + SEG[k].cls)); sp.appendChild(document.createTextNode(SEG[k].name)); leg.appendChild(sp); }
+  head.appendChild(leg); panel.appendChild(head);
   if (!rows.length) { panel.appendChild(el("div", "empty", "No lead managers match these filters. Reset them to see everyone.")); return panel; }
   const wrap = el("div", "tw"), tb = el("table", "t dt lg fit"), hr = el("tr");
-  for (const [h, num] of [["Lead manager"], ["Filings", 1], ["Mainboard", 1], ["SME", 1], ["Approval noted", 1], ["Last 90 days", 1], ["Latest filing"], ["IPOs seen", 1], ["IPO size (₹ Cr)", 1]]) hr.appendChild(el("th", num ? "num" : "", h));
+  for (const [h, cls] of [["#", "rk-n"], ["Lead manager", ""], ["Filings & mix", "num"], ["Mainboard", "num"], ["SME", "num"], ["Approval noted", "num"], ["Last 90D", "num"], ["Latest filing", ""], ["Desk IPOs", "num"]]) hr.appendChild(el("th", cls, h));
   const th = el("thead"); th.appendChild(hr); tb.appendChild(th);
   const body = el("tbody");
-  for (const r of rows.slice(0, bankShown)) {
+  const maxT = Math.max(1, ...rows.map(r => r.t));
+  rows.slice(0, bankShown).forEach((r, idx) => {
     const tr = el("tr"), td = (txt, cls, lab) => { const x = el("td", cls || "", txt); if (lab) x.dataset.l = lab; tr.appendChild(x); return x; };
+    td(String(idx + 1), "rk-n");
     const nm = td("", "nm"); const b = el("button", "lm", r.n); b.type = "button"; b.addEventListener("click", () => openBanker(r.n)); nm.appendChild(b);
-    td(String(r.t), "num", "Filings"); td(String(r.m), "num", "Mainboard"); td(String(r.s), "num", "SME");
+    const flTd = td("", "num", "Filings");
+    const mix = el("span", "mix");
+    mix.appendChild(el("b", null, String(r.t)));
+    if (r.t) {
+      const bar = el("span", "mix-bar");
+      bar.title = r.m + " Mainboard, " + r.s + " SME";
+      const scale = r.t / maxT * 100;
+      if (r.m) { const i = el("i", "m"); i.style.width = (r.m / r.t * scale).toFixed(1) + "%"; bar.appendChild(i); }
+      if (r.s) { const i = el("i", "s"); i.style.width = (r.s / r.t * scale).toFixed(1) + "%"; bar.appendChild(i); }
+      if (r.u) { const i = el("i", "u"); i.style.width = (r.u / r.t * scale).toFixed(1) + "%"; bar.appendChild(i); }
+      mix.appendChild(bar);
+    }
+    flTd.appendChild(mix);
+    td(String(r.m), "num", "Mainboard"); td(String(r.s), "num", "SME");
     const ap = td(r.t ? r.a + " (" + Math.round(r.a / r.t * 100) + "%)" : "–", "num", "Approval noted");
     if (r.t) { const m = el("span", "meter"), i = el("i"); i.style.width = Math.round(r.a / r.t * 100) + "%"; m.appendChild(i); ap.appendChild(m); }
-    td(String(r.r), "num", "Last 90 days"); td(r.last ? fmt(r.last) : "–", "", "Latest filing");
-    td(r.rec.length ? String(r.rec.length) : "–", "num", "IPOs seen"); td(r.cr ? r.cr.toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : "–", "num", "IPO size (₹ Cr)");
+    td(String(r.r), "num", "Last 90D"); td(r.last ? fmt(r.last) : "–", "", "Latest filing");
+    td(r.rec.length ? r.rec.length + (r.cr ? " · ₹" + crp(r.cr, 0) + " Cr" : "") : "–", "num", "Desk IPOs");
     body.appendChild(tr);
-  }
+  });
   tb.appendChild(body); wrap.appendChild(tb); panel.appendChild(wrap);
   if (rows.length > bankShown) { const more = el("div", "more"), b = el("button", "btn", "Show " + Math.min(25, rows.length - bankShown) + " more"); b.type = "button"; b.addEventListener("click", () => { bankShown += 25; renderBankers(); }); more.appendChild(b); panel.appendChild(more); }
+  panel.appendChild(el("p", "b-note", "Filing counts come from draft prospectuses tracked on SEBI and the exchanges (one credit per company per lead manager). Desk IPO totals reflect full issue credit per firm in the table; the KPI card above deduplicates co-managed IPOs. Listing gains are populated only from verified exchange opens or seed records, never estimated."));
   return panel;
 }
 function bankRecord(r) {
@@ -1940,29 +1979,32 @@ function bankRecord(r) {
   t.appendChild(el("h2", null, "IPO record")); t.appendChild(el("p", null, "Issues this lead manager has taken through the IPO Desk. Sizes in crores, prices per share."));
   head.appendChild(t); panel.appendChild(head);
   const list = r.rec.slice().sort((a, b) => (b.ls || b.o || "").localeCompare(a.ls || a.o || ""));
-  if (!list.length) { panel.appendChild(el("div", "empty", "No IPOs recorded for this lead manager yet. The record builds as issues pass through the IPO Desk.")); return panel; }
+  if (!list.length) { panel.appendChild(el("div", "empty", "No IPOs recorded for this lead manager yet. The record builds automatically as issues pass through the IPO Desk.")); return panel; }
   const sme = list.filter(i => i.sg === "S"), mb = list.filter(i => i.sg !== "S"), sum = a => a.reduce((x, i) => x + (i.sz || 0), 0);
   const gains = list.filter(i => i.lp && i.ip).map(i => (i.lp / i.ip - 1) * 100);
+  const hasCp = list.some(i => i.cp && i.ip);
   const line = el("p", "rec-sum");
   line.appendChild(el("b", null, plural(list.length, "IPO")));
   line.appendChild(document.createTextNode(" recorded since " + (REC.since ? fmt(REC.since) : "the record began") + ": " + mb.length + " mainboard" + (sum(mb) ? " (" + crAmt(sum(mb)) + ")" : "") + ", " + sme.length + " SME" + (sum(sme) ? " (" + crAmt(sum(sme)) + ")" : "") + ". "));
   if (gains.length) {
     const avg = gains.reduce((x, g) => x + g, 0) / gains.length;
     line.appendChild(document.createTextNode("Listing day: average " + signed(avg, 1) + "% across " + plural(gains.length, "IPO") + ", " + gains.filter(g => g > 0).length + " above and " + gains.filter(g => g < 0).length + " below the issue price."));
-  } else line.appendChild(document.createTextNode("No listing prices are recorded yet, so listing-day results and returns since listing are not shown. They are never estimated."));
+  } else line.appendChild(document.createTextNode("Listing-day gains populate automatically once verified Day-1 opens are captured by the New Listings tracker."));
   panel.appendChild(line);
   const wrap = el("div", "tw"), tb = el("table", "t dt fit"), hr = el("tr");
-  for (const [h, num] of [["Company"], ["Segment"], ["Opens"], ["Size (₹ Cr)", 1], ["Issue price", 1], ["Listing price", 1], ["Listing gain", 1], ["Since listing", 1]]) hr.appendChild(el("th", num ? "num" : "", h));
+  const cols = [["Company"], ["Segment"], ["Opens"], ["Size (₹ Cr)", 1], ["Issue price", 1], ["Listing open", 1], ["Listing gain", 1]];
+  if (hasCp) cols.push(["Since listing", 1]);
+  for (const [h, num] of cols) hr.appendChild(el("th", num ? "num" : "", h));
   const th = el("thead"); th.appendChild(hr); tb.appendChild(th);
   const body = el("tbody");
   for (const i of list) {
     const tr = el("tr"), td = (txt, cls, lab) => { const x = el("td", cls || "", txt); if (lab) x.dataset.l = lab; tr.appendChild(x); return x; };
     td(i.n, "nm"); td(i.sg === "S" ? "SME" : "Mainboard", "", "Segment"); td(i.o ? shortDate(i.o) : "–", "", "Opens");
     td(i.sz ? i.sz.toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : "–", "num", "Size (₹ Cr)");
-    td(i.ip ? inr(i.ip) : "–", "num", "Issue price"); td(i.lp ? inr(i.lp) : "Not recorded", "num", "Listing price");
+    td(i.ip ? inr(i.ip) : "–", "num", "Issue price"); td(i.lp ? inr(i.lp) : "Pending listing", "num", "Listing open");
     const g = i.lp && i.ip ? (i.lp / i.ip - 1) * 100 : null, s = i.cp && i.ip ? (i.cp / i.ip - 1) * 100 : null;
     td(g == null ? "–" : signed(g, 1) + "%", "num" + (g > 0 ? " up" : g < 0 ? " dn" : ""), "Listing gain");
-    td(s == null ? "–" : signed(s, 1) + "%", "num" + (s > 0 ? " up" : s < 0 ? " dn" : ""), "Since listing");
+    if (hasCp) td(s == null ? "–" : signed(s, 1) + "%", "num" + (s > 0 ? " up" : s < 0 ? " dn" : ""), "Since listing");
     body.appendChild(tr);
   }
   tb.appendChild(body); wrap.appendChild(tb); panel.appendChild(wrap);
@@ -1994,36 +2036,48 @@ function bankFilings(r) {
 }
 function bankDetail(r) {
   const box = el("div", "main-col"), head = el("section", "panel bd-head");
+  const top = el("div", "bd-top");
   const back = el("button", "btn", "‹ All lead managers"); back.type = "button"; back.addEventListener("click", () => { S.bn = ""; bankShown = 25; render(); window.scrollTo(0, 0); });
-  head.appendChild(back); head.appendChild(el("h2", null, r.n));
-  head.appendChild(el("p", null, r.t ? "Named as a lead manager on " + plural(r.t, "draft filing") + ", " + r.m + " mainboard and " + r.s + " SME." : "No draft filings found for this lead manager."));
+  top.appendChild(back);
+  const focus = r.m && r.s ? "Mainboard & SME" : r.m ? "Mainboard BRLM" : r.s ? "SME Merchant Banker" : "Lead Manager";
+  top.appendChild(el("span", "tag", focus));
+  head.appendChild(top);
+  head.appendChild(el("h2", null, r.n));
+  head.appendChild(el("p", null, r.t ? "Named as a lead manager on " + plural(r.t, "draft filing") + " (" + r.m + " mainboard, " + r.s + " SME)." : "Tracked from IPO Desk issues; no draft filings matched yet."));
   box.appendChild(head);
   const k = el("section", "panel kpis");
   k.appendChild(kpiTile("Filings", String(r.t), r.m + " mainboard, " + r.s + " SME"));
   k.appendChild(kpiTile("Approval noted", String(r.a), r.t ? Math.round(r.a / r.t * 100) + "% of filings" : " "));
-  k.appendChild(kpiTile("Last 90 days", String(r.r), "Filings in the period"));
+  k.appendChild(kpiTile("Last 90 days", String(r.r), "Recent pipeline"));
   k.appendChild(kpiTile("Latest filing", r.last ? fmt(r.last) : "None", r.last ? ago(r.last) : " ", true));
-  k.appendChild(kpiTile("IPOs seen", String(r.rec.length), r.rec.length ? "On the IPO Desk" : "None yet"));
-  k.appendChild(kpiTile("IPO size", r.cr ? crAmt(r.cr) : "None yet", r.cr ? "Issue size, all seen" : " ", true));
+  k.appendChild(kpiTile("Desk IPOs", String(r.rec.length), r.rec.length ? "On the IPO Desk" : "None yet"));
+  k.appendChild(kpiTile("Desk IPO credit", r.cr ? crAmt(r.cr) : "None yet", r.cr ? "Total issue size" : " ", true));
   box.appendChild(k);
-  box.appendChild(bankRecord(r));
   const two = el("div", "bd-two");
-  for (const [title, sub, entries] of [["Sectors", "Where the filings are", tally(r.fl, c => [c.sec])], ["Exchanges", "Where they plan to list", tally(r.fl, c => [c.x || "Not stated"])], ["Often alongside", "Other lead managers on the same filings", tally(r.fl, c => c.b.filter(x => x !== r.n))]]) {
+  for (const [title, sub, entries] of [["Sectors", "Where the filings are", tally(r.fl, c => [c.sec])], ["Exchanges", "Where they plan to list", tally(r.fl, c => [c.x || "Not stated"])], ["Frequent co-managers", "Other lead managers on the same filings", tally(r.fl, c => c.b.filter(x => x !== r.n))]]) {
     const p = el("section", "panel"), h = el("div", "ph"), t = el("div"); t.appendChild(el("h2", null, title)); t.appendChild(el("p", null, sub)); h.appendChild(t); p.appendChild(h);
-    const body = el("div", "pb rk"); p.appendChild(body); renderRank(body, entries, 6, title === "Often alongside" ? openBanker : null); two.appendChild(p);
+    const body = el("div", "pb rk"); p.appendChild(body); renderRank(body, entries, 6, title === "Frequent co-managers" ? openBanker : null); two.appendChild(p);
   }
   box.appendChild(two);
+  box.appendChild(bankRecord(r));
   box.appendChild(bankFilings(r));
   return box;
 }
 function renderBankers() {
   setSel("#b-w", S.bw); setSel("#b-z", S.bz); if (document.activeElement !== $("#b-q")) $("#b-q").value = S.bq;
   for (const b of $("#b-g").children) b.setAttribute("aria-pressed", String(b.dataset.v === S.bg));
-  const rows = bankRows(); bankKpis(rows);
+  const known = Boolean(S.bn && BK.get(S.bn));
+  $("#b-kpis").hidden = known;
+  $("#b-bar").hidden = known;
   const main = $("#b-main"); main.textContent = "";
-  const known = S.bn && BK.get(S.bn);
-  if (known) main.appendChild(bankDetail(bankStat(S.bn, BK.get(S.bn).f)));
-  else { if (S.bn) S.bn = ""; main.appendChild(leagueTable(rows)); }
+  if (known) {
+    main.appendChild(bankDetail(bankStat(S.bn, BK.get(S.bn).f)));
+  } else {
+    if (S.bn) S.bn = "";
+    const rows = bankRows();
+    bankKpis(rows);
+    main.appendChild(leagueTable(rows));
+  }
   writeHash();
 }
 

@@ -4,9 +4,9 @@ Two layers feed the directory:
   * Filings: every DRHP the radar has found names its lead managers. That is counted in the browser from the same
     company list the Filings page uses, so it is always as fresh as the radar.
   * IPO record: the issues that pass through the IPO Desk (issue size in crores, issue price, lead managers) are kept in
-    data/bankers_record.json as they are seen, so money raised builds up automatically. Listing-day and since-listing
-    results need a listing price, which no free public source gives the radar, so they are read from an optional file the
-    desk can fill: data/bankers_seed.csv (columns below). Nothing is estimated or invented: with no listing price, the
+    data/bankers_record.json as they are seen, so money raised builds up automatically. Verified Day-1 listing open
+    prices are recorded by radar/listings.py via record_listing_prices(), and optional historical rows can still be
+    supplied in data/bankers_seed.csv (columns below). Nothing is estimated or invented: with no listing price, the
     page says so.
 
 Money rules: issue size is kept in crores. A seed file must give issue_size_cr already in crores; prices are per share
@@ -26,13 +26,20 @@ _ACRONYMS = {
     "jm": "JM", "hdfc": "HDFC", "clsa": "CLSA", "idbi": "IDBI", "hsbc": "HSBC", "bofa": "BofA", "smc": "SMC",
     "isk": "ISK", "pnb": "PNB", "bob": "BOB", "dam": "DAM", "llp": "LLP", "incred": "InCred", "ski": "SKI",
     "iifl": "IIFL", "icici": "ICICI", "sbi": "SBI", "pl": "PL", "gyr": "GYR", "svk": "SVK", "boi": "BOI",
+    "d&a": "D&A",
 }
-# Firms that changed their registered name: the old and new name are one lead manager.
+# Firms that changed their registered name, appear with source typos, or split across bank/IB labels.
 _ALIASES = {
     "iifl securities": "IIFL Capital Services",
     "idfc securities": "DAM Capital Advisors",
     "guiness corporate advisors": "Oneview Corporate Advisors",
     "360 one wam": "360 ONE WAM",
+    "axis bank": "Axis Capital",
+    "3dimesnion capital services": "3Dimension Capital Services",
+    "3dimension capital services": "3Dimension Capital Services",
+    "pune e-stock broking": "Pune E-Stock Broking",
+    "kotak mahindra capital company": "Kotak Mahindra Capital",
+    "d&a financial services": "D&A Financial Services",
 }
 _EMPTY = {"", "n/a", "na", "-", "none", "nil", "not available"}
 
@@ -40,6 +47,8 @@ _EMPTY = {"", "n/a", "na", "-", "none", "nil", "not available"}
 def canon(name: str) -> str:
     """'Dam Capital Advisors Limited (Formerly Idfc Securities Limited)' -> 'DAM Capital Advisors'. '' for no name."""
     s = re.sub(r"\([^)]*\)", " ", name or "")
+    s = re.sub(r"\s*-\s*", "-", s)
+    s = re.sub(r"\b([A-Za-z])\s*&\s*([A-Za-z])\b", r"\1&\2", s)
     s = re.sub(r"\s+", " ", s).strip(" ,.-")
     for _ in range(2):
         s = _SUFFIX.sub("", s).strip(" ,.-")
@@ -51,7 +60,17 @@ def canon(name: str) -> str:
         s = s.title()
     words = []
     for w in s.split(" "):
-        words.append(_ACRONYMS.get(w.lower(), w))
+        if "-" in w:
+            parts = [(_ACRONYMS.get(p.lower(), p.capitalize() if p.isupper() and len(p) > 2 else p)) for p in w.split("-")]
+            words.append("-".join(parts))
+        else:
+            lw = w.lower()
+            if lw in _ACRONYMS:
+                words.append(_ACRONYMS[lw])
+            elif w.isupper() and len(w) > 3:
+                words.append(w.title())
+            else:
+                words.append(w)
     return " ".join(words)
 
 
@@ -89,7 +108,8 @@ def load_ledger(path: str) -> dict:
 
 
 def update_ledger(items: list[dict], path: str, today: str) -> dict:
-    """Add or refresh each issue the IPO Desk shows. A listing price is never written here; only the seed file has one."""
+    """Add or refresh each issue the IPO Desk shows. A listing price is never written here; only verified listing
+    opens (via record_listing_prices) or the seed file set lp."""
     ledger = load_ledger(path)
     if not ledger["since"]:
         ledger["since"] = today
@@ -155,7 +175,11 @@ def record(ledger_path: str, seed_path: str) -> dict:
     """The IPO record the page reads: the ledger, with any seed rows laid over it by company name."""
     ledger = load_ledger(ledger_path)
     seed, skipped = read_seed(seed_path)
-    merged = {_key(r["n"]): dict(r, src="desk") for r in ledger["ipos"] if r.get("n") and r.get("bk")}
+    merged = {}
+    for r in ledger["ipos"]:
+        bks = canon_list(r.get("bk"))
+        if r.get("n") and bks:
+            merged[_key(r["n"])] = dict(r, bk=bks, src="desk")
     for r in seed:
         merged[_key(r["n"])] = dict(merged.get(_key(r["n"]), {}), **r)
     ipos = sorted(merged.values(), key=lambda r: (r.get("ls") or r.get("o") or "", r["n"]))

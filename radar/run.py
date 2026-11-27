@@ -29,6 +29,7 @@ FAIL_THRESHOLD = 3  # failed runs in a row before the admin is told
 EMPTY_LIMIT = 16  # runs in a row with zero items, for a source that used to return items
 MAX_ALERTS = 12  # per run; the rest go out as one digest
 HEARTBEAT_HOUR = 9  # IST
+_TRUNC_BANKERS = re.compile(r"\+\s*\d+\s*more\s*$", re.I)
 
 
 def _run_source(name, fn, fetcher) -> SourceResult:
@@ -104,7 +105,10 @@ def run_once(sources, fetcher, tg, state, now, alert_segments, site_url="") -> l
                 if not is_new and entry["message_id"] and _not_listed(official_updates, entry):
                     official_updates.append(entry)
             for k, v in rec.info.items():
-                if v and not entry.get("info", {}).get(k):
+                if not v:
+                    continue
+                cur = entry.get("info", {}).get(k, "")
+                if not cur or (k == "bankers" and _TRUNC_BANKERS.search(cur) and not _TRUNC_BANKERS.search(v)):
                     entry.setdefault("info", {})[k] = v
             if rec.doc_url and all(d["url"] != rec.doc_url for d in entry.get("documents", [])):
                 entry.setdefault("documents", []).append(
@@ -318,7 +322,7 @@ def main() -> None:
     try:
         if ipos and ipos.get("items"):
             bankers.update_ledger(enrich_ipos(ipos["items"], companies), ledger_path, now.date().isoformat())
-    except Exception as e:  # noqa: BLE001
+    except Exception as e:  # noqa: BLE001 - the directory's record is optional; the page builds without it
         print(f"bankers ledger update failed: {type(e).__name__}", file=sys.stderr)
     listings_path = os.getenv("RADAR_LISTINGS", "data/listings.json")
     listings_data, list_info = listings.refresh(fetcher, listings_path, now, ledger_path=ledger_path, ipos=ipos, companies=companies)
