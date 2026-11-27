@@ -2,9 +2,9 @@
 
 Sources:
   * Candidates: data/bankers_record.json + data/ipos.json (listing date <= today, within last 14 calendar days).
-  * Ticker resolution: NSE official master CSVs (EQUITY_L.csv, SME_EQUITY_L.csv) first, cached daily, with
-    optional manual overrides in data/listings_overrides.json and Yahoo search fallback for BSE-only SMEs.
-  * Prices & volume: Yahoo Finance daily OHLCV chart JSON (NSE volume only for .NS tickers).
+  * Ticker resolution: manual overrides (data/listings_overrides.json), NSE official master CSVs (EQUITY_L.csv,
+    SME_EQUITY_L.csv) cached daily, and Yahoo search fallback for BSE-only SMEs.
+  * Prices & intraday chart: Yahoo Finance daily OHLCV + 15-minute intraday price path (NSE volume for .NS).
 
 Never invents or estimates prices. Keeps last valid data on temporary feed errors."""
 from __future__ import annotations
@@ -23,9 +23,11 @@ NSE_MAIN_CSV = "https://nsearchives.nseindia.com/content/equities/EQUITY_L.csv"
 NSE_SME_CSV = "https://nsearchives.nseindia.com/content/equities/SME_EQUITY_L.csv"
 YAHOO_SEARCH = "https://query1.finance.yahoo.com/v1/finance/search?q={q}&quotesCount=6&newsCount=0"
 YAHOO_CHART = "https://query1.finance.yahoo.com/v8/finance/chart/{symbol}?range=1mo&interval=1d"
+YAHOO_INTRADAY = "https://query1.finance.yahoo.com/v8/finance/chart/{symbol}?range=5d&interval=15m"
 
 LOOKBACK_DAYS = 14
 MAX_SESSIONS = 5
+MON = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
 
 
 def _key(name: str) -> str:
@@ -110,6 +112,34 @@ def _parse_ohlcv(text: str) -> list[dict]:
     return [by_day[d] for d in sorted(by_day)]
 
 
+def _fetch_intraday(fetcher, symbol: str, ls_date: date, allowed_dates: set[date]) -> list[list]:
+    """Fetch 15-minute intraday price & volume points for the tracked debut sessions."""
+    res = fetcher.get("listing_intraday", YAHOO_INTRADAY.format(symbol=quote(symbol, safe="")))
+    if not res.ok:
+        return []
+    try:
+        data = json.loads(res.text)
+        result = data["chart"]["result"][0]
+        stamps = result.get("timestamp") or []
+        q = result["indicators"]["quote"][0]
+        closes = q.get("close") or []
+        vols = q.get("volume") or [None] * len(stamps)
+    except (ValueError, KeyError, IndexError, TypeError):
+        return []
+    pts: list[list] = []
+    for st, c, v in zip(stamps, closes, vols):
+        if not isinstance(c, (int, float)) or c != c or c <= 0:
+            continue
+        dt = datetime.fromtimestamp(st, IST)
+        d = dt.date()
+        if d < ls_date or (allowed_dates and d not in allowed_dates):
+            continue
+        label = f"{dt.day} {MON[dt.month - 1]}, {dt.strftime('%H:%M')}"
+        vv = int(v) if isinstance(v, (int, float)) and v == v and v > 0 else 0
+        pts.append([label, round(float(c), 2), vv])
+    return pts
+
+
 def _fetch_valid_bars(fetcher, symbol: str, ls_date: date, issue_price: float | None) -> list[dict] | None:
     res = fetcher.get("listing_chart", YAHOO_CHART.format(symbol=quote(symbol, safe="")))
     if not res.ok:
@@ -187,7 +217,25 @@ def _circuit_flag(sess: list[dict], seg: str, sz: float | None) -> str:
     return ""
 
 
-def _build_entry(base: dict, symbol: str, bars: list[dict] | None, now: datetime) -> dict:
+def _trend_label(pts: list[list], sess: list[dict]) -> str:
+    """Short directional read from the latest ~1 hour of 15-min bars (or Day-1 open-to-LTP fallback)."""
+    if len(pts) >= 2:
+        ref = pts[max(0, len(pts) - 5)][1]
+        cur = pts[-1][1]
+        if ref > 0:
+            pct = (cur / ref - 1.0) * 100
+            if pct >= 0.4:
+                return "Heading up"
+            if pct <= -0.4:
+                return "Heading down"
+            return "Consolidating"
+    if sess:
+        chg = sess[-1]["chg"]
+        return "Heading up" if chg >= 0.4 else "Heading down" if chg <= -0.4 else "Consolidating"
+    return ""
+
+
+def _build_entry(base: dict, symbol: str, bars: list[dict] | None, pts: list[list], now: datetime) -> dict:
     ist = now.astimezone(IST)
     today = ist.date()
     ls_iso = base["ls"]
@@ -202,7 +250,7 @@ def _build_entry(base: dict, symbol: str, bars: list[dict] | None, now: datetime
         "n": base["n"], "sg": base.get("sg") or "M", "x": base.get("x") or "",
         "sc": base.get("sc") or "", "bk": base.get("bk") or [], "ls": ls_iso,
         "sym": symbol, "ip": ip, "sz": sz, "gmp": gmp, "gmp_pct": gmp_pct,
-        "day": 0, "status": "awaiting", "sess": [],
+        "day": 0, "status": "awaiting", "sess": [], "pts": [], "trend": "",
     }
     if not bars:
         if ls_iso == today.isoformat() and dtime(9, 0) <= ist.time() < dtime(10, 0):
@@ -218,7 +266,7 @@ def _build_entry(base: dict, symbol: str, bars: list[dict] | None, now: datetime
         sess.append({"d": b["d"].isoformat(), "o": o, "h": h, "l": l, "c": c, "v": v, "t": turn, "chg": chg})
 
     day_n = len(sess)
-    lo_open, ltp = sess[0]["o"], sess[-1]["c"]
+    lo_open, ltp = sess[0]["o"], (pts[-1][1] if pts else sess[-1]["c"])
     hi5, lo5 = max(s["h"] for s in sess), min(s["l"] for s in sess)
     rpos = round((ltp - lo5) / (hi5 - lo5) * 100, 1) if hi5 > lo5 else 50.0
     cum_turn = round(sum(s["t"] for s in sess), 2)
@@ -256,7 +304,8 @@ def _build_entry(base: dict, symbol: str, bars: list[dict] | None, now: datetime
         "lg_rs": lg_rs, "lg_pct": lg_pct, "tg_pct": tg_pct, "o2c_pct": o2c_pct,
         "gmp_diff": gmp_diff, "verdict": verdict,
         "hi5": hi5, "lo5": lo5, "rpos": rpos, "circ": _circuit_flag(sess, out["sg"], sz),
-        "turn_cr": cum_turn, "churn": churn, "vol_d1": vol_vs_d1, "sess": sess,
+        "turn_cr": cum_turn, "churn": churn, "vol_d1": vol_vs_d1,
+        "sess": sess, "pts": pts, "trend": _trend_label(pts, sess),
     })
     return out
 
@@ -275,7 +324,6 @@ def refresh(fetcher, path: str, now: datetime, ledger_path: str = "data/bankers_
     overrides = _read_json(overrides_path) or {}
     comp_by = {_strict_key(c["n"]): c for c in (companies or []) if c.get("n")}
 
-    # Collect candidates from bankers_record.json + ipos.json
     cands: dict[str, dict] = {}
     ledger = _read_json(ledger_path) or {}
     for row in ledger.get("ipos") or []:
@@ -299,7 +347,6 @@ def refresh(fetcher, path: str, now: datetime, ledger_path: str = "data/bankers_
                 cur["bk"] = list(row["bk"])
             cur["x"] = row.get("x") or row.get("ex") or cur.get("x") or ""
 
-    # Backfill sector/exchange from filings companies
     for k, cur in cands.items():
         co = comp_by.get(k)
         if co:
@@ -322,25 +369,35 @@ def refresh(fetcher, path: str, now: datetime, ledger_path: str = "data/bankers_
             if prev.get("gmp") is not None and base.get("gmp") is None:
                 base["gmp"], base["gmp_pct"] = prev.get("gmp"), prev.get("gmp_pct")
             ls_date = date.fromisoformat(base["ls"])
-            sym = overrides.get(k) or overrides.get(_key(base["n"])) or prev.get("sym") or ""
-            bars = None
-            if sym:
-                bars = _fetch_valid_bars(fetcher, sym, ls_date, base.get("ip"))
+            raw_ov = overrides.get(k) or overrides.get(_key(base["n"]))
+            try_syms: list[str] = raw_ov if isinstance(raw_ov, list) else ([raw_ov] if isinstance(raw_ov, str) and raw_ov else [])
+            if prev.get("sym") and prev["sym"] not in try_syms:
+                try_syms.append(prev["sym"])
+            sym, bars = "", None
+            for cand_sym in try_syms:
+                got = _fetch_valid_bars(fetcher, cand_sym, ls_date, base.get("ip"))
+                if got:
+                    sym, bars = cand_sym, got
+                    break
             if bars is None:
                 for cand_sym in _resolve_candidates(base["n"], base["sg"], nse_rows, fetcher):
+                    if cand_sym in try_syms:
+                        continue
                     got = _fetch_valid_bars(fetcher, cand_sym, ls_date, base.get("ip"))
                     if got:
                         sym, bars = cand_sym, got
                         break
             if bars is None and prev.get("sess"):
-                # Keep last good session data on temporary Yahoo failure
                 kept = dict(prev)
                 kept["sc"] = kept.get("sc") or base.get("sc", "")
                 kept["x"] = kept.get("x") or base.get("x", "")
                 items.append(kept)
                 priced += 1
                 continue
-            entry = _build_entry(base, sym, bars, now)
+            pts = _fetch_intraday(fetcher, sym, ls_date, {b["d"] for b in bars}) if (sym and bars) else []
+            if not pts and prev.get("pts"):
+                pts = prev["pts"]
+            entry = _build_entry(base, sym, bars, pts, now)
             if entry["sess"]:
                 priced += 1
             items.append(entry)
