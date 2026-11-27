@@ -540,6 +540,40 @@ body:not(.home) #gate{display:none}
   .t tr.cf th:first-child{grid-column:1/-1}
   .dfilters .f-end{width:100%}
 }
+/* New Listings (5-Session Debut Tracker) */
+.l-cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.l-head{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;flex-wrap:wrap}
+.l-pills{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.l-ver{font-size:11.5px;font-weight:600;border-radius:999px;padding:2px 9px;border:1px solid var(--line);background:var(--bg);color:var(--muted)}
+.l-ver.up{border-color:#bcd3ce;background:#e7eeeb;color:#044f48}
+.l-ver.dn{border-color:#e2bcb6;background:#f8ece8;color:#b3382c}
+.l-ver.warn{border-color:#e1cfa7;background:#faf4e6;color:#8a5a12}
+.l-circ{font-size:11px;font-weight:650;border-radius:5px;padding:2px 7px;text-transform:uppercase;letter-spacing:.03em}
+.l-circ.up{background:#044f48;color:#fff}.l-circ.dn{background:#b3382c;color:#fff}
+.l-band{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;border-radius:9px;padding:11px 12px;background:var(--bg)}
+.l-band.up{background:#e7eeeb}.l-band.dn{background:#f8ece8}
+.l-m{min-width:0}
+.l-m .k{font-size:11.5px;color:var(--muted)}
+.l-m .v{font:400 26px/1.15 var(--serif);font-variant-numeric:tabular-nums;color:var(--brand);margin-top:2px}
+.l-m .v.up{color:#044f48}.l-m .v.dn{color:#b3382c}
+.l-m .s{font-size:11.5px;color:var(--muted);margin-top:2px}
+.l-rng{display:grid;gap:5px}
+.l-rng-h{display:flex;justify-content:space-between;font-size:11.5px;color:var(--muted);font-variant-numeric:tabular-nums}
+.l-track{position:relative;height:8px;border-radius:999px;background:var(--line-2)}
+.l-fill{position:absolute;top:0;bottom:0;border-radius:999px;background:var(--s2);opacity:.45}
+.l-ip{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--brand);border-radius:1px}
+.l-dot{position:absolute;top:50%;width:12px;height:12px;border-radius:50%;background:var(--pos);border:2px solid #fff;box-shadow:0 0 0 1px var(--brand);transform:translate(-50%,-50%)}
+.l-dot.dn{background:var(--neg)}
+.l-facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px 12px;margin:0}
+.l-facts div{min-width:0}
+.l-facts dt{font-size:11.5px;color:var(--faint)}
+.l-facts dd{margin:0;font-weight:600;font-size:13px;font-variant-numeric:tabular-nums}
+.l-trk{border-top:1px solid var(--line-2);padding-top:9px}
+.l-trk-h{display:flex;justify-content:space-between;font-size:11.5px;color:var(--muted);margin-bottom:4px}
+.l-trk svg{display:block;width:100%;height:auto}
+.l-wait{border-radius:8px;padding:12px;background:var(--bg);font-size:13px;color:var(--muted)}
+@media (max-width:960px){.l-cards{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:600px){.l-band{grid-template-columns:minmax(0,1fr);gap:8px}.l-facts{grid-template-columns:repeat(2,minmax(0,1fr))}}
 </style>
 </head>
 <body class="home">
@@ -652,10 +686,11 @@ body:not(.home) #gate{display:none}
 
 <div id="v-desk" role="tabpanel" hidden aria-labelledby="tab-desk">
 <section class="wrap hero" aria-labelledby="h1-desk">
-  <div><span class="bar-acc"></span><h1 id="h1-desk">IPO Desk</h1><p>Open and upcoming issues with price band, key dates, grey market premium and lead managers.</p></div>
+  <div><span class="bar-acc"></span><h1 id="h1-desk">IPO Desk</h1><p>Open and upcoming issues with price band, key dates, grey market premium, and 5-session debut tracking.</p></div>
+  <div class="hero-tools"><div class="seg" id="d-mode" role="group" aria-label="IPO Desk view"><button type="button" data-v="issues">Issues</button><button type="button" data-v="listings" id="d-mode-list">New listings</button></div></div>
 </section>
 <main class="wrap">
-  <div class="split rev">
+  <div class="split rev" id="d-issues">
     <div class="main-col">
       <section class="panel kpis desk-kpis" id="d-kpis" aria-label="Summary"></section>
       <section class="panel dfilters" role="region" aria-label="IPO filters">
@@ -686,12 +721,37 @@ body:not(.home) #gate{display:none}
           <p class="note">Grey market premium (GMP) is unofficial and comes from ipowatch.in. It is not an exchange price and can move sharply before listing. Issue size is in crores. Minimum investment is one lot at the upper price band. Dates are as published and can change. For information only, not a recommendation to apply.</p></div>
       </section>
     </div>
-    <aside class="rail sticky" aria-label="Key dates calendar">
+  <aside class="rail sticky" aria-label="Key dates calendar">
       <section class="panel calp" id="d-cal"></section>
     </aside>
   </div>
+
+  <div class="main-col" id="d-listings" hidden style="padding:20px 0 8px">
+    <section class="panel kpis desk-kpis" id="l-kpis" aria-label="New listings summary"></section>
+    <section class="panel dfilters" role="region" aria-label="New listings filters">
+      <div class="f-in">
+        <div class="f"><span class="l" id="l-lg">Segment</span>
+          <div class="seg" id="l-g" role="group" aria-labelledby="l-lg">
+            <button type="button" data-v="all">All</button><button type="button" data-v="M">Mainboard</button><button type="button" data-v="S">SME</button>
+          </div></div>
+        <div class="f"><span class="l" id="l-ls">Session status</span>
+          <div class="seg" id="l-s" role="group" aria-labelledby="l-ls">
+            <button type="button" data-v="all">All</button><button type="button" data-v="active">Day 1–5 active</button><button type="button" data-v="completed">5D complete</button>
+          </div></div>
+        <div class="f"><label for="l-o">Sort</label><select id="l-o"></select></div>
+        <div class="f-end"><span class="pill" id="l-pill" hidden><i></i><span></span></span></div>
+      </div>
+    </section>
+    <section class="panel" aria-labelledby="h-nl">
+      <div class="ph"><div><h2 id="h-nl">New listings · First 5 trading sessions</h2><p id="l-sub"></p></div></div>
+      <div class="pb"><div id="l-body"></div>
+        <p class="note">Tracks newly listed IPOs from Day 1 through Day 5 using daily exchange OHLCV data from Yahoo Finance. Listing gain is Day-1 open vs. issue price; Open-to-LTP measures post-open accumulation or fading. NSE (.NS) turnover excludes BSE volume for dual-listed mainboard issues. For research only, not investment advice.</p></div>
+    </section>
+  </div>
 </main>
 </div>
+
+<div id="v-sectors"
 
 <div id="v-sectors" role="tabpanel" aria-labelledby="tab-sectors" hidden>
 <section class="wrap hero" aria-labelledby="h1-sectors">
@@ -1117,7 +1177,7 @@ const PAGES = ["filings", "desk", "sectors"];
 const LEGACY = { ipos: "desk", flow: "sectors", commodities: "sectors" };
 let page = "home";
 { const v = new URLSearchParams(location.hash.slice(1)).get("v"), m = LEGACY[v] || v; if (PAGES.includes(m)) page = m; }
-const MK = DATA.market, IPOS = DATA.ipos;
+const MK = DATA.market, IPOS = DATA.ipos, LISTINGS = DATA.listings;
 const signed = (x, d) => x == null ? "–" : (x > 0 ? "+" : "") + minus(x.toFixed(d == null ? 2 : d));
 const inr = n => "₹" + n.toLocaleString("en-IN", { maximumFractionDigits: 2 });
 const shortDate = iso => { const [, m, d] = iso.split("-"); return (+d) + " " + MON[m - 1]; };
@@ -1375,12 +1435,13 @@ function buildSectorControls() {
 }
 
 /* ---------- IPO Desk ---------- */
-const DDEF = { dg: "all", dk: "all", dx: "all", ds: "all", db: "all", dw: "all", dp: "all", dq: "", dz: "default", dv: "cards" };
+const DDEF = { dm: "issues", dg: "all", dk: "all", dx: "all", ds: "all", db: "all", dw: "all", dp: "all", dq: "", dz: "default", dv: "cards", lg: "all", ls: "all", lz: "date" };
 const D = Object.assign({}, DDEF);
 {
   const p = new URLSearchParams(location.hash.slice(1));
   for (const k in DDEF) if (p.has(k)) D[k] = p.get(k);
   if (!["cards", "table"].includes(D.dv)) D.dv = "cards";
+  if (!["issues", "listings"].includes(D.dm)) D.dm = "issues";
 }
 const dayFrom = iso => Math.round((parse(iso) - today) / 864e5);
 const venues = i => i.x ? [i.x] : i.ex ? i.ex.split(",").map(s => s.trim()).filter(Boolean) : ["Not stated"];
@@ -1545,7 +1606,160 @@ function deskTable(list) {
   t.appendChild(tb); wrap.appendChild(t); return wrap;
 }
 const STATE_WORD = { open: "Open", upcoming: "Upcoming", closed: "Closed" };
+const LORDER = [["date", "Listing date"], ["gain", "Total gain vs issue"], ["drift", "Open-to-LTP conviction"], ["churn", "Highest issue churn"]];
+const LSORT = {
+  date: (a, b) => (b.ls || "").localeCompare(a.ls || "") || a.n.localeCompare(b.n),
+  gain: (a, b) => (b.tg_pct == null ? -1e9 : b.tg_pct) - (a.tg_pct == null ? -1e9 : a.tg_pct),
+  drift: (a, b) => (b.o2c_pct == null ? -1e9 : b.o2c_pct) - (a.o2c_pct == null ? -1e9 : a.o2c_pct),
+  churn: (a, b) => (b.churn == null ? -1 : b.churn) - (a.churn == null ? -1 : a.churn),
+};
+function debutTrajectory(sess) {
+  const W = 340, H = 74, mid = 36, step = W / 5;
+  const maxC = Math.max(2, ...sess.map(s => Math.abs(s.chg || 0)));
+  const maxV = Math.max(1, ...sess.map(s => s.v || 0));
+  const g = svg("svg", { viewBox: "0 0 " + W + " " + H, role: "img", "aria-label": "5-session daily return and volume trajectory" });
+  g.appendChild(svg("line", { x1: "0", x2: String(W), y1: String(mid), y2: String(mid), stroke: "#e2dacd", "stroke-width": "1" }));
+  for (let i = 0; i < 5; i++) {
+    const cx = i * step + step / 2, s = sess[i];
+    const lbl = svg("text", { x: cx.toFixed(1), y: String(H - 2), "text-anchor": "middle", "font-size": "10", fill: "#5e6a66" });
+    lbl.textContent = "D" + (i + 1); g.appendChild(lbl);
+    if (!s) continue;
+    const bh = Math.max(2, Math.abs(s.chg) / maxC * 26);
+    g.appendChild(svg("rect", { x: (cx - 14).toFixed(1), y: (s.chg >= 0 ? mid - bh : mid).toFixed(1), width: "28", height: bh.toFixed(1), rx: "2", fill: s.chg >= 0 ? "#044f48" : "#b3382c" }));
+    if (s.v > 0) {
+      const vh = Math.max(2, s.v / maxV * 14);
+      g.appendChild(svg("rect", { x: (cx - 14).toFixed(1), y: (H - 14 - vh).toFixed(1), width: "28", height: vh.toFixed(1), rx: "1.5", fill: "#64908b", opacity: "0.45" }));
+    }
+    const hit = svg("rect", { x: (i * step).toFixed(1), y: "0", width: step.toFixed(1), height: String(H), fill: "transparent" });
+    hover(hit, "Day " + (i + 1) + " · " + shortDate(s.d), [
+      { k: "Open / Close", v: inr(s.o) + " / " + inr(s.c) },
+      { k: "High / Low", v: inr(s.h) + " / " + inr(s.l) },
+      { k: i === 0 ? "Open-to-Close" : "Day change", v: signed(s.chg) + "%" },
+      { k: "Turnover", v: s.t ? "₹" + crp(s.t, 1) + " Cr" : "–" },
+    ]);
+    g.appendChild(hit);
+  }
+  return g;
+}
+function listingCard(i) {
+  const c = el("article", "card");
+  const top = el("div", "l-head");
+  const st = el("span", "stt " + (i.status === "live" || i.status === "active" ? "open" : "upcoming"));
+  st.appendChild(el("i"));
+  const dayTxt = i.status === "preopen" ? "Pre-open · 10:00 AM" : i.status === "awaiting" ? "Listed " + shortDate(i.ls) : "Day " + i.day + " of 5" + (i.status === "live" ? " · Live" : i.status === "completed" ? " · Complete" : "");
+  st.appendChild(document.createTextNode(dayTxt));
+  top.appendChild(st);
+  const pills = el("div", "l-pills");
+  if (i.circ) pills.appendChild(el("span", "l-circ " + (i.circ === "upper_lock" ? "up" : "dn"), i.circ === "upper_lock" ? "Upper circuit" : "Lower circuit"));
+  if (i.verdict) {
+    const vcls = i.verdict === "Holding above open" ? "up" : i.verdict === "Broken issue price" ? "dn" : "warn";
+    pills.appendChild(el("span", "l-ver " + vcls, i.verdict));
+  }
+  pills.appendChild(el("span", "tag", i.sg === "S" ? "SME" : "Mainboard"));
+  top.appendChild(pills); c.appendChild(top);
+
+  c.appendChild(el("h3", null, i.n));
+  const metaBits = [i.sc || "Sector not stated", i.x || (i.sg === "S" ? "SME" : "NSE, BSE"), i.sym || ""].filter(Boolean);
+  const m = el("p", "meta"); m.appendChild(el("b", null, metaBits[0]));
+  if (metaBits.length > 1) m.appendChild(document.createTextNode(" · " + metaBits.slice(1).join(" · ")));
+  c.appendChild(m);
+
+  if (!i.sess || !i.sess.length) {
+    const w = el("div", "l-wait", i.status === "preopen"
+      ? "Special pre-open session (9:00–10:00 AM IST) in progress. Listing open and live tracking begin after 10:00 AM IST."
+      : "Listed on " + fmt(i.ls) + (i.ip ? " at " + inr(i.ip) : "") + ". Awaiting exchange price feed on Yahoo Finance.");
+    c.appendChild(w);
+  } else {
+    const band = el("div", "l-band " + dirOf(i.tg_pct));
+    const metric = (k, v, cls, s) => {
+      const box = el("div", "l-m"); box.appendChild(el("div", "k", k));
+      box.appendChild(el("div", "v" + (cls ? " " + cls : ""), v));
+      box.appendChild(el("div", "s", s || " ")); band.appendChild(box);
+    };
+    metric("Total vs issue", i.tg_pct != null ? signed(i.tg_pct) + "%" : "–", dirOf(i.tg_pct), "LTP " + inr(i.ltp) + (i.ip ? " vs " + inr(i.ip) : ""));
+    const gmpSub = i.gmp_diff != null ? (i.gmp_diff >= 0 ? "Beat" : "Missed") + " GMP by " + Math.abs(i.gmp_diff).toFixed(1) + " pp" : "GMP not recorded";
+    metric("Listing pop", i.lg_pct != null ? signed(i.lg_pct) + "%" : "–", dirOf(i.lg_pct), gmpSub);
+    metric("Open-to-LTP", i.o2c_pct != null ? signed(i.o2c_pct) + "%" : "–", dirOf(i.o2c_pct), "Open " + inr(i.lo));
+    c.appendChild(band);
+
+    const rng = el("div", "l-rng");
+    const rh = el("div", "l-rng-h");
+    rh.appendChild(el("span", null, "5D low " + inr(i.lo5)));
+    rh.appendChild(el("span", null, "5D high " + inr(i.hi5)));
+    rng.appendChild(rh);
+    const tr = el("div", "l-track");
+    const span = Math.max(0.01, i.hi5 - i.lo5);
+    const pctOf = v => Math.max(0, Math.min(100, (v - i.lo5) / span * 100));
+    const fill = el("span", "l-fill"); fill.style.left = "0%"; fill.style.width = pctOf(i.ltp) + "%"; tr.appendChild(fill);
+    if (i.ip && i.ip >= i.lo5 && i.ip <= i.hi5) {
+      const ipMark = el("span", "l-ip"); ipMark.style.left = pctOf(i.ip) + "%"; ipMark.title = "Issue price " + inr(i.ip); tr.appendChild(ipMark);
+    }
+    const dot = el("span", "l-dot" + (i.tg_pct < 0 ? " dn" : "")); dot.style.left = pctOf(i.ltp) + "%"; dot.title = "Latest price " + inr(i.ltp); tr.appendChild(dot);
+    rng.appendChild(tr); c.appendChild(rng);
+
+    const f = el("dl", "l-facts");
+    const add = (k, v) => { const d = el("div"); d.appendChild(el("dt", null, k)); d.appendChild(el("dd", null, v)); f.appendChild(d); };
+    add("Issue size", i.sz ? "₹" + crp(i.sz, 1) + " Cr" : "–");
+    add("5D turnover", i.turn_cr ? "₹" + crp(i.turn_cr, 1) + " Cr" : "–");
+    add("Est. issue churn", i.churn != null ? i.churn.toFixed(1) + "%" : "–");
+    add("Vol vs Day 1", i.vol_d1 != null ? i.vol_d1.toFixed(0) + "%" : (i.day === 1 ? "Day 1" : "–"));
+    add("Last GMP", i.gmp_pct != null ? signed(i.gmp_pct) + "%" : "Not recorded");
+    add("Listing date", shortDate(i.ls));
+    c.appendChild(f);
+
+    const trk = el("div", "l-trk");
+    const th = el("div", "l-trk-h");
+    th.appendChild(el("span", null, "5-session trajectory (return & volume)"));
+    th.appendChild(el("span", null, i.sym && i.sym.endsWith(".NS") ? "NSE feed" : "Exchange feed"));
+    trk.appendChild(th); trk.appendChild(debutTrajectory(i.sess));
+    c.appendChild(trk);
+  }
+
+  const bm = el("p", "meta"); bm.appendChild(el("b", null, "Lead managers: "));
+  if (!(i.bk || []).length) bm.appendChild(document.createTextNode("Not stated"));
+  else i.bk.forEach((n, idx) => {
+    if (idx) bm.appendChild(document.createTextNode(", "));
+    const b = el("button", "lm", n); b.type = "button"; b.addEventListener("click", () => openBanker(n)); bm.appendChild(b);
+  });
+  c.appendChild(bm);
+  return c;
+}
+function renderListings() {
+  const body = $("#l-body"), kpis = $("#l-kpis"), pill = $("#l-pill");
+  body.textContent = ""; kpis.textContent = "";
+  for (const [id, key] of [["#l-g", "lg"], ["#l-s", "ls"]]) for (const b of $(id).children) b.setAttribute("aria-pressed", String(b.dataset.v === D[key]));
+  $("#l-o").value = D.lz;
+  const all = (LISTINGS && LISTINGS.items) || [];
+  if (LISTINGS && LISTINGS.updated) {
+    pill.hidden = false; pill.className = "pill good"; pill.textContent = "";
+    pill.appendChild(el("i")); pill.appendChild(el("span", null, "Updated " + clockOf(LISTINGS.updated) + " IST"));
+  } else pill.hidden = true;
+  if (!all.length) {
+    $("#l-sub").textContent = "No recent IPOs inside the 5-session post-listing window.";
+    emptyBox(body, "Newly listed IPOs appear here automatically on their listing day and are tracked across their first 5 trading sessions.");
+    return;
+  }
+  const list = all.filter(i => (D.lg === "all" || i.sg === D.lg) && (D.ls === "all" || (D.ls === "completed" ? i.status === "completed" : i.status !== "completed")))
+    .slice().sort(LSORT[D.lz] || LSORT.date);
+  const priced = list.filter(i => i.lg_pct != null);
+  const avgPop = priced.length ? priced.reduce((x, i) => x + i.lg_pct, 0) / priced.length : null;
+  const above = priced.filter(i => i.tg_pct != null && i.tg_pct >= 0).length;
+  const totTurn = list.reduce((x, i) => x + (i.turn_cr || 0), 0);
+  kpis.appendChild(kpiTile("Tracked debuts", String(list.length), list.filter(i => i.status !== "completed").length + " inside Day 1–5"));
+  kpis.appendChild(kpiTile("Avg listing pop", avgPop != null ? signed(avgPop, 1) + "%" : "–", priced.length ? "Across " + plural(priced.length, "priced debut") : "Awaiting feed"));
+  kpis.appendChild(kpiTile("Above issue price", priced.length ? above + " / " + priced.length : "–", priced.length ? Math.round(above / priced.length * 100) + "% holding issue" : " "));
+  kpis.appendChild(kpiTile("Est. 5D turnover", totTurn ? "₹" + crp(totTurn, 1) + " Cr" : "–", "Cumulative NSE feed"));
+  $("#l-sub").textContent = plural(list.length, "newly listed IPO") + " shown of " + all.length + " in the 5-session window.";
+  if (!list.length) { emptyBox(body, "No debuts match these filters."); return; }
+  const grid = el("div", "l-cards");
+  for (const i of list) grid.appendChild(listingCard(i));
+  body.appendChild(grid);
+}
 function renderDesk() {
+  const isList = D.dm === "listings";
+  for (const b of $("#d-mode").children) b.setAttribute("aria-pressed", String(b.dataset.v === D.dm));
+  $("#d-issues").hidden = isList; $("#d-listings").hidden = !isList;
+  if (isList) { renderListings(); writeHash(); return; }
   const body = $("#d-body"); body.textContent = "";
   if (!IPOS) { emptyBox(body, "IPO data is not available yet. It loads with the next check."); $("#d-sub").textContent = ""; $("#d-pill").hidden = true; $("#d-cal").textContent = ""; $("#d-kpis").textContent = ""; return; }
   const ups = IPOS.map(i => i.up).filter(Boolean).sort();
@@ -1563,6 +1777,12 @@ function renderDesk() {
 }
 function buildDeskControls() {
   const items = IPOS || [];
+  const lcnt = (LISTINGS && LISTINGS.items && LISTINGS.items.length) || 0;
+  if (lcnt) $("#d-mode-list").textContent = "New listings (" + lcnt + ")";
+  $("#d-mode").addEventListener("click", e => { const b = e.target.closest("button"); if (!b) return; D.dm = b.dataset.v; renderDesk(); window.scrollTo(0, 0); });
+  fillSelect("#l-o", LORDER, D.lz);
+  for (const [id, key] of [["#l-g", "lg"], ["#l-s", "ls"]]) $(id).addEventListener("click", e => { const b = e.target.closest("button"); if (!b) return; D[key] = b.dataset.v; renderDesk(); });
+  $("#l-o").addEventListener("change", e => { D.lz = e.target.value; renderDesk(); });
   const count = f => { const m = new Map(); for (const i of items) for (const k of f(i)) m.set(k, (m.get(k) || 0) + 1); return [...m].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0])); };
   const opts = (all, rows) => [["all", all]].concat(rows.map(([k, n]) => [k, k + " (" + n + ")"]));
   fillSelect("#d-x", opts("All exchanges", count(venues)), D.dx);
@@ -1575,7 +1795,7 @@ function buildDeskControls() {
   for (const [id, key] of [["#d-g", "dg"], ["#d-k", "dk"], ["#d-v", "dv"]]) $(id).addEventListener("click", e => { const b = e.target.closest("button"); if (!b) return; D[key] = b.dataset.v; renderDesk(); });
   for (const k in DSEL) $(DSEL[k]).addEventListener("change", e => { D[k] = e.target.value; renderDesk(); });
   let timer; $("#d-q").addEventListener("input", e => { clearTimeout(timer); timer = setTimeout(() => { D.dq = e.target.value; renderDesk(); }, 120); });
-  $("#d-reset").addEventListener("click", () => { Object.assign(D, DDEF); $("#d-q").value = ""; for (const k in DSEL) $(DSEL[k]).value = D[k]; renderDesk(); });
+  $("#d-reset").addEventListener("click", () => { for (const k of ["dg", "dk", "dx", "ds", "db", "dw", "dp", "dq", "dz", "dv"]) D[k] = DDEF[k]; $("#d-q").value = ""; for (const k in DSEL) $(DSEL[k]).value = D[k]; renderDesk(); });
 }
 
 /* ---------- lead managers directory (inside Filings) ---------- */
