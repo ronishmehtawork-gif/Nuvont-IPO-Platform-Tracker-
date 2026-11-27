@@ -8,7 +8,7 @@ SECTOR_TICKERS = {
     "BANKING & FINANCE": [
         ("Nifty Bank", "^NSEBANK"),
         ("PSU Banks", "^CNXPSUBANK"),
-        ("Financial Services", "^CNXFIN"),
+        ("Financial Services", "NIFTY_FIN_SERVICE.NS"),
     ],
     "AUTOMOBILES & COMPONENTS": [
         ("Nifty Auto", "^CNXAUTO"),
