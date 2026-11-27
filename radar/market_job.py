@@ -5,7 +5,7 @@ import os
 import sys
 from datetime import datetime
 
-from . import diag, flows, ipowatch, market
+from . import bankers, diag, flows, ipowatch, market
 from . import state as st
 from .http import Fetcher
 from .run import IST
@@ -36,8 +36,10 @@ def main() -> None:
 
     state = st.load(os.getenv("RADAR_STATE", "data/state.json"))
     ipos = ipowatch.load(os.getenv("RADAR_IPOS", "data/ipos.json"))
+   bankers_data = bankers.record(os.getenv("RADAR_BANKERS", "data/bankers_record.json"),
+                                  os.getenv("RADAR_BANKERS_SEED", "data/bankers_seed.csv"))
     build_site(state, os.getenv("RADAR_SITE", "docs/index.html"), now, market=payload, ipos=ipos,
-               flows=flows.load(flows_path), whatsapp_join=join_link())
+               flows=flows.load(flows_path), whatsapp_join=join_link(), bankers=bankers_data)
     if not info["ok"] and not payload:
         sys.exit(1)  # nothing to show at all: fail the run so it is noticed
 
