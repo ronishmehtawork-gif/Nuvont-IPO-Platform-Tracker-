@@ -21,13 +21,19 @@
     "with_sector": 10,
     "with_size": 8
   },
+  "listings": {
+    "note": "saved",
+    "ok": true,
+    "priced": 1,
+    "tracked": 2
+  },
   "market": {
     "asof": "2026-11-27",
     "bars_per_date": {
       "2026-11-20": 495,
       "2026-11-23": 495,
       "2026-11-25": 495,
-      "2026-11-26": 308,
+      "2026-11-26": 495,
       "2026-11-27": 495
     },
     "dropped": {
@@ -46,22 +52,14 @@
       "stocks": 216
     },
     "fno_note": "F&O list fetched from nsearchives.nseindia.com",
-    "gaps": [
-      "2026-11-26"
-    ],
+    "gaps": [],
     "live": true,
-    "missing_prev_examples": [
-      "AIAENG: no bar on 2026-11-26, last bars 2026-11-23, 2026-11-25, 2026-11-27",
-      "AADHARHFC: no bar on 2026-11-26, last bars 2026-11-23, 2026-11-25, 2026-11-27",
-      "AAVAS: no bar on 2026-11-26, last bars 2026-11-23, 2026-11-25, 2026-11-27",
-      "ABBOTINDIA: no bar on 2026-11-26, last bars 2026-11-23, 2026-11-25, 2026-11-27"
-    ],
     "note": "saved",
     "ok": true,
     "priced": 493,
     "stock_last_sessions": [
-      "2026-11-23",
       "2026-11-25",
+      "2026-11-26",
       "2026-11-27"
     ],
     "stocks_with_prices": 495,
