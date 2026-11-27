@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src '__SCRIPT_HASH__'; style-src 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; form-action 'none'; base-uri 'none'">
 <meta name="referrer" content="no-referrer">
-<meta name="robots" content="noindex,nofollow">
+<meta name="robots" content="noindex,nofollow"> <meta name="description" content="Indian IPO filings, DRHP radar, grey market premiums, FII/DII flows, and Nifty 500 sector outlook."> <meta property="og:title" content="Nuvont Capital — Indian IPO &amp; Market Research Desk"> <meta property="og:description" content="Live DRHP filings, IPO Desk with GMP &amp; key dates, FII/DII flows, and Sector Outlook."> <meta property="og:type" content="website">
 <meta name="color-scheme" content="light">
 <title>Nuvont Capital</title>
 <link rel="icon" type="image/png" href="assets/favicon.png">
@@ -1164,7 +1164,7 @@ function heat(x, scale) {
   return { bg: "rgb(" + rgb.join(",") + ")", fg: Math.abs(k) > 0.55 ? "#fff" : "var(--ink)" };
 }
 function stockMatches(s, q) { return (s[0] + " " + s[1]).toLowerCase().includes(q); }
-function niceMax(max) { const p = Math.pow(10, Math.floor(Math.log10(max))), m = max / p; return (m <= 1 ? 1 : m <= 2 ? 2 : m <= 5 ? 5 : 10) * p; }
+function niceFlowMax(max) { const p = Math.pow(10, Math.floor(Math.log10(max))), m = max / p; return (m <= 1 ? 1 : m <= 2 ? 2 : m <= 5 ? 5 : 10) * p; }
 function flowBar(x, max) {
   const b = el("span", "fb"), w = Math.min(50, Math.abs(x) / (max || 1) * 50), i = el("i", x >= 0 ? "p" : "n");
   i.style.left = (x >= 0 ? 50 : 50 - w) + "%"; i.style.width = w + "%"; b.appendChild(i); b.title = crs(x) + " crore"; return b;
@@ -1221,7 +1221,7 @@ function renderTiles() {
 
 function flowChart(days) {
   const W = 620, H = 196, L = 46, R = 8, T = 12, B = 26, n = days.length, half = (H - T - B) / 2;
-  const nice = niceMax(Math.max(1, ...days.flatMap(d => [Math.abs(d.fn), Math.abs(d.dn)])));
+  const nice = niceFlowMax(Math.max(1, ...days.flatMap(d => [Math.abs(d.fn), Math.abs(d.dn)])));
   const y = v => T + half - v / nice * half;
   const s = svg("svg", { viewBox: "0 0 " + W + " " + H, role: "img", "aria-label": "Daily net buying and selling by FII and DII, last " + n + " sessions" });
   for (const v of [nice, nice / 2, 0, -nice / 2, -nice]) {
