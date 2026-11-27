@@ -5,7 +5,7 @@ import os
 import sys
 from datetime import datetime
 
-from . import bankers, diag, flows, ipowatch, market
+from . import bankers, diag, flows, ipowatch, listings, market
 from . import state as st
 from .http import Fetcher
 from .run import IST
@@ -36,10 +36,16 @@ def main() -> None:
 
     state = st.load(os.getenv("RADAR_STATE", "data/state.json"))
     ipos = ipowatch.load(os.getenv("RADAR_IPOS", "data/ipos.json"))
-   bankers_data = bankers.record(os.getenv("RADAR_BANKERS", "data/bankers_record.json"),
-                                  os.getenv("RADAR_BANKERS_SEED", "data/bankers_seed.csv"))
+    ledger_path, seed_path = os.getenv("RADAR_BANKERS", "data/bankers_record.json"), os.getenv("RADAR_BANKERS_SEED", "data/bankers_seed.csv")
+    listings_data, list_info = listings.refresh(Fetcher(), os.getenv("RADAR_LISTINGS", "data/listings.json"), now,
+                                                ledger_path=ledger_path, ipos=ipos)
+    diag.record("listings", list_info)
+    if listings_data and listings_data.get("items"):
+        bankers.record_listing_prices(listings_data["items"], ledger_path)
+    bankers_data = bankers.record(ledger_path, seed_path)
     build_site(state, os.getenv("RADAR_SITE", "docs/index.html"), now, market=payload, ipos=ipos,
-               flows=flows.load(flows_path), whatsapp_join=join_link(), bankers=bankers_data)
+               flows=flows.load(flows_path), whatsapp_join=join_link(), bankers=bankers_data,
+               listings=listings_data)
     if not info["ok"] and not payload:
         sys.exit(1)  # nothing to show at all: fail the run so it is noticed
 
