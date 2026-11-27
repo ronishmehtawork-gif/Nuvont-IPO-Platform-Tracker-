@@ -143,4 +143,4 @@ def test_download_link_found_later_is_sent_as_a_reply():
 
 def test_city_sector_and_bankers_are_read():
     rec = ipoplatform.parse(SME_HTML, "sme", SME_URL)[0]
-    assert rec.info == {"city": "Noida", "sector": "Clothing and Apparels", "bankers": "Some Bank, Other Bank +1 more"}
+    assert rec.info == {"city": "Noida", "sector": "Clothing and Apparels", "bankers": "Some Bank, Other Bank, Third Bank"}
