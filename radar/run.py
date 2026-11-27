@@ -6,7 +6,7 @@ import sys
 from datetime import date, datetime, timedelta
 from zoneinfo import ZoneInfo
 
-from . import bankers, cadence, diag, flows, ipowatch
+from . import bankers, cadence, diag, flows, ipowatch, listings
 from . import market as market_data
 from . import state as st
 from .documents import exchange_doc_label, find_pdf_links
@@ -314,16 +314,27 @@ def main() -> None:
     market_path = os.getenv("RADAR_MARKET", "data/market.json")
     refresh_market(state, path, market_path, now, tg)
     ledger_path, seed_path = os.getenv("RADAR_BANKERS", "data/bankers_record.json"), os.getenv("RADAR_BANKERS_SEED", "data/bankers_seed.csv")
+    companies = build_companies(state)
     try:
         if ipos and ipos.get("items"):
-            bankers.update_ledger(enrich_ipos(ipos["items"], build_companies(state)), ledger_path, now.date().isoformat())
+            bankers.update_ledger(enrich_ipos(ipos["items"], companies), ledger_path, now.date().isoformat())
+    except Exception as e:  # noqa: BLE001
+        print(f"bankers ledger update failed: {type(e).__name__}", file=sys.stderr)
+    listings_path = os.getenv("RADAR_LISTINGS", "data/listings.json")
+    listings_data, list_info = listings.refresh(fetcher, listings_path, now, ledger_path=ledger_path, ipos=ipos, companies=companies)
+    diag.record("listings", list_info)
+    print("listings:", list_info)
+    try:
+        if listings_data and listings_data.get("items"):
+            bankers.record_listing_prices(listings_data["items"], ledger_path)
         bankers_data = bankers.record(ledger_path, seed_path)
     except Exception as e:  # noqa: BLE001 - the directory's record is optional; the page builds without it
         print(f"bankers record failed: {type(e).__name__}", file=sys.stderr)
         bankers_data = None
     build_site(state, os.getenv("RADAR_SITE", "docs/index.html"), now,
                market=market_data.load(market_path), ipos=ipos,
-               flows=flows.load(flows_path), whatsapp_join=join_link(), bankers=bankers_data)
+               flows=flows.load(flows_path), whatsapp_join=join_link(), bankers=bankers_data,
+               listings=listings_data)
 
 
 if __name__ == "__main__":
