@@ -2,8 +2,7 @@
   "flows": {
     "asof": "2026-11-26",
     "days": 2,
-    "ok": true,
-    "skipped": true
+    "ok": true
   },
   "ipo_pipeline": {
     "date_conflicts": 0,
@@ -24,11 +23,11 @@
   "market": {
     "asof_kept": "2026-11-26",
     "bars_per_date": {
-      "2026-11-18": 495,
       "2026-11-19": 495,
       "2026-11-20": 495,
       "2026-11-23": 495,
-      "2026-11-25": 495
+      "2026-11-25": 495,
+      "2026-11-26": 308
     },
     "fetch_failures": {},
     "fetched": 495,
@@ -37,6 +36,12 @@
       "stocks": 216
     },
     "fno_note": "F&O list fetched from nsearchives.nseindia.com",
+    "missing_prev_examples": [
+      "AIAENG: no bar on 2026-11-26, last bars 2026-11-20, 2026-11-23, 2026-11-25",
+      "AADHARHFC: no bar on 2026-11-26, last bars 2026-11-20, 2026-11-23, 2026-11-25",
+      "AAVAS: no bar on 2026-11-26, last bars 2026-11-20, 2026-11-23, 2026-11-25",
+      "ABBOTINDIA: no bar on 2026-11-26, last bars 2026-11-20, 2026-11-23, 2026-11-25"
+    ],
     "note": "kept previous data: new data (2026-11-25) is older than the saved data (2026-11-26)",
     "ok": false,
     "stock_last_sessions": [
