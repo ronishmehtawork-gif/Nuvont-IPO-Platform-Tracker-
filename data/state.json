@@ -21,14 +21,14 @@
    "empty_streak": 0,
    "ever_parsed": true,
    "failures": 0,
-   "last_note": "844 items",
+   "last_note": "846 items",
    "last_ok": "2026-11-27"
   },
   "rss_ipocentral": {
    "down_alerted": true,
-   "empty_streak": 131,
+   "empty_streak": 132,
    "ever_parsed": true,
-   "failures": 116,
+   "failures": 117,
    "last_note": "0 items matched",
    "last_ok": "2026-11-26"
   },
@@ -218,7 +218,7 @@
     }
    ]
   },
-  "updated": "27 Nov 2026, 04:50 PM IST"
+  "updated": "27 Nov 2026, 05:20 PM IST"
  },
  "seen": {
   "aarish outdoors|drhp_filed": {
@@ -3117,6 +3117,32 @@
    "segment": "mainboard",
    "sources": {
     "ipoplatform": "https://www.ipoplatform.com/ipo/bvg-india-ipo/4490"
+   }
+  },
+  "bvishal oil and energy|approval": {
+   "alerted": true,
+   "baseline": false,
+   "company": "Bvishal Oil and Energy Limited",
+   "documents": [
+    {
+     "label": "DRHP file on NSE",
+     "url": "https://nsearchives.nseindia.com/corporate/Registration_31032026223423_BvishalOilandEnergyLimited_DRHP.pdf"
+    }
+   ],
+   "event": "approval",
+   "exchange": "NSE",
+   "filed_on": "2026-03-31",
+   "first_seen": "2026-11-27T17:20:40+05:30",
+   "info": {
+    "bankers": "Unistone Capital Private Limited",
+    "city": "Ahmedabad",
+    "sector": "Oil and Gas"
+   },
+   "message_id": 11,
+   "official_url": "",
+   "segment": "mainboard",
+   "sources": {
+    "ipoplatform": "https://www.ipoplatform.com/ipo/bvishal-oil-and-energy-limited-ipo/4658"
    }
   },
   "bvishal oil and energy|drhp_filed": {
@@ -13778,6 +13804,32 @@
     "ipoplatform": "https://www.ipoplatform.com/ipo/pci-infraprojects-ipo/4867"
    }
   },
+  "pentacle consultants i|approval": {
+   "alerted": true,
+   "baseline": false,
+   "company": "Pentacle Consultants (I) Limited",
+   "documents": [
+    {
+     "label": "DRHP ZIP on NSE",
+     "url": "https://nsearchives.nseindia.in/corporate/AD_IPO_7796_30092026001056.zip"
+    }
+   ],
+   "event": "approval",
+   "exchange": "NSE",
+   "filed_on": "2026-09-29",
+   "first_seen": "2026-11-27T17:20:40+05:30",
+   "info": {
+    "bankers": "Socradamus Capital Private Limited",
+    "city": "Mumbai",
+    "sector": "Consultancy - Business Operations"
+   },
+   "message_id": 10,
+   "official_url": "",
+   "segment": "mainboard",
+   "sources": {
+    "ipoplatform": "https://www.ipoplatform.com/ipo/pentacle-consultants-ipo/4912"
+   }
+  },
   "pentacle consultants i|drhp_filed": {
    "alerted": false,
    "baseline": true,
@@ -13786,6 +13838,10 @@
     {
      "label": "DRHP file on NSE",
      "url": "https://www.nseindia.com/companies-listing/corporate-filings-offer-documents"
+    },
+    {
+     "label": "DRHP ZIP on NSE",
+     "url": "https://nsearchives.nseindia.in/corporate/AD_IPO_7796_30092026001056.zip"
     }
    ],
    "event": "drhp_filed",
