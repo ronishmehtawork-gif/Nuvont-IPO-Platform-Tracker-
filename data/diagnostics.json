@@ -22,13 +22,22 @@
     "with_size": 8
   },
   "market": {
-    "asof_kept": "2026-11-26",
+    "asof": "2026-11-27",
     "bars_per_date": {
       "2026-11-20": 495,
       "2026-11-23": 495,
       "2026-11-25": 495,
       "2026-11-26": 308,
       "2026-11-27": 495
+    },
+    "dropped": {
+      "no_data": 0,
+      "outlier": [
+        "HEGAM",
+        "VEDL"
+      ],
+      "short": 0,
+      "stale": 0
     },
     "fetch_failures": {},
     "fetched": 495,
@@ -37,20 +46,26 @@
       "stocks": 216
     },
     "fno_note": "F&O list fetched from nsearchives.nseindia.com",
+    "gaps": [
+      "2026-11-26"
+    ],
+    "live": true,
     "missing_prev_examples": [
       "AIAENG: no bar on 2026-11-26, last bars 2026-11-23, 2026-11-25, 2026-11-27",
       "AADHARHFC: no bar on 2026-11-26, last bars 2026-11-23, 2026-11-25, 2026-11-27",
-      "ABBOTINDIA: no bar on 2026-11-26, last bars 2026-11-23, 2026-11-25, 2026-11-27",
-      "AAVAS: no bar on 2026-11-26, last bars 2026-11-23, 2026-11-25, 2026-11-27"
+      "AAVAS: no bar on 2026-11-26, last bars 2026-11-23, 2026-11-25, 2026-11-27",
+      "ABBOTINDIA: no bar on 2026-11-26, last bars 2026-11-23, 2026-11-25, 2026-11-27"
     ],
-    "note": "kept previous data: new data (2026-11-25) is older than the saved data (2026-11-26)",
-    "ok": false,
+    "note": "saved",
+    "ok": true,
+    "priced": 493,
     "stock_last_sessions": [
       "2026-11-23",
       "2026-11-25",
       "2026-11-27"
     ],
     "stocks_with_prices": 495,
+    "universe": 495,
     "universe_note": "universe fetched from nsearchives.nseindia.com"
   },
   "whatsapp": {
