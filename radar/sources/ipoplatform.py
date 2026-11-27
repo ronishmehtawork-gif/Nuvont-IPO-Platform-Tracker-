@@ -44,10 +44,10 @@ def _details(item) -> dict:
             info["sector"] = text
     for box in item.select("div.company-info"):
         if "merchant bankers" in box.get_text(" ", strip=True).lower():
-            names = [_clean(x.get_text(" ", strip=True)) for x in box.find_all("strong")]
+            names = list(dict.fromkeys(_clean(x.get_text(" ", strip=True)) for x in box.find_all("strong")))
             names = [n for n in names if n]
             if names:
-                info["bankers"] = ", ".join(names[:2]) + (f" +{len(names) - 2} more" if len(names) > 2 else "")
+                info["bankers"] = ", ".join(names)
     return info
 
 
