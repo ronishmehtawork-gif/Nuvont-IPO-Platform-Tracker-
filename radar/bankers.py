@@ -159,5 +159,21 @@ def record(ledger_path: str, seed_path: str) -> dict:
     for r in seed:
         merged[_key(r["n"])] = dict(merged.get(_key(r["n"]), {}), **r)
     ipos = sorted(merged.values(), key=lambda r: (r.get("ls") or r.get("o") or "", r["n"]))
-    return {"since": ledger.get("since", ""), "ipos": ipos, "seed": len(seed), "skipped": skipped}   def record_listing_prices(listings_items: list[dict], path: str) -> None:     """Save verified Day-1 listing open prices into data/bankers_record.json (never writes stale cp)."""     if not listings_items:         return     ledger = load_ledger(path)     index = {_key(r["n"]): r for r in ledger["ipos"] if r.get("n")}     changed = False     for it in listings_items:         lo = it.get("lo")         row = index.get(_key(it.get("n", "")))         if row is not None and lo and row.get("lp") != lo:             row["lp"] = lo             changed = True     if changed:         Path(path).write_text(json.dumps(ledger, ensure_ascii=False, indent=1) + "
-")
+    return {"since": ledger.get("since", ""), "ipos": ipos, "seed": len(seed), "skipped": skipped}
+
+
+def record_listing_prices(listings_items: list[dict], path: str) -> None:
+    """Save verified Day-1 listing open prices into data/bankers_record.json (never writes stale cp)."""
+    if not listings_items:
+        return
+    ledger = load_ledger(path)
+    index = {_key(r["n"]): r for r in ledger["ipos"] if r.get("n")}
+    changed = False
+    for it in listings_items:
+        lo = it.get("lo")
+        row = index.get(_key(it.get("n", "")))
+        if row is not None and lo and row.get("lp") != lo:
+            row["lp"] = lo
+            changed = True
+    if changed:
+        Path(path).write_text(json.dumps(ledger, ensure_ascii=False, indent=1) + "\n")
