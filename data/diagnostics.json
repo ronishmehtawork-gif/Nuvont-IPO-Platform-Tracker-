@@ -2,8 +2,7 @@
   "flows": {
     "asof": "2026-11-26",
     "days": 2,
-    "ok": true,
-    "skipped": true
+    "ok": true
   },
   "ipo_pipeline": {
     "date_conflicts": 0,
@@ -52,9 +51,9 @@
     "live": true,
     "missing_prev_examples": [
       "AIAENG: no bar on 2026-11-26, last bars 2026-11-23, 2026-11-25, 2026-11-27",
+      "AADHARHFC: no bar on 2026-11-26, last bars 2026-11-23, 2026-11-25, 2026-11-27",
       "AAVAS: no bar on 2026-11-26, last bars 2026-11-23, 2026-11-25, 2026-11-27",
-      "ABBOTINDIA: no bar on 2026-11-26, last bars 2026-11-23, 2026-11-25, 2026-11-27",
-      "AADHARHFC: no bar on 2026-11-26, last bars 2026-11-23, 2026-11-25, 2026-11-27"
+      "ABBOTINDIA: no bar on 2026-11-26, last bars 2026-11-23, 2026-11-25, 2026-11-27"
     ],
     "note": "saved",
     "ok": true,
