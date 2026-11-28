@@ -26,9 +26,9 @@
   },
   "rss_ipocentral": {
    "down_alerted": true,
-   "empty_streak": 166,
+   "empty_streak": 167,
    "ever_parsed": true,
-   "failures": 151,
+   "failures": 152,
    "last_note": "0 items matched",
    "last_ok": "2026-11-26"
   },
@@ -36,7 +36,7 @@
    "down_alerted": true,
    "empty_streak": 0,
    "ever_parsed": true,
-   "failures": 15,
+   "failures": 16,
    "last_note": "ConnectionError",
    "last_ok": "2026-11-28"
   }
@@ -218,7 +218,7 @@
     }
    ]
   },
-  "updated": "28 Nov 2026, 06:17 PM IST"
+  "updated": "28 Nov 2026, 07:19 PM IST"
  },
  "seen": {
   "aarish outdoors|drhp_filed": {
